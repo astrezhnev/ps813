@@ -1,0 +1,317 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "PoliSci 813: Causal Inference",
+    "section": "",
+    "text": "Questions of cause and effect are central to the study of political science and to the social sciences more broadly. This course provides students with a structured statistical framework for articulating the assumptions behind causal research designs and estimating effects using quantitative data."
+  },
+  {
+    "objectID": "index.html#course-details",
+    "href": "index.html#course-details",
+    "title": "PoliSci 813: Causal Inference",
+    "section": "Course Details",
+    "text": "Course Details\n\n\n\n\n\n\n\nInstructor\nAnton Strezhnev\n\n\nLectures\nTuesdays & Thursdays, 2:00pm - 3:20pm\n\n\nSections\nFridays, 2:30pm - 3:20pm\n\n\nLocation\nTBA"
+  },
+  {
+    "objectID": "index.html#quick-links",
+    "href": "index.html#quick-links",
+    "title": "PoliSci 813: Causal Inference",
+    "section": "Quick Links",
+    "text": "Quick Links\n\n\nSyllabus\n\n\nSchedule\n\n\nAssignments\n\n\nResources"
+  },
+  {
+    "objectID": "index.html#announcements",
+    "href": "index.html#announcements",
+    "title": "PoliSci 813: Causal Inference",
+    "section": "Announcements",
+    "text": "Announcements\nCheck back here for course announcements throughout the semester.\n\nLast updated: January 12, 2026"
+  },
+  {
+    "objectID": "staff.html",
+    "href": "staff.html",
+    "title": "Staff",
+    "section": "",
+    "text": "Assistant Professor Department of Political Science University of Wisconsin-Madison\n\n\n\nOffice\nNorth Hall 322D\n\n\nEmail\nstrezhnev@wisc.edu\n\n\nWebsite\nantonstrezhnev.com\n\n\nOffice Hours\nTuesdays, 2pm-4pm (or by appointment via email)"
+  },
+  {
+    "objectID": "staff.html#instructor",
+    "href": "staff.html#instructor",
+    "title": "Staff",
+    "section": "",
+    "text": "Assistant Professor Department of Political Science University of Wisconsin-Madison\n\n\n\nOffice\nNorth Hall 322D\n\n\nEmail\nstrezhnev@wisc.edu\n\n\nWebsite\nantonstrezhnev.com\n\n\nOffice Hours\nTuesdays, 2pm-4pm (or by appointment via email)"
+  },
+  {
+    "objectID": "staff.html#teaching-assistant",
+    "href": "staff.html#teaching-assistant",
+    "title": "Staff",
+    "section": "Teaching Assistant",
+    "text": "Teaching Assistant\n\nJunda Li\nGraduate Student Department of Political Science University of Wisconsin-Madison\n\n\n\nEmail\njli2458@wisc.edu\n\n\nWebsite\njundali.org\n\n\nOffice Hours\nTBA"
+  },
+  {
+    "objectID": "staff.html#contact-policy",
+    "href": "staff.html#contact-policy",
+    "title": "Staff",
+    "section": "Contact Policy",
+    "text": "Contact Policy\n\nCourse questions: Please post questions about course content on the Ed discussion forum so that all students can benefit from the answers.\nPersonal matters: Email the instructor directly.\nProblem set questions: Post on the discussion forum or come to office hours.\nExpected response time: We aim to respond to discussion posts within 24 hours on weekdays."
+  },
+  {
+    "objectID": "schedule.html",
+    "href": "schedule.html",
+    "title": "Schedule",
+    "section": "",
+    "text": "A schedule of topics and readings is provided below. Each week will cover a single topic or group of topics. Monday lectures will typically be an introduction to the topic while Wednesday lectures will go into greater detail and involve some applications of the method. You should make sure to review the readings prior to that week’s lectures with an aim towards completing the reading assignments prior to Wednesday’s lecture."
+  },
+  {
+    "objectID": "schedule.html#week-1-january-21-review",
+    "href": "schedule.html#week-1-january-21-review",
+    "title": "Schedule",
+    "section": "Week 1: January 21 | Review",
+    "text": "Week 1: January 21 | Review\nTopics:\n\nEstimands and causal quantities of interest\nReview of statistical properties of estimators\nLarge sample theory, big-O/little-o notation\n\nReadings:\n\nChapter 1, Imbens and Rubin. Causal Inference for Statistics, Social, and Biomedical Sciences. Cambridge University Press. 2015.\nChapter 1, Hernán and Robins. Causal Inference: What If. Chapman & Hall/CRC. 2020.\nLundberg, Ian, Rebecca Johnson, and Brandon M. Stewart. “What is your estimand? Defining the target quantity connects statistical evidence to theory.” American Sociological Review 86.3 (2021): 532-565."
+  },
+  {
+    "objectID": "schedule.html#week-2-january-26-30-introduction-to-potential-outcomes-randomized-experiments",
+    "href": "schedule.html#week-2-january-26-30-introduction-to-potential-outcomes-randomized-experiments",
+    "title": "Schedule",
+    "section": "Week 2: January 26-30 | Introduction to Potential Outcomes + Randomized Experiments",
+    "text": "Week 2: January 26-30 | Introduction to Potential Outcomes + Randomized Experiments\nMonday, January 26 & Wednesday, January 28\nTopics:\n\nWhat assumptions are needed to identify average treatment effects\nWhy randomized experiments satisfy these assumptions\nCounterfactual reasoning and the “Fundamental Problem of Causal Inference”\nThe “potential outcomes” model\nEstimation and randomization inference in standard experimental designs\n\nReadings:\n\nSections 1-5, Athey and Imbens, “The Econometrics of Randomized Experiments,” Handbook of economic field experiments. Vol. 1. North-Holland, 2017. 73-140.\nChapter 2, Hernán and Robins. Causal Inference: What If. Chapman & Hall/CRC. 2020.\nDruckman, James N., et al. “The growth and development of experimental research in political science.” American Political Science Review 100.4 (2006): 627-635.\n\nApplications:\n\nGerber, Alan S., Donald P. Green, and Christopher W. Larimer. “Social pressure and voter turnout: Evidence from a large-scale field experiment.” American Political Science Review 102.1 (2008): 33-48.\nMutz, Diana C., and Byron Reeves. “The new videomalaise: Effects of televised incivility on political trust.” American Political Science Review 99.1 (2005): 1-15."
+  },
+  {
+    "objectID": "schedule.html#week-3-february-2-6-covariates-in-randomized-experiments",
+    "href": "schedule.html#week-3-february-2-6-covariates-in-randomized-experiments",
+    "title": "Schedule",
+    "section": "Week 3: February 2-6 | Covariates in Randomized Experiments",
+    "text": "Week 3: February 2-6 | Covariates in Randomized Experiments\nMonday, February 2 & Wednesday, February 4\nTopics:\n\nStratification and using covariates in experiments\nAnalysis of cluster-randomized experiments\nProblems of non-compliance\n\nReadings:\n\nSections 6-12, Athey and Imbens, “The Econometrics of Randomized Experiments,” Handbook of economic field experiments. Vol. 1. North-Holland, 2017. 73-140.\nMontgomery, Jacob M., Brendan Nyhan, and Michelle Torres. “How conditioning on posttreatment variables can ruin your experiment and what to do about it.” American Journal of Political Science 62.3 (2018): 760-775.\nAronow, P. M., Jonathon Baron, and Lauren Pinson. “A note on dropping experimental subjects who fail a manipulation check.” Political Analysis 27.4 (2019): 572-589.\nLin, Winston. “Agnostic notes on regression adjustments to experimental data: Reexamining Freedman’s critique.” The Annals of Applied Statistics 7.1 (2013): 295-318.\n\nBonus: Samii, C., and P. M. Aronow. “On equivalencies between design-based and regression-based variance estimators for randomized experiments.” Statistics & Probability Letters 82.2 (2012): 365-370.\n\n\nApplications:\n\nCasey, K., Glennerster, R., & Miguel, E. (2012). Reshaping institutions: Evidence on aid impacts using a preanalysis plan. The Quarterly Journal of Economics, 127(4), 1755-1812.\nCrépon, B., Devoto, F., Duflo, E., & Parienté, W. (2015). Estimating the impact of microcredit on those who take it up: Evidence from a randomized experiment in Morocco. American Economic Journal: Applied Economics, 7(1), 123-50."
+  },
+  {
+    "objectID": "schedule.html#week-4-february-9-13-experiments-continued",
+    "href": "schedule.html#week-4-february-9-13-experiments-continued",
+    "title": "Schedule",
+    "section": "Week 4: February 9-13 | Experiments Continued",
+    "text": "Week 4: February 9-13 | Experiments Continued\nMonday, February 9 & Wednesday, February 11\nTopics:\n\nTBA\n\nReadings:\n\nTBA"
+  },
+  {
+    "objectID": "schedule.html#week-5-february-16-20-selection-on-observables",
+    "href": "schedule.html#week-5-february-16-20-selection-on-observables",
+    "title": "Schedule",
+    "section": "Week 5: February 16-20 | Selection-on-Observables",
+    "text": "Week 5: February 16-20 | Selection-on-Observables\nMonday, February 16 & Wednesday, February 18\nTopics:\n\nWhat to do when random assignment of treatment is not possible – common challenges of observational designs\nAssumptions behind “no unobserved confounding” designs\nRepresenting assumptions using graphical models\nCovariate adjustment via subclassification\n\nReadings:\n\nChapter 12. Imbens and Rubin.\nChapters 6-8. Huntington-Klein. The Effect: An introduction to research design and causality. Chapman and Hall/CRC, 2021.\nChapters 3, 6-8. Hernán and Robins.\n\nApplications:\n\nWashington, Ebonya L. “Female socialization: how daughters affect their legislator fathers.” American Economic Review 98, no. 1 (2008): 311-32.\nBa, Bocar A., Dean Knox, Jonathan Mummolo, and Roman Rivera. “The role of officer race and gender in police-civilian interactions in Chicago.” Science 371, no. 6530 (2021): 696-702."
+  },
+  {
+    "objectID": "schedule.html#week-6-february-23-27-selection-on-observables-continued",
+    "href": "schedule.html#week-6-february-23-27-selection-on-observables-continued",
+    "title": "Schedule",
+    "section": "Week 6: February 23-27 | Selection-on-Observables Continued",
+    "text": "Week 6: February 23-27 | Selection-on-Observables Continued\nMonday, February 23 & Wednesday, February 25\nTopics:\n\nPropensity scores and covariate adjustment via weighting\nMatching estimators\nRegression estimators and “doubly-robust” estimators\n\nReadings:\n\nChapter 13. Imbens and Rubin.\nImbens, G. W. (2004). Nonparametric estimation of average treatment effects under exogeneity: A review. Review of Economics and Statistics, 86(1), 4-29.\nAronow, Peter M., and Cyrus Samii. “Does regression produce representative estimates of causal effects?” American Journal of Political Science 60.1 (2016): 250-267.\nGlynn, Adam N., and Kevin M. Quinn. “An introduction to the augmented inverse propensity weighted estimator.” Political Analysis 18.1 (2010): 36-56.\nAbadie, A., & Imbens, G. W. (2011). Bias-corrected matching estimators for average treatment effects. Journal of Business & Economic Statistics, 29(1), 1-11."
+  },
+  {
+    "objectID": "schedule.html#week-7-march-2-6-selection-on-observables-continued",
+    "href": "schedule.html#week-7-march-2-6-selection-on-observables-continued",
+    "title": "Schedule",
+    "section": "Week 7: March 2-6 | Selection-on-Observables Continued",
+    "text": "Week 7: March 2-6 | Selection-on-Observables Continued\nMonday, March 2 & Wednesday, March 4\nMidterm exam\nTopics:\n\nTBA\n\nReadings:\n\nTBA"
+  },
+  {
+    "objectID": "schedule.html#week-8-march-9-13-instrumental-variables",
+    "href": "schedule.html#week-8-march-9-13-instrumental-variables",
+    "title": "Schedule",
+    "section": "Week 8: March 9-13 | Instrumental Variables",
+    "text": "Week 8: March 9-13 | Instrumental Variables\nMonday, March 9 & Wednesday, March 11\nTopics:\n\nEstimating effects under unobserved confounding using exogenous variation in treatment induced by an instrument\nAssumptions behind the instrumental variable strategy – exogeneity, relevance, “exclusion restriction”\nEstimation via the Wald Estimator and Two-Stage Least Squares\nInterpreting the IV estimand – Local Average Treatment Effect\nWhat makes a good instrument?\n\nReadings:\n\nCunningham, Causal Inference: The Mixtape, Chapter 7 - Instrumental Variables\nAngrist, Imbens and Rubin (1996) “Identification of causal effects using instrumental variables.” Journal of the American Statistical Association, 91:434, 444-455\nSovey, Allison J., and Donald P. Green. “Instrumental variables estimation in political science: A readers’ guide.” American Journal of Political Science 55, no. 1 (2011): 188-200.\nAndrews, Isaiah, James H. Stock, and Liyang Sun. “Weak instruments in instrumental variables regression: Theory and practice.” Annual Review of Economics 11 (2019): 727-753.\n\nApplications:\n\nGerber, Alan S., and Donald P. Green. “The effects of canvassing, telephone calls, and direct mail on voter turnout: A field experiment.” American Political Science Review 94.3 (2000): 653-663.\nDobbie, Will, Jacob Goldin, and Crystal S. Yang. “The effects of pretrial detention on conviction, future crime, and employment: Evidence from randomly assigned judges.” American Economic Review 108.2 (2018): 201-40."
+  },
+  {
+    "objectID": "schedule.html#week-9-march-16-20-differences-in-differences",
+    "href": "schedule.html#week-9-march-16-20-differences-in-differences",
+    "title": "Schedule",
+    "section": "Week 9: March 16-20 | Differences-in-Differences",
+    "text": "Week 9: March 16-20 | Differences-in-Differences\nMonday, March 16 & Wednesday, March 18\nTopics:\n\nWeakening “selection on observables” by studying changes over time\nAssumptions behind the “differences-in-differences” strategy – parallel trends\nEstimation and diagnostics for the identification assumptions\nPitfalls and challenges when units initiate treatment at different times\n\nReadings:\n\nCunningham, The Causal Inference Mixtape, Chapter 9 - Differences-in-differences\nRoth, J., Sant’Anna, P. H., Bilinski, A., & Poe, J. (2022). What’s Trending in Difference-in-Differences? A Synthesis of the Recent Econometrics Literature. arXiv preprint arXiv:2201.01194.\nImai, Kosuke, In Song Kim, and Erik H. Wang. “Matching Methods for Causal Inference with Time-Series Cross-Sectional Data.” American Journal of Political Science (2021).\n\nApplications:\n\nMalesky, E. J., Nguyen, C. V., & Tran, A. (2014). The impact of recentralization on public services: A difference-in-differences analysis of the abolition of elected councils in Vietnam. American Political Science Review, 108(1), 144-168.\nMiller, S., Johnson, N., & Wherry, L. R. (2021). Medicaid and mortality: new evidence from linked survey and administrative data. The Quarterly Journal of Economics, 136(3), 1783-1829."
+  },
+  {
+    "objectID": "schedule.html#week-10-march-23-27-differences-in-differences-continued",
+    "href": "schedule.html#week-10-march-23-27-differences-in-differences-continued",
+    "title": "Schedule",
+    "section": "Week 10: March 23-27 | Differences-in-Differences Continued",
+    "text": "Week 10: March 23-27 | Differences-in-Differences Continued\nMonday, March 23 & Wednesday, March 25\nTopics:\n\nTBA\n\nReadings:\n\nTBA"
+  },
+  {
+    "objectID": "schedule.html#spring-break-march-28---april-5",
+    "href": "schedule.html#spring-break-march-28---april-5",
+    "title": "Schedule",
+    "section": "Spring Break: March 28 - April 5",
+    "text": "Spring Break: March 28 - April 5\nNo class"
+  },
+  {
+    "objectID": "schedule.html#week-11-april-6-10-panel-data-causal-inference",
+    "href": "schedule.html#week-11-april-6-10-panel-data-causal-inference",
+    "title": "Schedule",
+    "section": "Week 11: April 6-10 | Panel Data Causal Inference",
+    "text": "Week 11: April 6-10 | Panel Data Causal Inference\nMonday, April 6 & Wednesday, April 8\nTopics:\n\nTBA\n\nReadings:\n\nTBA"
+  },
+  {
+    "objectID": "schedule.html#week-12-april-13-17-regression-discontinuity-designs",
+    "href": "schedule.html#week-12-april-13-17-regression-discontinuity-designs",
+    "title": "Schedule",
+    "section": "Week 12: April 13-17 | Regression Discontinuity Designs",
+    "text": "Week 12: April 13-17 | Regression Discontinuity Designs\nMonday, April 13 & Wednesday, April 15\nTopics:\n\nEstimating effects under unobserved confounding using quasi-random assignment at a cutpoint\nCommon applications: Elections, test scores\nEstimation and sensitivity to modeling assumptions\n\nReadings:\n\nChapters 1, 2 and 5. Cattaneo, Matias D., Nicolás Idrobo, and Rocío Titiunik. A practical introduction to regression discontinuity designs: Foundations. Cambridge University Press, 2019.\nEggers, A. C., Freier, R., Grembi, V., & Nannicini, T. (2018). Regression discontinuity designs based on population thresholds: Pitfalls and solutions. American Journal of Political Science, 62(1), 210-229.\nKeele, Luke J., and Rocio Titiunik. “Geographic boundaries as regression discontinuities.” Political Analysis 23.1 (2015): 127-155.\n\nApplications:\n\nHidalgo, F. Daniel, and Simeon Nichter. “Voter buying: Shaping the electorate through clientelism.” American Journal of Political Science 60.2 (2016): 436-455.\nBleemer, Zachary, and Aashish Mehta. “Will studying economics make you rich? A regression discontinuity analysis of the returns to college major.” American Economic Journal: Applied Economics 14.2 (2022): 1-22."
+  },
+  {
+    "objectID": "schedule.html#week-13-april-20-24-mediation-and-sensitivity-analysis",
+    "href": "schedule.html#week-13-april-20-24-mediation-and-sensitivity-analysis",
+    "title": "Schedule",
+    "section": "Week 13: April 20-24 | Mediation and Sensitivity Analysis",
+    "text": "Week 13: April 20-24 | Mediation and Sensitivity Analysis\nMonday, April 20 & Wednesday, April 22\nTopics:\n\nHow to define and identify indirect and direct effects of treatment\nHow to assess the robustness of results to violations of identification assumptions\n\nReadings:\n\nBlackwell, Matthew. “A selection bias approach to sensitivity analysis for causal effects.” Political Analysis 22.2 (2014): 169-182.\nCinelli, Carlos, and Chad Hazlett. “Making sense of sensitivity: Extending omitted variable bias.” Journal of the Royal Statistical Society: Series B (Statistical Methodology) 82.1 (2020): 39-67.\nImai, K., Keele, L., Tingley, D., & Yamamoto, T. (2011). Unpacking the black box of causality: Learning about causal mechanisms from experimental and observational studies. American Political Science Review, 105(4), 765-789.\n\nBonus: Green, Donald P., Shang E. Ha, and John G. Bullock. “Enough already about”black box” experiments: Studying mediation is more difficult than most scholars suppose.” The Annals of the American Academy of Political and Social Science 628.1 (2010): 200-208.\n\nAcharya, Avidit, Matthew Blackwell, and Maya Sen. “Explaining causal findings without bias: Detecting and assessing direct effects.” American Political Science Review 110.3 (2016): 512-529."
+  },
+  {
+    "objectID": "schedule.html#week-14-april-27---may-1-shift-share-designs-and-experiments-with-interference",
+    "href": "schedule.html#week-14-april-27---may-1-shift-share-designs-and-experiments-with-interference",
+    "title": "Schedule",
+    "section": "Week 14: April 27 - May 1 | Shift-share designs and experiments with interference",
+    "text": "Week 14: April 27 - May 1 | Shift-share designs and experiments with interference\nMonday, April 27 & Wednesday, April 29\nTopics:\n\nTBA\n\nReadings:\n\nTBA"
+  },
+  {
+    "objectID": "assignments.html",
+    "href": "assignments.html",
+    "title": "Assignments",
+    "section": "",
+    "text": "Assignment\nAssigned\nDue\n\n\n\n\nProblem Set 1\nWeek 1\nWeek 3\n\n\nProblem Set 2\nWeek 3\nWeek 5\n\n\nMidterm Exam\nWeek 5\nWeek 6\n\n\nProblem Set 3\nWeek 7\nWeek 9\n\n\nFinal Exam\nTBA\nExam Week"
+  },
+  {
+    "objectID": "assignments.html#assignment-schedule",
+    "href": "assignments.html#assignment-schedule",
+    "title": "Assignments",
+    "section": "",
+    "text": "Assignment\nAssigned\nDue\n\n\n\n\nProblem Set 1\nWeek 1\nWeek 3\n\n\nProblem Set 2\nWeek 3\nWeek 5\n\n\nMidterm Exam\nWeek 5\nWeek 6\n\n\nProblem Set 3\nWeek 7\nWeek 9\n\n\nFinal Exam\nTBA\nExam Week"
+  },
+  {
+    "objectID": "assignments.html#problem-sets",
+    "href": "assignments.html#problem-sets",
+    "title": "Assignments",
+    "section": "Problem Sets",
+    "text": "Problem Sets\nProblem sets will be distributed as PDF and Rmarkdown files (.Rmd). You should submit your answers and any relevant R code in the same format: including an Rmarkdown file (.Rmd extension) and a corresponding rendered .pdf file.\n\nSubmission Guidelines\n\nDownload the problem set from the course GitHub repository\nComplete your work in the provided .Rmd template\nRender your document to PDF\nSubmit both the .Rmd and .pdf files on Canvas\n\n\n\nGrading Scale\n\n\n\n\n\n\n\nGrade\nDescription\n\n\n\n\n+\nComplete and near-perfect work\n\n\n✓\nGenerally good work with clear effort shown but with some errors\n\n\n-\nSignificantly incomplete work with major conceptual errors and little effort shown\n\n\n\n\n\nCollaboration Policy\nWe strongly encourage collaboration between students on the problem sets. You may discuss problems with each other either in person or via the discussion forum. However, each student is expected to submit their own write-up of the answers and any relevant code."
+  },
+  {
+    "objectID": "assignments.html#problem-set-downloads",
+    "href": "assignments.html#problem-set-downloads",
+    "title": "Assignments",
+    "section": "Problem Set Downloads",
+    "text": "Problem Set Downloads\nProblem sets will be posted here as they become available.\n\nProblem Set 1\n\nTopic: Potential Outcomes and Randomized Experiments\nAssigned: Week 1\nDue: Week 3\nFiles: Coming soon\n\n\n\nProblem Set 2\n\nTopic: Experiments and Selection-on-Observables\nAssigned: Week 3\nDue: Week 5\nFiles: Coming soon\n\n\n\nProblem Set 3\n\nTopic: Instrumental Variables and Differences-in-Differences\nAssigned: Week 7\nDue: Week 9\nFiles: Coming soon"
+  },
+  {
+    "objectID": "assignments.html#exams",
+    "href": "assignments.html#exams",
+    "title": "Assignments",
+    "section": "Exams",
+    "text": "Exams\n\nMidterm Exam (30%)\nThe take-home midterm will have the same format and structure as the problem sets. You are not permitted to collaborate with other students or any other individual on the exam. The teaching staff will answer clarifying questions on the discussion board but will not answer substantive questions.\n\nFormat: Take-home exam\nAssigned: Week 5\nDue: Week 6\n\n\n\nFinal Exam (35%)\nThe final exam will take place in person during exams week. The exam will be a standard pen-and-paper timed examination involving both theory and practical analysis of sample code and results.\n\nFormat: In-person, closed-book\nDate: TBA (Exam Week)\nLocation: TBA"
+  },
+  {
+    "objectID": "assignments.html#late-policy",
+    "href": "assignments.html#late-policy",
+    "title": "Assignments",
+    "section": "Late Policy",
+    "text": "Late Policy\nProblem sets submitted late will be penalized. Please contact the instructor in advance if you have extenuating circumstances."
+  },
+  {
+    "objectID": "syllabus.html",
+    "href": "syllabus.html",
+    "title": "Syllabus",
+    "section": "",
+    "text": "Questions of cause and effect are central to the study of political science and to the social sciences more broadly. But making inferences about causation from empirical data is a significant challenge. Critically, there is no simple, assumption-free process for learning about a causal relationship from the data alone. Causal inference requires researchers to make assumptions about the underlying data generating process in order to identify and estimate causal effects. The goal of this course is to provide students with a structured statistical framework for articulating the assumptions behind causal research designs and estimating effects using quantitative data.\nThe course begins by introducing the counterfactual framework of causal inference as a way of defining causal quantities of interest such as the “average treatment effect.” It then proceeds to illustrate a variety of different designs for identifying and estimating these quantities. We will start with the most basic experimental designs and progress to more complex experimental and observational methods. For each approach, we will discuss the necessary assumptions that a researcher needs to make about the process that generated the data, how to assess whether these assumptions are reasonable, how to interpret the quantity being estimated and ultimately how to conduct the analysis.\nThis course will involve a combination of lectures and problem sets. Lectures will focus on introducing the core theoretical concepts being taught in this course. Sections will emphasize application and demonstrate how to implement various causal inference techniques with real data sets. Problem sets will contain a mixture of both theoretical and applied questions and serve to reinforce key concepts and allow students to assess their progress and understanding throughout the course.\nAssignments will involve analysis of data using the R programming language. This is a free and open source language for statistical computing that is used extensively for data analysis in many fields. Prior experience with the fundamentals of R programming is required."
+  },
+  {
+    "objectID": "syllabus.html#course-overview",
+    "href": "syllabus.html#course-overview",
+    "title": "Syllabus",
+    "section": "",
+    "text": "Questions of cause and effect are central to the study of political science and to the social sciences more broadly. But making inferences about causation from empirical data is a significant challenge. Critically, there is no simple, assumption-free process for learning about a causal relationship from the data alone. Causal inference requires researchers to make assumptions about the underlying data generating process in order to identify and estimate causal effects. The goal of this course is to provide students with a structured statistical framework for articulating the assumptions behind causal research designs and estimating effects using quantitative data.\nThe course begins by introducing the counterfactual framework of causal inference as a way of defining causal quantities of interest such as the “average treatment effect.” It then proceeds to illustrate a variety of different designs for identifying and estimating these quantities. We will start with the most basic experimental designs and progress to more complex experimental and observational methods. For each approach, we will discuss the necessary assumptions that a researcher needs to make about the process that generated the data, how to assess whether these assumptions are reasonable, how to interpret the quantity being estimated and ultimately how to conduct the analysis.\nThis course will involve a combination of lectures and problem sets. Lectures will focus on introducing the core theoretical concepts being taught in this course. Sections will emphasize application and demonstrate how to implement various causal inference techniques with real data sets. Problem sets will contain a mixture of both theoretical and applied questions and serve to reinforce key concepts and allow students to assess their progress and understanding throughout the course.\nAssignments will involve analysis of data using the R programming language. This is a free and open source language for statistical computing that is used extensively for data analysis in many fields. Prior experience with the fundamentals of R programming is required."
+  },
+  {
+    "objectID": "syllabus.html#prerequisites",
+    "href": "syllabus.html#prerequisites",
+    "title": "Syllabus",
+    "section": "Prerequisites",
+    "text": "Prerequisites\nThis course is the second in the political science graduate methodology sequence. Completing the introductory course prior to this sequence should prepare you for the material in this class. We will rely on some background knowledge of core concepts in probability, statistics and inference as well as experience with statistical programming in R. However, there are no strict, specific course pre-requisites as many different disciplines and departments offer introductory statistics classes that cover the relevant material.\nIn general, you should have had some introduction to probability theory and should be familiar with concepts like the properties of random variables (especially expectation and variance), estimands and estimators, and statistical inference. Familiarity with regression modeling is a plus but not strictly required.\nPlease contact the instructor if you are interested in enrolling but are unsure of the requirements."
+  },
+  {
+    "objectID": "syllabus.html#logistics",
+    "href": "syllabus.html#logistics",
+    "title": "Syllabus",
+    "section": "Logistics",
+    "text": "Logistics\n\nLectures: Tuesdays/Thursdays from 2pm - 3:20pm\nSections: Fridays from 2:30pm - 3:20pm\n\nYou should attend sections regularly as they comprise a significant element of the course instruction.\nDiscussion Forum: We will use a private discussion forum as a course discussion platform. See Canvas for more details.\nCourse Materials: Lecture materials, problem sets and section code will be posted on the course GitHub page. Problem set solutions will be posted after the due date on Canvas.\nReadings will be posted on the Canvas website. You can find them under the “Modules” section organized by week."
+  },
+  {
+    "objectID": "syllabus.html#textbooks",
+    "href": "syllabus.html#textbooks",
+    "title": "Syllabus",
+    "section": "Textbooks",
+    "text": "Textbooks\nThe course will involve readings from a variety of different textbooks and published papers. The class will not require the purchase of a single, specific, text and all excerpts from textbooks are available online (either directly or through library resources). However, we do recommend considering obtaining some of these texts to use as a personal reference and they may be valuable to you in the future.\n\nRecommended Textbooks\n\nCunningham, Scott. Causal inference: The Mixtape. Yale University Press, 2021.\nHuntington-Klein, Nick. The Effect: An Introduction to Research Design and Causality. Chapman and Hall/CRC, 2021.\nAngrist, Joshua D., and Jorn-Steffen Pischke. Mostly Harmless Econometrics: An Empiricist’s Companion. Princeton University Press. 2009.\nImbens, Guido W. and Donald B. Rubin. Causal Inference for Statistics, Social, and Biomedical Sciences. Cambridge University Press. 2010.\nHernán, Miguel A. and James M. Robins. Causal Inference: What If. Chapman & Hall/CRC. 2020. (PDF available online)\nMorgan, Stephen L., and Christopher Winship. Counterfactuals and Causal Inference. Cambridge University Press, 2015."
+  },
+  {
+    "objectID": "syllabus.html#requirements",
+    "href": "syllabus.html#requirements",
+    "title": "Syllabus",
+    "section": "Requirements",
+    "text": "Requirements\nStudents’ final grades are based on four components:\n\nProblem Sets (25%)\nStudents will complete a total of three problem sets throughout the quarter. Problem sets will primarily cover topics from the lecture and section for that week and the previous week.\nThe goal of the problem sets is to encourage exploration of the material and to provide you with a clear and credible means of assessing your understanding and progress through the course. As such, problem sets are designed to be challenging and we expect students to find some questions difficult.\nProblem sets will be graded on a (+/✓/-) scale:\n\n+ : Complete and near-perfect work\n✓ : Generally good work with clear effort shown but with some errors\n- : Significantly incomplete work with major conceptual errors and little effort shown\n\n\nCollaboration Policy\nWe strongly encourage collaboration between students on the problem sets and highly recommend that students discuss problems with each other either in person or via the discussion forum. However, each student is expected to submit their own write-up of the answers and any relevant code.\n\n\nOffice Hours and Online Discussion\nStudents should feel free to discuss any questions about the problem sets with the teaching staff during sections and office hours. We also strongly encourage students to post questions about both the problem sets and the assigned readings on the course discussion board and respond to other students’ questions. Responding to other students’ questions will contribute to your participation grade.\n\n\nSubmission Guidelines\nProblem sets will be distributed as PDF and Rmarkdown files (.Rmd). You should submit your answers and any relevant R code in the same format: including an Rmarkdown file (.Rmd extension) and a corresponding rendered .pdf file as your submission. Rmarkdown combines the text formatting syntax of Markdown markup language with the ability to embed and execute chunks of R code directly into a text document. This allows you to present your code, graphical output, and discussion/write-up all in the same document.\n\n\n\nTake-home Midterm (30%)\nThe take-home midterm will have the same format and structure as the problem sets but with one key difference. You are not permitted to collaborate with other students or any other individual on the exams. The teaching staff will answer any clarifying questions on the discussion board, but will not answer substantive questions.\n\n\nIn-person Final (35%)\nThe final exam will take place in person during exams week. The exact date and time will be announced once final exam room assignments have been made. Exams will take the form of a standard pen-and-paper timed examination involving both theory and practical analysis of sample code and results. More details will be provided towards the latter half of the course.\n\n\nParticipation (10%)\nWe expect students to take an active role in learning in both lecture and section. Engagement with the teaching staff by asking and answering questions will contribute to this grade as will interaction on the discussion board."
+  },
+  {
+    "objectID": "syllabus.html#computing",
+    "href": "syllabus.html#computing",
+    "title": "Syllabus",
+    "section": "Computing",
+    "text": "Computing\nThis course will use the R programming language. This is a free and open source programming language that is available for nearly all computing platforms. You should download and install it from https://www.r-project.org.\nUnless you have strong preferences for a specific coding environment, we also highly recommend that you use the free RStudio Desktop Integrated Development Environment (IDE) which you can download from https://rstudio.com/products/rstudio/download/#download.\nIn addition to base R, we will be frequently using data management and processing tools found in the tidyverse set of packages along with basic graphics and visualization using ggplot2."
+  },
+  {
+    "objectID": "syllabus.html#policy-on-generative-large-language-models",
+    "href": "syllabus.html#policy-on-generative-large-language-models",
+    "title": "Syllabus",
+    "section": "Policy on Generative Large Language Models",
+    "text": "Policy on Generative Large Language Models\nThe rapid growth in both the capabilities and the accessibility of generative large language models (LLMs) such as the GPT series, Claude, LLaMa, etc. has introduced some novel challenges to the classroom. On the one hand, generative text models can be used as a tool to improve the quality of students’ writing. On the other hand, they can be readily used to represent another’s work as one’s own – that is, to commit plagiarism.\nMy view in short: Large language models are marvels of engineering. You should use them for engineering tasks, but the task of research is not purely engineering and LLMs are much less effective for the task of doing science.\nBy “engineering,” I mean the iterative task of solving a problem by brainstorming potential solutions, implementing those solutions, and then subsequently evaluating the solutions with respect to some clearly defined criteria. The key components here are both the existence of a well-defined problem and the ability to assess whether the proposed solutions are effective.\n\nAcceptable Use\nCurrently, the most obvious and effective use-case for large language models is in coding. You are welcome to experiment with using LLMs in debugging code. The interactivity is great for beginning programmers who may have an idea of what they want their code to do, but are unfamiliar with the syntax of a particular language. Likewise, it’s an incredibly valuable tool for experienced programmers who want to quickly generate some prototype code that is customized to their particular problem.\nWhy is programming an ideal use case? Programming is fundamentally an engineering task. There is a clearly defined problem that a programmer needs to solve via code and there is a straightforward way to evaluate whether a block of code works. As a result, mistakes are easy to catch – if the code throws an error, something needs to be changed. There is always a human in the loop who is capable of evaluating the output.\nAnother acceptable use is cleaning up original text that you have written to eliminate grammar mistakes or to rephrase the text to have a clearer style. We already accept the use of spellcheckers and thesauruses that are embedded in most word processors and I don’t see this use case as substantively different as long as your original writing is the input.\n\n\nProhibited Use\nOutside of coding and editing, you should be cautious about any LLM outputs that you are not able to verify or evaluate yourself.\nSubmitting LLM-generated text as a substitute for your own thinking is not permitted in this class and will be considered plagiarism. This includes prompting an LLM to compose all or part of your writing and submitting that output either verbatim or with some editing. This policy also applies to generating posts on the discussion board."
+  },
+  {
+    "objectID": "syllabus.html#acknowledgments",
+    "href": "syllabus.html#acknowledgments",
+    "title": "Syllabus",
+    "section": "Acknowledgments",
+    "text": "Acknowledgments\nThis course is indebted to the many wonderful and generous scholars who have developed causal inference curricula in political science departments throughout the world and who have made their course materials available to the public. In particular, I thank Matthew Blackwell, Brandon Stewart, Molly Roberts, Kosuke Imai, Teppei Yamamoto, Jens Hainmueller, Adam Glynn, Gary King, and Justin Grimmer whose lecture notes and syllabi have been immensely valuable in the creation of this course."
+  },
+  {
+    "objectID": "resources.html",
+    "href": "resources.html",
+    "title": "Resources",
+    "section": "",
+    "text": "These textbooks provide a number of the readings that will be used through the course of the semester. Each is available either as a free online version or in digital from via UW-Madison library access.\n\nCunningham, Scott. Causal inference: The Mixtape. Yale University Press, 2021.\n\nFree online version\n\nHuntington-Klein, Nick. The Effect: An Introduction to Research Design and Causality. Chapman and Hall/CRC, 2021.\n\nFree online version\n\nHernán, Miguel A. and James M. Robins. Causal Inference: What If. Chapman & Hall/CRC. 2020.\n\nFree PDF available\n\nImbens, Guido W. and Donald B. Rubin. Causal Inference for Statistics, Social, and Biomedical Sciences. Cambridge University Press. 2015.\n\nUW-Madison Library Access\n\nMorgan, Stephen L., and Christopher Winship. Counterfactuals and Causal Inference. Cambridge University Press, 2015.\n\nUW-Madison Library Access"
+  },
+  {
+    "objectID": "resources.html#textbooks",
+    "href": "resources.html#textbooks",
+    "title": "Resources",
+    "section": "",
+    "text": "These textbooks provide a number of the readings that will be used through the course of the semester. Each is available either as a free online version or in digital from via UW-Madison library access.\n\nCunningham, Scott. Causal inference: The Mixtape. Yale University Press, 2021.\n\nFree online version\n\nHuntington-Klein, Nick. The Effect: An Introduction to Research Design and Causality. Chapman and Hall/CRC, 2021.\n\nFree online version\n\nHernán, Miguel A. and James M. Robins. Causal Inference: What If. Chapman & Hall/CRC. 2020.\n\nFree PDF available\n\nImbens, Guido W. and Donald B. Rubin. Causal Inference for Statistics, Social, and Biomedical Sciences. Cambridge University Press. 2015.\n\nUW-Madison Library Access\n\nMorgan, Stephen L., and Christopher Winship. Counterfactuals and Causal Inference. Cambridge University Press, 2015.\n\nUW-Madison Library Access"
+  },
+  {
+    "objectID": "resources.html#software",
+    "href": "resources.html#software",
+    "title": "Resources",
+    "section": "Software",
+    "text": "Software\n\nR and RStudio\nThis course uses R for all programming assignments. You are welcome to use the RStudio Interactive Development Environment (IDE) to write code and edit the assignment write-up. Due to the extensive integration of Quarto into Posit-developed IDEs, I encourage using either RStudio or the more recent Positron\n\nR: Download from https://www.r-project.org\nRStudio: Download from https://posit.co/download/rstudio-desktop/\nPositron: Download from https://github.com/posit-dev/positron/releases\n\n\n\nQuarto and Markdown\nThe assignments are distributed as .qmd Quarto files. Quarto is the successor to R Markdown and lets you present your analysis, code, figures and written discussion all in a single document. It uses Markdown syntax for formatting text and supports embedded R code chunks that execute when you render the document. This lets you present your analysis, code, figures, and written discussion all in one place.\nTo complete assignments, you will edit the provided .qmd file, adding your code and written responses, then render it to an HTML file for submission. Quarto is the successor to R Markdown and works similarly, but with additional features and broader language support.\n\nQuarto: Download from https://quarto.org/docs/get-started/\nQuarto Guide: https://quarto.org/docs/guide/\nMarkdown Basics: https://quarto.org/docs/authoring/markdown-basics.html"
+  },
+  {
+    "objectID": "resources.html#r-tutorials",
+    "href": "resources.html#r-tutorials",
+    "title": "Resources",
+    "section": "R Tutorials",
+    "text": "R Tutorials\n\nGetting Started with R\n\n\nR Markdown\n\nR Markdown: The Definitive Guide\nMarkdown Cheatsheet"
+  },
+  {
+    "objectID": "resources.html#getting-help",
+    "href": "resources.html#getting-help",
+    "title": "Resources",
+    "section": "Getting Help",
+    "text": "Getting Help\n\nCourse Support\n\nDiscussion Forum: Post questions about course content\nOffice Hours: See the Staff page for times and locations\n\n\n\nComputing Help\n\nUW-Madison DoIT Help Desk\nSSCC Statistical Computing"
+  },
+  {
+    "objectID": "resources.html#academic-policies",
+    "href": "resources.html#academic-policies",
+    "title": "Resources",
+    "section": "Academic Policies",
+    "text": "Academic Policies\n\nAcademic Integrity\nAll students are expected to follow the UW-Madison Academic Integrity policies.\n\n\nAccommodations\nIf you need accommodations for a disability, please contact the McBurney Disability Resource Center to establish eligibility and coordinate accommodations."
+  }
+]

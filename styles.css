@@ -1,0 +1,32 @@
+/* Additional CSS overrides */
+
+/* Quick links grid on homepage */
+.grid {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Ensure buttons have consistent height */
+.btn-lg {
+  padding: 0.75rem 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Course details table on homepage */
+table td:first-child {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Reading list formatting */
+.schedule-readings ul {
+  margin-bottom: 0.5rem;
+}
+
+/* Application papers in schedule - slightly different styling */
+.applications {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-radius: 0.25rem;
+  margin-top: 1rem;
+}
