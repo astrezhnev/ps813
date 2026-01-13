@@ -1,0 +1,91 @@
+---
+title: "Assignments"
+---
+
+## Assignment Schedule
+
+| Assignment | Assigned | Due |
+|------------|----------|-----|
+| Problem Set 1 | Week 1 | Week 3 |
+| Problem Set 2 | Week 3 | Week 5 |
+| **Midterm Exam** | Week 5 | Week 6 |
+| Problem Set 3 | Week 7 | Week 9 |
+| **Final Exam** | TBA | Exam Week |
+
+---
+
+## Problem Sets
+
+Problem sets will be distributed as PDF and Rmarkdown files (.Rmd). You should submit your answers and any relevant R code in the same format: including an Rmarkdown file (.Rmd extension) and a corresponding rendered .pdf file.
+
+### Submission Guidelines
+
+1. Download the problem set from the course GitHub repository
+2. Complete your work in the provided .Rmd template
+3. Render your document to PDF
+4. Submit both the .Rmd and .pdf files on Canvas
+
+### Grading Scale
+
+| Grade | Description |
+|-------|-------------|
+| **+** | Complete and near-perfect work |
+| **✓** | Generally good work with clear effort shown but with some errors |
+| **-** | Significantly incomplete work with major conceptual errors and little effort shown |
+
+### Collaboration Policy
+
+We strongly encourage collaboration between students on the problem sets. You may discuss problems with each other either in person or via the discussion forum. However, each student is expected to submit their own write-up of the answers and any relevant code.
+
+---
+
+## Problem Set Downloads
+
+*Problem sets will be posted here as they become available.*
+
+### Problem Set 1
+
+- **Topic:** Potential Outcomes and Randomized Experiments
+- **Assigned:** Week 1
+- **Due:** Week 3
+- **Files:** *Coming soon*
+
+### Problem Set 2
+
+- **Topic:** Experiments and Selection-on-Observables
+- **Assigned:** Week 3
+- **Due:** Week 5
+- **Files:** *Coming soon*
+
+### Problem Set 3
+
+- **Topic:** Instrumental Variables and Differences-in-Differences
+- **Assigned:** Week 7
+- **Due:** Week 9
+- **Files:** *Coming soon*
+
+---
+
+## Exams
+
+### Midterm Exam (30%)
+
+The take-home midterm will have the same format and structure as the problem sets. **You are not permitted to collaborate with other students or any other individual on the exam.** The teaching staff will answer clarifying questions on the discussion board but will not answer substantive questions.
+
+- **Format:** Take-home exam
+- **Assigned:** Week 5
+- **Due:** Week 6
+
+### Final Exam (35%)
+
+The final exam will take place in person during exams week. The exam will be a standard pen-and-paper timed examination involving both theory and practical analysis of sample code and results.
+
+- **Format:** In-person, closed-book
+- **Date:** TBA (Exam Week)
+- **Location:** TBA
+
+---
+
+## Late Policy
+
+Problem sets submitted late will be penalized. Please contact the instructor in advance if you have extenuating circumstances.

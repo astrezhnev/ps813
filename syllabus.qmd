@@ -1,0 +1,121 @@
+---
+title: "Syllabus"
+---
+
+## Course Overview
+
+Questions of cause and effect are central to the study of political science and to the social sciences more broadly. But making inferences about causation from empirical data is a significant challenge. Critically, there is no simple, assumption-free process for learning about a causal relationship from the data alone. Causal inference requires researchers to make assumptions about the underlying data generating process in order to identify and estimate causal effects. The goal of this course is to provide students with a structured statistical framework for articulating the assumptions behind causal research designs and estimating effects using quantitative data.
+
+The course begins by introducing the counterfactual framework of causal inference as a way of defining causal quantities of interest such as the "average treatment effect." It then proceeds to illustrate a variety of different designs for identifying and estimating these quantities. We will start with the most basic experimental designs and progress to more complex experimental and observational methods. For each approach, we will discuss the necessary assumptions that a researcher needs to make about the process that generated the data, how to assess whether these assumptions are reasonable, how to interpret the quantity being estimated and ultimately how to conduct the analysis.
+
+This course will involve a combination of lectures and problem sets. Lectures will focus on introducing the core theoretical concepts being taught in this course. Sections will emphasize application and demonstrate how to implement various causal inference techniques with real data sets. Problem sets will contain a mixture of both theoretical and applied questions and serve to reinforce key concepts and allow students to assess their progress and understanding throughout the course.
+
+Assignments will involve analysis of data using the R programming language. This is a free and open source language for statistical computing that is used extensively for data analysis in many fields. Prior experience with the fundamentals of R programming is required.
+
+## Prerequisites
+
+This course is the second in the political science graduate methodology sequence. Completing the introductory course prior to this sequence should prepare you for the material in this class. We will rely on some background knowledge of core concepts in probability, statistics and inference as well as experience with statistical programming in R. However, there are no strict, specific course pre-requisites as many different disciplines and departments offer introductory statistics classes that cover the relevant material.
+
+In general, you should have had some introduction to probability theory and should be familiar with concepts like the properties of random variables (especially expectation and variance), estimands and estimators, and statistical inference. Familiarity with regression modeling is a plus but not strictly required.
+
+Please contact the instructor if you are interested in enrolling but are unsure of the requirements.
+
+## Logistics
+
+- **Lectures**: Tuesdays/Thursdays from 2pm - 3:20pm
+- **Sections**: Fridays from 2:30pm - 3:20pm
+
+You should attend sections regularly as they comprise a significant element of the course instruction.
+
+**Discussion Forum**: We will use a private discussion forum as a course discussion platform. See Canvas for more details.
+
+**Course Materials**: Lecture materials, problem sets and section code will be posted on the course GitHub page. Problem set solutions will be posted after the due date on Canvas.
+
+Readings will be posted on the Canvas website. You can find them under the "Modules" section organized by week.
+
+## Textbooks
+
+The course will involve readings from a variety of different textbooks and published papers. The class will not require the purchase of a single, specific, text and all excerpts from textbooks are available online (either directly or through library resources). However, we do recommend considering obtaining some of these texts to use as a personal reference and they may be valuable to you in the future.
+
+### Recommended Textbooks
+
+- Cunningham, Scott. *Causal inference: The Mixtape*. Yale University Press, 2021.
+- Huntington-Klein, Nick. *The Effect: An Introduction to Research Design and Causality*. Chapman and Hall/CRC, 2021.
+- Angrist, Joshua D., and Jorn-Steffen Pischke. *Mostly Harmless Econometrics: An Empiricist's Companion*. Princeton University Press. 2009.
+- Imbens, Guido W. and Donald B. Rubin. *Causal Inference for Statistics, Social, and Biomedical Sciences*. Cambridge University Press. 2010.
+- Hernán, Miguel A. and James M. Robins. *Causal Inference: What If*. Chapman & Hall/CRC. 2020. ([PDF available online](https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/))
+- Morgan, Stephen L., and Christopher Winship. *Counterfactuals and Causal Inference*. Cambridge University Press, 2015.
+
+## Requirements
+
+Students' final grades are based on four components:
+
+### Problem Sets (25%)
+
+Students will complete a total of three problem sets throughout the quarter. Problem sets will primarily cover topics from the lecture and section for that week and the previous week.
+
+The goal of the problem sets is to encourage exploration of the material and to provide you with a clear and credible means of assessing your understanding and progress through the course. As such, problem sets are *designed* to be challenging and we expect students to find some questions difficult.
+
+Problem sets will be graded on a (+/✓/-) scale:
+
+- **+** : Complete and near-perfect work
+- **✓** : Generally good work with clear effort shown but with some errors
+- **-** : Significantly incomplete work with major conceptual errors and little effort shown
+
+#### Collaboration Policy
+
+We strongly encourage collaboration between students on the problem sets and highly recommend that students discuss problems with each other either in person or via the discussion forum. However, each student is expected to submit their own write-up of the answers and any relevant code.
+
+#### Office Hours and Online Discussion
+
+Students should feel free to discuss any questions about the problem sets with the teaching staff during sections and office hours. We also strongly encourage students to post questions about both the problem sets and the assigned readings on the course discussion board and respond to other students' questions. Responding to other students' questions will contribute to your participation grade.
+
+#### Submission Guidelines
+
+Problem sets will be distributed as PDF and Rmarkdown files (.Rmd). You should submit your answers and any relevant R code in the same format: including an Rmarkdown file (.Rmd extension) and a corresponding rendered .pdf file as your submission. Rmarkdown combines the text formatting syntax of Markdown markup language with the ability to embed and execute chunks of R code directly into a text document. This allows you to present your code, graphical output, and discussion/write-up all in the same document.
+
+### Take-home Midterm (30%)
+
+The take-home midterm will have the same format and structure as the problem sets but with one key difference. You are **not** permitted to collaborate with other students or any other individual on the exams. The teaching staff will answer any clarifying questions on the discussion board, but will not answer substantive questions.
+
+### In-person Final (35%)
+
+The final exam will take place in person during exams week. The exact date and time will be announced once final exam room assignments have been made. Exams will take the form of a standard pen-and-paper timed examination involving both theory and practical analysis of sample code and results. More details will be provided towards the latter half of the course.
+
+### Participation (10%)
+
+We expect students to take an active role in learning in both lecture and section. Engagement with the teaching staff by asking and answering questions will contribute to this grade as will interaction on the discussion board.
+
+## Computing
+
+This course will use the R programming language. This is a free and open source programming language that is available for nearly all computing platforms. You should download and install it from [https://www.r-project.org](https://www.r-project.org).
+
+Unless you have strong preferences for a specific coding environment, we also highly recommend that you use the free [RStudio](https://rstudio.com) Desktop Integrated Development Environment (IDE) which you can download from [https://rstudio.com/products/rstudio/download/#download](https://rstudio.com/products/rstudio/download/#download).
+
+In addition to base R, we will be frequently using data management and processing tools found in the [tidyverse](https://www.tidyverse.org/) set of packages along with basic graphics and visualization using [ggplot2](https://ggplot2.tidyverse.org/).
+
+## Policy on Generative Large Language Models
+
+The rapid growth in both the capabilities and the accessibility of generative large language models (LLMs) such as the GPT series, Claude, LLaMa, etc. has introduced some novel challenges to the classroom. On the one hand, generative text models can be used as a tool to improve the quality of students' writing. On the other hand, they can be readily used to represent another's work as one's own -- that is, to commit plagiarism.
+
+**My view in short:** Large language models are marvels of **engineering**. You should use them for **engineering** tasks, but the task of research is not purely engineering and LLMs are much less effective for the task of doing **science**.
+
+By "engineering," I mean the iterative task of solving a problem by brainstorming potential solutions, implementing those solutions, and then subsequently *evaluating* the solutions with respect to some clearly defined criteria. The key components here are both the existence of a well-defined problem and the ability to assess whether the proposed solutions are effective.
+
+### Acceptable Use
+
+Currently, the most obvious and effective use-case for large language models is in coding. You are welcome to experiment with using LLMs in debugging code. The interactivity is great for beginning programmers who may have an idea of what they want their code to do, but are unfamiliar with the syntax of a particular language. Likewise, it's an incredibly valuable tool for experienced programmers who want to quickly generate some prototype code that is customized to their particular problem.
+
+Why is programming an ideal use case? Programming is fundamentally an engineering task. There is a clearly defined problem that a programmer needs to solve via code and there is a straightforward way to evaluate whether a block of code works. As a result, mistakes are easy to catch -- if the code throws an error, something needs to be changed. There is always a human in the loop who is capable of evaluating the output.
+
+Another acceptable use is cleaning up original text that you have written to eliminate grammar mistakes or to rephrase the text to have a clearer style. We already accept the use of spellcheckers and thesauruses that are embedded in most word processors and I don't see this use case as substantively different as long as your original writing is the input.
+
+### Prohibited Use
+
+Outside of coding and editing, you should be cautious about any LLM outputs that you are not able to verify or evaluate yourself.
+
+**Submitting LLM-generated text as a substitute for your own thinking is not permitted in this class and will be considered plagiarism.** This includes prompting an LLM to compose all or part of your writing and submitting that output either verbatim or with some editing. This policy also applies to generating posts on the discussion board.
+
+## Acknowledgments
+
+This course is indebted to the many wonderful and generous scholars who have developed causal inference curricula in political science departments throughout the world and who have made their course materials available to the public. In particular, I thank Matthew Blackwell, Brandon Stewart, Molly Roberts, Kosuke Imai, Teppei Yamamoto, Jens Hainmueller, Adam Glynn, Gary King, and Justin Grimmer whose lecture notes and syllabi have been immensely valuable in the creation of this course.

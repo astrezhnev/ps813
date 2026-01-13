@@ -1,0 +1,45 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "PoliSci 813: Causal Inference"
+  description: "Graduate course in causal inference methods for political science"
+  site-url: https://astrezhnev.github.io/ps813/
+  repo-url: https://github.com/astrezhnev/ps813
+  repo-actions: [issue]
+
+  navbar:
+    background: "#c5050c"  # UW-Madison red
+    foreground: white
+    left:
+      - text: "Syllabus"
+        href: syllabus.qmd
+      - text: "Schedule"
+        href: schedule.qmd
+      - text: "Staff"
+        href: staff.qmd
+      - text: "Assignments"
+        href: assignments.qmd
+      - text: "Resources"
+        href: resources.qmd
+    right:
+      - icon: github
+        href: https://github.com/astrezhnev/ps813
+        aria-label: GitHub
+
+  page-footer:
+    left: |
+      PoliSci 813: Causal Inference<br>
+      University of Wisconsin-Madison
+    right: |
+      Made with [Quarto](https://quarto.org/)
+
+format:
+  html:
+    theme:
+      - cosmo
+      - styles.scss
+    css: styles.css
+    toc: true
+    toc-depth: 3

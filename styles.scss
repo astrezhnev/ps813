@@ -1,0 +1,65 @@
+/*-- scss:defaults --*/
+
+// UW-Madison brand colors
+$uw-red: #c5050c;
+$uw-dark-red: #9b0000;
+$uw-light-gray: #f7f7f7;
+$uw-gray: #646569;
+
+// Theme customization
+$primary: $uw-red;
+$link-color: $uw-red;
+
+/*-- scss:rules --*/
+
+// Lead paragraph styling
+.lead {
+  font-size: 1.25rem;
+  font-weight: 300;
+  color: $uw-gray;
+  border-left: 4px solid $uw-red;
+  padding-left: 1rem;
+  margin-bottom: 2rem;
+}
+
+// Button styling
+.btn-outline-primary {
+  color: $uw-red;
+  border-color: $uw-red;
+
+  &:hover {
+    background-color: $uw-red;
+    border-color: $uw-red;
+    color: white;
+  }
+}
+
+// Staff page image styling
+.rounded {
+  border-radius: 50% !important;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+// Table styling
+table {
+  margin-bottom: 1.5rem;
+}
+
+// Horizontal rule styling
+hr {
+  border-top: 2px solid $uw-light-gray;
+  margin: 2rem 0;
+}
+
+// Navbar tweaks
+.navbar {
+  font-weight: 500;
+}
+
+// Footer styling
+.nav-footer {
+  background-color: $uw-light-gray;
+  border-top: 3px solid $uw-red;
+}

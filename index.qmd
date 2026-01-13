@@ -1,0 +1,50 @@
+---
+title: "PoliSci 813: Causal Inference"
+subtitle: "Spring 2025 | University of Wisconsin-Madison"
+date: last-modified
+date-format: "MMMM D, YYYY"
+toc: false
+---
+
+::: {.lead}
+Questions of cause and effect are central to the study of political science and to the social sciences more broadly. This course provides students with a structured statistical framework for articulating the assumptions behind causal research designs and estimating effects using quantitative data.
+:::
+
+## Course Details
+
+|                    |                                                          |
+|--------------------|----------------------------------------------------------|
+| **Instructor**     | Anton Strezhnev                                          |
+| **Lectures**       | Tuesdays & Thursdays, 2:00pm - 3:20pm                    |
+| **Sections**       | Fridays, 2:30pm - 3:20pm                                 |
+| **Location**       | TBA                                                      |
+
+## Quick Links
+
+::: {.grid}
+
+::: {.g-col-6 .g-col-md-3}
+<a href="syllabus.qmd" class="btn btn-outline-primary btn-lg d-block">Syllabus</a>
+:::
+
+::: {.g-col-6 .g-col-md-3}
+<a href="schedule.qmd" class="btn btn-outline-primary btn-lg d-block">Schedule</a>
+:::
+
+::: {.g-col-6 .g-col-md-3}
+<a href="assignments.qmd" class="btn btn-outline-primary btn-lg d-block">Assignments</a>
+:::
+
+::: {.g-col-6 .g-col-md-3}
+<a href="resources.qmd" class="btn btn-outline-primary btn-lg d-block">Resources</a>
+:::
+
+:::
+
+## Announcements
+
+Check back here for course announcements throughout the semester.
+
+---
+
+*Last updated: {{< meta date >}}*
