@@ -4,28 +4,28 @@
     "href": "index.html",
     "title": "PoliSci 813: Causal Inference",
     "section": "",
-    "text": "Questions of cause and effect are central to the study of political science and to the social sciences more broadly. This course provides students with a structured statistical framework for articulating the assumptions behind causal research designs and estimating effects using quantitative data."
+    "text": "Designing studies to uncover causal relationships from data.\n\n\n\n\n\n\nAnton Strezhnev\n{{&lt; fa envelope &gt;}} strezhnev@wisc.edu\n{{&lt; fa globe &gt;}} antonstrezhnev.com\n{{&lt; fa building &gt;}} North Hall 322D\n\n\n\nJunda Li\n{{&lt; fa envelope &gt;}} jli2479@wisc.edu\n{{&lt; fa globe &gt;}} jundali.org\n\n\n\n{{&lt; fa calendar &gt;}} Mondays & Wednesdays\n{{&lt; fa clock &gt;}} 9:30am - 10:45am\n{{&lt; fa location-dot &gt;}} North Hall 422\n{{&lt; fa book &gt;}} Syllabus\n{{&lt; fa calendar-alt &gt;}} Schedule\n{{&lt; fa file-alt &gt;}} Assignments\n{{&lt; fa toolbox &gt;}} Resources"
+  },
+  {
+    "objectID": "index.html#instructor",
+    "href": "index.html#instructor",
+    "title": "PoliSci 813: Causal Inference",
+    "section": "",
+    "text": "Anton Strezhnev\n{{&lt; fa envelope &gt;}} strezhnev@wisc.edu\n{{&lt; fa globe &gt;}} antonstrezhnev.com\n{{&lt; fa building &gt;}} North Hall 322D"
+  },
+  {
+    "objectID": "index.html#teaching-assistant",
+    "href": "index.html#teaching-assistant",
+    "title": "PoliSci 813: Causal Inference",
+    "section": "",
+    "text": "Junda Li\n{{&lt; fa envelope &gt;}} jli2479@wisc.edu\n{{&lt; fa globe &gt;}} jundali.org"
   },
   {
     "objectID": "index.html#course-details",
     "href": "index.html#course-details",
     "title": "PoliSci 813: Causal Inference",
-    "section": "Course Details",
-    "text": "Course Details\n\n\n\n\n\n\n\nInstructor\nAnton Strezhnev\n\n\nLectures\nTuesdays & Thursdays, 2:00pm - 3:20pm\n\n\nSections\nFridays, 2:30pm - 3:20pm\n\n\nLocation\nTBA"
-  },
-  {
-    "objectID": "index.html#quick-links",
-    "href": "index.html#quick-links",
-    "title": "PoliSci 813: Causal Inference",
-    "section": "Quick Links",
-    "text": "Quick Links\n\n\nSyllabus\n\n\nSchedule\n\n\nAssignments\n\n\nResources"
-  },
-  {
-    "objectID": "index.html#announcements",
-    "href": "index.html#announcements",
-    "title": "PoliSci 813: Causal Inference",
-    "section": "Announcements",
-    "text": "Announcements\nCheck back here for course announcements throughout the semester.\n\nLast updated: January 12, 2026"
+    "section": "",
+    "text": "{{&lt; fa calendar &gt;}} Mondays & Wednesdays\n{{&lt; fa clock &gt;}} 9:30am - 10:45am\n{{&lt; fa location-dot &gt;}} North Hall 422\n{{&lt; fa book &gt;}} Syllabus\n{{&lt; fa calendar-alt &gt;}} Schedule\n{{&lt; fa file-alt &gt;}} Assignments\n{{&lt; fa toolbox &gt;}} Resources"
   },
   {
     "objectID": "staff.html",
@@ -63,32 +63,32 @@
     "text": "A schedule of topics and readings is provided below. Each week will cover a single topic or group of topics. Monday lectures will typically be an introduction to the topic while Wednesday lectures will go into greater detail and involve some applications of the method. You should make sure to review the readings prior to that week’s lectures with an aim towards completing the reading assignments prior to Wednesday’s lecture."
   },
   {
-    "objectID": "schedule.html#week-1-january-21-review",
-    "href": "schedule.html#week-1-january-21-review",
+    "objectID": "schedule.html#week-1-january-21-statistical-review",
+    "href": "schedule.html#week-1-january-21-statistical-review",
     "title": "Schedule",
-    "section": "Week 1: January 21 | Review",
-    "text": "Week 1: January 21 | Review\nTopics:\n\nEstimands and causal quantities of interest\nReview of statistical properties of estimators\nLarge sample theory, big-O/little-o notation\n\nReadings:\n\nChapter 1, Imbens and Rubin. Causal Inference for Statistics, Social, and Biomedical Sciences. Cambridge University Press. 2015.\nChapter 1, Hernán and Robins. Causal Inference: What If. Chapman & Hall/CRC. 2020.\nLundberg, Ian, Rebecca Johnson, and Brandon M. Stewart. “What is your estimand? Defining the target quantity connects statistical evidence to theory.” American Sociological Review 86.3 (2021): 532-565."
+    "section": "Week 1: January 21 | Statistical Review",
+    "text": "Week 1: January 21 | Statistical Review\nTopics:\n\nEstimands and causal quantities of interest\nReview of statistical properties of estimators\nLarge sample theory, big-O/little-o notation\n\nReadings:\n\nChapter 1, Imbens and Rubin. Causal Inference for Statistics, Social, and Biomedical Sciences. Cambridge University Press. 2015.\nChapter 1, Hernán and Robins. Causal Inference: What If. Chapman & Hall/CRC. 2020.\nLundberg, Ian, Rebecca Johnson, and Brandon M. Stewart. “What is your estimand? Defining the target quantity connects statistical evidence to theory.” American Sociological Review 86.3 (2021): 532-565."
   },
   {
-    "objectID": "schedule.html#week-2-january-26-30-introduction-to-potential-outcomes-randomized-experiments",
-    "href": "schedule.html#week-2-january-26-30-introduction-to-potential-outcomes-randomized-experiments",
+    "objectID": "schedule.html#week-2-january-26-28-potential-outcomes-randomized-experiments",
+    "href": "schedule.html#week-2-january-26-28-potential-outcomes-randomized-experiments",
     "title": "Schedule",
-    "section": "Week 2: January 26-30 | Introduction to Potential Outcomes + Randomized Experiments",
-    "text": "Week 2: January 26-30 | Introduction to Potential Outcomes + Randomized Experiments\nMonday, January 26 & Wednesday, January 28\nTopics:\n\nWhat assumptions are needed to identify average treatment effects\nWhy randomized experiments satisfy these assumptions\nCounterfactual reasoning and the “Fundamental Problem of Causal Inference”\nThe “potential outcomes” model\nEstimation and randomization inference in standard experimental designs\n\nReadings:\n\nSections 1-5, Athey and Imbens, “The Econometrics of Randomized Experiments,” Handbook of economic field experiments. Vol. 1. North-Holland, 2017. 73-140.\nChapter 2, Hernán and Robins. Causal Inference: What If. Chapman & Hall/CRC. 2020.\nDruckman, James N., et al. “The growth and development of experimental research in political science.” American Political Science Review 100.4 (2006): 627-635.\n\nApplications:\n\nGerber, Alan S., Donald P. Green, and Christopher W. Larimer. “Social pressure and voter turnout: Evidence from a large-scale field experiment.” American Political Science Review 102.1 (2008): 33-48.\nMutz, Diana C., and Byron Reeves. “The new videomalaise: Effects of televised incivility on political trust.” American Political Science Review 99.1 (2005): 1-15."
+    "section": "Week 2: January 26, 28 | Potential Outcomes + Randomized Experiments",
+    "text": "Week 2: January 26, 28 | Potential Outcomes + Randomized Experiments\nMonday, January 26 & Wednesday, January 28\nTopics:\n\nCounterfactual reasoning and the potential outcomes model\nWhat assumptions are needed to identify average treatment effects\nWhy randomized experiments satisfy these assumptions\nEstimation and randomization inference in standard experimental designs\n\nReadings:\n\nSections 1-5, Athey and Imbens, “The Econometrics of Randomized Experiments,” Handbook of economic field experiments. Vol. 1. North-Holland, 2017. 73-140.\nChapter 2, Hernán and Robins. Causal Inference: What If. Chapman & Hall/CRC. 2020.\nDruckman, James N., et al. “The growth and development of experimental research in political science.” American Political Science Review 100.4 (2006): 627-635.\n\nApplications:\n\nGerber, Alan S., Donald P. Green, and Christopher W. Larimer. “Social pressure and voter turnout: Evidence from a large-scale field experiment.” American Political Science Review 102.1 (2008): 33-48."
   },
   {
-    "objectID": "schedule.html#week-3-february-2-6-covariates-in-randomized-experiments",
-    "href": "schedule.html#week-3-february-2-6-covariates-in-randomized-experiments",
+    "objectID": "schedule.html#week-3-february-2-6-experiments-incorporating-covariates-and-statistical-power",
+    "href": "schedule.html#week-3-february-2-6-experiments-incorporating-covariates-and-statistical-power",
     "title": "Schedule",
-    "section": "Week 3: February 2-6 | Covariates in Randomized Experiments",
-    "text": "Week 3: February 2-6 | Covariates in Randomized Experiments\nMonday, February 2 & Wednesday, February 4\nTopics:\n\nStratification and using covariates in experiments\nAnalysis of cluster-randomized experiments\nProblems of non-compliance\n\nReadings:\n\nSections 6-12, Athey and Imbens, “The Econometrics of Randomized Experiments,” Handbook of economic field experiments. Vol. 1. North-Holland, 2017. 73-140.\nMontgomery, Jacob M., Brendan Nyhan, and Michelle Torres. “How conditioning on posttreatment variables can ruin your experiment and what to do about it.” American Journal of Political Science 62.3 (2018): 760-775.\nAronow, P. M., Jonathon Baron, and Lauren Pinson. “A note on dropping experimental subjects who fail a manipulation check.” Political Analysis 27.4 (2019): 572-589.\nLin, Winston. “Agnostic notes on regression adjustments to experimental data: Reexamining Freedman’s critique.” The Annals of Applied Statistics 7.1 (2013): 295-318.\n\nBonus: Samii, C., and P. M. Aronow. “On equivalencies between design-based and regression-based variance estimators for randomized experiments.” Statistics & Probability Letters 82.2 (2012): 365-370.\n\n\nApplications:\n\nCasey, K., Glennerster, R., & Miguel, E. (2012). Reshaping institutions: Evidence on aid impacts using a preanalysis plan. The Quarterly Journal of Economics, 127(4), 1755-1812.\nCrépon, B., Devoto, F., Duflo, E., & Parienté, W. (2015). Estimating the impact of microcredit on those who take it up: Evidence from a randomized experiment in Morocco. American Economic Journal: Applied Economics, 7(1), 123-50."
+    "section": "Week 3: February 2-6 | Experiments: Incorporating Covariates and Statistical Power",
+    "text": "Week 3: February 2-6 | Experiments: Incorporating Covariates and Statistical Power\nMonday, February 2 & Wednesday, February 4\nTopics:\n\nStratification and using covariates in experiments\nAnalysis of cluster-randomized experiments\nProblems of non-compliance\n\nReadings:\n\nSections 6-12, Athey and Imbens, “The Econometrics of Randomized Experiments,” Handbook of economic field experiments. Vol. 1. North-Holland, 2017. 73-140.\nMontgomery, Jacob M., Brendan Nyhan, and Michelle Torres. “How conditioning on posttreatment variables can ruin your experiment and what to do about it.” American Journal of Political Science 62.3 (2018): 760-775.\nAronow, P. M., Jonathon Baron, and Lauren Pinson. “A note on dropping experimental subjects who fail a manipulation check.” Political Analysis 27.4 (2019): 572-589.\nLin, Winston. “Agnostic notes on regression adjustments to experimental data: Reexamining Freedman’s critique.” The Annals of Applied Statistics 7.1 (2013): 295-318.\n\nBonus: Samii, C., and P. M. Aronow. “On equivalencies between design-based and regression-based variance estimators for randomized experiments.” Statistics & Probability Letters 82.2 (2012): 365-370.\n\n\nApplications:\n\nCasey, K., Glennerster, R., & Miguel, E. (2012). Reshaping institutions: Evidence on aid impacts using a preanalysis plan. The Quarterly Journal of Economics, 127(4), 1755-1812.\nCrépon, B., Devoto, F., Duflo, E., & Parienté, W. (2015). Estimating the impact of microcredit on those who take it up: Evidence from a randomized experiment in Morocco. American Economic Journal: Applied Economics, 7(1), 123-50."
   },
   {
-    "objectID": "schedule.html#week-4-february-9-13-experiments-continued",
-    "href": "schedule.html#week-4-february-9-13-experiments-continued",
+    "objectID": "schedule.html#week-4-february-9-13-experiments-attrition-and-non-compliance",
+    "href": "schedule.html#week-4-february-9-13-experiments-attrition-and-non-compliance",
     "title": "Schedule",
-    "section": "Week 4: February 9-13 | Experiments Continued",
-    "text": "Week 4: February 9-13 | Experiments Continued\nMonday, February 9 & Wednesday, February 11\nTopics:\n\nTBA\n\nReadings:\n\nTBA"
+    "section": "Week 4: February 9-13 | Experiments: Attrition and Non-Compliance",
+    "text": "Week 4: February 9-13 | Experiments: Attrition and Non-Compliance\nMonday, February 9 & Wednesday, February 11\nTopics:\n\nTBA\n\nReadings:\n\nTBA"
   },
   {
     "objectID": "schedule.html#week-5-february-16-20-selection-on-observables",
