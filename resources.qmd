@@ -29,17 +29,17 @@ These textbooks provide a number of the readings that will be used through the c
 
 ### R and RStudio
 
-This course uses R for all programming assignments. You are welcome to use the RStudio Interactive Development Environment (IDE) to write code and edit the assignment write-up. Due to the extensive integration of Quarto into Posit-developed IDEs, I encourage using either RStudio or the more recent Positron 
+This course uses R for all programming assignments. You are welcome to use the RStudio Interactive Development Environment (IDE) to write code and edit the assignment write-up. Due to the extensive integration of Quarto into Posit-developed IDEs, I encourage using either RStudio or the more recent Positron IDE.
 
 - **R:** Download from [https://www.r-project.org](https://www.r-project.org)
 - **RStudio:** Download from [https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/)
-- **Positron:** Download from [https://github.com/posit-dev/positron/releases](https://github.com/posit-dev/positron/releases)
+- **Positron:** Download from [https://positron.posit.co/](https://positron.posit.co/)
 
 ### Quarto and Markdown
 
 The assignments are distributed as `.qmd` Quarto files. [Quarto](https://quarto.org/) is the successor to R Markdown and lets you present your analysis, code, figures and written discussion all in a single document. It uses Markdown syntax for formatting text and supports embedded R code chunks that execute when you render the document. This lets you present your analysis, code, figures, and written discussion all in one place.
 
-To complete assignments, you will edit the provided `.qmd` file, adding your code and written responses, then render it to an HTML file for submission. Quarto is the successor to R Markdown and works similarly, but with additional features and broader language support.
+To complete assignments, you will edit the provided `.qmd` file, adding your code and written responses, then render it to an HTML file for submission. Both your `.html` output and `.qmd` file will be submitted via Gradescope
 
 - **Quarto:** Download from [https://quarto.org/docs/get-started/](https://quarto.org/docs/get-started/)
 - **Quarto Guide:** [https://quarto.org/docs/guide/](https://quarto.org/docs/guide/)
@@ -57,8 +57,6 @@ To complete assignments, you will edit the provided `.qmd` file, adding your cod
 
 - [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/)
 - [Markdown Cheatsheet](https://www.rstudio.com/resources/cheatsheets/)
-
----
 
 ---
 
