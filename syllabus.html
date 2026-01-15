@@ -157,11 +157,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#participation-10" id="toc-participation-10" class="nav-link" data-scroll-target="#participation-10">Participation (10%)</a></li>
   </ul></li>
   <li><a href="#computing" id="toc-computing" class="nav-link" data-scroll-target="#computing">Computing</a></li>
-  <li><a href="#policy-on-generative-large-language-models" id="toc-policy-on-generative-large-language-models" class="nav-link" data-scroll-target="#policy-on-generative-large-language-models">Policy on Generative Large Language Models</a>
-  <ul class="collapse">
-  <li><a href="#acceptable-use" id="toc-acceptable-use" class="nav-link" data-scroll-target="#acceptable-use">Acceptable Use</a></li>
-  <li><a href="#prohibited-use" id="toc-prohibited-use" class="nav-link" data-scroll-target="#prohibited-use">Prohibited Use</a></li>
-  </ul></li>
+  <li><a href="#policy-on-generative-large-language-models" id="toc-policy-on-generative-large-language-models" class="nav-link" data-scroll-target="#policy-on-generative-large-language-models">Policy on Generative Large Language Models</a></li>
   <li><a href="#accommodations-and-accessibility" id="toc-accommodations-and-accessibility" class="nav-link" data-scroll-target="#accommodations-and-accessibility">Accommodations and Accessibility</a></li>
   <li><a href="#acknowledgments" id="toc-acknowledgments" class="nav-link" data-scroll-target="#acknowledgments">Acknowledgments</a></li>
   </ul>
@@ -193,7 +189,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="course-overview">Course Overview</h2>
 <p>Questions of cause and effect are central to the study of political science and to the social sciences more broadly. But making inferences about causation from empirical data is a significant challenge. Critically, there is no simple, assumption-free process for learning about a causal relationship from the data alone. Causal inference requires researchers to make assumptions about the underlying data generating process in order to identify and estimate causal effects. The goal of this course is to provide students with a structured statistical framework for articulating the assumptions behind causal research designs and for estimating effects using quantitative data.</p>
 <p>The course begins by introducing the counterfactual framework of causal inference as a way of defining causal quantities of interest such as the “average treatment effect.” It then proceeds to illustrate a variety of different designs for identifying and estimating these quantities. We will start with the most basic experimental designs and progress to more complex experimental and observational methods. For each approach, we will discuss the necessary assumptions that a researcher needs to make about the process that generated the data, how to assess whether these assumptions are reasonable, how to interpret the quantity being estimated and ultimately how to conduct the analysis.</p>
-<p>This course will involve a combination of lectures and problem sets. Problem sets will contain a mixture of both theoretical and applied questions and serve to reinforce key concepts and allow students to assess their progress and understanding throughout the course. Assignments will involve analysis of data using the <a href="https://www.r-project.org/"><i class="fa-brands fa-r-project" aria-label="r-project"></i> programming language</a>. This is a free and open source language for statistical computing that is used extensively for data analysis in many fields. Prior experience with the fundamentals of <i class="fa-brands fa-r-project" aria-label="r-project"></i> programming is required.</p>
+<p>This course will involve a combination of lectures and problem sets. Problem sets will contain a mixture of both theoretical and applied questions and serve to reinforce key concepts and allow students to assess their progress and understanding throughout the course. Assignments will involve analysis of data using the <i class="fa-brands fa-r-project" aria-label="r-project"></i> programming language. This is a free and open source language for statistical computing that is used extensively for data analysis in many fields. Prior experience with the fundamentals of <i class="fa-brands fa-r-project" aria-label="r-project"></i> programming is required.</p>
 </section>
 <section id="prerequisites" class="level2">
 <h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
@@ -232,7 +228,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Students’ final grades are based on four components:</p>
 <section id="problem-sets-25" class="level3">
 <h3 class="anchored" data-anchor-id="problem-sets-25">Problem Sets (25%)</h3>
-<p>Students will complete a total of five problem sets throughout the quarter. Problem sets will primarily cover topics from the lecture and section for that week and the previous week.</p>
+<p>Students will complete a total of five problem sets throughout the quarter. Problem sets will cover roughly a two-week period of course material. A complete schedule of the assignments can be found on the <a href="./assignments.html">Assignments</a> page.</p>
 <p>The goal of the problem sets is to encourage exploration of the material and to provide you with a clear and credible means of assessing your understanding and progress through the course. As such, problem sets are <em>designed</em> to be challenging and we expect students to find some questions difficult.</p>
 <p>Problem sets will be graded on a (+/✓/-) scale:</p>
 <ul>
@@ -275,21 +271,8 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="policy-on-generative-large-language-models" class="level2">
 <h2 class="anchored" data-anchor-id="policy-on-generative-large-language-models">Policy on Generative Large Language Models</h2>
-<p>Large Language Models (LLMs) continue to have an immense impact on the educational field. Over the last several years, we have seen striking growth in the capabilities of these models and it is clear that they will remain a permanent presence in all of our lives.</p>
-<p>The rapid growth in both the capabilities and the accessibility of generative large language models (LLMs) such as the GPT series, Claude, LLaMa, etc. has introduced some novel challenges to the classroom. On the one hand, generative text models can be used as a tool to improve the quality of students’ writing. On the other hand, they can be readily used to represent another’s work as one’s own – that is, to commit plagiarism.</p>
-<p><strong>My view in short:</strong> Large language models are marvels of <strong>engineering</strong>. You should use them for <strong>engineering</strong> tasks, but the task of research is not purely engineering and LLMs are much less effective for the task of doing <strong>science</strong>.</p>
-<p>By “engineering,” I mean the iterative task of solving a problem by brainstorming potential solutions, implementing those solutions, and then subsequently <em>evaluating</em> the solutions with respect to some clearly defined criteria. The key components here are both the existence of a well-defined problem and the ability to assess whether the proposed solutions are effective.</p>
-<section id="acceptable-use" class="level3">
-<h3 class="anchored" data-anchor-id="acceptable-use">Acceptable Use</h3>
-<p>Currently, the most obvious and effective use-case for large language models is in coding. You are welcome to experiment with using LLMs in debugging code. The interactivity is great for beginning programmers who may have an idea of what they want their code to do, but are unfamiliar with the syntax of a particular language. Likewise, it’s an incredibly valuable tool for experienced programmers who want to quickly generate some prototype code that is customized to their particular problem.</p>
-<p>Why is programming an ideal use case? Programming is fundamentally an engineering task. There is a clearly defined problem that a programmer needs to solve via code and there is a straightforward way to evaluate whether a block of code works. As a result, mistakes are easy to catch – if the code throws an error, something needs to be changed. There is always a human in the loop who is capable of evaluating the output.</p>
-<p>Another acceptable use is cleaning up original text that you have written to eliminate grammar mistakes or to rephrase the text to have a clearer style. We already accept the use of spellcheckers and thesauruses that are embedded in most word processors and I don’t see this use case as substantively different as long as your original writing is the input.</p>
-</section>
-<section id="prohibited-use" class="level3">
-<h3 class="anchored" data-anchor-id="prohibited-use">Prohibited Use</h3>
-<p>Outside of coding and editing, you should be cautious about any LLM outputs that you are not able to verify or evaluate yourself.</p>
-<p><strong>Submitting LLM-generated text as a substitute for your own thinking is not permitted in this class and will be considered plagiarism.</strong> This includes prompting an LLM to compose all or part of your writing and submitting that output either verbatim or with some editing. This policy also applies to generating posts on the discussion board.</p>
-</section>
+<p>Large Language Models (LLMs) continue to have an immense impact on the educational field. Over the last several years, we have seen striking growth in the capabilities of these models and it is clear that they will remain a permanent and inextricable presence in all of our lives. This very course website has been built with considerable assistance from Claude’s Opus 4.5 model. Having taught a causal inference course every year since 2020, I have seen first-hand how these tools are rapidly reshaping how students engage with the material - for better and for worse.</p>
+<p>It is clear that any restrictions on LLM use aside from <em>restricted, in-class pen-and-paper examination</em> use are fundamentally unenforceable. Therefore, with respect to the problem sets, students are permitted to use LLMs in whatever capacity they see fit.</p>
 </section>
 <section id="accommodations-and-accessibility" class="level2">
 <h2 class="anchored" data-anchor-id="accommodations-and-accessibility">Accommodations and Accessibility</h2>
