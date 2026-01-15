@@ -2,7 +2,7 @@
 title: "Assignments"
 ---
 
-## Assignment Schedule
+## Schedule
 
 | Assignment        | Assigned           | Due                  |
 |-------------------|--------------------|----------------------|
