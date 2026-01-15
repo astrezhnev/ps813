@@ -1,73 +1,77 @@
 ---
-title: "PoliSci 813: Causal Inference"
-subtitle: "Spring 2026 | University of Wisconsin-Madison"
+title: "Causal Inference"
+subtitle: "Designing studies to uncover causal relationships from data"
+details: |
+  PoliSci 813 • Spring 2026<br>University of Wisconsin-Madison
+sidebar: false
 toc: false
 page-layout: full
 ---
 
-::: {.column-page-inset}
+::: {.grid .course-details}
 
-::: {.column-page-inset-left style="display: flex; gap: min(4vw, 1.5em);"}
+::: {.g-col-12 .g-col-sm-8 .order-2 .order-sm-1}
 
-::: {}
-![](ps813-hex-sticker.png){style="max-width: 150px;"}
-:::
+# {{< meta title >}}
 
-::: {}
-Designing studies to uncover causal relationships from data.
-:::
+{{< meta subtitle >}}
+
+{{< meta details >}}
 
 :::
 
----
+::: {.g-col-12 .g-col-sm-4 .order-1 .order-sm-2}
 
-::: {.grid}
-
-::: {.g-col-12 .g-col-md-4}
-
-## Instructor
-
-[**Anton Strezhnev**](https://www.antonstrezhnev.com)
-
-{{< fa envelope >}} [strezhnev@wisc.edu](mailto:strezhnev@wisc.edu)
-
-{{< fa globe >}} [antonstrezhnev.com](https://www.antonstrezhnev.com)
-
-{{< fa building >}} North Hall 322D
+::: {.grid style="--bs-columns: 5;"}
+::: {.g-col-1 .g-col-sm-0}
+:::
+::: {.g-col-3 .g-col-sm-5}
+![](images/ps813-hex-sticker.png){.img-fluid}
+:::
+::: {.g-col-1 .g-col-sm-0}
+:::
+:::
 
 :::
 
-::: {.g-col-12 .g-col-md-4}
+:::
 
-## Teaching Assistant
+::: {.grid .course-details}
 
-[**Junda Li**](https://jundali.org)
+::: {.g-col-12 .g-col-sm-6 .g-col-md-4}
 
-{{< fa envelope >}} [jli2479@wisc.edu](mailto:jli2479@wisc.edu)
+### Instructor
 
-{{< fa globe >}} [jundali.org](https://jundali.org)
+- {{< fa user >}} &nbsp; [Anton Strezhnev](https://www.antonstrezhnev.com)
+- {{< fa university >}} &nbsp; North Hall 322D
+- {{< fa envelope >}} &nbsp; [strezhnev@wisc.edu](mailto:strezhnev@wisc.edu)
+
+### Teaching Assistant
+
+- {{< fa user >}} &nbsp; [Junda Li](https://jundali.org)
+- {{< fa envelope >}} &nbsp; [jli2479@wisc.edu](mailto:jli2479@wisc.edu)
 
 :::
 
-::: {.g-col-12 .g-col-md-4}
+::: {.g-col-12 .g-col-sm-6 .g-col-md-4}
 
-## Course Details
+### Course details
 
-{{< fa calendar >}} Mondays & Wednesdays
-
-{{< fa clock >}} 9:30am - 10:45am
-
-{{< fa location-dot >}} North Hall 422
-
-{{< fa book >}} [Syllabus](syllabus.qmd)
-
-{{< fa calendar-alt >}} [Schedule](schedule.qmd)
-
-{{< fa file-alt >}} [Assignments](assignments.qmd)
-
-{{< fa toolbox >}} [Resources](resources.qmd)
+- {{< fa calendar >}} &nbsp; Mondays & Wednesdays
+- {{< fa clock >}} &nbsp; 9:30am - 10:45am
+- {{< fa location-dot >}} &nbsp; North Hall 422
+- {{< fa book >}} &nbsp; [Syllabus](syllabus.qmd)
+- {{< fa calendar-alt >}} &nbsp; [Schedule](schedule.qmd)
+- {{< fa file-alt >}} &nbsp; [Assignments](assignments.qmd)
+- {{< fa toolbox >}} &nbsp; [Resources](resources.qmd)
 
 :::
+
+::: {.g-col-12 .g-col-md-4 .contact-policy}
+
+### Contacting me
+
+E-mail is the best way to get in touch with me. My dedicated office hours are **Tuesdays** from **2pm-4pm** if you want to meet in-person. I am also generally in my office on weekdays during normal hours and my door is open, so you are welcome to drop in.
 
 :::
 
