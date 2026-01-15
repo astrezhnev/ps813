@@ -1,50 +1,74 @@
 ---
 title: "PoliSci 813: Causal Inference"
-subtitle: "Spring 2025 | University of Wisconsin-Madison"
-date: last-modified
-date-format: "MMMM D, YYYY"
+subtitle: "Spring 2026 | University of Wisconsin-Madison"
 toc: false
+page-layout: full
 ---
 
-::: {.lead}
-Questions of cause and effect are central to the study of political science and to the social sciences more broadly. This course provides students with a structured statistical framework for articulating the assumptions behind causal research designs and estimating effects using quantitative data.
+::: {.column-page-inset}
+
+::: {.column-page-inset-left style="display: flex; gap: min(4vw, 1.5em);"}
+
+::: {}
+![](ps813-hex-sticker.png){style="max-width: 150px;"}
 :::
 
-## Course Details
+::: {}
+Designing studies to uncover causal relationships from data.
+:::
 
-|                        |                                                   |
-|------------------------|---------------------------------------------------|
-| **Instructor**         | [Anton Strezhnev](https://www.antonstrezhnev.com) |
-| **Teaching Assistant** | [Junda Li](https://jundali.org)                   |
-| **Lectures**           | Mondays & Wednesdays, 9:30am - 10:45am            |
-| **Location**           | North Hall 422                                    |
+:::
 
-## Quick Links
+---
 
 ::: {.grid}
 
-::: {.g-col-6 .g-col-md-3}
-<a href="syllabus.qmd" class="btn btn-outline-primary btn-lg d-block">Syllabus</a>
-:::
+::: {.g-col-12 .g-col-md-4}
 
-::: {.g-col-6 .g-col-md-3}
-<a href="schedule.qmd" class="btn btn-outline-primary btn-lg d-block">Schedule</a>
-:::
+## Instructor
 
-::: {.g-col-6 .g-col-md-3}
-<a href="assignments.qmd" class="btn btn-outline-primary btn-lg d-block">Assignments</a>
-:::
+[**Anton Strezhnev**](https://www.antonstrezhnev.com)
 
-::: {.g-col-6 .g-col-md-3}
-<a href="resources.qmd" class="btn btn-outline-primary btn-lg d-block">Resources</a>
-:::
+{{< fa envelope >}} [strezhnev@wisc.edu](mailto:strezhnev@wisc.edu)
+
+{{< fa globe >}} [antonstrezhnev.com](https://www.antonstrezhnev.com)
+
+{{< fa building >}} North Hall 322D
 
 :::
 
-## Announcements
+::: {.g-col-12 .g-col-md-4}
 
-Check back here for course announcements throughout the semester.
+## Teaching Assistant
 
----
+[**Junda Li**](https://jundali.org)
 
-*Last updated: {{< meta date >}}*
+{{< fa envelope >}} [jli2479@wisc.edu](mailto:jli2479@wisc.edu)
+
+{{< fa globe >}} [jundali.org](https://jundali.org)
+
+:::
+
+::: {.g-col-12 .g-col-md-4}
+
+## Course Details
+
+{{< fa calendar >}} Mondays & Wednesdays
+
+{{< fa clock >}} 9:30am - 10:45am
+
+{{< fa location-dot >}} North Hall 422
+
+{{< fa book >}} [Syllabus](syllabus.qmd)
+
+{{< fa calendar-alt >}} [Schedule](schedule.qmd)
+
+{{< fa file-alt >}} [Assignments](assignments.qmd)
+
+{{< fa toolbox >}} [Resources](resources.qmd)
+
+:::
+
+:::
+
+:::
