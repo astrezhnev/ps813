@@ -30,3 +30,7 @@ table td:first-child {
   border-radius: 0.25rem;
   margin-top: 1rem;
 }
+
+.compact-list p {
+  margin-bottom: 0.25em;
+}

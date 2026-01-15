@@ -8,7 +8,7 @@ Questions of cause and effect are central to the study of political science and 
 
 The course begins by introducing the counterfactual framework of causal inference as a way of defining causal quantities of interest such as the "average treatment effect." It then proceeds to illustrate a variety of different designs for identifying and estimating these quantities. We will start with the most basic experimental designs and progress to more complex experimental and observational methods. For each approach, we will discuss the necessary assumptions that a researcher needs to make about the process that generated the data, how to assess whether these assumptions are reasonable, how to interpret the quantity being estimated and ultimately how to conduct the analysis.
 
-This course will involve a combination of lectures and problem sets. Problem sets will contain a mixture of both theoretical and applied questions and serve to reinforce key concepts and allow students to assess their progress and understanding throughout the course. Assignments will involve analysis of data using the [{{< fa brands r-project >}} programming language](https://www.r-project.org/). This is a free and open source language for statistical computing that is used extensively for data analysis in many fields. Prior experience with the fundamentals of {{< fa brands r-project >}} programming is required.
+This course will involve a combination of lectures and problem sets. Problem sets will contain a mixture of both theoretical and applied questions and serve to reinforce key concepts and allow students to assess their progress and understanding throughout the course. Assignments will involve analysis of data using the {{< fa brands r-project >}} programming language. This is a free and open source language for statistical computing that is used extensively for data analysis in many fields. Prior experience with the fundamentals of {{< fa brands r-project >}} programming is required.
 
 ## Prerequisites
 
@@ -24,7 +24,7 @@ Please contact the instructor if you are interested in enrolling but are unsure 
 
 You should attend lectures regularly as they comprise a significant element of the course instruction. Lecture materials will be posted on the course website.
 
-- **Discussion Forum**: We will be using [Piazza](https://piazza.com/) as our primary course discussion platform. If you are enrolled in the class on Canvas, you should already have access to the Piazza board for this class. Please use this to post questions about the readings/lecture material as well as about the problem sets.
+- **Discussion Forum**: We will be using [Ed](https://edstem.org/) as our primary course discussion platform. If you are enrolled in the class on Canvas, you should already have access to the Ed board for this class. Please use this to post questions about the readings/lecture material as well as about the problem sets.
 
 - **Course Materials**: Lecture materials, problem sets and tutorial code will be posted on the course website. Problem set solutions will be posted after the due date on Canvas. Links to readings can be found on the course website organized by week.
 
@@ -47,7 +47,7 @@ Students' final grades are based on four components:
 
 ### Problem Sets (25%)
 
-Students will complete a total of five problem sets throughout the quarter. Problem sets will primarily cover topics from the lecture and section for that week and the previous week.
+Students will complete a total of five problem sets throughout the quarter. Problem sets will cover roughly a two-week period of course material. A complete schedule of the assignments can be found on the [Assignments](assignments.qmd) page.
 
 The goal of the problem sets is to encourage exploration of the material and to provide you with a clear and credible means of assessing your understanding and progress through the course. As such, problem sets are *designed* to be challenging and we expect students to find some questions difficult.
 
@@ -93,30 +93,21 @@ See the [Resources](resources.qmd) page for additional information.
 
 ## Policy on Generative Large Language Models
 
-Large Language Models (LLMs) continue to have an immense impact on the educational field. Over the last several years, we have seen striking growth in the capabilities of these models and it is clear that they will remain a permanent presence in all of our lives. 
+Large Language Models (LLMs) continue to have an immense impact on the educational field. Over the last several years, we have seen striking growth in the capabilities of these models and it is clear that they will remain a permanent and inextricable presence in all of our lives. This very course website has been built with considerable assistance from Claude's Opus 4.5 model. Having taught a causal inference course every year since 2020, I have seen first-hand how these tools are rapidly reshaping how students engage with the material - for better and for worse. 
 
-The rapid growth in both the capabilities and the accessibility of generative large language models (LLMs) such as the GPT series, Claude, LLaMa, etc. has introduced some novel challenges to the classroom. On the one hand, generative text models can be used as a tool to improve the quality of students' writing. On the other hand, they can be readily used to represent another's work as one's own -- that is, to commit plagiarism.
+It is clear that any restrictions on LLM use aside from *restricted, in-class pen-and-paper examination* use are fundamentally unenforceable. Therefore, with respect to the problem sets, students are permitted to use LLMs in whatever capacity they see fit.
 
-**My view in short:** Large language models are marvels of **engineering**. You should use them for **engineering** tasks, but the task of research is not purely engineering and LLMs are much less effective for the task of doing **science**.
 
-By "engineering," I mean the iterative task of solving a problem by brainstorming potential solutions, implementing those solutions, and then subsequently *evaluating* the solutions with respect to some clearly defined criteria. The key components here are both the existence of a well-defined problem and the ability to assess whether the proposed solutions are effective.
+## Accommodations and Accessibility
 
-### Acceptable Use
+The University of Wisconsin–Madison supports the right of all enrolled students to a full and equal educational opportunity. The Americans with Disabilities Act (ADA), Wisconsin State Statute (36.12), and UW–Madison policy (Faculty Document 1071) require that students with disabilities be reasonably accommodated in instruction and campus life. Reasonable accommodations for students with disabilities is a shared faculty and student responsibility. 
 
-Currently, the most obvious and effective use-case for large language models is in coding. You are welcome to experiment with using LLMs in debugging code. The interactivity is great for beginning programmers who may have an idea of what they want their code to do, but are unfamiliar with the syntax of a particular language. Likewise, it's an incredibly valuable tool for experienced programmers who want to quickly generate some prototype code that is customized to their particular problem.
+Students are expected to inform faculty of their need for instructional accommodations by the end of the third week of the semester, or as soon as possible after a disability has been incurred or recognized. 
 
-Why is programming an ideal use case? Programming is fundamentally an engineering task. There is a clearly defined problem that a programmer needs to solve via code and there is a straightforward way to evaluate whether a block of code works. As a result, mistakes are easy to catch -- if the code throws an error, something needs to be changed. There is always a human in the loop who is capable of evaluating the output.
-
-Another acceptable use is cleaning up original text that you have written to eliminate grammar mistakes or to rephrase the text to have a clearer style. We already accept the use of spellcheckers and thesauruses that are embedded in most word processors and I don't see this use case as substantively different as long as your original writing is the input.
-
-### Prohibited Use
-
-Outside of coding and editing, you should be cautious about any LLM outputs that you are not able to verify or evaluate yourself.
-
-**Submitting LLM-generated text as a substitute for your own thinking is not permitted in this class and will be considered plagiarism.** This includes prompting an LLM to compose all or part of your writing and submitting that output either verbatim or with some editing. This policy also applies to generating posts on the discussion board.
+I will work either directly with you or in coordination with the [McBurney Disability Resource Center](https://mcburney.wisc.edu/) to identify and provide reasonable instructional accommodations. Once you are approved for accommodations by the McBurney Center, please be sure to make the relevant selections in [McBurney Connect](https://mcburney.wisc.edu/mcburneyconnect/). When I have received your Student Accommodation Letter, I will send you a follow-up e-mail to connect and discuss how the accommodations will be implemented for this course. Disability information, including instructional accommodations as part of a student’s educational record, is confidential and protected under FERPA.
 
 ## Acknowledgments
 
-This course is indebted to the many wonderful and generous scholars who have developed causal inference curricula in political science departments throughout the world and who have made their course materials available to the public. In particular, I thank Matthew Blackwell, Brandon Stewart, Molly Roberts, Kosuke Imai, Teppei Yamamoto, Jens Hainmueller, Adam Glynn, Gary King, and Justin Grimmer whose lecture notes and syllabi have been immensely valuable in the creation of this course. I also thank the previous teaching assistants of this course and its earlier incarnation as PLSC 30600 at the University of Chicago: Arthur Yu, Oscar Cuadros, Zikai Li, and Cindy Wang.
+This course is indebted to the many wonderful and generous scholars who have developed causal inference curricula in political science departments throughout the world and who have made their course materials available to the public. In particular, I thank Matthew Blackwell, Brandon Stewart, Molly Roberts, Kosuke Imai, Teppei Yamamoto, Jens Hainmueller, Adam Glynn, Gary King, and Justin Grimmer whose lecture notes and syllabi have been immensely valuable in the creation of this course. Special thanks to Molly Offer-Westort, Andy Eggers and Bobby Gulotty who helped in the development of this course in its earlier incarnation as PLSC 30600 at the University of Chicago. I also thank the previous teaching assistants of this course: Arthur Yu, Oscar Cuadros, Zikai Li, and Cindy Wang.
 
-Lastly, thanks to Andrew Heiss and Matt Blackwell for their Quarto website template, which I have extensively borrowed from in designing this course site.
+Lastly, thanks to Andrew Heiss and Matt Blackwell for their Quarto website templates, which I have extensively borrowed from in designing this course site.

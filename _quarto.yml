@@ -22,6 +22,10 @@ website:
         href: assignments.qmd
       - text: "Resources"
         href: resources.qmd
+      - text: "Ed"
+        href: https://edstem.org/us/courses/93768/
+      - text: "Gradescope"
+        href: https://www.gradescope.com/courses/1223529
     right:
       - icon: github
         href: https://github.com/astrezhnev/ps813

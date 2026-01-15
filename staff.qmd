@@ -6,11 +6,13 @@ title: "Staff"
 
 ### Anton Strezhnev
 
-**Assistant Professor**
+::: {.course-details}
 
-Department of Political Science
+- **Assistant Professor**
+- Department of Political Science
+- University of Wisconsin-Madison
 
-University of Wisconsin-Madison
+:::
 
 |                  |                                                     |
 |------------------|-----------------------------------------------------|
@@ -25,11 +27,13 @@ University of Wisconsin-Madison
 
 ### Junda Li
 
-**Graduate Student**
+::: {.course-details}
 
-Department of Political Science
+- **PhD Candidate**
+- Department of Political Science
+- University of Wisconsin-Madison
 
-University of Wisconsin-Madison
+:::
 
 |                  |                                                     |
 |------------------|-----------------------------------------------------|
@@ -41,7 +45,7 @@ University of Wisconsin-Madison
 
 ## Contact Policy
 
-- **Course questions:** Please post questions about course content on the Piazza discussion forum so that all students can benefit from the answers.
+- **Course questions:** Please post questions about course content on the Ed discussion forum so that all students can benefit from the answers.
 - **Personal matters:** Email the instructor directly.
 - **Problem set questions:** Post on the discussion forum or come to office hours.
 - **Expected response time:** We aim to respond to discussion posts within 24 hours on weekdays.

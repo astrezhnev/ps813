@@ -4,9 +4,7 @@ title: "Resources"
 
 ## Textbooks
 
-### Primary References
-
-These textbooks provide a number of the readings that will be used through the course of the semester. Each is available either as a free online version or in digital from via UW-Madison library access.
+These textbooks provide a number of the readings that will be used through the course of the semester. Each is available either as a free online version or in digital form via UW-Madison library access.
 
 - **Cunningham, Scott.** *Causal inference: The Mixtape*. Yale University Press, 2021.
   - [Free online version](https://mixtape.scunning.com/)
@@ -23,6 +21,9 @@ These textbooks provide a number of the readings that will be used through the c
 - **Morgan, Stephen L., and Christopher Winship.** *Counterfactuals and Causal Inference*. Cambridge University Press, 2015.
   - [UW-Madison Library Access](https://www-cambridge-org.ezproxy.library.wisc.edu/core/books/counterfactuals-and-causal-inference/5CC81E6DF63C5E5A8B88F79D45E1D1B7)
 
+- **Wager, Stefan**. *Causal inference: A statistical learning approach.* 
+  - [Draft PDF available here](https://web.stanford.edu/~swager/causal_inf_book.pdf)
+
 ---
 
 ## Software
@@ -35,6 +36,11 @@ This course uses R for all programming assignments. You are welcome to use the R
 - **RStudio:** Download from [https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/)
 - **Positron:** Download from [https://positron.posit.co/](https://positron.posit.co/)
 
+#### Recommended Guides for R Programming
+
+- **R For Data Science** Available at [https://r4ds.hadley.nz/](https://r4ds.hadley.nz/)
+- **Data Visualization: A Practical Introduction** Available at [https://socviz.co/](https://socviz.co/)
+
 ### Quarto and Markdown
 
 The assignments are distributed as `.qmd` Quarto files. [Quarto](https://quarto.org/) is the successor to R Markdown and lets you present your analysis, code, figures and written discussion all in a single document. It uses Markdown syntax for formatting text and supports embedded R code chunks that execute when you render the document. This lets you present your analysis, code, figures, and written discussion all in one place.
@@ -44,42 +50,10 @@ To complete assignments, you will edit the provided `.qmd` file, adding your cod
 - **Quarto:** Download from [https://quarto.org/docs/get-started/](https://quarto.org/docs/get-started/)
 - **Quarto Guide:** [https://quarto.org/docs/guide/](https://quarto.org/docs/guide/)
 - **Markdown Basics:** [https://quarto.org/docs/authoring/markdown-basics.html](https://quarto.org/docs/authoring/markdown-basics.html)
+- Note also the [chapter on Quarto](https://r4ds.hadley.nz/quarto.html) in **R For Data Science**
+
+
+### 
 
 ---
 
-## R Tutorials
-
-### Getting Started with R
-
-
-
-### R Markdown
-
-- [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/)
-- [Markdown Cheatsheet](https://www.rstudio.com/resources/cheatsheets/)
-
----
-
-## Getting Help
-
-### Course Support
-
-1. **Discussion Forum:** Post questions about course content
-2. **Office Hours:** See the [Staff](staff.qmd) page for times and locations
-
-### Computing Help
-
-- [UW-Madison DoIT Help Desk](https://it.wisc.edu/help/)
-- [SSCC Statistical Computing](https://www.ssc.wisc.edu/sscc/)
-
----
-
-## Academic Policies
-
-### Academic Integrity
-
-All students are expected to follow the [UW-Madison Academic Integrity policies](https://conduct.students.wisc.edu/academic-integrity/).
-
-### Accommodations
-
-If you need accommodations for a disability, please contact the [McBurney Disability Resource Center](https://mcburney.wisc.edu/) to establish eligibility and coordinate accommodations.
