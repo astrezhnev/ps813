@@ -141,10 +141,10 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#recommended-textbooks" id="toc-recommended-textbooks" class="nav-link" data-scroll-target="#recommended-textbooks">Recommended Textbooks</a></li>
   </ul></li>
-  <li><a href="#requirements" id="toc-requirements" class="nav-link" data-scroll-target="#requirements">Requirements</a>
+  <li><a href="#grading" id="toc-grading" class="nav-link" data-scroll-target="#grading">Grading</a>
   <ul class="collapse">
   <li><a href="#problem-sets-25" id="toc-problem-sets-25" class="nav-link" data-scroll-target="#problem-sets-25">Problem Sets (25%)</a></li>
-  <li><a href="#take-home-midterm-30" id="toc-take-home-midterm-30" class="nav-link" data-scroll-target="#take-home-midterm-30">Take-home Midterm (30%)</a></li>
+  <li><a href="#in-person-midterm-30" id="toc-in-person-midterm-30" class="nav-link" data-scroll-target="#in-person-midterm-30">In-person Midterm (30%)</a></li>
   <li><a href="#in-person-final-35" id="toc-in-person-final-35" class="nav-link" data-scroll-target="#in-person-final-35">In-person Final (35%)</a></li>
   <li><a href="#participation-10" id="toc-participation-10" class="nav-link" data-scroll-target="#participation-10">Participation (10%)</a></li>
   </ul></li>
@@ -154,6 +154,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#acceptable-use" id="toc-acceptable-use" class="nav-link" data-scroll-target="#acceptable-use">Acceptable Use</a></li>
   <li><a href="#prohibited-use" id="toc-prohibited-use" class="nav-link" data-scroll-target="#prohibited-use">Prohibited Use</a></li>
   </ul></li>
+  <li><a href="#accommodations-and-accessibility" id="toc-accommodations-and-accessibility" class="nav-link" data-scroll-target="#accommodations-and-accessibility">Accommodations and Accessibility</a></li>
   <li><a href="#acknowledgments" id="toc-acknowledgments" class="nav-link" data-scroll-target="#acknowledgments">Acknowledgments</a></li>
   </ul>
 </nav>
@@ -182,54 +183,53 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="course-overview" class="level2">
 <h2 class="anchored" data-anchor-id="course-overview">Course Overview</h2>
-<p>Questions of cause and effect are central to the study of political science and to the social sciences more broadly. But making inferences about causation from empirical data is a significant challenge. Critically, there is no simple, assumption-free process for learning about a causal relationship from the data alone. Causal inference requires researchers to make assumptions about the underlying data generating process in order to identify and estimate causal effects. The goal of this course is to provide students with a structured statistical framework for articulating the assumptions behind causal research designs and estimating effects using quantitative data.</p>
+<p>Questions of cause and effect are central to the study of political science and to the social sciences more broadly. But making inferences about causation from empirical data is a significant challenge. Critically, there is no simple, assumption-free process for learning about a causal relationship from the data alone. Causal inference requires researchers to make assumptions about the underlying data generating process in order to identify and estimate causal effects. The goal of this course is to provide students with a structured statistical framework for articulating the assumptions behind causal research designs and for estimating effects using quantitative data.</p>
 <p>The course begins by introducing the counterfactual framework of causal inference as a way of defining causal quantities of interest such as the “average treatment effect.” It then proceeds to illustrate a variety of different designs for identifying and estimating these quantities. We will start with the most basic experimental designs and progress to more complex experimental and observational methods. For each approach, we will discuss the necessary assumptions that a researcher needs to make about the process that generated the data, how to assess whether these assumptions are reasonable, how to interpret the quantity being estimated and ultimately how to conduct the analysis.</p>
-<p>This course will involve a combination of lectures and problem sets. Lectures will focus on introducing the core theoretical concepts being taught in this course. Sections will emphasize application and demonstrate how to implement various causal inference techniques with real data sets. Problem sets will contain a mixture of both theoretical and applied questions and serve to reinforce key concepts and allow students to assess their progress and understanding throughout the course.</p>
-<p>Assignments will involve analysis of data using the R programming language. This is a free and open source language for statistical computing that is used extensively for data analysis in many fields. Prior experience with the fundamentals of R programming is required.</p>
+<p>This course will involve a combination of lectures and problem sets. Problem sets will contain a mixture of both theoretical and applied questions and serve to reinforce key concepts and allow students to assess their progress and understanding throughout the course. Assignments will involve analysis of data using the <a href="https://www.r-project.org/"><i class="fa-brands fa-r-project" aria-label="r-project"></i> programming language</a>. This is a free and open source language for statistical computing that is used extensively for data analysis in many fields. Prior experience with the fundamentals of <i class="fa-brands fa-r-project" aria-label="r-project"></i> programming is required.</p>
 </section>
 <section id="prerequisites" class="level2">
 <h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
-<p>This course is the second in the political science graduate methodology sequence. Completing the introductory course prior to this sequence should prepare you for the material in this class. We will rely on some background knowledge of core concepts in probability, statistics and inference as well as experience with statistical programming in R. However, there are no strict, specific course pre-requisites as many different disciplines and departments offer introductory statistics classes that cover the relevant material.</p>
-<p>In general, you should have had some introduction to probability theory and should be familiar with concepts like the properties of random variables (especially expectation and variance), estimands and estimators, and statistical inference. Familiarity with regression modeling is a plus but not strictly required.</p>
+<p>This course is the second in the political science graduate methodology sequence. Completing the introductory course prior to this sequence should prepare you for the material in this class. We will rely on some background knowledge of core concepts in probability, statistics and inference as well as experience with statistical programming in <i class="fa-brands fa-r-project" aria-label="r-project"></i>. However, there are no strict, specific course pre-requisites as many different disciplines and departments offer introductory statistics classes that cover the relevant material.</p>
+<p>In general, you should have had some introduction to probability theory and should be familiar with concepts like the properties of random variables (especially expectation and variance), estimands and estimators, and statistical inference. Familiarity with linear regression is also a plus, but we will be reviewing it during the relevant week.</p>
 <p>Please contact the instructor if you are interested in enrolling but are unsure of the requirements.</p>
 </section>
 <section id="logistics" class="level2">
 <h2 class="anchored" data-anchor-id="logistics">Logistics</h2>
 <ul>
-<li><strong>Lectures</strong>: Tuesdays/Thursdays from 2pm - 3:20pm</li>
-<li><strong>Sections</strong>: Fridays from 2:30pm - 3:20pm</li>
+<li><strong>Lectures</strong>: Mondays/Wednesdays from 9:30am-10:45am</li>
 </ul>
-<p>You should attend sections regularly as they comprise a significant element of the course instruction.</p>
-<p><strong>Discussion Forum</strong>: We will use a private discussion forum as a course discussion platform. See Canvas for more details.</p>
-<p><strong>Course Materials</strong>: Lecture materials, problem sets and section code will be posted on the course GitHub page. Problem set solutions will be posted after the due date on Canvas.</p>
-<p>Readings will be posted on the Canvas website. You can find them under the “Modules” section organized by week.</p>
+<p>You should attend lectures regularly as they comprise a significant element of the course instruction. Lecture materials will be posted on the course website.</p>
+<ul>
+<li><p><strong>Discussion Forum</strong>: We will be using <a href="https://edstem.org/">Ed</a> as our primary course discussion platform. If you are enrolled in the class on Canvas, you should already have access to the Ed board for this class. Please use this to post questions about the readings/lecture material as well as about the problem sets.</p></li>
+<li><p><strong>Course Materials</strong>: Lecture materials, problem sets and tutorial code will be posted on the course website. Problem set solutions will be posted after the due date on Canvas. Links to readings can be found on the course website organized by week.</p></li>
+</ul>
 </section>
 <section id="textbooks" class="level2">
 <h2 class="anchored" data-anchor-id="textbooks">Textbooks</h2>
-<p>The course will involve readings from a variety of different textbooks and published papers. The class will not require the purchase of a single, specific, text and all excerpts from textbooks are available online (either directly or through library resources). However, we do recommend considering obtaining some of these texts to use as a personal reference and they may be valuable to you in the future.</p>
+<p>The course will involve readings from a variety of different textbooks and published papers. The class will not require the purchase of a single, specific, text and all excerpts from textbooks are available online (either directly or through library resources). However, you may wish to obtain some of these texts to use as a personal reference and they may be valuable to you in the future.</p>
 <section id="recommended-textbooks" class="level3">
 <h3 class="anchored" data-anchor-id="recommended-textbooks">Recommended Textbooks</h3>
 <ul>
+<li>Imbens, Guido W. and Donald B. Rubin. <em>Causal Inference for Statistics, Social, and Biomedical Sciences</em>. Cambridge University Press. 2010.</li>
+<li>Hernán, Miguel A. and James M. Robins. <em>Causal Inference: What If</em>. Chapman &amp; Hall/CRC. 2020.</li>
+<li>Morgan, Stephen L., and Christopher Winship. <em>Counterfactuals and Causal Inference</em>. Cambridge University Press, 2015.</li>
 <li>Cunningham, Scott. <em>Causal inference: The Mixtape</em>. Yale University Press, 2021.</li>
 <li>Huntington-Klein, Nick. <em>The Effect: An Introduction to Research Design and Causality</em>. Chapman and Hall/CRC, 2021.</li>
-<li>Angrist, Joshua D., and Jorn-Steffen Pischke. <em>Mostly Harmless Econometrics: An Empiricist’s Companion</em>. Princeton University Press. 2009.</li>
-<li>Imbens, Guido W. and Donald B. Rubin. <em>Causal Inference for Statistics, Social, and Biomedical Sciences</em>. Cambridge University Press. 2010.</li>
-<li>Hernán, Miguel A. and James M. Robins. <em>Causal Inference: What If</em>. Chapman &amp; Hall/CRC. 2020. (<a href="https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/">PDF available online</a>)</li>
-<li>Morgan, Stephen L., and Christopher Winship. <em>Counterfactuals and Causal Inference</em>. Cambridge University Press, 2015.</li>
+<li>Wager, Stefan. <em>Causal inference: A statistical learning approach.</em> Draft available <a href="https://web.stanford.edu/~swager/causal_inf_book.pdf">here</a></li>
 </ul>
 </section>
 </section>
-<section id="requirements" class="level2">
-<h2 class="anchored" data-anchor-id="requirements">Requirements</h2>
+<section id="grading" class="level2">
+<h2 class="anchored" data-anchor-id="grading">Grading</h2>
 <p>Students’ final grades are based on four components:</p>
 <section id="problem-sets-25" class="level3">
 <h3 class="anchored" data-anchor-id="problem-sets-25">Problem Sets (25%)</h3>
-<p>Students will complete a total of three problem sets throughout the quarter. Problem sets will primarily cover topics from the lecture and section for that week and the previous week.</p>
+<p>Students will complete a total of five problem sets throughout the quarter. Problem sets will primarily cover topics from the lecture and section for that week and the previous week.</p>
 <p>The goal of the problem sets is to encourage exploration of the material and to provide you with a clear and credible means of assessing your understanding and progress through the course. As such, problem sets are <em>designed</em> to be challenging and we expect students to find some questions difficult.</p>
 <p>Problem sets will be graded on a (+/✓/-) scale:</p>
 <ul>
 <li><strong>+</strong> : Complete and near-perfect work</li>
-<li><strong>✓</strong> : Generally good work with clear effort shown but with some errors</li>
+<li><strong>✓</strong> : Generally good work with clear effort shown but with notable errors</li>
 <li><strong>-</strong> : Significantly incomplete work with major conceptual errors and little effort shown</li>
 </ul>
 <section id="collaboration-policy" class="level4">
@@ -242,16 +242,16 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="submission-guidelines" class="level4">
 <h4 class="anchored" data-anchor-id="submission-guidelines">Submission Guidelines</h4>
-<p>Problem sets will be distributed as PDF and Rmarkdown files (.Rmd). You should submit your answers and any relevant R code in the same format: including an Rmarkdown file (.Rmd extension) and a corresponding rendered .pdf file as your submission. Rmarkdown combines the text formatting syntax of Markdown markup language with the ability to embed and execute chunks of R code directly into a text document. This allows you to present your code, graphical output, and discussion/write-up all in the same document.</p>
+<p>Problem sets will be distributed as HTMl and Quarto files (<code>.qmd</code>). You should submit your answers and any relevant R code in the same format: including the Quarto file (<code>.qmd</code> extension) and a corresponding rendered <code>.html</code> file as your submission. You will be submitting your problem sets via <a href="https://www.gradescope.com/">Gradescope</a>.</p>
 </section>
 </section>
-<section id="take-home-midterm-30" class="level3">
-<h3 class="anchored" data-anchor-id="take-home-midterm-30">Take-home Midterm (30%)</h3>
-<p>The take-home midterm will have the same format and structure as the problem sets but with one key difference. You are <strong>not</strong> permitted to collaborate with other students or any other individual on the exams. The teaching staff will answer any clarifying questions on the discussion board, but will not answer substantive questions.</p>
+<section id="in-person-midterm-30" class="level3">
+<h3 class="anchored" data-anchor-id="in-person-midterm-30">In-person Midterm (30%)</h3>
+<p>We will have an in-person midterm examination on <strong>Wednesday, March 4th, 2026</strong>. This exam will cover the material in the first half of the course (experiments and selection-on-observables) The exam will take the form of a standard pen-and-paper timed examination involving both theory and practical analysis of sample code and results.</p>
 </section>
 <section id="in-person-final-35" class="level3">
 <h3 class="anchored" data-anchor-id="in-person-final-35">In-person Final (35%)</h3>
-<p>The final exam will take place in person during exams week. The exact date and time will be announced once final exam room assignments have been made. Exams will take the form of a standard pen-and-paper timed examination involving both theory and practical analysis of sample code and results. More details will be provided towards the latter half of the course.</p>
+<p>The final exam will take place in person during exams week. We have been assigned an exam date of <strong>May 4, 2026</strong> at <strong>5:05PM - 7:05PM</strong>. Room information will be made available nearer to the end of the semester. The exam will take the same form as the midterm, but will be slightly longer given the additional time available during the exam period.</p>
 </section>
 <section id="participation-10" class="level3">
 <h3 class="anchored" data-anchor-id="participation-10">Participation (10%)</h3>
@@ -261,11 +261,13 @@ ul.task-list li input[type="checkbox"] {
 <section id="computing" class="level2">
 <h2 class="anchored" data-anchor-id="computing">Computing</h2>
 <p>This course will use the R programming language. This is a free and open source programming language that is available for nearly all computing platforms. You should download and install it from <a href="https://www.r-project.org">https://www.r-project.org</a>.</p>
-<p>Unless you have strong preferences for a specific coding environment, we also highly recommend that you use the free <a href="https://rstudio.com">RStudio</a> Desktop Integrated Development Environment (IDE) which you can download from <a href="https://rstudio.com/products/rstudio/download/#download">https://rstudio.com/products/rstudio/download/#download</a>.</p>
+<p>Unless you have strong preferences for a specific coding environment, we recommend that you use the free <a href="https://rstudio.com">RStudio</a> Desktop Integrated Development Environment (IDE) which you can download from <a href="https://rstudio.com/products/rstudio/download/#download">https://rstudio.com/products/rstudio/download/#download</a>.</p>
 <p>In addition to base R, we will be frequently using data management and processing tools found in the <a href="https://www.tidyverse.org/">tidyverse</a> set of packages along with basic graphics and visualization using <a href="https://ggplot2.tidyverse.org/">ggplot2</a>.</p>
+<p>See the <a href="./resources.html">Resources</a> page for additional information.</p>
 </section>
 <section id="policy-on-generative-large-language-models" class="level2">
 <h2 class="anchored" data-anchor-id="policy-on-generative-large-language-models">Policy on Generative Large Language Models</h2>
+<p>Large Language Models (LLMs) continue to have an immense impact on the educational field. Over the last several years, we have seen striking growth in the capabilities of these models and it is clear that they will remain a permanent presence in all of our lives.</p>
 <p>The rapid growth in both the capabilities and the accessibility of generative large language models (LLMs) such as the GPT series, Claude, LLaMa, etc. has introduced some novel challenges to the classroom. On the one hand, generative text models can be used as a tool to improve the quality of students’ writing. On the other hand, they can be readily used to represent another’s work as one’s own – that is, to commit plagiarism.</p>
 <p><strong>My view in short:</strong> Large language models are marvels of <strong>engineering</strong>. You should use them for <strong>engineering</strong> tasks, but the task of research is not purely engineering and LLMs are much less effective for the task of doing <strong>science</strong>.</p>
 <p>By “engineering,” I mean the iterative task of solving a problem by brainstorming potential solutions, implementing those solutions, and then subsequently <em>evaluating</em> the solutions with respect to some clearly defined criteria. The key components here are both the existence of a well-defined problem and the ability to assess whether the proposed solutions are effective.</p>
@@ -281,9 +283,16 @@ ul.task-list li input[type="checkbox"] {
 <p><strong>Submitting LLM-generated text as a substitute for your own thinking is not permitted in this class and will be considered plagiarism.</strong> This includes prompting an LLM to compose all or part of your writing and submitting that output either verbatim or with some editing. This policy also applies to generating posts on the discussion board.</p>
 </section>
 </section>
+<section id="accommodations-and-accessibility" class="level2">
+<h2 class="anchored" data-anchor-id="accommodations-and-accessibility">Accommodations and Accessibility</h2>
+<p>The University of Wisconsin–Madison supports the right of all enrolled students to a full and equal educational opportunity. The Americans with Disabilities Act (ADA), Wisconsin State Statute (36.12), and UW–Madison policy (Faculty Document 1071) require that students with disabilities be reasonably accommodated in instruction and campus life. Reasonable accommodations for students with disabilities is a shared faculty and student responsibility.</p>
+<p>Students are expected to inform faculty of their need for instructional accommodations by the end of the third week of the semester, or as soon as possible after a disability has been incurred or recognized.</p>
+<p>I will work either directly with you or in coordination with the <a href="https://mcburney.wisc.edu/">McBurney Disability Resource Center</a> to identify and provide reasonable instructional accommodations. Once you are approved for accommodations by the McBurney Center, please be sure to make the relevant selections in <a href="https://mcburney.wisc.edu/mcburneyconnect/">McBurney Connect</a>. When I have received your Student Accommodation Letter, I will send you a follow-up e-mail to connect and discuss how the accommodations will be implemented for this course. Disability information, including instructional accommodations as part of a student’s educational record, is confidential and protected under FERPA.</p>
+</section>
 <section id="acknowledgments" class="level2">
 <h2 class="anchored" data-anchor-id="acknowledgments">Acknowledgments</h2>
-<p>This course is indebted to the many wonderful and generous scholars who have developed causal inference curricula in political science departments throughout the world and who have made their course materials available to the public. In particular, I thank Matthew Blackwell, Brandon Stewart, Molly Roberts, Kosuke Imai, Teppei Yamamoto, Jens Hainmueller, Adam Glynn, Gary King, and Justin Grimmer whose lecture notes and syllabi have been immensely valuable in the creation of this course.</p>
+<p>This course is indebted to the many wonderful and generous scholars who have developed causal inference curricula in political science departments throughout the world and who have made their course materials available to the public. In particular, I thank Matthew Blackwell, Brandon Stewart, Molly Roberts, Kosuke Imai, Teppei Yamamoto, Jens Hainmueller, Adam Glynn, Gary King, and Justin Grimmer whose lecture notes and syllabi have been immensely valuable in the creation of this course. I also thank the previous teaching assistants of this course and its earlier incarnation as PLSC 30600 at the University of Chicago: Arthur Yu, Oscar Cuadros, Zikai Li, and Cindy Wang.</p>
+<p>Lastly, thanks to Andrew Heiss and Matt Blackwell for their Quarto website template, which I have extensively borrowed from in designing this course site.</p>
 
 
 </section>
