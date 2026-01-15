@@ -4,15 +4,13 @@ title: "Schedule"
 
 A schedule of topics and readings is provided below. Each week will cover a single topic or group of topics. Monday lectures will typically be an introduction to the topic while Wednesday lectures will go into greater detail and involve some applications of the method. You should make sure to review the readings prior to that week's lectures with an aim towards completing the reading assignments prior to Wednesday's lecture.
 
-## Week 1: January 21 | Review 
+## Week 1: January 21 | Statistical Review 
 
 **Topics:**
-
 
 - Estimands and causal quantities of interest
 - Review of statistical properties of estimators
 - Large sample theory, big-O/little-o notation
-
 
 **Readings:**
 
@@ -22,16 +20,15 @@ A schedule of topics and readings is provided below. Each week will cover a sing
 
 ---
 
-## Week 2: January 26-30 | Introduction to Potential Outcomes + Randomized Experiments
+## Week 2: January 26, 28 | Potential Outcomes + Randomized Experiments
 
 *Monday, January 26 & Wednesday, January 28*
 
 **Topics:**
 
+- Counterfactual reasoning and the potential outcomes model
 - What assumptions are needed to identify average treatment effects
 - Why randomized experiments satisfy these assumptions
-- Counterfactual reasoning and the "Fundamental Problem of Causal Inference"
-- The "potential outcomes" model
 - Estimation and randomization inference in standard experimental designs
 
 **Readings:**
@@ -43,11 +40,11 @@ A schedule of topics and readings is provided below. Each week will cover a sing
 **Applications:**
 
 - Gerber, Alan S., Donald P. Green, and Christopher W. Larimer. "Social pressure and voter turnout: Evidence from a large-scale field experiment." *American Political Science Review* 102.1 (2008): 33-48.
-- Mutz, Diana C., and Byron Reeves. "The new videomalaise: Effects of televised incivility on political trust." *American Political Science Review* 99.1 (2005): 1-15.
+
 
 ---
 
-## Week 3: February 2-6 | Covariates in Randomized Experiments
+## Week 3: February 2-6 | Experiments: Incorporating Covariates and Statistical Power
 
 *Monday, February 2 & Wednesday, February 4*
 
@@ -72,7 +69,7 @@ A schedule of topics and readings is provided below. Each week will cover a sing
 
 ---
 
-## Week 4: February 9-13 | Experiments Continued
+## Week 4: February 9-13 | Experiments: Attrition and Non-Compliance
 
 *Monday, February 9 & Wednesday, February 11*
 
