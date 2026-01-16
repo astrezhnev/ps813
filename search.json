@@ -1,40 +1,5 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "PoliSci 813",
-    "section": "",
-    "text": "Causal Inference\nDesigning studies to uncover cause and effect from data\nPoliSci 813 • Spring 2026University of Wisconsin-Madison\n\n\n\n\n\n\n\n\nInstructor\n\n   Anton Strezhnev\n   North Hall 322D\n   strezhnev@wisc.edu\n\n\n\nTeaching Assistant\n\n   Junda Li\n   jli2479@wisc.edu\n\n\n\n\nCourse details\n\n   Mondays & Wednesdays\n   1/21/2026 - 5/4/2026\n   9:30am - 10:45am\n   North Hall 422\n\n\n\nContacting me\nE-mail is the best way to get in touch with me. My dedicated office hours are Tuesdays from 2pm-4pm if you want to meet in-person. I am also generally in my office on weekdays during normal hours and my door is open, so you are welcome to drop in. You can also feel free to e-mail me to confirm availability or to schedule a virtual meeting via Zoom."
-  },
-  {
-    "objectID": "staff.html",
-    "href": "staff.html",
-    "title": "Staff",
-    "section": "",
-    "text": "Assistant Professor\nDepartment of Political Science\nUniversity of Wisconsin-Madison\n\n\n\n\n\nOffice\nNorth Hall 322D\n\n\nEmail\nstrezhnev@wisc.edu\n\n\nWebsite\nantonstrezhnev.com\n\n\nOffice Hours\nTuesdays, 2pm-4pm (or by appointment via email)"
-  },
-  {
-    "objectID": "staff.html#instructor",
-    "href": "staff.html#instructor",
-    "title": "Staff",
-    "section": "",
-    "text": "Assistant Professor\nDepartment of Political Science\nUniversity of Wisconsin-Madison\n\n\n\n\n\nOffice\nNorth Hall 322D\n\n\nEmail\nstrezhnev@wisc.edu\n\n\nWebsite\nantonstrezhnev.com\n\n\nOffice Hours\nTuesdays, 2pm-4pm (or by appointment via email)"
-  },
-  {
-    "objectID": "staff.html#teaching-assistant",
-    "href": "staff.html#teaching-assistant",
-    "title": "Staff",
-    "section": "Teaching Assistant",
-    "text": "Teaching Assistant\n\nJunda Li\n\n\nPhD Candidate\nDepartment of Political Science\nUniversity of Wisconsin-Madison\n\n\n\n\n\nEmail\njli2458@wisc.edu\n\n\nWebsite\njundali.org\n\n\nOffice Hours\nTBA"
-  },
-  {
-    "objectID": "staff.html#contact-policy",
-    "href": "staff.html#contact-policy",
-    "title": "Staff",
-    "section": "Contact Policy",
-    "text": "Contact Policy\n\nCourse questions: Please post questions about course content on the Ed discussion forum so that all students can benefit from the answers.\nPersonal matters: Email the instructor directly.\nProblem set questions: Post on the discussion forum or come to office hours.\nExpected response time: We aim to respond to discussion posts within 24 hours on weekdays."
-  },
-  {
     "objectID": "schedule.html",
     "href": "schedule.html",
     "title": "Schedule",
@@ -147,20 +112,6 @@
     "text": "Week 14: April 27 - May 1 | Shift-share designs and experiments with interference\nMonday, April 27 & Wednesday, April 29\nTopics:\n\nTBA\n\nReadings:\n\nTBA"
   },
   {
-    "objectID": "assignments.html",
-    "href": "assignments.html",
-    "title": "Assignments",
-    "section": "",
-    "text": "Assignment\nAssigned\nDue\n\n\n\n\nProblem Set 1\nJan 21 (Week 1)\nFeb 4 (Week 3)\n\n\nProblem Set 2\nFeb 4 (Week 3)\nFeb 18 (Week 5)\n\n\nProblem Set 3\nFeb 18 (Week 5)\nMarch 4 (Week 7)\n\n\nMidterm Exam\nMarch 4 (Week 7)\nIn-Class\n\n\nProblem Set 4\nMarch 11 (Week 8)\nMarch 25 (Week 10)\n\n\nProblem Set 5\nApril 8 (Week 11)\nApril 22 (Week 13)\n\n\nFinal Exam\nMay 4 (Exam Week)\nLocation TBA"
-  },
-  {
-    "objectID": "assignments.html#schedule",
-    "href": "assignments.html#schedule",
-    "title": "Assignments",
-    "section": "",
-    "text": "Assignment\nAssigned\nDue\n\n\n\n\nProblem Set 1\nJan 21 (Week 1)\nFeb 4 (Week 3)\n\n\nProblem Set 2\nFeb 4 (Week 3)\nFeb 18 (Week 5)\n\n\nProblem Set 3\nFeb 18 (Week 5)\nMarch 4 (Week 7)\n\n\nMidterm Exam\nMarch 4 (Week 7)\nIn-Class\n\n\nProblem Set 4\nMarch 11 (Week 8)\nMarch 25 (Week 10)\n\n\nProblem Set 5\nApril 8 (Week 11)\nApril 22 (Week 13)\n\n\nFinal Exam\nMay 4 (Exam Week)\nLocation TBA"
-  },
-  {
     "objectID": "syllabus.html",
     "href": "syllabus.html",
     "title": "Syllabus",
@@ -231,6 +182,34 @@
     "text": "Acknowledgments\nThis course is indebted to the many wonderful and generous scholars who have developed causal inference curricula in political science departments throughout the world and who have made their course materials available to the public. In particular, I thank Matthew Blackwell, Brandon Stewart, Molly Roberts, Kosuke Imai, Teppei Yamamoto, Jens Hainmueller, Adam Glynn, Gary King, and Justin Grimmer whose lecture notes and syllabi have been immensely valuable in the creation of this course. Special thanks to Molly Offer-Westort, Andy Eggers and Bobby Gulotty who helped in the development of this course in its earlier incarnation as PLSC 30600 at the University of Chicago. I also thank the previous teaching assistants of this course: Arthur Yu, Oscar Cuadros, Zikai Li, and Cindy Wang.\nLastly, thanks to Andrew Heiss and Matt Blackwell for their Quarto website templates, which I have extensively borrowed from in designing this course site."
   },
   {
+    "objectID": "staff.html",
+    "href": "staff.html",
+    "title": "Staff",
+    "section": "",
+    "text": "Assistant Professor\nDepartment of Political Science\nUniversity of Wisconsin-Madison\n\n\n\n\n\nOffice\nNorth Hall 322D\n\n\nEmail\nstrezhnev@wisc.edu\n\n\nWebsite\nantonstrezhnev.com\n\n\nOffice Hours\nTuesdays, 2pm-4pm (or by appointment via email)"
+  },
+  {
+    "objectID": "staff.html#instructor",
+    "href": "staff.html#instructor",
+    "title": "Staff",
+    "section": "",
+    "text": "Assistant Professor\nDepartment of Political Science\nUniversity of Wisconsin-Madison\n\n\n\n\n\nOffice\nNorth Hall 322D\n\n\nEmail\nstrezhnev@wisc.edu\n\n\nWebsite\nantonstrezhnev.com\n\n\nOffice Hours\nTuesdays, 2pm-4pm (or by appointment via email)"
+  },
+  {
+    "objectID": "staff.html#teaching-assistant",
+    "href": "staff.html#teaching-assistant",
+    "title": "Staff",
+    "section": "Teaching Assistant",
+    "text": "Teaching Assistant\n\nJunda Li\n\n\nPhD Candidate\nDepartment of Political Science\nUniversity of Wisconsin-Madison\n\n\n\n\n\nEmail\njli2458@wisc.edu\n\n\nWebsite\njundali.org\n\n\nOffice Hours\nTBA"
+  },
+  {
+    "objectID": "staff.html#contact-policy",
+    "href": "staff.html#contact-policy",
+    "title": "Staff",
+    "section": "Contact Policy",
+    "text": "Contact Policy\n\nCourse questions: Please post questions about course content on the Ed discussion forum so that all students can benefit from the answers.\nPersonal matters: Email the instructor directly.\nProblem set questions: Post on the discussion forum or come to office hours.\nExpected response time: We aim to respond to discussion posts within 24 hours on weekdays."
+  },
+  {
     "objectID": "resources.html",
     "href": "resources.html",
     "title": "Resources",
@@ -250,5 +229,26 @@
     "title": "Resources",
     "section": "Software",
     "text": "Software\n\nR and RStudio\nThis course uses R for all programming assignments. You are welcome to use the RStudio Interactive Development Environment (IDE) to write code and edit the assignment write-up. Due to the extensive integration of Quarto into Posit-developed IDEs, I encourage using either RStudio or the more recent Positron IDE.\n\nR: Download from https://www.r-project.org\nRStudio: Download from https://posit.co/download/rstudio-desktop/\nPositron: Download from https://positron.posit.co/\n\n\nRecommended Guides for R Programming\n\nR For Data Science Available at https://r4ds.hadley.nz/\nData Visualization: A Practical Introduction Available at https://socviz.co/\n\n\n\n\nQuarto and Markdown\nThe assignments are distributed as .qmd Quarto files. Quarto is the successor to R Markdown and lets you present your analysis, code, figures and written discussion all in a single document. It uses Markdown syntax for formatting text and supports embedded R code chunks that execute when you render the document. This lets you present your analysis, code, figures, and written discussion all in one place.\nTo complete assignments, you will edit the provided .qmd file, adding your code and written responses, then render it to an HTML file for submission. Both your .html output and .qmd file will be submitted via Gradescope\n\nQuarto: Download from https://quarto.org/docs/get-started/\nQuarto Guide: https://quarto.org/docs/guide/\nMarkdown Basics: https://quarto.org/docs/authoring/markdown-basics.html\nNote also the chapter on Quarto in R For Data Science"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "PoliSci 813",
+    "section": "",
+    "text": "Causal Inference\nDesigning studies to uncover cause and effect from data\nPoliSci 813 • Spring 2026University of Wisconsin-Madison\n\n\n\n\n\n\n\n\nInstructor\n\n   Anton Strezhnev\n   North Hall 322D\n   strezhnev@wisc.edu\n\n\n\nTeaching Assistant\n\n   Junda Li\n   jli2479@wisc.edu\n\n\n\n\nCourse details\n\n   Mondays & Wednesdays\n   1/21/2026 - 5/4/2026\n   9:30am - 10:45am\n   North Hall 422\n\n\n\nContacting me\nE-mail is the best way to get in touch with me. My dedicated office hours are Tuesdays from 2pm-4pm if you want to meet in-person. I am also generally in my office on weekdays during normal hours and my door is open, so you are welcome to drop in. You can also feel free to e-mail me to confirm availability or to schedule a virtual meeting via Zoom."
+  },
+  {
+    "objectID": "assignments.html",
+    "href": "assignments.html",
+    "title": "Assignments",
+    "section": "",
+    "text": "Assignment\nAssigned\nDue\n\n\n\n\nProblem Set 1\nJan 21 (Week 1)\nFeb 4 (Week 3)\n\n\nProblem Set 2\nFeb 4 (Week 3)\nFeb 18 (Week 5)\n\n\nProblem Set 3\nFeb 18 (Week 5)\nMarch 4 (Week 7)\n\n\nMidterm Exam\nMarch 4 (Week 7)\nIn-Class\n\n\nProblem Set 4\nMarch 11 (Week 8)\nMarch 25 (Week 10)\n\n\nProblem Set 5\nApril 8 (Week 11)\nApril 22 (Week 13)\n\n\nFinal Exam\nMay 4 (Exam Week)\nLocation TBA"
+  },
+  {
+    "objectID": "assignments.html#schedule",
+    "href": "assignments.html#schedule",
+    "title": "Assignments",
+    "section": "",
+    "text": "Assignment\nAssigned\nDue\n\n\n\n\nProblem Set 1\nJan 21 (Week 1)\nFeb 4 (Week 3)\n\n\nProblem Set 2\nFeb 4 (Week 3)\nFeb 18 (Week 5)\n\n\nProblem Set 3\nFeb 18 (Week 5)\nMarch 4 (Week 7)\n\n\nMidterm Exam\nMarch 4 (Week 7)\nIn-Class\n\n\nProblem Set 4\nMarch 11 (Week 8)\nMarch 25 (Week 10)\n\n\nProblem Set 5\nApril 8 (Week 11)\nApril 22 (Week 13)\n\n\nFinal Exam\nMay 4 (Exam Week)\nLocation TBA"
   }
 ]
