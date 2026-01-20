@@ -16,3 +16,11 @@ title: "Assignments"
 
 ---
 
+## Problem Sets
+
+Problem sets are distributed as `.qmd` files along with their rendered `.html` form. You should edit the provided `.qmd` file and render to `.html` when submitting the assignment. Additional files (e.g. datasets) are located in sub-folders. For convenience, all the combined files are also distributed as a `.zip` compressed archive.
+
+### Problem Set 1
+
+- [Github Repository]
+- [`.zip` archive]

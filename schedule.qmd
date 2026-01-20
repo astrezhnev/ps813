@@ -4,12 +4,14 @@ title: "Schedule"
 
 A schedule of topics and readings is provided below. Each week will cover a single topic or group of topics. Monday lectures will typically be an introduction to the topic while Wednesday lectures will go into greater detail and involve some applications of the method. You should make sure to review the readings prior to that week's lectures with an aim towards completing the reading assignments prior to Wednesday's lecture.
 
+Applications are optional but useful examples of a given methodological approach implemented in a published political science (or adjacent discipline) paper. I have tried to curate two examples for each week that provide a contrast between an "older" vs. a more "modern" paper using a particular methodology, highlight a debate over an interesting empirical question that hinges on a methodological problem, and/or just generally provide an
+
 ## Week 1: January 21 | Statistical Review 
 
 **Topics:**
 
-- Estimands and causal quantities of interest
-- Review of statistical properties of estimators
+- Estimands and estimators
+- Review of statistical properties of estimators (bias/variance)
 - Large sample theory, big-O/little-o notation
 
 **Readings:**
@@ -17,6 +19,7 @@ A schedule of topics and readings is provided below. Each week will cover a sing
 - Chapter 1, Imbens and Rubin. *Causal Inference for Statistics, Social, and Biomedical Sciences*. Cambridge University Press. 2015.
 - Chapter 1, Hernán and Robins. *Causal Inference: What If*. Chapman & Hall/CRC. 2020.
 - Lundberg, Ian, Rebecca Johnson, and Brandon M. Stewart. "What is your estimand? Defining the target quantity connects statistical evidence to theory." *American Sociological Review* 86.3 (2021): 532-565.
+- Torreblanca, Carolina, William Dinneen, Guy Grossman, and Yiqing Xu. "The Credibility Revolution in Political Science." Available at SSRN 5842482 (2025).
 
 ---
 
@@ -40,7 +43,7 @@ A schedule of topics and readings is provided below. Each week will cover a sing
 **Applications:**
 
 - Gerber, Alan S., Donald P. Green, and Christopher W. Larimer. "Social pressure and voter turnout: Evidence from a large-scale field experiment." *American Political Science Review* 102.1 (2008): 33-48.
-
+- Broockman, David E., and Joshua L. Kalla. "Consuming cross-cutting media causes learning and moderates attitudes: A field experiment with Fox News viewers." *The Journal of Politics* 87, no. 1 (2025): 246-261.
 
 ---
 
@@ -50,17 +53,16 @@ A schedule of topics and readings is provided below. Each week will cover a sing
 
 **Topics:**
 
-- Stratification and using covariates in experiments
+- Stratification/blocking and using covariates in experiments
 - Analysis of cluster-randomized experiments
-- Problems of non-compliance
+- Power, precision and Type II error.
 
 **Readings:**
 
 - Sections 6-12, Athey and Imbens, "The Econometrics of Randomized Experiments," *Handbook of economic field experiments.* Vol. 1. North-Holland, 2017. 73-140.
-- Montgomery, Jacob M., Brendan Nyhan, and Michelle Torres. "How conditioning on posttreatment variables can ruin your experiment and what to do about it." *American Journal of Political Science* 62.3 (2018): 760-775.
-- Aronow, P. M., Jonathon Baron, and Lauren Pinson. "A note on dropping experimental subjects who fail a manipulation check." *Political Analysis* 27.4 (2019): 572-589.
 - Lin, Winston. "Agnostic notes on regression adjustments to experimental data: Reexamining Freedman's critique." *The Annals of Applied Statistics* 7.1 (2013): 295-318.
   - **Bonus:** Samii, C., and P. M. Aronow. "On equivalencies between design-based and regression-based variance estimators for randomized experiments." *Statistics & Probability Letters* 82.2 (2012): 365-370.
+- Gelman, Andrew, and John Carlin. "Beyond power calculations: Assessing type S (sign) and type M (magnitude) errors." Perspectives on psychological science 9, no. 6 (2014): 641-651.
 
 **Applications:**
 
@@ -69,17 +71,26 @@ A schedule of topics and readings is provided below. Each week will cover a sing
 
 ---
 
-## Week 4: February 9-13 | Experiments: Attrition and Non-Compliance
+## Week 4: February 9-13 | Experiments: Attrition and Generalizability
 
 *Monday, February 9 & Wednesday, February 11*
 
 **Topics:**
 
-- TBA
+- What happens when units drop out of the study?
+- What sorts of covariates should we **not** adjust for in an experiment?
+- How do we generalize from one experiment to other settings?
 
 **Readings:**
 
-- TBA
+- Montgomery, Jacob M., Brendan Nyhan, and Michelle Torres. "How conditioning on posttreatment variables can ruin your experiment and what to do about it." *American Journal of Political Science* 62.3 (2018): 760-775.
+- Aronow, P. M., Jonathon Baron, and Lauren Pinson. "A note on dropping experimental subjects who fail a manipulation check." *Political Analysis* 27.4 (2019): 572-589.
+
+- Egami, Naoki, and Erin Hartman. "Elements of external validity: Framework, design, and analysis." *American Political Science Review* 117, no. 3 (2023): 1070-1088.
+
+**Applications:**
+
+- Gerber, Alan S., and Donald P. Green. "The effects of canvassing, telephone calls, and direct mail on voter turnout: A field experiment." *American Political Science Review* 94.3 (2000): 653-663.
 
 ---
 
@@ -164,8 +175,8 @@ A schedule of topics and readings is provided below. Each week will cover a sing
 
 **Applications:**
 
-- Gerber, Alan S., and Donald P. Green. "The effects of canvassing, telephone calls, and direct mail on voter turnout: A field experiment." *American Political Science Review* 94.3 (2000): 653-663.
 - Dobbie, Will, Jacob Goldin, and Crystal S. Yang. "The effects of pretrial detention on conviction, future crime, and employment: Evidence from randomly assigned judges." *American Economic Review* 108.2 (2018): 201-40.
+- Angrist, Joshua D., and Peter Hull. "Instrumental variables methods reconcile intention-to-screen effects across pragmatic cancer screening trials." Proceedings of the national academy of sciences 120, no. 51 (2023): e2311556120.
 
 ---
 
