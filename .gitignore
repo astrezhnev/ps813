@@ -30,3 +30,5 @@ Thumbs.db
 *.blg
 *.run.xml
 *.bcf
+
+**/*.quarto_ipynb

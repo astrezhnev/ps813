@@ -1,6 +1,10 @@
 project:
   type: website
   output-dir: _site
+  render:
+      - "*.qmd"  
+      - "!slides/" 
+      - "!psets/"
 
 website:
   title: "PoliSci 813"
