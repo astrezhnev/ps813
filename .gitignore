@@ -3,6 +3,8 @@
 /_site/
 *_files/
 *.html
+!slides/**/*.html
+!psets/**/*.html
 
 # R
 .Rhistory
