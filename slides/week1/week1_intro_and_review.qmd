@@ -246,16 +246,7 @@ systematically higher or lower than the target?
 
 # Estimation
 
-::: {.incremental}
-
-- How do we know if we've picked a good estimator? Will it be close to the truth? Will it be systematically higher or lower than the target?
-- We want to derive some of its properties
-  - **Bias**: $E[\hat{\mu}] - \mu$
-  - **Variance**: $Var(\hat{\mu})$
-  - **Consistency**: Does $\hat{\mu}$ converge in probability to $\mu$ as $n$ goes to infinity?
-  - **Asymptotic normality**: Is the sampling distribution of $\hat{\mu}$ well approximated by a normal distribution in large samples?
-  
-:::
+![Properties of Estimators](assets/bias-variance.png){height="500px"}
 
 
 # Unbiasedness
