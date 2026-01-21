@@ -22,5 +22,5 @@ Problem sets are distributed as `.qmd` files along with their rendered `.html` f
 
 ### Problem Set 1
 
-- [Github Repository]
-- [`.zip` archive]
+- Github Repository
+- `.zip` archive
