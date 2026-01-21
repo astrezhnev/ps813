@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>PoliSci 813</title>
+<title>Lectures – PoliSci 813</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -103,7 +103,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Staff</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./lectures.html"> 
+    <a class="nav-link active" href="./lectures.html" aria-current="page"> 
 <span class="menu-text">Lectures</span></a>
   </li>  
   <li class="nav-item">
@@ -137,60 +137,160 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#lecture-slides" id="toc-lecture-slides" class="nav-link active" data-scroll-target="#lecture-slides">Lecture Slides</a>
+  <ul class="collapse">
+  <li><a href="#week-1-statistical-review" id="toc-week-1-statistical-review" class="nav-link" data-scroll-target="#week-1-statistical-review">Week 1: Statistical Review</a></li>
+  <li><a href="#week-2-potential-outcomes-randomized-experiments" id="toc-week-2-potential-outcomes-randomized-experiments" class="nav-link" data-scroll-target="#week-2-potential-outcomes-randomized-experiments">Week 2: Potential Outcomes + Randomized Experiments</a></li>
+  <li><a href="#week-3-experiments-incorporating-covariates-and-statistical-power" id="toc-week-3-experiments-incorporating-covariates-and-statistical-power" class="nav-link" data-scroll-target="#week-3-experiments-incorporating-covariates-and-statistical-power">Week 3: Experiments: Incorporating Covariates and Statistical Power</a></li>
+  <li><a href="#week-4-experiments-attrition-and-generalizability" id="toc-week-4-experiments-attrition-and-generalizability" class="nav-link" data-scroll-target="#week-4-experiments-attrition-and-generalizability">Week 4: Experiments: Attrition and Generalizability</a></li>
+  <li><a href="#week-5-selection-on-observables" id="toc-week-5-selection-on-observables" class="nav-link" data-scroll-target="#week-5-selection-on-observables">Week 5: Selection-on-Observables</a></li>
+  <li><a href="#week-6-selection-on-observables-continued" id="toc-week-6-selection-on-observables-continued" class="nav-link" data-scroll-target="#week-6-selection-on-observables-continued">Week 6: Selection-on-Observables Continued</a></li>
+  <li><a href="#week-7-selection-on-observables-continued-midterm" id="toc-week-7-selection-on-observables-continued-midterm" class="nav-link" data-scroll-target="#week-7-selection-on-observables-continued-midterm">Week 7: Selection-on-Observables Continued / Midterm</a></li>
+  <li><a href="#week-8-instrumental-variables" id="toc-week-8-instrumental-variables" class="nav-link" data-scroll-target="#week-8-instrumental-variables">Week 8: Instrumental Variables</a></li>
+  <li><a href="#week-9-differences-in-differences" id="toc-week-9-differences-in-differences" class="nav-link" data-scroll-target="#week-9-differences-in-differences">Week 9: Differences-in-Differences</a></li>
+  <li><a href="#week-10-differences-in-differences-continued" id="toc-week-10-differences-in-differences-continued" class="nav-link" data-scroll-target="#week-10-differences-in-differences-continued">Week 10: Differences-in-Differences Continued</a></li>
+  <li><a href="#week-11-panel-data-causal-inference" id="toc-week-11-panel-data-causal-inference" class="nav-link" data-scroll-target="#week-11-panel-data-causal-inference">Week 11: Panel Data Causal Inference</a></li>
+  <li><a href="#week-12-regression-discontinuity-designs" id="toc-week-12-regression-discontinuity-designs" class="nav-link" data-scroll-target="#week-12-regression-discontinuity-designs">Week 12: Regression Discontinuity Designs</a></li>
+  <li><a href="#week-13-mediation-and-sensitivity-analysis" id="toc-week-13-mediation-and-sensitivity-analysis" class="nav-link" data-scroll-target="#week-13-mediation-and-sensitivity-analysis">Week 13: Mediation and Sensitivity Analysis</a></li>
+  <li><a href="#week-14-shift-share-designs-and-experiments-with-interference" id="toc-week-14-shift-share-designs-and-experiments-with-interference" class="nav-link" data-scroll-target="#week-14-shift-share-designs-and-experiments-with-interference">Week 14: Shift-share Designs and Experiments with Interference</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content">
 
-
-
-
-<div class="grid">
-<div class="g-col-12 g-col-sm-8 order-2 order-sm-1">
-<p><span style="font-size: 4em; font-weight: bold;">Causal Inference</span></p>
-<p><span style="font-size: 2em;">Designing studies to uncover cause and effect from data</span></p>
-<p><span style="color: grey;">PoliSci 813 • Spring 2026<br>University of Wisconsin-Madison</span></p>
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lectures</h1>
 </div>
-<div class="g-col-12 g-col-sm-4 order-1 order-sm-2">
-<p><img src="images/ps813-hex-sticker.png" class="img-fluid" style="max-width: 300px;"></p>
-</div>
-</div>
-<div class="grid course-details">
-<div class="g-col-12 g-col-sm-6 g-col-md-4">
-<section id="instructor" class="level3">
-<h3 class="anchored" data-anchor-id="instructor">Instructor</h3>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="lecture-slides" class="level2">
+<h2 class="anchored" data-anchor-id="lecture-slides">Lecture Slides</h2>
+<p>Lecture slides are available as self-contained <code>.html</code> files made with RevealJS from a Quarto <code>.qmd</code> file. You can choose to print these to a PDF document by using the “PDF Export Mode” in the Tools menu accessed via the settings button in the lower left-hand side of the page. You are also welcome to directly download the <code>.qmd</code> file and supporting data/images/etc… from the Github repository. Slides are organized by week and combine Monday and Wednesday’s lectures.</p>
+<section id="week-1-statistical-review" class="level3">
+<h3 class="anchored" data-anchor-id="week-1-statistical-review">Week 1: Statistical Review</h3>
 <ul>
-<li><i class="fa-solid fa-user" aria-label="user"></i> &nbsp; <a href="https://www.antonstrezhnev.com">Anton Strezhnev</a></li>
-<li><i class="fa-solid fa-university" aria-label="university"></i> &nbsp; North Hall 322D</li>
-<li><i class="fa-solid fa-envelope" aria-label="envelope"></i> &nbsp; <a href="mailto:strezhnev@wisc.edu">strezhnev@wisc.edu</a></li>
+<li>[Week 1 Github Repository]</li>
+<li>[Week 1 <code>.html</code> slides]</li>
 </ul>
 </section>
-<section id="teaching-assistant" class="level3">
-<h3 class="anchored" data-anchor-id="teaching-assistant">Teaching Assistant</h3>
+<section id="week-2-potential-outcomes-randomized-experiments" class="level3">
+<h3 class="anchored" data-anchor-id="week-2-potential-outcomes-randomized-experiments">Week 2: Potential Outcomes + Randomized Experiments</h3>
 <ul>
-<li><i class="fa-solid fa-user" aria-label="user"></i> &nbsp; <a href="https://jundali.org">Junda Li</a></li>
-<li><i class="fa-solid fa-envelope" aria-label="envelope"></i> &nbsp; <a href="mailto:jli2479@wisc.edu">jli2479@wisc.edu</a></li>
+<li>[Week 2 Github Repository]</li>
+<li>[Week 2 <code>.html</code> slides]</li>
 </ul>
 </section>
-</div>
-<section id="course-details" class="level3 g-col-12 g-col-sm-6 g-col-md-4">
-<h3 class="anchored" data-anchor-id="course-details">Course details</h3>
+<section id="week-3-experiments-incorporating-covariates-and-statistical-power" class="level3">
+<h3 class="anchored" data-anchor-id="week-3-experiments-incorporating-covariates-and-statistical-power">Week 3: Experiments: Incorporating Covariates and Statistical Power</h3>
 <ul>
-<li><i class="fa-solid fa-calendar" aria-label="calendar"></i> &nbsp; Mondays &amp; Wednesdays</li>
-<li><i class="fa-solid fa-calendar-alt" aria-label="calendar-alt"></i> &nbsp; 1/21/2026 - 5/4/2026</li>
-<li><i class="fa-solid fa-clock" aria-label="clock"></i> &nbsp; 9:30am - 10:45am</li>
-<li><i class="fa-solid fa-location-dot" aria-label="location-dot"></i> &nbsp; North Hall 422</li>
+<li>[Week 3 Github Repository]</li>
+<li>[Week 3 <code>.html</code> slides]</li>
 </ul>
 </section>
-<section id="contacting-me" class="level3 g-col-12 g-col-md-4 contact-policy">
-<h3 class="anchored" data-anchor-id="contacting-me">Contacting me</h3>
-<p>E-mail is the best way to get in touch with me. My dedicated office hours are <strong>Tuesdays</strong> from <strong>2pm-4pm</strong> if you want to meet in-person. I am also generally in my office on weekdays during normal hours and my door is open, so you are welcome to drop in. You can also feel free to e-mail me to confirm availability or to schedule a virtual meeting via Zoom.</p>
+<section id="week-4-experiments-attrition-and-generalizability" class="level3">
+<h3 class="anchored" data-anchor-id="week-4-experiments-attrition-and-generalizability">Week 4: Experiments: Attrition and Generalizability</h3>
+<ul>
+<li>[Week 4 Github Repository]</li>
+<li>[Week 4 <code>.html</code> slides]</li>
+</ul>
 </section>
-</div>
+<section id="week-5-selection-on-observables" class="level3">
+<h3 class="anchored" data-anchor-id="week-5-selection-on-observables">Week 5: Selection-on-Observables</h3>
+<ul>
+<li>[Week 5 Github Repository]</li>
+<li>[Week 5 <code>.html</code> slides]</li>
+</ul>
+</section>
+<section id="week-6-selection-on-observables-continued" class="level3">
+<h3 class="anchored" data-anchor-id="week-6-selection-on-observables-continued">Week 6: Selection-on-Observables Continued</h3>
+<ul>
+<li>[Week 6 Github Repository]</li>
+<li>[Week 6 <code>.html</code> slides]</li>
+</ul>
+</section>
+<section id="week-7-selection-on-observables-continued-midterm" class="level3">
+<h3 class="anchored" data-anchor-id="week-7-selection-on-observables-continued-midterm">Week 7: Selection-on-Observables Continued / Midterm</h3>
+<ul>
+<li>[Week 7 Github Repository]</li>
+<li>[Week 7 <code>.html</code> slides]</li>
+</ul>
+</section>
+<section id="week-8-instrumental-variables" class="level3">
+<h3 class="anchored" data-anchor-id="week-8-instrumental-variables">Week 8: Instrumental Variables</h3>
+<ul>
+<li>[Week 8 Github Repository]</li>
+<li>[Week 8 <code>.html</code> slides]</li>
+</ul>
+</section>
+<section id="week-9-differences-in-differences" class="level3">
+<h3 class="anchored" data-anchor-id="week-9-differences-in-differences">Week 9: Differences-in-Differences</h3>
+<ul>
+<li>[Week 9 Github Repository]</li>
+<li>[Week 9 <code>.html</code> slides]</li>
+</ul>
+</section>
+<section id="week-10-differences-in-differences-continued" class="level3">
+<h3 class="anchored" data-anchor-id="week-10-differences-in-differences-continued">Week 10: Differences-in-Differences Continued</h3>
+<ul>
+<li>[Week 10 Github Repository]</li>
+<li>[Week 10 <code>.html</code> slides]</li>
+</ul>
+</section>
+<section id="week-11-panel-data-causal-inference" class="level3">
+<h3 class="anchored" data-anchor-id="week-11-panel-data-causal-inference">Week 11: Panel Data Causal Inference</h3>
+<ul>
+<li>[Week 11 Github Repository]</li>
+<li>[Week 11 <code>.html</code> slides]</li>
+</ul>
+</section>
+<section id="week-12-regression-discontinuity-designs" class="level3">
+<h3 class="anchored" data-anchor-id="week-12-regression-discontinuity-designs">Week 12: Regression Discontinuity Designs</h3>
+<ul>
+<li>[Week 12 Github Repository]</li>
+<li>[Week 12 <code>.html</code> slides]</li>
+</ul>
+</section>
+<section id="week-13-mediation-and-sensitivity-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="week-13-mediation-and-sensitivity-analysis">Week 13: Mediation and Sensitivity Analysis</h3>
+<ul>
+<li>[Week 13 Github Repository]</li>
+<li>[Week 13 <code>.html</code> slides]</li>
+</ul>
+</section>
+<section id="week-14-shift-share-designs-and-experiments-with-interference" class="level3">
+<h3 class="anchored" data-anchor-id="week-14-shift-share-designs-and-experiments-with-interference">Week 14: Shift-share Designs and Experiments with Interference</h3>
+<ul>
+<li>[Week 14 Github Repository]</li>
+<li>[Week 14 <code>.html</code> slides]</li>
+</ul>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
