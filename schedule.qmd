@@ -4,7 +4,9 @@ title: "Schedule"
 
 A schedule of topics and readings is provided below. Each week will cover a single topic or group of topics. Monday lectures will typically be an introduction to the topic while Wednesday lectures will go into greater detail and involve some applications of the method. You should make sure to review the readings prior to that week's lectures with an aim towards completing the reading assignments prior to Wednesday's lecture.
 
-Applications are optional but useful examples of a given methodological approach implemented in a published political science (or adjacent discipline) paper. I have tried to curate two examples for each week that provide a contrast between an "older" vs. a more "modern" paper using a particular methodology, highlight a debate over an interesting empirical question that hinges on a methodological problem, and/or just generally provide an
+Applications are optional but useful examples of a given methodological approach implemented in a published political science (or adjacent discipline) paper. I have tried to curate two examples for each week that provide a contrast between an "older" vs. a more "modern" paper using a particular methodology, highlight a debate over an interesting empirical question that hinges on a methodological problem, and/or just generally provide a cool empirical application using the framework being taught that week.
+
+All hyperlinks to papers are either to the published version of the paper (if published) or to the working paper. You should use your university library access to obtain the full version if the article is not open access. Likewise, textbook readings will be to the free/open version of the book (if available) or to the UW-Madison university library eBook.
 
 ## Week 1: January 21 | Statistical Review 
 
@@ -16,10 +18,10 @@ Applications are optional but useful examples of a given methodological approach
 
 **Readings:**
 
-- Chapter 1, Imbens and Rubin. *Causal Inference for Statistics, Social, and Biomedical Sciences*. Cambridge University Press. 2015.
-- Chapter 1, Hernán and Robins. *Causal Inference: What If*. Chapman & Hall/CRC. 2020.
-- Lundberg, Ian, Rebecca Johnson, and Brandon M. Stewart. "What is your estimand? Defining the target quantity connects statistical evidence to theory." *American Sociological Review* 86.3 (2021): 532-565.
-- Torreblanca, Carolina, William Dinneen, Guy Grossman, and Yiqing Xu. "The Credibility Revolution in Political Science." Available at SSRN 5842482 (2025).
+- [Chapter 1, Imbens and Rubin. *Causal Inference for Statistics, Social, and Biomedical Sciences*. Cambridge University Press. 2015.](https://www-cambridge-org.ezproxy.library.wisc.edu/core/services/aop-cambridge-core/content/view/E7DCA0764A18E419996E75B0BBF7F683/9781139025751c1_p3-22_CBO.pdf/causality_the_basic_framework.pdf)
+- [Chapter 1, Hernán and Robins. *Causal Inference: What If*. Chapman & Hall/CRC. 2020.](https://static1.squarespace.com/static/675db8b0dd37046447128f5f/t/691fb7706ce66332f0b44467/1763686256720/hernanrobins_WhatIf_21nov25.pdf)
+- [Lundberg, Ian, Rebecca Johnson, and Brandon M. Stewart. "What is your estimand? Defining the target quantity connects statistical evidence to theory." *American Sociological Review* 86.3 (2021): 532-565.](https://journals.sagepub.com/doi/full/10.1177/00031224211004187)
+- [Torreblanca, Carolina, William Dinneen, Guy Grossman, and Yiqing Xu. "The Credibility Revolution in Political Science." Available at SSRN 5842482 (2025).](https://osf.io/preprints/socarxiv/w2kmc_v1)
 
 ---
 

@@ -1,0 +1,77 @@
+---
+title: "Lectures"
+---
+
+## Lecture Slides
+
+Lecture slides are available as self-contained `.html` files made with RevealJS from a Quarto `.qmd` file. You can choose to print these to a PDF document by using the "PDF Export Mode" in the Tools menu accessed via the settings button in the lower left-hand side of the page. You are also welcome to directly download the `.qmd` file and supporting data/images/etc... from the Github repository. Slides are organized by week and combine Monday and Wednesday's lectures.
+
+### Week 1: Statistical Review
+
+- [Week 1 Github Repository]
+- [Week 1 `.html` slides]
+
+### Week 2: Potential Outcomes + Randomized Experiments
+
+- [Week 2 Github Repository]
+- [Week 2 `.html` slides]
+
+### Week 3: Experiments: Incorporating Covariates and Statistical Power
+
+- [Week 3 Github Repository]
+- [Week 3 `.html` slides]
+
+### Week 4: Experiments: Attrition and Generalizability
+
+- [Week 4 Github Repository]
+- [Week 4 `.html` slides]
+
+### Week 5: Selection-on-Observables
+
+- [Week 5 Github Repository]
+- [Week 5 `.html` slides]
+
+### Week 6: Selection-on-Observables Continued
+
+- [Week 6 Github Repository]
+- [Week 6 `.html` slides]
+
+### Week 7: Selection-on-Observables Continued / Midterm
+
+- [Week 7 Github Repository]
+- [Week 7 `.html` slides]
+
+### Week 8: Instrumental Variables
+
+- [Week 8 Github Repository]
+- [Week 8 `.html` slides]
+
+### Week 9: Differences-in-Differences
+
+- [Week 9 Github Repository]
+- [Week 9 `.html` slides]
+
+### Week 10: Differences-in-Differences Continued
+
+- [Week 10 Github Repository]
+- [Week 10 `.html` slides]
+
+### Week 11: Panel Data Causal Inference
+
+- [Week 11 Github Repository]
+- [Week 11 `.html` slides]
+
+### Week 12: Regression Discontinuity Designs
+
+- [Week 12 Github Repository]
+- [Week 12 `.html` slides]
+
+### Week 13: Mediation and Sensitivity Analysis
+
+- [Week 13 Github Repository]
+- [Week 13 `.html` slides]
+
+### Week 14: Shift-share Designs and Experiments with Interference
+
+- [Week 14 Github Repository]
+- [Week 14 `.html` slides]

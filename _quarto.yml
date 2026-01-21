@@ -18,6 +18,8 @@ website:
         href: schedule.qmd
       - text: "Staff"
         href: staff.qmd
+      - text: "Lectures"
+        href: lectures.qmd
       - text: "Assignments"
         href: assignments.qmd
       - text: "Resources"
