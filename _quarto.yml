@@ -2,8 +2,7 @@ project:
   type: website
   output-dir: _site
   render:
-      - "*.qmd"  
-      - "!slides/" 
+      - "*.qmd" 
       - "!psets/"
 
 website:
