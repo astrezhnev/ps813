@@ -18,10 +18,10 @@ All hyperlinks to papers are either to the published version of the paper (if pu
 
 **Readings:**
 
-- [Chapter 1, Imbens and Rubin. *Causal Inference for Statistics, Social, and Biomedical Sciences*. Cambridge University Press. 2015.](https://www-cambridge-org.ezproxy.library.wisc.edu/core/services/aop-cambridge-core/content/view/E7DCA0764A18E419996E75B0BBF7F683/9781139025751c1_p3-22_CBO.pdf/causality_the_basic_framework.pdf)
-- [Chapter 1, Hernán and Robins. *Causal Inference: What If*. Chapman & Hall/CRC. 2020.](https://static1.squarespace.com/static/675db8b0dd37046447128f5f/t/691fb7706ce66332f0b44467/1763686256720/hernanrobins_WhatIf_21nov25.pdf)
 - [Lundberg, Ian, Rebecca Johnson, and Brandon M. Stewart. "What is your estimand? Defining the target quantity connects statistical evidence to theory." *American Sociological Review* 86.3 (2021): 532-565.](https://journals.sagepub.com/doi/full/10.1177/00031224211004187)
 - [Torreblanca, Carolina, William Dinneen, Guy Grossman, and Yiqing Xu. "The Credibility Revolution in Political Science." Available at SSRN 5842482 (2025).](https://osf.io/preprints/socarxiv/w2kmc_v1)
+- [Chapter 3, Blackwell, Matthew. *A User’s Guide to Statistical Inference and Regression*. 2025](https://mattblackwell.github.io/gov2002-book/asymptotics.html)
+
 
 ---
 
@@ -38,14 +38,15 @@ All hyperlinks to papers are either to the published version of the paper (if pu
 
 **Readings:**
 
-- Sections 1-5, Athey and Imbens, "The Econometrics of Randomized Experiments," *Handbook of economic field experiments.* Vol. 1. North-Holland, 2017. 73-140.
-- Chapter 2, Hernán and Robins. *Causal Inference: What If*. Chapman & Hall/CRC. 2020.
-- Druckman, James N., et al. "The growth and development of experimental research in political science." *American Political Science Review* 100.4 (2006): 627-635.
+- [Chapter 1, Imbens and Rubin. *Causal Inference for Statistics, Social, and Biomedical Sciences*. Cambridge University Press. 2015.](https://www-cambridge-org.ezproxy.library.wisc.edu/core/services/aop-cambridge-core/content/view/E7DCA0764A18E419996E75B0BBF7F683/9781139025751c1_p3-22_CBO.pdf/causality_the_basic_framework.pdf)
+- [Chapters 1-2, Hernán and Robins. *Causal Inference: What If*. Chapman & Hall/CRC. 2020.](https://static1.squarespace.com/static/675db8b0dd37046447128f5f/t/691fb7706ce66332f0b44467/1763686256720/hernanrobins_WhatIf_21nov25.pdf)
+- [Sections 1-5, Athey and Imbens, "The Econometrics of Randomized Experiments," *Handbook of economic field experiments.* Vol. 1. North-Holland, 2017. 73-140.](https://www.sciencedirect.com/science/chapter/handbook/pii/S2214658X16300174)
+- [Druckman, James N., et al. "The growth and development of experimental research in political science." *American Political Science Review* 100.4 (2006): 627-635.](https://www.cambridge.org/core/journals/american-political-science-review/article/abs/growth-and-development-of-experimental-research-in-political-science/4381F50C6A43ED85AF8B973326BC546A)
 
 **Applications:**
 
-- Gerber, Alan S., Donald P. Green, and Christopher W. Larimer. "Social pressure and voter turnout: Evidence from a large-scale field experiment." *American Political Science Review* 102.1 (2008): 33-48.
-- Broockman, David E., and Joshua L. Kalla. "Consuming cross-cutting media causes learning and moderates attitudes: A field experiment with Fox News viewers." *The Journal of Politics* 87, no. 1 (2025): 246-261.
+- [Gerber, Alan S., Donald P. Green, and Christopher W. Larimer. "Social pressure and voter turnout: Evidence from a large-scale field experiment." *American Political Science Review* 102.1 (2008): 33-48.](https://www.cambridge.org/core/journals/american-political-science-review/article/abs/social-pressure-and-voter-turnout-evidence-from-a-largescale-field-experiment/11E84AF4C0B7FBD1D20C855972C2C3EB)
+- [Broockman, David E., and Joshua L. Kalla. "Consuming cross-cutting media causes learning and moderates attitudes: A field experiment with Fox News viewers." *The Journal of Politics* 87, no. 1 (2025): 246-261.](https://www.journals.uchicago.edu/doi/full/10.1086/730725)
 
 ---
 

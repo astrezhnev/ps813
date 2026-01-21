@@ -1,0 +1,501 @@
+---
+title: "Week 1: Review!"
+subtitle: "PS 813 - Causal Inference"
+author:
+  - name: "Anton Strezhnev"
+    affiliation: "University of Wisconsin-Madison"
+    email: strezhnev@wisc.edu
+date: "January 21, 2026"
+date-format: "MMMM D, YYYY"
+editor: 
+  render-on-save: true
+format: 
+  revealjs:
+    theme: [default, custom.scss]
+    slide-number: true
+    overview: true
+    navigation-mode: vertical
+    progress: false
+    controls: true
+    link-external-newwindow: true
+    footer: "PS 813 - University of Wisconsin - Madison"
+    html-math-method:
+      method: mathjax
+      url: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+execute: 
+  cache: false
+code:
+  execute: 
+    - r
+    - python
+embed-resources: true
+
+---
+
+# Welcome! {.title-slide}
+$$
+  \require{cancel}
+$$
+
+# Course Overview
+
+::: {.incremental}
+
+- Instructor: **Anton Strezhnev**
+- TA: **Junda Li**
+- Logistics:
+  - **Lectures** M/W - 9:30am - 10:45am
+  - *5* Problem Sets (~ 2 weeks)
+  - In-class midterm (March 4th)
+  - In-class final (May 4th)
+  - **My office hours:** Tuesdays 2pm-4pm (North Hall 322D)
+  - **Junda's office hours:** TBA
+  - **Course Website**: [https://www.antonstrezhnev.com/ps813](https://www.antonstrezhnev.com/ps813)
+  - Announcements will be posted on **Ed** - please let me know if you do not have access.
+  
+:::
+
+# Course Objectives
+
+::: {.incremental}
+
+- What is this course about?
+  - **Defining** causal effects w/ a structured statistical framework (potential outcomes)
+  - **Outlining** assumptions necessary to identify causal effects from data
+  - **Estimating** and conducting **inference** on causal effects
+- Goals for the course
+  - Give you the tools you need to develop your own causal
+  research designs and comment on others' designs.
+  - Equip you with an understanding of the fundamentals of causal inference
+  to enable you to learn new methods.
+  - Professionalization - how did causal inference emerge as a field
+  and how do different disciplines approach the topic?
+  
+:::
+
+# Course workflow
+
+::: {.incremental}
+- **Lectures**
+  - One set of slides for each of the two lectures in each week 
+  - Your primary point of instruction - goal is to **synthesize** the core material + give you the tools to learn more.
+  - I want lectures to be **interactive** - you should ask questions and interrupt!
+  - You should do the readings prior to each week, but definitely be sure to do them before the Wednesday.
+- **Readings**
+  - Mix of textbooks and papers
+  - Combination of "theory" readings w/ selected applications to political science (and sociology/econ)
+  - Organized on the syllabus by priority. **Try** to do all of them, but if
+  you need to prioritize, start with the first ones on the list for the week.
+  - All readings available digitally on the course website.
+  
+:::
+
+# Course workflow
+
+
+::: {.incremental}
+
+- **Problem sets** (25% of your grade)
+  - Main day-to-day component of the class -- meant to get you working with your colleagues and
+  thinking hard about the material.
+  - Collaboration is **strongly encouraged** -- you should ask and answer questions on our class
+  **Ed Discussion** board
+  - Submit on the **Gradescope** assignment platform
+  - Grading is on a **plus/check/minus** scale.
+    - Conversion to grade point is somewhat holistic.
+    - Majority plusses is an A, Majority checks is an AB, Majority minus is a B
+  - Solutions will be posted after the due-date.
+
+:::
+
+# Course workflow
+
+::: {.incremental}
+
+- **Midterm Exam** (30% of your grade)
+  - The midterm will be in-class on March 4th
+    - Covers all material up to that point (experiments + selection-on-observables)
+    - Combination of theoretical questions and code/results analysis.
+- **Final Exam** (35% of your grade)
+  - The final exam will be in-person and written during the exam period (May 4th)
+  - A longer version of the midterm exam (to cover the 2 hour exam block).
+- **Participation** (10% of your grade)
+  - It is important that you actively engage with lecture and with the teaching staff -- ask and answer questions.
+  - Do the reading!
+  - Participating on Ed counts towards this as well.
+  
+:::
+
+
+
+
+# Class Requirements
+
+::: {.incremental}
+
+- **Overall**: An interest in learning and willingness to ask questions.
+- Generally assume some background in probability theory and statistics (e.g. an
+intro course taught in most departments)
+- Main concepts to be familiar with:
+  - properties of random variables
+  - estimands and estimators
+  - bias, variance, consistency
+  - central limit theorem
+  - confidence intervals; hypothesis testing
+    
+:::
+
+
+
+# A brief overview
+
+::: {.incremental}
+
+- **Week 1:** Review of the properties of estimators
+- **Week 2-4:** Experiments
+- **Week 5-7:** Selection-on-observables
+- **Week 8:** Instrumental variables
+- **Week 9-10:** Differences-in-differences
+- **Week 11:** Panel data causal inference
+- **Week 12:** Regression discontinuity designs
+- **Week 13:** Causal mediation; sensitivity analysis
+- **Week 14:** Shift-share designs and experiments with interference
+  
+:::
+
+# Review: Estimators and their properties {.title-slide}
+
+# Estimation
+
+::: {.incremental}
+
+- One critical use of statistical theory is understanding how to learn about things we
+**don't observe** using things that we **do observe**. We call this estimation.
+  - What is the share of voters in Wisconsin who will turn out in the 2026 election?
+  - What is the share of voters who turn out **among those assigned** to receive a GOTV phone call?
+- **Estimand**: The **unobserved** quantity that we want to learn about. Often denoted
+via a greek letter (e.g. $\mu$, $\pi$)
+  - Often a "population" characteristic that we want to learn about via a sample.
+    - But in this class, you'll learn another reason why we sometimes can't observe a quantity of interest
+  even in a sample!
+  - Important to define your estimand well. **(Lundberg, Johnson and Stewart, 2022)**
+  
+:::
+
+
+# Estimation
+
+::: {.incremental}
+
+- **Estimator**: The **function** of random variables that we will use to try to
+estimate the quantity of interest. Often denoted with a hat on the parameter of interest
+(e.g. $\hat{\mu}$, $\hat{\pi}$)
+  - Why are the variables random?
+    - **Classic inference**: We have a random sample from the population - if we took another sample,
+    we would obtain a different realization when applying our estimator to the new sample.
+    - **Design-based inference**: We have a randomly assigned treatment - if we were to
+    re-run the experiment, we would observe a different treatment/control difference b/c of different allocation of units.
+- **Estimate**: A single realization of our estimator (e.g. 0.3, 9.535)
+  - We often report both point estimates ("best guess") and interval estimates (e.g. confidence intervals).
+  - Careful not to confuse properties of estimators with properties of the estimates themselves.
+    
+:::
+
+
+# Estimation
+
+![Illustrating Estimation](assets/estimation.jpeg){height="500px"}
+
+
+# Estimation
+
+::: {.incremental}
+
+- The classic estimation problem in statistics is to estimate some unknown population mean
+$\mu$ from an i.i.d. sample of $n$ observations $Y_1, Y_2, \dotsc, Y_n$.
+  - We assume that each $Y_i$ is a draw from the target population with mean $\mu$ and population variance $\sigma^2$
+  (identically distributed) - therefore $E[Y_i] = \mu$ and $Var(Y_i) = \sigma^2$
+  - We'll also assume that conditioning on $Y_i$ tells us nothing about any other $Y_j$
+  - $Y_i \perp \!\!\! \perp Y_j$ (independently distributed) - this implies $Cov(Y_i, Y_j) = 0$
+  
+- **Our estimand:** $\mu$
+- **Our estimator:** The sample mean $\hat{\mu} = \bar{Y} = \frac{1}{n}\sum_{i=1}^n Y_i$
+- **Our estimate:** A particular realization of that estimator based on our observed sample (e.g. $0.4$)
+
+- Note that our estimator is a *random variable* -- it's a function of $Y_i$s which are random variables.
+  - Therefore it has an expectation $E[\hat{\mu}]$
+  - It has a variance $Var(\hat{\mu})$
+  - It has a distribution (which we may or may not know).
+    
+:::
+
+
+# Estimation
+
+::: {.incremental}
+
+- How do we know if we've picked a good estimator? Will it be close to the truth? Will it be
+systematically higher or lower than the target?
+- We want to derive some of its properties
+  - **Bias**: $E[\hat{\mu}] - \mu$
+  - **Variance**: $Var(\hat{\mu})$
+  - **Consistency**: Does $\hat{\mu}$ converge in probability to $\mu$ as $n$ goes to infinity?
+  - **Asymptotic distribution**: Is the sampling distribution of $\hat{\mu}$ well approximated by a known distribution?
+  
+:::
+
+# Estimation
+
+::: {.incremental}
+
+- How do we know if we've picked a good estimator? Will it be close to the truth? Will it be systematically higher or lower than the target?
+- We want to derive some of its properties
+  - **Bias**: $E[\hat{\mu}] - \mu$
+  - **Variance**: $Var(\hat{\mu})$
+  - **Consistency**: Does $\hat{\mu}$ converge in probability to $\mu$ as $n$ goes to infinity?
+  - **Asymptotic normality**: Is the sampling distribution of $\hat{\mu}$ well approximated by a normal distribution in large samples?
+  
+:::
+
+
+# Unbiasedness
+
+::: {.incremental}
+
+- Is the expectation of $\hat{\mu}$ equal to $\mu$?
+- First we pull out the constant.
+
+  $$E[\hat{\mu}] = E\left[\frac{1}{n}\sum_{i=1}^n Y_i\right] = \frac{1}{n}E\left[\sum_{i=1}^n Y_i\right]$$
+
+- Next we use linearity of expectations
+
+  $$\frac{1}{n}E\left[\sum_{i=1}^n Y_i\right] = \frac{1}{n}\sum_{i=1}^n E\left[Y_i\right]$$
+
+- Finally, under our i.i.d. assumption
+
+  $$\frac{1}{n}\sum_{i=1}^n E\left[Y_i\right] = \frac{1}{n}\sum_{i=1}^n \mu = \frac{n \mu}{n} = \mu$$
+
+- Therefore, the bias, $\text{Bias}(\hat{\mu}) = E[\hat{\mu}] - \mu = 0$
+
+:::
+
+
+# Variance
+
+::: {.incremental}
+
+- What is the variance of $\hat{\mu}$? Again, start by pulling out the constant.
+
+  $$Var(\hat{\mu}) = Var\left[\frac{1}{n}\sum_{i=1}^n Y_i\right] = \frac{1}{n^2}Var\left[\sum_{i=1}^n Y_i\right]$$
+
+- We can further simplify by using our i.i.d. assumption. The variance of a sum of i.i.d. random variables is the sum of the variances.
+
+  $$\frac{1}{n^2}Var\left[\sum_{i=1}^n Y_i\right] = \frac{1}{n^2}\sum_{i=1}^n Var\left[Y_i\right]$$
+
+- "identically distributed"
+
+  $$\frac{1}{n^2}\sum_{i=1}^n Var\left[Y_i\right] = \frac{1}{n^2}\sum_{i=1}^n \sigma^2 = \frac{n\sigma^2}{n^2} = \frac{\sigma^2}{n}$$
+
+- Therefore, the variance is $\frac{\sigma^2}{n}$
+
+:::
+
+# Asymptotic properties
+
+::: {.incremental}
+
+- Another way of talking about properties of estimators is to consider how they **behave** as the sample size gets large.
+  - Sometimes this is just *easier* than working with finite sample expectations.
+  - Additionally, we might have a **biased** estimator. Does that bias "go away" in large samples?
+  
+- This requires us to talk about **sequences** of estimators indexed (typically) by sample size.
+  - We'll typically denote this sequence with a subscript - for example, for the sample mean...
+  
+  $$\bar{Y}_n = \{\bar{Y}_1, \bar{Y}_2, \bar{Y}_3, \dotsc\}$$
+  
+- Can we characterize the **limit** of this sequence of estimators?
+  - It's a **random variable**...so we need a slightly different language compared to deterministic series.
+  - But a lot of intuitions from convergence of series carry over!
+ 
+:::
+
+# Convergence in probability
+
+::: {.incremental}
+
+- First, we can talk about the convergence of a sequence to a single **value**
+  - There are lots of different forms of convergence here, but the most common that we use is **convergence in probability**
+  - This is the form of convergence in the "weak" law of large numbers
+- **Convergence in probability**
+  - A sequence of random variables $\hat{\mu}_n$ is said to **converge in probability** to some value $\mu$ if for every $\epsilon > 0$,
+  
+    $$\Pr(|\hat{\mu}_n - \mu| \ge \epsilon) \to 0$$
+  as $n \to \infty$. 
+
+- We'll denote this as $\hat{\mu_n} \xrightarrow{p} \mu$. You'll see other texts use the term "plim" 
+- An **estimator** that converges in probability to the target estimand is called **consistent**.
+
+:::
+
+# Properties of convergence in probability
+
+- Consider two sequences $X_n \xrightarrow{p} x$ and $Y_n \xrightarrow{p} y$ and continuous function $g()$. By the continuous mapping theorem
+
+1. $X_n + Y_n \xrightarrow{p} x + y$
+2. $X_nY_n \xrightarrow{p} xy$
+3. $X_n/Y_n \xrightarrow{p} x/y$ if $b \neq 0$
+4. $g(X_n) \xrightarrow{p} g(x)$
+
+# Convergence in distribution
+
+::: {.incremental}
+
+- In addition to asking whether the estimator will get closer to our target as $n$ gets large, we also want to know whether its **sampling distribution** will be well approximated by a known distribution
+  - Specifically, we care about whether it is approximately **normally distributed**
+  - This lets us use our typical hypothesis tests and confidence intervals that rely on normal distribution critical values!
+  
+- **Convergence in distribution**
+  - A sequence of random variables $X_n$ with CDF $F_n(x)$ is said to **converge in distribution** to some random variable $X$ with CDF $F(x)$ if
+  
+    $$\lim_{n \to \infty} F_n(x) = F(x)$$
+    
+- We'll typically denote this as as $X_n \xrightarrow{d} X$.
+    
+:::
+
+# Properties of convergence in distribution
+
+::: {.incremental}
+
+- In addition to the continuous mapping theorem from before, it is also useful to know **Slutsky's theorem** which involves one sequence converging in distribution and another converging in probability
+- Consider two sequences $X_n \xrightarrow{d} X$ and $Y_n \xrightarrow{p} y$
+
+1. $X_n + Y_n \xrightarrow{d} X + y$
+2. $X_nY_n \xrightarrow{d} Xy$
+3. $X_n/Y_n \xrightarrow{d} X/y$ if $y \neq 0$
+    
+:::
+
+# The Central Limit Theorem
+
+::: {.incremental}
+
+- The most famous convergence in distribution result is the **central limit theorem**
+  - The mean of $n$ independent and identically distributed random variables converges in distribution to a **normal distribution**
+  - Many other **central limit theorems** under different assumptions on the random variables (e.g. "weak" dependence) 
+  - Showing that an estimator is **asymptotically normal** often involves showing we can write it in a form that admits one of these CLTs
+
+- By the **central limit theorem**
+
+  $$\sqrt{n}(\hat{\mu}_n - \mu) \xrightarrow{d} \mathcal{N}(0, \sigma^2)$$
+  
+- And we'll use this result to justify our asymptotic **approximation** of the sampling distribution of $\hat{\mu}_n$
+
+  $$\hat{\mu}_n \overset{a}{\sim} \mathcal{N}\bigg(\mu, \frac{\sigma^2}{n}\bigg)$$
+
+:::
+
+# Big-$O_p$ and little-$o_p$ notation
+
+::: {.incremental}
+
+- Sometimes we'll want to use **shorthand** to characterize the asymptotic behavior of a given term
+
+- Little-$o_p$ notation denotes convergence (in probability) to **zero**
+  - $Y_n = o_p(1)$ means $\Pr(|Y_n| \ge \epsilon) \to 0$ as $n \to \infty$
+  - e.g. for a consistent estimator, we can write $\hat{\mu}_n = \mu + o_p(1)$
+  
+- Big-$O_p$ notation denotes **boundedness** of a sequence as $n \to \infty$
+  - $Y_n = O_p(1)$ means that $Pr(|Y_n| > M) < \epsilon$ for sufficiently large $n$
+  
+:::
+
+
+# Big-$O_p$ and little-$o_p$ notation
+
+::: {.incremental}
+
+- The rest of the orders are defined **recursively**
+  - So $Y_n = O_p(a_n)$ means that $\frac{Y_n}{a_n} = O_p(1)$
+
+- Useful properties
+  - $o_p(1) + o_p(1) = o_p(1)$
+  - $o_p(1) + O_p(1) = O_p(1)$
+  - $O_p(1)o_p(1) = o_p(1)$
+  - If a sequence is $o_p(1)$, it is $O_p(1)$ but not vice-versa.
+
+:::
+
+# $\sqrt{n}$-consistency
+
+::: {.incremental}
+
+- Most common place where you will see Big-$O_p$ notation is in discussion of **convergence rates** of estimators
+  - Not just **whether** $\hat{\mu}$ converges to $\mu$, but **how quickly**? 
+  - This matters for determining whether our approximation is going to be **good quality** in finite samples!
+
+- An estimator $\hat{\mu}_n$ has a convergence rate $r_n \to \infty$ if
+
+  $$r_n(\hat{\mu}_n - \mu) = O_p(1)$$
+- This implies that the estimation error $\hat{\mu}_n - \mu$ is $O_p(1/r_n)$ or in other words **bounded** in probability by $1/r_n \to 0$.
+
+:::
+
+# $\sqrt{n}$-consistency
+
+::: {.incremental}
+
+- From the central limit theorem, the most common convergence rate that you'll encounter is $\sqrt{n}$
+  - Slower rates appear in nonparametrics and machine learning and create challenges for inference! 
+- Suppose the central limit theorem holds w.r.t. $\hat{\mu}_n$ (e.g. it's the sample mean).
+
+  $$\sqrt{n}(\hat{\mu}_n - \mu) \sim \mathcal{N}(0, \sigma^2)$$
+  
+- The variance is **finite**, does not depend on $n$, and the distribution is **normal**
+  - So we can always find an $M$ sufficiently large that the probability of observing $|\hat{\mu}_n - \mu|$ greater than that $M$ is less than any arbitrary $\epsilon > 0$.
+- And therefore
+
+  $$\sqrt{n}(\hat{\mu}_n - \mu) = O_p(1)$$
+  
+:::
+
+
+# Preview of next week
+
+# Thinking about causal effects
+
+::: {.incremental}
+- Two types of causal questions (Gelman and Rubin, 2013)
+
+- **Causes of effects**
+  - What are the factors that cause some outcome $Y$?
+  - "Why?" questions: Why do states go to war? Why do politicians get re-elected?
+
+- **Effects of causes**
+  - If $X$ were to change, what might happen to $Y$?
+  - "What if?" questions: What if a pair of states were democratic, would that change
+  their chances of going to war? What if a politician were an incumbent, would that
+  affect their re-election probability?
+
+- We'll spend more time on the **effects of causes**
+  - Why? Because we can connect them to well-defined statistical quantities of
+  interest (e.g. an "average treatment effect")
+  - "Causes of effects" are still important questions, and theoretical inquiry
+  can lead you towards possible causes to evaluate.
+  
+:::
+
+
+# Next week
+
+- **Potential outcomes model**
+  - Defining treatment effects as **contrasts** in **counterfactuals**
+  
+- **Causal identification**
+  - How do we connect something we can observe (e.g. a difference-in-means) to something we **can't** observe (an average treatment effect)?
+  - We need to make assumptions! 
+  - Every identification assumption imposes some **outside knowledge** on the data-generating process.
+  
+- **Randomized experiments**
+  - Randomized experiments solve the identification problem (for the sample ATE)
+  - What can we get **just** with randomization of treatment?
