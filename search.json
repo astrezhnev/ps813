@@ -175,74 +175,74 @@
     "text": "Week 5: Selection-on-Observables\nMonday, February 16 & Wednesday, February 18\nTopics:\n\nWhat to do when random assignment of treatment is not possible - common challenges of observational designs\nAssumptions behind “no unobserved confounding” designs\nRepresenting assumptions using graphical models\nCovariate adjustment using stratification\n\nReadings:\n\nChapter 12; Imbens and Rubin. Causal Inference for Statistics, Social, and Biomedical Sciences. Cambridge University Press. 2015.\nChapters 3; 6-8; Hernán and Robins. Causal Inference: What If. Chapman & Hall/CRC. 2020.\nChapters 6-8. Huntington-Klein, Nick. The effect: An introduction to research design and causality. Chapman and Hall/CRC, 2021.\nSupplementary: Cinelli, Carlos, Andrew Forney, and Judea Pearl. “A crash course in good and bad controls.” Sociological Methods & Research 53, no. 3 (2024): 1071-1104.\nSupplementary: Rohrer, Julia M. “Thinking clearly about correlations and causation: Graphical causal models for observational data.” Advances in methods and practices in psychological science 1, no. 1 (2018): 27-42.\n\nApplications:\n\nWashington, Ebonya L. “Female socialization: how daughters affect their legislator fathers.” American Economic Review 98, no. 1 (2008): 311-32.\nBa, Bocar A., Dean Knox, Jonathan Mummolo, and Roman Rivera. “The role of officer race and gender in police-civilian interactions in Chicago.” Science 371, no. 6530 (2021): 696-702."
   },
   {
-    "objectID": "schedule.html#week-6-february-23-27-selection-on-observables---regression-and-weighting",
-    "href": "schedule.html#week-6-february-23-27-selection-on-observables---regression-and-weighting",
+    "objectID": "schedule.html#week-6-selection-on-observables---regression-and-weighting",
+    "href": "schedule.html#week-6-selection-on-observables---regression-and-weighting",
     "title": "Schedule",
-    "section": "Week 6: February 23-27 | Selection-on-Observables - Regression and Weighting",
-    "text": "Week 6: February 23-27 | Selection-on-Observables - Regression and Weighting\nMonday, February 23 & Wednesday, February 25\nTopics:\n\nCovariate adjustment using regression estimators\nPropensity scores and covariate adjustment via weighting\nCombining treatment and outcome models for a “doubly-robust” estimator\n\nReadings:\n\nImbens, Guido W. “Nonparametric estimation of average treatment effects under exogeneity: A review.” Review of Economics and statistics 86, no. 1 (2004): 4-29.\nGlynn, Adam N., and Kevin M. Quinn. “An introduction to the augmented inverse propensity weighted estimator.” Political Analysis 18.1 (2010): 36-56.\nAronow, Peter M., and Cyrus Samii. “Does regression produce representative estimates of causal effects?” American Journal of Political Science 60.1 (2016): 250-267.\nChapters 11-12; Hernán and Robins. Causal Inference: What If. Chapman & Hall/CRC. 2020.\n\nApplications:"
+    "section": "Week 6: Selection-on-Observables - Regression and Weighting",
+    "text": "Week 6: Selection-on-Observables - Regression and Weighting\nMonday, February 23 & Wednesday, February 25\nTopics:\n\nCovariate adjustment using regression estimators\nPropensity scores and covariate adjustment via weighting\nCombining treatment and outcome models for a “doubly-robust” estimator\n\nReadings:\n\nImbens, Guido W. “Nonparametric estimation of average treatment effects under exogeneity: A review.” Review of Economics and statistics 86, no. 1 (2004): 4-29.\nGlynn, Adam N., and Kevin M. Quinn. “An introduction to the augmented inverse propensity weighted estimator.” Political Analysis 18.1 (2010): 36-56.\nAronow, Peter M., and Cyrus Samii. “Does regression produce representative estimates of causal effects?” American Journal of Political Science 60.1 (2016): 250-267.\nChapters 11-12; Hernán and Robins. Causal Inference: What If. Chapman & Hall/CRC. 2020.\n\nApplications:"
   },
   {
-    "objectID": "schedule.html#week-7-march-2-6-selection-on-observables---matching",
-    "href": "schedule.html#week-7-march-2-6-selection-on-observables---matching",
+    "objectID": "schedule.html#week-7-selection-on-observables---matching",
+    "href": "schedule.html#week-7-selection-on-observables---matching",
     "title": "Schedule",
-    "section": "Week 7: March 2-6 | Selection-on-Observables - Matching",
-    "text": "Week 7: March 2-6 | Selection-on-Observables - Matching\nMonday, March 2 & Wednesday, March 4\nTopics:\n\nCovariate adjustming using matching estimators\nMidterm exam on Wednesday March 4th\n\nReadings:\n\nRosenbaum, Paul R. “Modern algorithms for matching in observational studies.” Annual Review of Statistics and Its Application 7, no. 1 (2020): 143-176.\nAbadie, A., & Imbens, G. W. (2011). Bias-corrected matching estimators for average treatment effects. Journal of Business & Economic Statistics, 29(1), 1-11.\n\nApplications:\n\nImai, Kosuke. “Do get-out-the-vote calls reduce turnout? The importance of statistical methods for field experiments.” American Political Science Review 99, no. 2 (2005): 283-300.\nHansen, Ben B., and Jake Bowers. “Attributing effects to a cluster-randomized get-out-the-vote campaign.” Journal of the American Statistical Association 104, no. 487 (2009): 873-885."
+    "section": "Week 7: Selection-on-Observables - Matching",
+    "text": "Week 7: Selection-on-Observables - Matching\nMonday, March 2 & Wednesday, March 4\nTopics:\n\nCovariate adjustming using matching estimators\nMidterm exam on Wednesday March 4th\n\nReadings:\n\nRosenbaum, Paul R. “Modern algorithms for matching in observational studies.” Annual Review of Statistics and Its Application 7, no. 1 (2020): 143-176.\nAbadie, A., & Imbens, G. W. (2011). Bias-corrected matching estimators for average treatment effects. Journal of Business & Economic Statistics, 29(1), 1-11.\n\nApplications:\n\nImai, Kosuke. “Do get-out-the-vote calls reduce turnout? The importance of statistical methods for field experiments.” American Political Science Review 99, no. 2 (2005): 283-300.\nHansen, Ben B., and Jake Bowers. “Attributing effects to a cluster-randomized get-out-the-vote campaign.” Journal of the American Statistical Association 104, no. 487 (2009): 873-885."
   },
   {
-    "objectID": "schedule.html#week-8-march-9-13-instrumental-variables",
-    "href": "schedule.html#week-8-march-9-13-instrumental-variables",
+    "objectID": "schedule.html#week-8-instrumental-variables",
+    "href": "schedule.html#week-8-instrumental-variables",
     "title": "Schedule",
-    "section": "Week 8: March 9-13 | Instrumental Variables",
-    "text": "Week 8: March 9-13 | Instrumental Variables\nMonday, March 9 & Wednesday, March 11\nTopics:\n\nIdentifying causal effects under unobserved confounding using exogenous variation in treatment induced by an instrument\nEstimation via the Wald estimator and two stage least squares (TSLS)\nInterpreting the IV estimand - the LATE theorem\n\nReadings:\n\nChapter 7; Cunningham, Scott. Causal inference: The mixtape. Yale university press, 2021.\nAngrist, Imbens and Rubin (1996) “Identification of causal effects using instrumental variables.” Journal of the American Statistical Association, 91:434, 444-455\nAndrews, Isaiah, James H. Stock, and Liyang Sun. “Weak instruments in instrumental variables regression: Theory and practice.” Annual Review of Economics 11 (2019): 727-753.\nSłoczyński, Tymon. “When should we (not) interpret linear IV estimands as LATE?.” arXiv preprint arXiv:2011.06695 (2024).\n\nApplications:\n\nWhite, Ariel. “Misdemeanor disenfranchisement? The demobilizing effects of brief jail spells on potential voters.” American Political Science Review 113, no. 2 (2019): 311-324.\nLal, Apoorva, Mackenzie Lockhart, Yiqing Xu, and Ziwen Zu. “How much should we trust instrumental variable estimates in political science? Practical advice based on 67 replicated studies.” Political Analysis 32, no. 4 (2024): 521-540.\nAngrist, Joshua D., and Peter Hull. “Instrumental variables methods reconcile intention-to-screen effects across pragmatic cancer screening trials.” Proceedings of the national academy of sciences 120, no. 51 (2023): e2311556120."
+    "section": "Week 8: Instrumental Variables",
+    "text": "Week 8: Instrumental Variables\nMonday, March 9 & Wednesday, March 11\nTopics:\n\nIdentifying causal effects under unobserved confounding using exogenous variation in treatment induced by an instrument\nEstimation via the Wald estimator and two stage least squares (TSLS)\nInterpreting the IV estimand - the LATE theorem\n\nReadings:\n\nChapter 7; Cunningham, Scott. Causal inference: The mixtape. Yale university press, 2021.\nAngrist, Imbens and Rubin (1996) “Identification of causal effects using instrumental variables.” Journal of the American Statistical Association, 91:434, 444-455\nAndrews, Isaiah, James H. Stock, and Liyang Sun. “Weak instruments in instrumental variables regression: Theory and practice.” Annual Review of Economics 11 (2019): 727-753.\nSłoczyński, Tymon. “When should we (not) interpret linear IV estimands as LATE?.” arXiv preprint arXiv:2011.06695 (2024).\n\nApplications:\n\nWhite, Ariel. “Misdemeanor disenfranchisement? The demobilizing effects of brief jail spells on potential voters.” American Political Science Review 113, no. 2 (2019): 311-324.\nLal, Apoorva, Mackenzie Lockhart, Yiqing Xu, and Ziwen Zu. “How much should we trust instrumental variable estimates in political science? Practical advice based on 67 replicated studies.” Political Analysis 32, no. 4 (2024): 521-540.\nAngrist, Joshua D., and Peter Hull. “Instrumental variables methods reconcile intention-to-screen effects across pragmatic cancer screening trials.” Proceedings of the national academy of sciences 120, no. 51 (2023): e2311556120."
   },
   {
-    "objectID": "schedule.html#week-9-march-16-20-differences-in-differences",
-    "href": "schedule.html#week-9-march-16-20-differences-in-differences",
+    "objectID": "schedule.html#week-9-differences-in-differences",
+    "href": "schedule.html#week-9-differences-in-differences",
     "title": "Schedule",
-    "section": "Week 9: March 16-20 | Differences-in-Differences",
-    "text": "Week 9: March 16-20 | Differences-in-Differences\nMonday, March 16 & Wednesday, March 18\nTopics:\n\nLeveraging repeated outcomes over time to address unobserved confounding\nAssumptions behind the “differences-in-differences” strategy – parallel trends\nEstimation and diagnostics for the identification assumptions\nConnection to regression estimators with “two-way fixed effects”\n\nReadings:\n\nChapter 9; Cunningham, Scott. Causal inference: The mixtape. Yale university press, 2021.\n\nApplications:\n\nCard, David, and Alan B. Krueger. “Minimum Wages and Employment: A Case Study of the Fast-Food Industry in New Jersey and Pennsylvania.” The American Economic Review 84, no. 4 (1994): 772-793.\nMiller, S., Johnson, N., & Wherry, L. R. (2021). Medicaid and mortality: new evidence from linked survey and administrative data. The Quarterly Journal of Economics, 136(3), 1783-1829."
+    "section": "Week 9: Differences-in-Differences",
+    "text": "Week 9: Differences-in-Differences\nMonday, March 16 & Wednesday, March 18\nTopics:\n\nLeveraging repeated outcomes over time to address unobserved confounding\nAssumptions behind the “differences-in-differences” strategy – parallel trends\nEstimation and diagnostics for the identification assumptions\nConnection to regression estimators with “two-way fixed effects”\n\nReadings:\n\nChapter 9; Cunningham, Scott. Causal inference: The mixtape. Yale university press, 2021.\n\nApplications:\n\nCard, David, and Alan B. Krueger. “Minimum Wages and Employment: A Case Study of the Fast-Food Industry in New Jersey and Pennsylvania.” The American Economic Review 84, no. 4 (1994): 772-793.\nMiller, S., Johnson, N., & Wherry, L. R. (2021). Medicaid and mortality: new evidence from linked survey and administrative data. The Quarterly Journal of Economics, 136(3), 1783-1829."
   },
   {
-    "objectID": "schedule.html#week-10-march-23-27-differences-in-differences-continued",
-    "href": "schedule.html#week-10-march-23-27-differences-in-differences-continued",
+    "objectID": "schedule.html#week-10-differences-in-differences-continued",
+    "href": "schedule.html#week-10-differences-in-differences-continued",
     "title": "Schedule",
-    "section": "Week 10: March 23-27 | Differences-in-Differences Continued",
-    "text": "Week 10: March 23-27 | Differences-in-Differences Continued\nMonday, March 23 & Wednesday, March 25\nTopics:\n\nTBA\n\nReadings:\n\nRoth, J., Sant’Anna, P. H., Bilinski, A., & Poe, J. (2022). What’s Trending in Difference-in-Differences? A Synthesis of the Recent Econometrics Literature. arXiv preprint arXiv:2201.01194."
+    "section": "Week 10: Differences-in-Differences Continued",
+    "text": "Week 10: Differences-in-Differences Continued\nMonday, March 23 & Wednesday, March 25\nTopics:\n\nTBA\n\nReadings:\n\nRoth, J., Sant’Anna, P. H., Bilinski, A., & Poe, J. (2022). What’s Trending in Difference-in-Differences? A Synthesis of the Recent Econometrics Literature. arXiv preprint arXiv:2201.01194."
   },
   {
-    "objectID": "schedule.html#spring-break-march-28---april-5",
-    "href": "schedule.html#spring-break-march-28---april-5",
+    "objectID": "schedule.html#spring-break",
+    "href": "schedule.html#spring-break",
     "title": "Schedule",
-    "section": "Spring Break: March 28 - April 5",
-    "text": "Spring Break: March 28 - April 5\nNo class"
+    "section": "Spring Break",
+    "text": "Spring Break\nNo Class: Monday, March 23 & Wednesday, March 25"
   },
   {
-    "objectID": "schedule.html#week-11-april-6-10-panel-data-causal-inference",
-    "href": "schedule.html#week-11-april-6-10-panel-data-causal-inference",
+    "objectID": "schedule.html#week-11-panel-data-causal-inference",
+    "href": "schedule.html#week-11-panel-data-causal-inference",
     "title": "Schedule",
-    "section": "Week 11: April 6-10 | Panel Data Causal Inference",
-    "text": "Week 11: April 6-10 | Panel Data Causal Inference\nMonday, April 6 & Wednesday, April 8\nTopics:\n\nImai, Kosuke, In Song Kim, and Erik H. Wang. “Matching Methods for Causal Inference with Time-Series Cross-Sectional Data.” American Journal of Political Science (2021).\nReadings:\nTBA"
+    "section": "Week 11: Panel Data Causal Inference",
+    "text": "Week 11: Panel Data Causal Inference\nMonday, April 6 & Wednesday, April 8\nTopics:\n\nImai, Kosuke, In Song Kim, and Erik H. Wang. “Matching Methods for Causal Inference with Time-Series Cross-Sectional Data.” American Journal of Political Science (2021).\nReadings:\nTBA"
   },
   {
-    "objectID": "schedule.html#week-12-april-13-17-regression-discontinuity-designs",
-    "href": "schedule.html#week-12-april-13-17-regression-discontinuity-designs",
+    "objectID": "schedule.html#week-12-regression-discontinuity-designs",
+    "href": "schedule.html#week-12-regression-discontinuity-designs",
     "title": "Schedule",
-    "section": "Week 12: April 13-17 | Regression Discontinuity Designs",
-    "text": "Week 12: April 13-17 | Regression Discontinuity Designs\nMonday, April 13 & Wednesday, April 15\nTopics:\n\nEstimating effects under unobserved confounding using quasi-random assignment at a cutpoint\nCommon applications: Elections, test scores\nEstimation and sensitivity to modeling assumptions\n\nReadings:\n\nChapters 1, 2 and 5. Cattaneo, Matias D., Nicolás Idrobo, and Rocío Titiunik. A practical introduction to regression discontinuity designs: Foundations. Cambridge University Press, 2019.\nEggers, A. C., Freier, R., Grembi, V., & Nannicini, T. (2018). Regression discontinuity designs based on population thresholds: Pitfalls and solutions. American Journal of Political Science, 62(1), 210-229.\nKeele, Luke J., and Rocio Titiunik. “Geographic boundaries as regression discontinuities.” Political Analysis 23.1 (2015): 127-155.\n\nApplications:\n\nHidalgo, F. Daniel, and Simeon Nichter. “Voter buying: Shaping the electorate through clientelism.” American Journal of Political Science 60.2 (2016): 436-455.\nBleemer, Zachary, and Aashish Mehta. “Will studying economics make you rich? A regression discontinuity analysis of the returns to college major.” American Economic Journal: Applied Economics 14.2 (2022): 1-22."
+    "section": "Week 12: Regression Discontinuity Designs",
+    "text": "Week 12: Regression Discontinuity Designs\nMonday, April 13 & Wednesday, April 15\nTopics:\n\nEstimating effects under unobserved confounding using quasi-random assignment at a cutpoint\nCommon applications: Elections, test scores\nEstimation and sensitivity to modeling assumptions\n\nReadings:\n\nChapters 1, 2 and 5. Cattaneo, Matias D., Nicolás Idrobo, and Rocío Titiunik. A practical introduction to regression discontinuity designs: Foundations. Cambridge University Press, 2019.\nEggers, A. C., Freier, R., Grembi, V., & Nannicini, T. (2018). Regression discontinuity designs based on population thresholds: Pitfalls and solutions. American Journal of Political Science, 62(1), 210-229.\nKeele, Luke J., and Rocio Titiunik. “Geographic boundaries as regression discontinuities.” Political Analysis 23.1 (2015): 127-155.\n\nApplications:\n\nHidalgo, F. Daniel, and Simeon Nichter. “Voter buying: Shaping the electorate through clientelism.” American Journal of Political Science 60.2 (2016): 436-455.\nBleemer, Zachary, and Aashish Mehta. “Will studying economics make you rich? A regression discontinuity analysis of the returns to college major.” American Economic Journal: Applied Economics 14.2 (2022): 1-22."
   },
   {
-    "objectID": "schedule.html#week-13-april-20-24-mediation-and-sensitivity-analysis",
-    "href": "schedule.html#week-13-april-20-24-mediation-and-sensitivity-analysis",
+    "objectID": "schedule.html#week-13-mediation-and-sensitivity-analysis",
+    "href": "schedule.html#week-13-mediation-and-sensitivity-analysis",
     "title": "Schedule",
-    "section": "Week 13: April 20-24 | Mediation and Sensitivity Analysis",
-    "text": "Week 13: April 20-24 | Mediation and Sensitivity Analysis\nMonday, April 20 & Wednesday, April 22\nTopics:\n\nHow to define and identify indirect and direct effects of treatment\nHow to assess the robustness of results to violations of identification assumptions\n\nReadings:\n\nBlackwell, Matthew. “A selection bias approach to sensitivity analysis for causal effects.” Political Analysis 22.2 (2014): 169-182.\nCinelli, Carlos, and Chad Hazlett. “Making sense of sensitivity: Extending omitted variable bias.” Journal of the Royal Statistical Society: Series B (Statistical Methodology) 82.1 (2020): 39-67.\nImai, K., Keele, L., Tingley, D., & Yamamoto, T. (2011). Unpacking the black box of causality: Learning about causal mechanisms from experimental and observational studies. American Political Science Review, 105(4), 765-789.\n\nBonus: Green, Donald P., Shang E. Ha, and John G. Bullock. “Enough already about”black box” experiments: Studying mediation is more difficult than most scholars suppose.” The Annals of the American Academy of Political and Social Science 628.1 (2010): 200-208.\n\nAcharya, Avidit, Matthew Blackwell, and Maya Sen. “Explaining causal findings without bias: Detecting and assessing direct effects.” American Political Science Review 110.3 (2016): 512-529."
+    "section": "Week 13: Mediation and Sensitivity Analysis",
+    "text": "Week 13: Mediation and Sensitivity Analysis\nMonday, April 20 & Wednesday, April 22\nTopics:\n\nHow to define and identify indirect and direct effects of treatment\nHow to assess the robustness of results to violations of identification assumptions\n\nReadings:\n\nBlackwell, Matthew. “A selection bias approach to sensitivity analysis for causal effects.” Political Analysis 22.2 (2014): 169-182.\nCinelli, Carlos, and Chad Hazlett. “Making sense of sensitivity: Extending omitted variable bias.” Journal of the Royal Statistical Society: Series B (Statistical Methodology) 82.1 (2020): 39-67.\nImai, K., Keele, L., Tingley, D., & Yamamoto, T. (2011). Unpacking the black box of causality: Learning about causal mechanisms from experimental and observational studies. American Political Science Review, 105(4), 765-789.\n\nBonus: Green, Donald P., Shang E. Ha, and John G. Bullock. “Enough already about”black box” experiments: Studying mediation is more difficult than most scholars suppose.” The Annals of the American Academy of Political and Social Science 628.1 (2010): 200-208.\n\nAcharya, Avidit, Matthew Blackwell, and Maya Sen. “Explaining causal findings without bias: Detecting and assessing direct effects.” American Political Science Review 110.3 (2016): 512-529."
   },
   {
-    "objectID": "schedule.html#week-14-april-27---may-1-shift-share-designs-and-experiments-with-interference",
-    "href": "schedule.html#week-14-april-27---may-1-shift-share-designs-and-experiments-with-interference",
+    "objectID": "schedule.html#week-14-shift-share-designs-and-experiments-with-interference",
+    "href": "schedule.html#week-14-shift-share-designs-and-experiments-with-interference",
     "title": "Schedule",
-    "section": "Week 14: April 27 - May 1 | Shift-share designs and experiments with interference",
-    "text": "Week 14: April 27 - May 1 | Shift-share designs and experiments with interference\nMonday, April 27 & Wednesday, April 29\nTopics:\n\nTBA\n\nReadings:\n\nTBA"
+    "section": "Week 14: Shift-share designs and experiments with interference",
+    "text": "Week 14: Shift-share designs and experiments with interference\nMonday, April 27 & Wednesday, April 29\nTopics:\n\nTBA\n\nReadings:\n\nTBA"
   },
   {
     "objectID": "staff.html",
