@@ -49,7 +49,7 @@ $$
   - In-class midterm (March 4th)
   - In-class final (May 4th)
   - **My office hours:** Tuesdays 2pm-4pm (North Hall 322D)
-  - **Junda's office hours:** TBA
+  - **Junda's office hours:** Thursdays, 1:30pm-3:30pm, (North Hall 101/Grad Lounge) 
   - **Course Website**: [https://www.antonstrezhnev.com/ps813](https://www.antonstrezhnev.com/ps813)
   - Announcements will be posted on **Ed** - please let me know if you do not have access.
   
@@ -334,7 +334,7 @@ systematically higher or lower than the target?
 
 1. $X_n + Y_n \xrightarrow{p} x + y$
 2. $X_nY_n \xrightarrow{p} xy$
-3. $X_n/Y_n \xrightarrow{p} x/y$ if $b \neq 0$
+3. $X_n/Y_n \xrightarrow{p} x/y$ if $y \neq 0$
 4. $g(X_n) \xrightarrow{p} g(x)$
 
 # Convergence in distribution
@@ -450,34 +450,9 @@ systematically higher or lower than the target?
   
 :::
 
-
-# Preview of next week
-
-# Thinking about causal effects
+# Next week
 
 ::: {.incremental}
-- Two types of causal questions (Gelman and Rubin, 2013)
-
-- **Causes of effects**
-  - What are the factors that cause some outcome $Y$?
-  - "Why?" questions: Why do states go to war? Why do politicians get re-elected?
-
-- **Effects of causes**
-  - If $X$ were to change, what might happen to $Y$?
-  - "What if?" questions: What if a pair of states were democratic, would that change
-  their chances of going to war? What if a politician were an incumbent, would that
-  affect their re-election probability?
-
-- We'll spend more time on the **effects of causes**
-  - Why? Because we can connect them to well-defined statistical quantities of
-  interest (e.g. an "average treatment effect")
-  - "Causes of effects" are still important questions, and theoretical inquiry
-  can lead you towards possible causes to evaluate.
-  
-:::
-
-
-# Next week
 
 - **Potential outcomes model**
   - Defining treatment effects as **contrasts** in **counterfactuals**
@@ -490,3 +465,5 @@ systematically higher or lower than the target?
 - **Randomized experiments**
   - Randomized experiments solve the identification problem (for the sample ATE)
   - What can we get **just** with randomization of treatment?
+
+:::

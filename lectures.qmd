@@ -16,12 +16,12 @@ Lecture slides are available as self-contained `.html` files made with RevealJS 
 - Week 2 Github Repository
 - Week 2 `.html` slides
 
-### Week 3: Experiments: Incorporating Covariates and Statistical Power
+### Week 3: Experiments: Attrition and Generalizability 
 
 - Week 3 Github Repository
 - Week 3 `.html` slides
 
-### Week 4: Experiments: Attrition and Generalizability
+### Week 4: Experiments: Incorporating Covariates
 
 - Week 4 Github Repository
 - Week 4 `.html` slides
@@ -31,12 +31,12 @@ Lecture slides are available as self-contained `.html` files made with RevealJS 
 - Week 5 Github Repository
 - Week 5 `.html` slides
 
-### Week 6: Selection-on-Observables Continued
+### Week 6: Selection-on-Observables - Regression and Weighting
 
 - Week 6 Github Repository
 - Week 6 `.html` slides
 
-### Week 7: Selection-on-Observables Continued / Midterm
+### Week 7: Selection-on-Observables - Matching
 
 - Week 7 Github Repository
 - Week 7 `.html` slides
@@ -51,7 +51,7 @@ Lecture slides are available as self-contained `.html` files made with RevealJS 
 - Week 9 Github Repository
 - Week 9 `.html` slides
 
-### Week 10: Differences-in-Differences Continued
+### Week 10: Modern Differences-in-Differences
 
 - Week 10 Github Repository
 - Week 10 `.html` slides

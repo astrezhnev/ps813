@@ -35,11 +35,11 @@ title: "Staff"
 
 :::
 
-|                  |                                                     |
-|------------------|-----------------------------------------------------|
-| **Email**        | [jli2458@wisc.edu](mailto:jli2458@wisc.edu)         |
-| **Website**      | [jundali.org](https://www.jundali.org/)             |
-| **Office Hours** | TBA                                                 |
+|                  |                                                              |
+|------------------|--------------------------------------------------------------|
+| **Email**        | [jli2458@wisc.edu](mailto:jli2458@wisc.edu)                  |
+| **Website**      | [jundali.org](https://www.jundali.org/)                      |
+| **Office Hours** | Thursdays, 1:30pm-3:30pm, North Hall 101 (Grad Lounge)       |
 
 ---
 
