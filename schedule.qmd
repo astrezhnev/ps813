@@ -4,7 +4,7 @@ title: "Schedule"
 
 A schedule of topics and readings is provided below. Each week will cover a single topic or group of topics. Monday lectures will typically be an introduction to the topic while Wednesday lectures will go into greater detail and involve some applications of the method. You should make sure to review the readings prior to that week's lectures with an aim towards completing the reading assignments prior to Wednesday's lecture.
 
-Applications are optional but useful examples of a given methodological approach implemented in a published political science (or adjacent discipline) paper. I have tried to curate two examples for each week that provide a contrast between an "older" vs. a more "modern" paper using a particular methodology, highlight a debate over an interesting empirical question that hinges on a methodological problem, and/or just generally provide a cool empirical application using the framework being taught that week.
+Applications are optional but useful examples of a given methodological approach implemented in a published political science (or adjacent discipline) paper. I have tried to curate some examples for each week that provide a contrast between an "older" vs. a more "modern" paper using a particular methodology, highlight a debate over an interesting empirical question that hinges on a methodological problem, and/or just generally provide a cool empirical application using the framework being taught that week.
 
 All hyperlinks to papers are either to the published version of the paper (if published) or to the working paper. You should use your university library access to obtain the full version if the article is not open access. Likewise, textbook readings will be to the free/open version of the book (if available) or to the UW-Madison university library eBook.
 
@@ -20,10 +20,10 @@ All hyperlinks to papers are either to the published version of the paper (if pu
 
 **Readings:**
 
-- [Lundberg, Ian, Rebecca Johnson, and Brandon M. Stewart. "What is your estimand? Defining the target quantity connects statistical evidence to theory." *American Sociological Review* 86.3 (2021): 532-565.](https://journals.sagepub.com/doi/full/10.1177/00031224211004187)
-- [Torreblanca, Carolina, William Dinneen, Guy Grossman, and Yiqing Xu. "The Credibility Revolution in Political Science." Available at SSRN 5842482 (2025).](https://osf.io/preprints/socarxiv/w2kmc_v1)
-- [Samii, Cyrus. "The 'problem solving' approach and social science methodology". Available at https://cyrussamii.com/?p=3682](https://cyrussamii.com/?p=3682)
-- [Chapter 3; Blackwell, Matthew. *A User’s Guide to Statistical Inference and Regression*. 2025](https://mattblackwell.github.io/gov2002-book/asymptotics.html)
+- Lundberg, Ian, Rebecca Johnson, and Brandon M. Stewart. 2021. ["What Is Your Estimand? Defining the Target Quantity Connects Statistical Evidence to Theory."](https://journals.sagepub.com/doi/full/10.1177/00031224211004187) *American Sociological Review* 86 (3): 532–565.
+- Torreblanca, Carolina, William Dinneen, Guy Grossman, and Yiqing Xu. 2025. ["The Credibility Revolution in Political Science."](https://osf.io/preprints/socarxiv/w2kmc_v1) Working paper.
+- Samii, Cyrus. 2023. ["The 'Problem Solving' Approach and Social Science Methodology."](https://cyrussamii.com/?p=3682) Blog post.
+- Chapter 3; Blackwell, Matthew. 2025. [*A User's Guide to Statistical Inference and Regression*.](https://mattblackwell.github.io/gov2002-book/asymptotics.html)
 
 ---
 
@@ -40,15 +40,15 @@ All hyperlinks to papers are either to the published version of the paper (if pu
 
 **Readings:**
 
-- [Chapter 1; Imbens and Rubin. *Causal Inference for Statistics, Social, and Biomedical Sciences*. Cambridge University Press. 2015.](https://www-cambridge-org.ezproxy.library.wisc.edu/core/services/aop-cambridge-core/content/view/E7DCA0764A18E419996E75B0BBF7F683/9781139025751c1_p3-22_CBO.pdf/causality_the_basic_framework.pdf)
-- [Chapters 1-2; Hernán and Robins. *Causal Inference: What If*. Chapman & Hall/CRC. 2020.](https://static1.squarespace.com/static/675db8b0dd37046447128f5f/t/691fb7706ce66332f0b44467/1763686256720/hernanrobins_WhatIf_21nov25.pdf)
-- [Sections 1-5; Athey and Imbens, "The Econometrics of Randomized Experiments," *Handbook of economic field experiments.* Vol. 1. North-Holland, 2017. 73-140.](https://www.sciencedirect.com/science/chapter/handbook/pii/S2214658X16300174)
-- [Druckman, James N., et al. "The growth and development of experimental research in political science." *American Political Science Review* 100.4 (2006): 627-635.](https://www.cambridge.org/core/journals/american-political-science-review/article/abs/growth-and-development-of-experimental-research-in-political-science/4381F50C6A43ED85AF8B973326BC546A)
+- Chapter 1; Imbens, Guido W., and Donald B. Rubin. 2015. [*Causal Inference for Statistics, Social, and Biomedical Sciences: An Introduction*.](https://www-cambridge-org.ezproxy.library.wisc.edu/core/services/aop-cambridge-core/content/view/E7DCA0764A18E419996E75B0BBF7F683/9781139025751c1_p3-22_CBO.pdf/causality_the_basic_framework.pdf) Cambridge: Cambridge University Press.
+- Chapters 1–2; Hernán, Miguel A., and James M. Robins. 2020. [*Causal Inference: What If*.](https://static1.squarespace.com/static/675db8b0dd37046447128f5f/t/691fb7706ce66332f0b44467/1763686256720/hernanrobins_WhatIf_21nov25.pdf) Boca Raton: Chapman & Hall/CRC.
+- Sections 1–5; Athey, Susan, and Guido W. Imbens. 2017. ["The Econometrics of Randomized Experiments."](https://www.sciencedirect.com/science/chapter/handbook/pii/S2214658X16300174) In *Handbook of Economic Field Experiments*, vol. 1, edited by Abhijit Vinayak Banerjee and Esther Duflo, 73–140. Amsterdam: North-Holland.
+- Druckman, James N., Donald P. Green, James H. Kuklinski, and Arthur Lupia. 2006. ["The Growth and Development of Experimental Research in Political Science."](https://www.cambridge.org/core/journals/american-political-science-review/article/abs/growth-and-development-of-experimental-research-in-political-science/4381F50C6A43ED85AF8B973326BC546A) *American Political Science Review* 100 (4): 627–635.
 
 **Applications:**
 
-- [Gerber, Alan S., Donald P. Green, and Christopher W. Larimer. "Social pressure and voter turnout: Evidence from a large-scale field experiment." *American Political Science Review* 102.1 (2008): 33-48.](https://www.cambridge.org/core/journals/american-political-science-review/article/abs/social-pressure-and-voter-turnout-evidence-from-a-largescale-field-experiment/11E84AF4C0B7FBD1D20C855972C2C3EB)
-- [Broockman, David E., and Joshua L. Kalla. "Consuming cross-cutting media causes learning and moderates attitudes: A field experiment with Fox News viewers." *The Journal of Politics* 87, no. 1 (2025): 246-261.](https://www.journals.uchicago.edu/doi/full/10.1086/730725)
+- Gerber, Alan S., Donald P. Green, and Christopher W. Larimer. 2008. ["Social Pressure and Voter Turnout: Evidence from a Large-Scale Field Experiment."](https://www.cambridge.org/core/journals/american-political-science-review/article/abs/social-pressure-and-voter-turnout-evidence-from-a-largescale-field-experiment/11E84AF4C0B7FBD1D20C855972C2C3EB) *American Political Science Review* 102 (1): 33–48.
+- Broockman, David E., and Joshua L. Kalla. 2025. ["Consuming Cross-Cutting Media Causes Learning and Moderates Attitudes: A Field Experiment with Fox News Viewers."](https://www.journals.uchicago.edu/doi/full/10.1086/730725) *Journal of Politics* 87 (1): 246–261.
 
 ---
 
@@ -64,14 +64,14 @@ All hyperlinks to papers are either to the published version of the paper (if pu
 
 **Readings:**
 
-- [Egami, Naoki, and Erin Hartman. "Elements of external validity: Framework, design, and analysis." *American Political Science Review* 117, no. 3 (2023): 1070-1088.](https://www.cambridge.org/core/journals/american-political-science-review/article/elements-of-external-validity-framework-design-and-analysis/2D0914404C84B3F169732FF1D5E39420)
-- [Zhang, Junni L., and Donald B. Rubin. "Estimation of causal effects via principal stratification when some outcomes are truncated by “death”." *Journal of Educational and Behavioral Statistics* 28, no. 4 (2003): 353-368.](https://journals.sagepub.com/doi/abs/10.3102/10769986028004353)
-- [Lee, David S. "Training, Wages, and Sample Selection: Estimating Sharp Bounds on Treatment Effects." *The Review of Economic Studies* 76, no. 3 (2009): 1071-1102.](https://www-jstor-org.ezproxy.library.wisc.edu/stable/40247633)
+- Egami, Naoki, and Erin Hartman. 2023. ["Elements of External Validity: Framework, Design, and Analysis."](https://www.cambridge.org/core/journals/american-political-science-review/article/elements-of-external-validity-framework-design-and-analysis/2D0914404C84B3F169732FF1D5E39420) *American Political Science Review* 117 (3): 1070–1088.
+- Zhang, Junni L., and Donald B. Rubin. 2003. ["Estimation of Causal Effects via Principal Stratification When Some Outcomes Are Truncated by 'Death.'"](https://journals.sagepub.com/doi/abs/10.3102/10769986028004353) *Journal of Educational and Behavioral Statistics* 28 (4): 353–368.
+- Lee, David S. 2009. ["Training, Wages, and Sample Selection: Estimating Sharp Bounds on Treatment Effects."](https://www-jstor-org.ezproxy.library.wisc.edu/stable/40247633) *Review of Economic Studies* 76 (3): 1071–1102.
 
 **Applications:**
 
-- [Bassan-Nygate, Lotem, Jonathan Renshon, Jessica LP Weeks, and Chagai M. Weiss. "The Generalizability of IR Experiments beyond the United States." *American Political Science Review* (2024): 1-16.](https://www.cambridge.org/core/journals/american-political-science-review/article/generalizability-of-ir-experiments-beyond-the-united-states/263CE4FF8EA7AAEC76A176BF3E05626C)
-- [Dunning, Thad, Guy Grossman, Macartan Humphreys, Susan D. Hyde, Craig McIntosh, Gareth Nellis, Claire L. Adida et al. "Voter information campaigns and political accountability: Cumulative findings from a preregistered meta-analysis of coordinated trials." *Science advances* 5, no. 7 (2019): eaaw2612.](https://www.science.org/doi/full/10.1126/sciadv.aaw2612)
+- Bassan-Nygate, Lotem, Jonathan Renshon, Jessica L. P. Weeks, and Chagai M. Weiss. 2024. ["The Generalizability of IR Experiments beyond the United States."](https://www.cambridge.org/core/journals/american-political-science-review/article/generalizability-of-ir-experiments-beyond-the-united-states/263CE4FF8EA7AAEC76A176BF3E05626C) *American Political Science Review* 118 (4): 1–16.
+- Dunning, Thad, Guy Grossman, Macartan Humphreys, Susan D. Hyde, Craig McIntosh, Gareth Nellis, Claire L. Adida, et al. 2019. ["Voter Information Campaigns and Political Accountability: Cumulative Findings from a Preregistered Meta-Analysis of Coordinated Trials."](https://www.science.org/doi/full/10.1126/sciadv.aaw2612) *Science Advances* 5 (7): eaaw2612.
 
 
 ## Week 4: Experiments: Incorporating Covariates
@@ -86,16 +86,16 @@ All hyperlinks to papers are either to the published version of the paper (if pu
 
 **Readings:**
 
-- [Sections 6-12; Athey and Imbens, "The Econometrics of Randomized Experiments," *Handbook of economic field experiments.* Vol. 1. North-Holland, 2017. 73-140.](https://www.sciencedirect.com/science/chapter/handbook/pii/S2214658X16300174)
-- [Chapters 5-7; Blackwell, Matthew. *A User’s Guide to Statistical Inference and Regression*. 2025](https://mattblackwell.github.io/gov2002-book/asymptotics.html)
-- [Chapter 7; Imbens and Rubin. *Causal Inference for Statistics, Social, and Biomedical Sciences*. Cambridge University Press. 2015.](https://www-cambridge-org.ezproxy.library.wisc.edu/core/services/aop-cambridge-core/content/view/E7DCA0764A18E419996E75B0BBF7F683/9781139025751c1_p3-22_CBO.pdf/causality_the_basic_framework.pdf)
-- [Lin, Winston. "Agnostic notes on regression adjustments to experimental data: Reexamining Freedman's critique." *The Annals of Applied Statistics* 7.1 (2013): 295-318.](https://www.jstor.org/stable/23566512)
-- **Bonus:** [Samii, C., and P. M. Aronow. "On equivalencies between design-based and regression-based variance estimators for randomized experiments." *Statistics & Probability Letters* 82.2 (2012): 365-370.](https://www.sciencedirect.com/science/article/pii/S0167715211003452)
+- Sections 6–12; Athey, Susan, and Guido W. Imbens. 2017. ["The Econometrics of Randomized Experiments."](https://www.sciencedirect.com/science/chapter/handbook/pii/S2214658X16300174) In *Handbook of Economic Field Experiments*, vol. 1, edited by Abhijit Vinayak Banerjee and Esther Duflo, 73–140. Amsterdam: North-Holland.
+- Chapters 5–7; Blackwell, Matthew. 2025. [*A User's Guide to Statistical Inference and Regression*.](https://mattblackwell.github.io/gov2002-book/asymptotics.html)
+- Chapter 7; Imbens, Guido W., and Donald B. Rubin. 2015. [*Causal Inference for Statistics, Social, and Biomedical Sciences: An Introduction*.](https://www-cambridge-org.ezproxy.library.wisc.edu/core/services/aop-cambridge-core/content/view/E7DCA0764A18E419996E75B0BBF7F683/9781139025751c1_p3-22_CBO.pdf/causality_the_basic_framework.pdf) Cambridge: Cambridge University Press.
+- Lin, Winston. 2013. ["Agnostic Notes on Regression Adjustments to Experimental Data: Reexamining Freedman's Critique."](https://www.jstor.org/stable/23566512) *Annals of Applied Statistics* 7 (1): 295–318.
+- **Bonus:** Samii, Cyrus, and P. M. Aronow. 2012. ["On Equivalencies between Design-Based and Regression-Based Variance Estimators for Randomized Experiments."](https://www.sciencedirect.com/science/article/pii/S0167715211003452) *Statistics & Probability Letters* 82 (2): 365–370.
 
 **Applications:**
 
-- [Nyhan, Brendan, and Jason Reifler. "The effect of fact‐checking on elites: A field experiment on US state legislators." American journal of political science 59, no. 3 (2015): 628-640.](https://onlinelibrary.wiley.com/doi/full/10.1111/ajps.12162)
-- [Raffler, Pia J. "Does political oversight of the bureaucracy increase accountability? Field experimental evidence from a dominant party regime." American Political Science Review 116, no. 4 (2022): 1443-1459.](https://www.cambridge.org/core/journals/american-political-science-review/article/does-political-oversight-of-the-bureaucracy-increase-accountability-field-experimental-evidence-from-a-dominant-party-regime/AC27020BB300F34C70380C5AA1BF77F1)
+- Nyhan, Brendan, and Jason Reifler. 2015. ["The Effect of Fact-Checking on Elites: A Field Experiment on US State Legislators."](https://onlinelibrary.wiley.com/doi/full/10.1111/ajps.12162) *American Journal of Political Science* 59 (3): 628–640.
+- Raffler, Pia J. 2022. ["Does Political Oversight of the Bureaucracy Increase Accountability? Field Experimental Evidence from a Dominant Party Regime."](https://www.cambridge.org/core/journals/american-political-science-review/article/does-political-oversight-of-the-bureaucracy-increase-accountability-field-experimental-evidence-from-a-dominant-party-regime/AC27020BB300F34C70380C5AA1BF77F1) *American Political Science Review* 116 (4): 1443–1459.
 
 ---
 
@@ -112,17 +112,17 @@ All hyperlinks to papers are either to the published version of the paper (if pu
 
 **Readings:**
 
-- [Chapter 12; Imbens and Rubin. *Causal Inference for Statistics, Social, and Biomedical Sciences*. Cambridge University Press. 2015.](https://www-cambridge-org.ezproxy.library.wisc.edu/core/services/aop-cambridge-core/content/view/E7DCA0764A18E419996E75B0BBF7F683/9781139025751c1_p3-22_CBO.pdf/causality_the_basic_framework.pdf)
-- [Chapters 3; 6-8; Hernán and Robins. *Causal Inference: What If*. Chapman & Hall/CRC. 2020.](https://static1.squarespace.com/static/675db8b0dd37046447128f5f/t/691fb7706ce66332f0b44467/1763686256720/hernanrobins_WhatIf_21nov25.pdf)
-- [Chapters 6-8. Huntington-Klein, Nick. The effect: An introduction to research design and causality. Chapman and Hall/CRC, 2021.](https://theeffectbook.net/ch-CausalDiagrams.html)
-- **Supplementary:** [Cinelli, Carlos, Andrew Forney, and Judea Pearl. "A crash course in good and bad controls." Sociological Methods & Research 53, no. 3 (2024): 1071-1104.](https://journals.sagepub.com/doi/full/10.1177/00491241221099552)
-- **Supplementary:** [Rohrer, Julia M. "Thinking clearly about correlations and causation: Graphical causal models for observational data." Advances in methods and practices in psychological science 1, no. 1 (2018): 27-42.](https://journals.sagepub.com/doi/full/10.1177/2515245917745629)
+- Chapter 12; Imbens, Guido W., and Donald B. Rubin. 2015. [*Causal Inference for Statistics, Social, and Biomedical Sciences: An Introduction*.](https://www-cambridge-org.ezproxy.library.wisc.edu/core/services/aop-cambridge-core/content/view/E7DCA0764A18E419996E75B0BBF7F683/9781139025751c1_p3-22_CBO.pdf/causality_the_basic_framework.pdf) Cambridge: Cambridge University Press.
+- Chapters 3, 6–8; Hernán, Miguel A., and James M. Robins. 2020. [*Causal Inference: What If*.](https://static1.squarespace.com/static/675db8b0dd37046447128f5f/t/691fb7706ce66332f0b44467/1763686256720/hernanrobins_WhatIf_21nov25.pdf) Boca Raton: Chapman & Hall/CRC.
+- Chapters 6–8; Huntington-Klein, Nick. 2021. [*The Effect: An Introduction to Research Design and Causality*.](https://theeffectbook.net/ch-CausalDiagrams.html) Boca Raton: Chapman and Hall/CRC.
+- **Supplementary:** Cinelli, Carlos, Andrew Forney, and Judea Pearl. 2024. ["A Crash Course in Good and Bad Controls."](https://journals.sagepub.com/doi/full/10.1177/00491241221099552) *Sociological Methods & Research* 53 (3): 1071–1104.
+- **Supplementary:** Rohrer, Julia M. 2018. ["Thinking Clearly about Correlations and Causation: Graphical Causal Models for Observational Data."](https://journals.sagepub.com/doi/full/10.1177/2515245917745629) *Advances in Methods and Practices in Psychological Science* 1 (1): 27–42.
 
 
 **Applications:**
 
-- [Washington, Ebonya L. "Female socialization: how daughters affect their legislator fathers." *American Economic Review* 98, no. 1 (2008): 311-32.](https://www.aeaweb.org/articles?id=10.1257/aer.98.1.311)
-- [Ba, Bocar A., Dean Knox, Jonathan Mummolo, and Roman Rivera. "The role of officer race and gender in police-civilian interactions in Chicago." *Science* 371, no. 6530 (2021): 696-702.](https://www.science.org/doi/full/10.1126/science.abd8694)
+- Washington, Ebonya L. 2008. ["Female Socialization: How Daughters Affect Their Legislator Fathers."](https://www.aeaweb.org/articles?id=10.1257/aer.98.1.311) *American Economic Review* 98 (1): 311–332.
+- Ba, Bocar A., Dean Knox, Jonathan Mummolo, and Roman Rivera. 2021. ["The Role of Officer Race and Gender in Police-Civilian Interactions in Chicago."](https://www.science.org/doi/full/10.1126/science.abd8694) *Science* 371 (6530): 696–702.
 
 ---
 
@@ -138,12 +138,16 @@ All hyperlinks to papers are either to the published version of the paper (if pu
 
 **Readings:**
 
-- [Imbens, Guido W. "Nonparametric estimation of average treatment effects under exogeneity: A review." Review of Economics and statistics 86, no. 1 (2004): 4-29.](https://direct.mit.edu/rest/article/86/1/4/57476/Nonparametric-Estimation-of-Average-Treatment)
-- [Glynn, Adam N., and Kevin M. Quinn. "An introduction to the augmented inverse propensity weighted estimator." *Political Analysis* 18.1 (2010): 36-56.](https://www.cambridge.org/core/journals/political-analysis/article/an-introduction-to-the-augmented-inverse-propensity-weighted-estimator/4B1B8301E46F4432C4DCC91FE20780DB)
-- [Aronow, Peter M., and Cyrus Samii. "Does regression produce representative estimates of causal effects?" *American Journal of Political Science* 60.1 (2016): 250-267.](https://onlinelibrary.wiley.com/doi/full/10.1111/ajps.12185)
-- [Chapters 11-12; Hernán and Robins. *Causal Inference: What If*. Chapman & Hall/CRC. 2020.](https://static1.squarespace.com/static/675db8b0dd37046447128f5f/t/691fb7706ce66332f0b44467/1763686256720/hernanrobins_WhatIf_21nov25.pdf)
+- Imbens, Guido W. 2004. ["Nonparametric Estimation of Average Treatment Effects under Exogeneity: A Review."](https://direct.mit.edu/rest/article/86/1/4/57476/Nonparametric-Estimation-of-Average-Treatment) *Review of Economics and Statistics* 86 (1): 4–29.
+- Glynn, Adam N., and Kevin M. Quinn. 2010. ["An Introduction to the Augmented Inverse Propensity Weighted Estimator."](https://www.cambridge.org/core/journals/political-analysis/article/an-introduction-to-the-augmented-inverse-propensity-weighted-estimator/4B1B8301E46F4432C4DCC91FE20780DB) *Political Analysis* 18 (1): 36–56.
+- Aronow, P. M., and Cyrus Samii. 2016. ["Does Regression Produce Representative Estimates of Causal Effects?"](https://onlinelibrary.wiley.com/doi/full/10.1111/ajps.12185) *American Journal of Political Science* 60 (1): 250–267.
+- Chapters 11–12; Hernán, Miguel A., and James M. Robins. 2020. [*Causal Inference: What If*.](https://static1.squarespace.com/static/675db8b0dd37046447128f5f/t/691fb7706ce66332f0b44467/1763686256720/hernanrobins_WhatIf_21nov25.pdf) Boca Raton: Chapman & Hall/CRC.
 
 **Applications:**
+
+- Hübert, Ryan, and Ryan Copus. 2022. ["Political Appointments and Outcomes in Federal District Courts."](https://www.journals.uchicago.edu/doi/full/10.1086/716947) *Journal of Politics* 84 (2): 908–922.
+- Jares, Jake Alton, and Neil Malhotra. 2025. ["Policy Impact and Voter Mobilization: Evidence from Farmers' Trade War Experiences."](https://www.cambridge.org/core/journals/american-political-science-review/article/policy-impact-and-voter-mobilization-evidence-from-farmers-trade-war-experiences/119AFEA161ABB2ACADEBEBCB2E8B3209) *American Political Science Review* 119 (2): 847–869.
+
 
 ---
 
@@ -153,18 +157,19 @@ All hyperlinks to papers are either to the published version of the paper (if pu
 
 **Topics:**
 
-- Covariate adjustming using matching estimators
+- Covariate adjustment using matching estimators
 - **Midterm exam** on Wednesday **March 4th**
 
 **Readings:**
 
-- [Rosenbaum, Paul R. "Modern algorithms for matching in observational studies." Annual Review of Statistics and Its Application 7, no. 1 (2020): 143-176.](https://www.annualreviews.org/content/journals/10.1146/annurev-statistics-031219-041058)
-- [Abadie, A., & Imbens, G. W. (2011). Bias-corrected matching estimators for average treatment effects. *Journal of Business & Economic Statistics*, 29(1), 1-11.](https://www.tandfonline.com/doi/abs/10.1198/jbes.2009.07333)
+- Rosenbaum, Paul R. 2020. ["Modern Algorithms for Matching in Observational Studies."](https://www.annualreviews.org/content/journals/10.1146/annurev-statistics-031219-041058) *Annual Review of Statistics and Its Application* 7 (1): 143–176.
+- Abadie, Alberto, and Guido W. Imbens. 2011. ["Bias-Corrected Matching Estimators for Average Treatment Effects."](https://www.tandfonline.com/doi/abs/10.1198/jbes.2009.07333) *Journal of Business & Economic Statistics* 29 (1): 1–11.
+- Imbens, Guido W., and Yiqing Xu. 2025. ["Comparing Experimental and Nonexperimental Methods: What Lessons Have We Learned Four Decades after LaLonde (1986)?"](https://www.aeaweb.org/articles?id=10.1257/jep.20251440) *Journal of Economic Perspectives* 39 (4): 173–201.
 
 **Applications:**
 
-- [Imai, Kosuke. "Do get-out-the-vote calls reduce turnout? The importance of statistical methods for field experiments." American Political Science Review 99, no. 2 (2005): 283-300.](https://www.cambridge.org/core/journals/american-political-science-review/article/do-getoutthevote-calls-reduce-turnout-the-importance-of-statistical-methods-for-field-experiments/0F14ADE925B538D4BC8FAA84A81DB882)
-- [Hansen, Ben B., and Jake Bowers. "Attributing effects to a cluster-randomized get-out-the-vote campaign." Journal of the American Statistical Association 104, no. 487 (2009): 873-885.](https://www.tandfonline.com/doi/abs/10.1198/jasa.2009.ap06589)
+- Imai, Kosuke. 2005. ["Do Get-Out-the-Vote Calls Reduce Turnout? The Importance of Statistical Methods for Field Experiments."](https://www.cambridge.org/core/journals/american-political-science-review/article/do-getoutthevote-calls-reduce-turnout-the-importance-of-statistical-methods-for-field-experiments/0F14ADE925B538D4BC8FAA84A81DB882) *American Political Science Review* 99 (2): 283–300.
+- Hansen, Ben B., and Jake Bowers. 2009. ["Attributing Effects to a Cluster-Randomized Get-Out-the-Vote Campaign."](https://www.tandfonline.com/doi/abs/10.1198/jasa.2009.ap06589) *Journal of the American Statistical Association* 104 (487): 873–885.
 
 ---
 
@@ -180,16 +185,16 @@ All hyperlinks to papers are either to the published version of the paper (if pu
 
 **Readings:**
 
-- [Chapter 7; Cunningham, Scott. Causal inference: The mixtape. Yale university press, 2021.](https://mixtape.scunning.com/07-instrumental_variables)
-- [Angrist, Imbens and Rubin (1996) "Identification of causal effects using instrumental variables." *Journal of the American Statistical Association*, 91:434, 444-455](https://www.tandfonline.com/doi/abs/10.1080/01621459.1996.10476902)
-- [Andrews, Isaiah, James H. Stock, and Liyang Sun. "Weak instruments in instrumental variables regression: Theory and practice." *Annual Review of Economics* 11 (2019): 727-753.](https://www.annualreviews.org/content/journals/10.1146/annurev-economics-080218-025643)
-- [Słoczyński, Tymon. "When should we (not) interpret linear IV estimands as LATE?." arXiv preprint arXiv:2011.06695 (2024).](https://arxiv.org/abs/2011.06695)
+- Chapter 7; Cunningham, Scott. 2021. [*Causal Inference: The Mixtape*.](https://mixtape.scunning.com/07-instrumental_variables) New Haven: Yale University Press.
+- Angrist, Joshua D., Guido W. Imbens, and Donald B. Rubin. 1996. ["Identification of Causal Effects Using Instrumental Variables."](https://www.tandfonline.com/doi/abs/10.1080/01621459.1996.10476902) *Journal of the American Statistical Association* 91 (434): 444–455.
+- Andrews, Isaiah, James H. Stock, and Liyang Sun. 2019. ["Weak Instruments in Instrumental Variables Regression: Theory and Practice."](https://www.annualreviews.org/content/journals/10.1146/annurev-economics-080218-025643) *Annual Review of Economics* 11: 727–753.
+- Słoczyński, Tymon. 2024. ["When Should We (Not) Interpret Linear IV Estimands as LATE?"](https://arxiv.org/abs/2011.06695) Working paper.
 
 **Applications:**
 
-- [White, Ariel. "Misdemeanor disenfranchisement? The demobilizing effects of brief jail spells on potential voters." American Political Science Review 113, no. 2 (2019): 311-324.](https://www.cambridge.org/core/journals/american-political-science-review/article/misdemeanor-disenfranchisement-the-demobilizing-effects-of-brief-jail-spells-on-potential-voters/2FEDEE197EA55768312586DA2FEFB8F9)
-- [Lal, Apoorva, Mackenzie Lockhart, Yiqing Xu, and Ziwen Zu. "How much should we trust instrumental variable estimates in political science? Practical advice based on 67 replicated studies." Political Analysis 32, no. 4 (2024): 521-540.](https://www.cambridge.org/core/journals/political-analysis/article/how-much-should-we-trust-instrumental-variable-estimates-in-political-science-practical-advice-based-on-67-replicated-studies/70A232CA0CD55FE8B97E93543CDD6361)
-- [Angrist, Joshua D., and Peter Hull. "Instrumental variables methods reconcile intention-to-screen effects across pragmatic cancer screening trials." Proceedings of the national academy of sciences 120, no. 51 (2023): e2311556120.](https://www.pnas.org/doi/abs/10.1073/pnas.2311556120)
+- White, Ariel. 2019. ["Misdemeanor Disenfranchisement? The Demobilizing Effects of Brief Jail Spells on Potential Voters."](https://www.cambridge.org/core/journals/american-political-science-review/article/misdemeanor-disenfranchisement-the-demobilizing-effects-of-brief-jail-spells-on-potential-voters/2FEDEE197EA55768312586DA2FEFB8F9) *American Political Science Review* 113 (2): 311–324.
+- Lal, Apoorva, Mackenzie Lockhart, Yiqing Xu, and Ziwen Zu. 2024. ["How Much Should We Trust Instrumental Variable Estimates in Political Science? Practical Advice Based on 67 Replicated Studies."](https://www.cambridge.org/core/journals/political-analysis/article/how-much-should-we-trust-instrumental-variable-estimates-in-political-science-practical-advice-based-on-67-replicated-studies/70A232CA0CD55FE8B97E93543CDD6361) *Political Analysis* 32 (4): 521–540.
+- Angrist, Joshua D., and Peter Hull. 2023. ["Instrumental Variables Methods Reconcile Intention-to-Screen Effects across Pragmatic Cancer Screening Trials."](https://www.pnas.org/doi/abs/10.1073/pnas.2311556120) *Proceedings of the National Academy of Sciences* 120 (51): e2311556120.
 
 ---
 
@@ -206,27 +211,40 @@ All hyperlinks to papers are either to the published version of the paper (if pu
 
 **Readings:**
 
-- [Chapter 9; Cunningham, Scott. Causal inference: The mixtape. Yale university press, 2021.](https://mixtape.scunning.com/09-difference_in_differences)
+- Baker, Andrew, Brantly Callaway, Scott Cunningham, Andrew Goodman-Bacon, and Pedro H. C. Sant'Anna. 2025. ["Difference-in-Differences Designs: A Practitioner's Guide."](https://arxiv.org/pdf/2503.13323) Working paper.
+- Chapter 9; Cunningham, Scott. 2021. [*Causal Inference: The Mixtape*.](https://mixtape.scunning.com/09-difference_in_differences) New Haven: Yale University Press.
+- Chapter 3; de Chaisemartin, Clément, and Xavier D'Haultfœuille. 2023. [*Credible Answers to Hard Questions: Differences-in-Differences for Natural Experiments*.](https://papers.ssrn.com/sol3/Delivery.cfm?abstractid=4487202) Working paper.
 
 
 **Applications:**
 
-- Card, David, and Alan B. Krueger. "Minimum Wages and Employment: A Case Study of the Fast-Food Industry in New Jersey and Pennsylvania." *The American Economic Review* 84, no. 4 (1994): 772-793.
-- Miller, S., Johnson, N., & Wherry, L. R. (2021). Medicaid and mortality: new evidence from linked survey and administrative data. *The Quarterly Journal of Economics*, 136(3), 1783-1829.
+- Card, David, and Alan B. Krueger. 1994. ["Minimum Wages and Employment: A Case Study of the Fast-Food Industry in New Jersey and Pennsylvania."](https://www2.stat.duke.edu/~jerry/sta101/labs/wage.pdf) *American Economic Review* 84 (4): 772–793.
+- Miller, Sarah, Norman Johnson, and Laura R. Wherry. 2021. ["Medicaid and Mortality: New Evidence from Linked Survey and Administrative Data."](https://academic.oup.com/qje/article-abstract/136/3/1783/6124639) *Quarterly Journal of Economics* 136 (3): 1783–1829.
 
 ---
 
-## Week 10: Differences-in-Differences Continued
+## Week 10: Modern Differences-in-Differences
 
 *Monday, March 23 & Wednesday, March 25*
 
 **Topics:**
 
-- TBA
+- Differences-in-differences under staggered adoption
+- "New" DiD estimators - TWFE regression imputation vs. AIPW
+- Diagnosing pre-trends violations and assessing robustness
+- Relaxing parallel trends assumptions
 
 **Readings:**
 
-- Roth, J., Sant'Anna, P. H., Bilinski, A., & Poe, J. (2022). What's Trending in Difference-in-Differences? A Synthesis of the Recent Econometrics Literature. arXiv preprint arXiv:2201.01194.
+- Roth, Jonathan, Pedro H. C. Sant'Anna, Alyssa Bilinski, and John Poe. 2023. ["What's Trending in Difference-in-Differences? A Synthesis of the Recent Econometrics Literature."](https://www.sciencedirect.com/science/article/pii/S0304407623001318) *Journal of Econometrics* 235 (2): 2218–2244.
+- Liu, Licheng, Ye Wang, and Yiqing Xu. 2024. ["A Practical Guide to Counterfactual Estimators for Causal Inference with Time-Series Cross-Sectional Data."](https://onlinelibrary.wiley.com/doi/10.1111/ajps.12723) *American Journal of Political Science* 68 (1): 160–176.
+- Caetano, Carolina, and Brantly Callaway. 2024. ["Difference-in-Differences When Parallel Trends Holds Conditional on Covariates."](https://arxiv.org/abs/2406.15288) Working paper.
+- Rambachan, Ashesh, and Jonathan Roth. 2023. ["A More Credible Approach to Parallel Trends."](https://academic.oup.com/restud/article/90/5/2555/7039335) *Review of Economic Studies* 90 (5): 2555–2591.
+- Strezhnev, Anton. 2024. ["Group-Specific Linear Trends and the Triple-Differences in Time Design."](https://osf.io/preprints/socarxiv/dg5ps_v1) Working paper.
+
+**Applications:**
+
+- Chiu, Albert, Xingchen Lan, Ziyi Liu, and Yiqing Xu. 2023. ["Causal Panel Analysis under Parallel Trends: Lessons from a Large Reanalysis Study."](https://www.cambridge.org/core/journals/american-political-science-review/article/causal-panel-analysis-under-parallel-trends-lessons-from-a-large-reanalysis-study/219275E0CE901F099F2CFFBA07079243) *American Political Science Review* 118 (4): 1–22.
 
 ---
 
@@ -242,11 +260,21 @@ All hyperlinks to papers are either to the published version of the paper (if pu
 
 **Topics:**
 
-- Imai, Kosuke, In Song Kim, and Erik H. Wang. "Matching Methods for Causal Inference with Time-Series Cross-Sectional Data." *American Journal of Political Science* (2021).
-- 
+- Estimating effects when past outcomes affect future treatments
+- Estimators for effects of treatment *histories*
+- Pitfalls and cautions with lagged outcome regressions
+
 **Readings:**
 
-- TBA
+- Blackwell, Matthew, and Adam N. Glynn. 2018. ["How to Make Causal Inferences with Time-Series Cross-Sectional Data under Selection on Observables."](https://www.cambridge.org/core/journals/american-political-science-review/article/how-to-make-causal-inferences-with-timeseries-crosssectional-data-under-selection-on-observables/498BE04E5AF9802EC4D33DD7A4016584) *American Political Science Review* 112 (4): 1067–1082.
+- Xu, Yiqing. 2023. ["Causal Inference with Time-Series Cross-Sectional Data: A Reflection."](https://academic.oup.com/edited-volume/52557/chapter/425773874) In *The SAGE Handbook of Research Methods in Political Science and International Relations*, edited by Luigi Curini and Robert Franzese. London: SAGE.
+- Daw, Jamie R., and Laura A. Hatfield. 2018. ["Matching and Regression to the Mean in Difference-in-Differences Analysis."](https://onlinelibrary.wiley.com/doi/full/10.1111/1475-6773.12993) *Health Services Research* 53 (6): 4138–4156.
+
+
+**Applications:**
+
+- Harvey, Cole J. 2022. ["Who Delivers the Votes? Elected versus Appointed Local Executives, Election Manipulation, and Natural Support for Ruling Parties."](https://www.sciencedirect.com/science/article/pii/S0261379422000166) *Electoral Studies* 76: 102455.
+- Bach, Laurent, Antoine Bozio, Arthur Guillouzouic, and Clément Malgouyres. 2023. ["Dividend Taxes and the Allocation of Capital: Comment."](https://www.aeaweb.org/articles?id=10.1257/aer.20221432) *American Economic Review* 113 (7): 2048–2052.
 
 ---
 
@@ -256,20 +284,23 @@ All hyperlinks to papers are either to the published version of the paper (if pu
 
 **Topics:**
 
-- Estimating effects under unobserved confounding using quasi-random assignment at a cutpoint
-- Common applications: Elections, test scores
-- Estimation and sensitivity to modeling assumptions
+- Identification under unobserved confounding using quasi-random assignment at a cutpoint
+- Local randomization vs. continuity-based approaches
+- Estimation using local polynomial regression
+- Diagnostics for design assumptions - "bunching" tests and placebo outcomes
 
 **Readings:**
 
-- Chapters 1, 2 and 5. Cattaneo, Matias D., Nicolás Idrobo, and Rocío Titiunik. *A practical introduction to regression discontinuity designs: Foundations*. Cambridge University Press, 2019.
-- Eggers, A. C., Freier, R., Grembi, V., & Nannicini, T. (2018). Regression discontinuity designs based on population thresholds: Pitfalls and solutions. *American Journal of Political Science*, 62(1), 210-229.
-- Keele, Luke J., and Rocio Titiunik. "Geographic boundaries as regression discontinuities." *Political Analysis* 23.1 (2015): 127-155.
+- Cattaneo, Matias D., Nicolás Idrobo, and Rocío Titiunik. 2019. [*A Practical Introduction to Regression Discontinuity Designs: Foundations*.](https://arxiv.org/abs/1911.09511) Cambridge: Cambridge University Press.
+- Cattaneo, Matias D., Nicolás Idrobo, and Rocío Titiunik. 2024. [*A Practical Introduction to Regression Discontinuity Designs: Extensions*.](https://arxiv.org/abs/2301.08958) Cambridge: Cambridge University Press.
+- Marshall, John. 2024. ["Can Close Election Regression Discontinuity Designs Identify Effects of Winning Politician Characteristics?"](https://onlinelibrary.wiley.com/doi/full/10.1111/ajps.12741) *American Journal of Political Science* 68 (2): 494–510.
+- Hausman, Catherine, and David S. Rapson. 2018. ["Regression Discontinuity in Time: Considerations for Empirical Applications."](https://www.annualreviews.org/content/journals/10.1146/annurev-resource-121517-033306) *Annual Review of Resource Economics* 10 (1): 533–552.
 
 **Applications:**
 
-- Hidalgo, F. Daniel, and Simeon Nichter. "Voter buying: Shaping the electorate through clientelism." *American Journal of Political Science* 60.2 (2016): 436-455.
-- Bleemer, Zachary, and Aashish Mehta. "Will studying economics make you rich? A regression discontinuity analysis of the returns to college major." *American Economic Journal: Applied Economics* 14.2 (2022): 1-22.
+- Caughey, Devin, and Jasjeet S. Sekhon. 2011. ["Elections and the Regression Discontinuity Design: Lessons from Close US House Races, 1942–2008."](https://www.cambridge.org/core/journals/political-analysis/article/elections-and-the-regression-discontinuity-design-lessons-from-close-us-house-races-19422008/E5A69927D29BE682E012CAE9BFD8AEB7) *Political Analysis* 19 (4): 385–408.
+- Eggers, Andrew C., Anthony Fowler, Jens Hainmueller, Andrew B. Hall, and James M. Snyder Jr. 2015. ["On the Validity of the Regression Discontinuity Design for Estimating Electoral Effects: New Evidence from Over 40,000 Close Races."](https://onlinelibrary.wiley.com/doi/full/10.1111/ajps.12127) *American Journal of Political Science* 59 (1): 259–274.
+- De la Cuesta, Brandon, and Kosuke Imai. 2016. ["Misunderstandings about the Regression Discontinuity Design in the Study of Close Elections."](https://www.annualreviews.org/content/journals/10.1146/annurev-polisci-032015-010115) *Annual Review of Political Science* 19 (1): 375–396.
 
 ---
 
@@ -279,18 +310,28 @@ All hyperlinks to papers are either to the published version of the paper (if pu
 
 **Topics:**
 
-- How to define and identify indirect and direct effects of treatment
-- How to assess the robustness of results to violations of identification assumptions
+- Assessing the robustness of selection-on-observables results to hypothetical unobserved confounding.
+- Decomposing causal effects into "direct" and "indirect" components
+- Estimating mediation effects under ignorability assumptions
+- Challenges and pitfalls of mediation analysis
 
 **Readings:**
 
-- Blackwell, Matthew. "A selection bias approach to sensitivity analysis for causal effects." *Political Analysis* 22.2 (2014): 169-182.
-- Cinelli, Carlos, and Chad Hazlett. "Making sense of sensitivity: Extending omitted variable bias." *Journal of the Royal Statistical Society: Series B (Statistical Methodology)* 82.1 (2020): 39-67.
-- Imai, K., Keele, L., Tingley, D., & Yamamoto, T. (2011). Unpacking the black box of causality: Learning about causal mechanisms from experimental and observational studies. *American Political Science Review*, 105(4), 765-789.
-  - **Bonus:** Green, Donald P., Shang E. Ha, and John G. Bullock. "Enough already about "black box" experiments: Studying mediation is more difficult than most scholars suppose." *The Annals of the American Academy of Political and Social Science* 628.1 (2010): 200-208.
-- Acharya, Avidit, Matthew Blackwell, and Maya Sen. "Explaining causal findings without bias: Detecting and assessing direct effects." *American Political Science Review* 110.3 (2016): 512-529.
+- Cinelli, Carlos, and Chad Hazlett. 2020. ["Making Sense of Sensitivity: Extending Omitted Variable Bias."](https://academic.oup.com/jrsssb/article/82/1/39/7056023) *Journal of the Royal Statistical Society: Series B (Statistical Methodology)* 82 (1): 39–67.
+- Imai, Kosuke, Luke Keele, Dustin Tingley, and Teppei Yamamoto. 2011. ["Unpacking the Black Box of Causality: Learning about Causal Mechanisms from Experimental and Observational Studies."](https://www.cambridge.org/core/journals/american-political-science-review/article/unpacking-the-black-box-of-causality-learning-about-causal-mechanisms-from-experimental-and-observational-studies/9D2ACE9F784B99A30216D216FBF88553) *American Political Science Review* 105 (4): 765–789.
+- **Bonus:** Green, Donald P., Shang E. Ha, and John G. Bullock. 2010. ["Enough Already about 'Black Box' Experiments: Studying Mediation Is More Difficult than Most Scholars Suppose."](https://journals.sagepub.com/doi/abs/10.1177/0002716209351526) *Annals of the American Academy of Political and Social Science* 628 (1): 200–208.
+- Acharya, Avidit, Matthew Blackwell, and Maya Sen. 2016. ["Explaining Causal Findings without Bias: Detecting and Assessing Direct Effects."](https://www.cambridge.org/core/journals/american-political-science-review/article/explaining-causal-findings-without-bias-detecting-and-assessing-direct-effects/D11BEB8666E913A0DCD7D0B9872F5D11) *American Political Science Review* 110 (3): 512–529.
+- Blackwell, Matthew, Ruofan Ma, and Aleksei Opacic. 2024. ["Assumption Smuggling in Intermediate Outcome Tests of Causal Mechanisms."](https://arxiv.org/abs/2407.07072) Working paper.
+
+**Applications:**
+
+- Rathbun, Brian C., Christopher Sebastian Parker, and Caleb Pomeroy. 2025. ["Separate but Unequal: Ethnocentrism and Racialization Explain the 'Democratic' Peace in Public Opinion."](https://www.cambridge.org/core/journals/american-political-science-review/article/separate-but-unequal-ethnocentrism-and-racialization-explain-the-democratic-peace-in-public-opinion/0BEEE1D2EC35BFD9EE6A8BA8E344643A) *American Political Science Review* 119 (2): 621–636.
+- Tomz, Michael, and Jessica L. P. Weeks. 2025. ["Race, Democracy, and Public Support for War."](https://www.cambridge.org/core/journals/american-political-science-review/article/race-democracy-and-public-support-for-war/57ACD344C3FF08E8DD3F7E85BD48F4E4) *American Political Science Review*: 1–18.
+- Hazlett, Chad. 2020. ["Angry or Weary? How Violence Impacts Attitudes toward Peace among Darfurian Refugees."](https://journals.sagepub.com/doi/abs/10.1177/0022002719879217) *Journal of Conflict Resolution* 64 (5): 844–870.
 
 ---
+
+
 
 ## Week 14: Shift-share designs and experiments with interference
 
@@ -298,8 +339,17 @@ All hyperlinks to papers are either to the published version of the paper (if pu
 
 **Topics:**
 
-- TBA
+- Identification with instruments that are inner products of unit-specific "shares" and independent global "shifts" 
+- "Share-exogeneity" and connections to differences-in-differences/"multiple instruments"
+- "Shift-exogeneity" and connections to experiments with interference
 
 **Readings:**
 
-- TBA
+- Borusyak, Kirill, Peter Hull, and Xavier Jaravel. 2025. ["A Practical Guide to Shift-Share Instruments."](https://www.aeaweb.org/articles?id=10.1257/jep.20231370) *Journal of Economic Perspectives* 39 (1): 181–204.
+- Borusyak, Kirill, Peter Hull, and Xavier Jaravel. 2025. ["Design-Based Identification with Formula Instruments: A Review."](https://academic.oup.com/ectj/article/28/1/83/7590835) *Econometrics Journal* 28 (1): 83–108.
+- Aronow, P. M., and Cyrus Samii. 2017. ["Estimating Average Causal Effects under General Interference, with Application to a Social Network Experiment."](https://projecteuclid.org/journals/annals-of-applied-statistics/volume-11/issue-4/Estimating-average-causal-effects-under-general-interference-with-application-to/10.1214/16-AOAS1005.full) *Annals of Applied Statistics* 11 (4): 1912–1947.
+
+**Applications:**
+
+- Fouka, Vasiliki, and Marco Tabellini. 2022. ["Changing In-Group Boundaries: The Effect of Immigration on Race Relations in the United States."](https://www.cambridge.org/core/journals/american-political-science-review/article/changing-ingroup-boundaries-the-effect-of-immigration-on-race-relations-in-the-united-states/3E56334308D0D1EB5E24FA9DC398E636) *American Political Science Review* 116 (3): 968–984.
+- Gulotty, Robert, and Anton Strezhnev. 2024. ["The Political Benefits of the Monoculture: Estimating the Electoral Effect of the Market Facilitation Program."](https://osf.io/preprints/socarxiv/b84yn) Working paper.
