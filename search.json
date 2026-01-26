@@ -70,69 +70,6 @@
     "text": "Acknowledgments\nThis course is indebted to the many wonderful and generous scholars who have developed causal inference curricula in political science departments throughout the world and who have made their course materials available to the public. In particular, I thank Matthew Blackwell, Brandon Stewart, Molly Roberts, Kosuke Imai, Teppei Yamamoto, Jens Hainmueller, Adam Glynn, Gary King, Justin Grimmer, and Edward Kennedy whose lecture notes and syllabi have been immensely valuable in the creation of this course. Special thanks to Molly Offer-Westort, Andy Eggers and Bobby Gulotty who helped in the development of this course in its earlier incarnation as PLSC 30600 at the University of Chicago. I also thank the previous teaching assistants of this course: Arthur Yu, Oscar Cuadros, Zikai Li, and Cindy Wang.\nLastly, thanks to Andrew Heiss and Matt Blackwell for their Quarto website templates, which I have extensively borrowed from in designing this course site."
   },
   {
-    "objectID": "resources.html",
-    "href": "resources.html",
-    "title": "Resources",
-    "section": "",
-    "text": "These textbooks provide a number of the readings that will be used through the course of the semester. Each is available either as a free online version or in digital form via UW-Madison library access.\n\nCunningham, Scott. Causal inference: The Mixtape. Yale University Press, 2021.\n\nFree online version\n\nHuntington-Klein, Nick. The Effect: An Introduction to Research Design and Causality. Chapman and Hall/CRC, 2021.\n\nFree online version\n\nHernán, Miguel A. and James M. Robins. Causal Inference: What If. Chapman & Hall/CRC. 2020.\n\nFree PDF available\n\nImbens, Guido W. and Donald B. Rubin. Causal Inference for Statistics, Social, and Biomedical Sciences. Cambridge University Press. 2015.\n\nUW-Madison Library Access\n\nMorgan, Stephen L., and Christopher Winship. Counterfactuals and Causal Inference. Cambridge University Press, 2015.\n\nUW-Madison Library Access\n\nWager, Stefan. Causal inference: A statistical learning approach.\n\nDraft PDF available here"
-  },
-  {
-    "objectID": "resources.html#textbooks",
-    "href": "resources.html#textbooks",
-    "title": "Resources",
-    "section": "",
-    "text": "These textbooks provide a number of the readings that will be used through the course of the semester. Each is available either as a free online version or in digital form via UW-Madison library access.\n\nCunningham, Scott. Causal inference: The Mixtape. Yale University Press, 2021.\n\nFree online version\n\nHuntington-Klein, Nick. The Effect: An Introduction to Research Design and Causality. Chapman and Hall/CRC, 2021.\n\nFree online version\n\nHernán, Miguel A. and James M. Robins. Causal Inference: What If. Chapman & Hall/CRC. 2020.\n\nFree PDF available\n\nImbens, Guido W. and Donald B. Rubin. Causal Inference for Statistics, Social, and Biomedical Sciences. Cambridge University Press. 2015.\n\nUW-Madison Library Access\n\nMorgan, Stephen L., and Christopher Winship. Counterfactuals and Causal Inference. Cambridge University Press, 2015.\n\nUW-Madison Library Access\n\nWager, Stefan. Causal inference: A statistical learning approach.\n\nDraft PDF available here"
-  },
-  {
-    "objectID": "resources.html#software",
-    "href": "resources.html#software",
-    "title": "Resources",
-    "section": "Software",
-    "text": "Software\n\nR and RStudio\nThis course uses R for all programming assignments. You are welcome to use the RStudio Interactive Development Environment (IDE) to write code and edit the assignment write-up. Due to the extensive integration of Quarto into Posit-developed IDEs, I encourage using either RStudio or the more recent Positron IDE.\n\nR: Download from https://www.r-project.org\nRStudio: Download from https://posit.co/download/rstudio-desktop/\nPositron: Download from https://positron.posit.co/\n\n\nRecommended Guides for R Programming\n\nR For Data Science Available at https://r4ds.hadley.nz/\nData Visualization: A Practical Introduction Available at https://socviz.co/\n\n\n\n\nQuarto and Markdown\nThe assignments are distributed as .qmd Quarto files. Quarto is the successor to R Markdown and lets you present your analysis, code, figures and written discussion all in a single document. It uses Markdown syntax for formatting text and supports embedded R code chunks that execute when you render the document. This lets you present your analysis, code, figures, and written discussion all in one place.\nTo complete assignments, you will edit the provided .qmd file, adding your code and written responses, then render it to an HTML file for submission. Both your .html output and .qmd file will be submitted via Gradescope\n\nQuarto: Download from https://quarto.org/docs/get-started/\nQuarto Guide: https://quarto.org/docs/guide/\nMarkdown Basics: https://quarto.org/docs/authoring/markdown-basics.html\nNote also the chapter on Quarto in R For Data Science"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "PoliSci 813",
-    "section": "",
-    "text": "Causal Inference\nDesigning studies to uncover cause and effect from data\nPoliSci 813 • Spring 2026University of Wisconsin-Madison\n\n\n\n\n\n\n\n\nInstructor\n\n   Anton Strezhnev\n   North Hall 322D\n   strezhnev@wisc.edu\n\n\n\nTeaching Assistant\n\n   Junda Li\n   jli2479@wisc.edu\n\n\n\n\nCourse details\n\n   Mondays & Wednesdays\n   1/21/2026 - 5/4/2026\n   9:30am - 10:45am\n   North Hall 422\n\n\n\nContacting me\nE-mail is the best way to get in touch with me. My dedicated office hours are Tuesdays from 2pm-4pm if you want to meet in-person. I am also generally in my office on weekdays during normal hours and my door is open, so you are welcome to drop in. You can also feel free to e-mail me to confirm availability or to schedule a virtual meeting via Zoom."
-  },
-  {
-    "objectID": "assignments.html",
-    "href": "assignments.html",
-    "title": "Assignments",
-    "section": "",
-    "text": "Assignment\nAssigned\nDue\n\n\n\n\nProblem Set 1\nJan 21 (Week 1)\nFeb 4 (Week 3)\n\n\nProblem Set 2\nFeb 4 (Week 3)\nFeb 18 (Week 5)\n\n\nProblem Set 3\nFeb 18 (Week 5)\nMarch 4 (Week 7)\n\n\nMidterm Exam\nMarch 4 (Week 7)\nIn-Class\n\n\nProblem Set 4\nMarch 11 (Week 8)\nMarch 25 (Week 10)\n\n\nProblem Set 5\nApril 8 (Week 11)\nApril 22 (Week 13)\n\n\nFinal Exam\nMay 4 (Exam Week)\nLocation TBA"
-  },
-  {
-    "objectID": "assignments.html#schedule",
-    "href": "assignments.html#schedule",
-    "title": "Assignments",
-    "section": "",
-    "text": "Assignment\nAssigned\nDue\n\n\n\n\nProblem Set 1\nJan 21 (Week 1)\nFeb 4 (Week 3)\n\n\nProblem Set 2\nFeb 4 (Week 3)\nFeb 18 (Week 5)\n\n\nProblem Set 3\nFeb 18 (Week 5)\nMarch 4 (Week 7)\n\n\nMidterm Exam\nMarch 4 (Week 7)\nIn-Class\n\n\nProblem Set 4\nMarch 11 (Week 8)\nMarch 25 (Week 10)\n\n\nProblem Set 5\nApril 8 (Week 11)\nApril 22 (Week 13)\n\n\nFinal Exam\nMay 4 (Exam Week)\nLocation TBA"
-  },
-  {
-    "objectID": "assignments.html#problem-sets",
-    "href": "assignments.html#problem-sets",
-    "title": "Assignments",
-    "section": "Problem Sets",
-    "text": "Problem Sets\nProblem sets are distributed as .qmd files along with their rendered .html form. You should edit the provided .qmd file and render to .html when submitting the assignment. Additional files (e.g. datasets) are located in sub-folders. For convenience, all the combined files are also distributed as a .zip compressed archive.\n\nProblem Set 1\n\nGithub Repository\n.zip archive"
-  },
-  {
-    "objectID": "lectures.html",
-    "href": "lectures.html",
-    "title": "Lectures",
-    "section": "",
-    "text": "Lecture slides are available as self-contained .html files made with RevealJS from a Quarto .qmd file. You can choose to print these to a PDF document by using the “PDF Export Mode” in the Tools menu accessed via the settings button in the lower left-hand side of the page. You are also welcome to directly download the .qmd file and supporting data/images/etc… from the Github repository. Slides are organized by week and combine Monday and Wednesday’s lectures.\n\n\n\nWeek 1 Github Repository\nWeek 1 .html slides\n\n\n\n\n\nWeek 2 Github Repository\nWeek 2 .html slides\n\n\n\n\n\nWeek 3 Github Repository\nWeek 3 .html slides\n\n\n\n\n\nWeek 4 Github Repository\nWeek 4 .html slides\n\n\n\n\n\nWeek 5 Github Repository\nWeek 5 .html slides\n\n\n\n\n\nWeek 6 Github Repository\nWeek 6 .html slides\n\n\n\n\n\nWeek 7 Github Repository\nWeek 7 .html slides\n\n\n\n\n\nWeek 8 Github Repository\nWeek 8 .html slides\n\n\n\n\n\nWeek 9 Github Repository\nWeek 9 .html slides\n\n\n\n\n\nWeek 10 Github Repository\nWeek 10 .html slides\n\n\n\n\n\nWeek 11 Github Repository\nWeek 11 .html slides\n\n\n\n\n\nWeek 12 Github Repository\nWeek 12 .html slides\n\n\n\n\n\nWeek 13 Github Repository\nWeek 13 .html slides\n\n\n\n\n\nWeek 14 Github Repository\nWeek 14 .html slides"
-  },
-  {
-    "objectID": "lectures.html#lecture-slides",
-    "href": "lectures.html#lecture-slides",
-    "title": "Lectures",
-    "section": "",
-    "text": "Lecture slides are available as self-contained .html files made with RevealJS from a Quarto .qmd file. You can choose to print these to a PDF document by using the “PDF Export Mode” in the Tools menu accessed via the settings button in the lower left-hand side of the page. You are also welcome to directly download the .qmd file and supporting data/images/etc… from the Github repository. Slides are organized by week and combine Monday and Wednesday’s lectures.\n\n\n\nWeek 1 Github Repository\nWeek 1 .html slides\n\n\n\n\n\nWeek 2 Github Repository\nWeek 2 .html slides\n\n\n\n\n\nWeek 3 Github Repository\nWeek 3 .html slides\n\n\n\n\n\nWeek 4 Github Repository\nWeek 4 .html slides\n\n\n\n\n\nWeek 5 Github Repository\nWeek 5 .html slides\n\n\n\n\n\nWeek 6 Github Repository\nWeek 6 .html slides\n\n\n\n\n\nWeek 7 Github Repository\nWeek 7 .html slides\n\n\n\n\n\nWeek 8 Github Repository\nWeek 8 .html slides\n\n\n\n\n\nWeek 9 Github Repository\nWeek 9 .html slides\n\n\n\n\n\nWeek 10 Github Repository\nWeek 10 .html slides\n\n\n\n\n\nWeek 11 Github Repository\nWeek 11 .html slides\n\n\n\n\n\nWeek 12 Github Repository\nWeek 12 .html slides\n\n\n\n\n\nWeek 13 Github Repository\nWeek 13 .html slides\n\n\n\n\n\nWeek 14 Github Repository\nWeek 14 .html slides"
-  },
-  {
     "objectID": "schedule.html",
     "href": "schedule.html",
     "title": "Schedule",
@@ -243,6 +180,69 @@
     "title": "Schedule",
     "section": "Week 14: Shift-share designs and experiments with interference",
     "text": "Week 14: Shift-share designs and experiments with interference\nMonday, April 27 & Wednesday, April 29\nTopics:\n\nIdentification with instruments that are inner products of unit-specific “shares” and independent global “shifts”\n“Share-exogeneity” and connections to differences-in-differences/“multiple instruments”\n“Shift-exogeneity” and connections to experiments with interference\n\nReadings:\n\nBorusyak, Kirill, Peter Hull, and Xavier Jaravel. 2025. “A Practical Guide to Shift-Share Instruments.” Journal of Economic Perspectives 39 (1): 181–204.\nBorusyak, Kirill, Peter Hull, and Xavier Jaravel. 2025. “Design-Based Identification with Formula Instruments: A Review.” Econometrics Journal 28 (1): 83–108.\nAronow, P. M., and Cyrus Samii. 2017. “Estimating Average Causal Effects under General Interference, with Application to a Social Network Experiment.” Annals of Applied Statistics 11 (4): 1912–1947.\n\nApplications:\n\nFouka, Vasiliki, and Marco Tabellini. 2022. “Changing In-Group Boundaries: The Effect of Immigration on Race Relations in the United States.” American Political Science Review 116 (3): 968–984.\nGulotty, Robert, and Anton Strezhnev. 2024. “The Political Benefits of the Monoculture: Estimating the Electoral Effect of the Market Facilitation Program.” Working paper."
+  },
+  {
+    "objectID": "lectures.html",
+    "href": "lectures.html",
+    "title": "Lectures",
+    "section": "",
+    "text": "Lecture slides are available as self-contained .html files made with RevealJS from a Quarto .qmd file. You can choose to print these to a PDF document by using the “PDF Export Mode” in the Tools menu accessed via the settings button in the lower left-hand side of the page. You are also welcome to directly download the .qmd file and supporting data/images/etc… from the Github repository. Slides are organized by week and combine Monday and Wednesday’s lectures.\n\n\n\nWeek 1 Github Repository\nWeek 1 .html slides\n\n\n\n\n\nWeek 2 Github Repository\nWeek 2 .html slides\n\n\n\n\n\nWeek 3 Github Repository\nWeek 3 .html slides\n\n\n\n\n\nWeek 4 Github Repository\nWeek 4 .html slides\n\n\n\n\n\nWeek 5 Github Repository\nWeek 5 .html slides\n\n\n\n\n\nWeek 6 Github Repository\nWeek 6 .html slides\n\n\n\n\n\nWeek 7 Github Repository\nWeek 7 .html slides\n\n\n\n\n\nWeek 8 Github Repository\nWeek 8 .html slides\n\n\n\n\n\nWeek 9 Github Repository\nWeek 9 .html slides\n\n\n\n\n\nWeek 10 Github Repository\nWeek 10 .html slides\n\n\n\n\n\nWeek 11 Github Repository\nWeek 11 .html slides\n\n\n\n\n\nWeek 12 Github Repository\nWeek 12 .html slides\n\n\n\n\n\nWeek 13 Github Repository\nWeek 13 .html slides\n\n\n\n\n\nWeek 14 Github Repository\nWeek 14 .html slides"
+  },
+  {
+    "objectID": "lectures.html#lecture-slides",
+    "href": "lectures.html#lecture-slides",
+    "title": "Lectures",
+    "section": "",
+    "text": "Lecture slides are available as self-contained .html files made with RevealJS from a Quarto .qmd file. You can choose to print these to a PDF document by using the “PDF Export Mode” in the Tools menu accessed via the settings button in the lower left-hand side of the page. You are also welcome to directly download the .qmd file and supporting data/images/etc… from the Github repository. Slides are organized by week and combine Monday and Wednesday’s lectures.\n\n\n\nWeek 1 Github Repository\nWeek 1 .html slides\n\n\n\n\n\nWeek 2 Github Repository\nWeek 2 .html slides\n\n\n\n\n\nWeek 3 Github Repository\nWeek 3 .html slides\n\n\n\n\n\nWeek 4 Github Repository\nWeek 4 .html slides\n\n\n\n\n\nWeek 5 Github Repository\nWeek 5 .html slides\n\n\n\n\n\nWeek 6 Github Repository\nWeek 6 .html slides\n\n\n\n\n\nWeek 7 Github Repository\nWeek 7 .html slides\n\n\n\n\n\nWeek 8 Github Repository\nWeek 8 .html slides\n\n\n\n\n\nWeek 9 Github Repository\nWeek 9 .html slides\n\n\n\n\n\nWeek 10 Github Repository\nWeek 10 .html slides\n\n\n\n\n\nWeek 11 Github Repository\nWeek 11 .html slides\n\n\n\n\n\nWeek 12 Github Repository\nWeek 12 .html slides\n\n\n\n\n\nWeek 13 Github Repository\nWeek 13 .html slides\n\n\n\n\n\nWeek 14 Github Repository\nWeek 14 .html slides"
+  },
+  {
+    "objectID": "assignments.html",
+    "href": "assignments.html",
+    "title": "Assignments",
+    "section": "",
+    "text": "Assignment\nAssigned\nDue\n\n\n\n\nProblem Set 1\nJan 21 (Week 1)\nFeb 4 (Week 3)\n\n\nProblem Set 2\nFeb 4 (Week 3)\nFeb 18 (Week 5)\n\n\nProblem Set 3\nFeb 18 (Week 5)\nMarch 4 (Week 7)\n\n\nMidterm Exam\nMarch 4 (Week 7)\nIn-Class\n\n\nProblem Set 4\nMarch 11 (Week 8)\nMarch 25 (Week 10)\n\n\nProblem Set 5\nApril 8 (Week 11)\nApril 22 (Week 13)\n\n\nFinal Exam\nMay 4 (Exam Week)\nLocation TBA"
+  },
+  {
+    "objectID": "assignments.html#schedule",
+    "href": "assignments.html#schedule",
+    "title": "Assignments",
+    "section": "",
+    "text": "Assignment\nAssigned\nDue\n\n\n\n\nProblem Set 1\nJan 21 (Week 1)\nFeb 4 (Week 3)\n\n\nProblem Set 2\nFeb 4 (Week 3)\nFeb 18 (Week 5)\n\n\nProblem Set 3\nFeb 18 (Week 5)\nMarch 4 (Week 7)\n\n\nMidterm Exam\nMarch 4 (Week 7)\nIn-Class\n\n\nProblem Set 4\nMarch 11 (Week 8)\nMarch 25 (Week 10)\n\n\nProblem Set 5\nApril 8 (Week 11)\nApril 22 (Week 13)\n\n\nFinal Exam\nMay 4 (Exam Week)\nLocation TBA"
+  },
+  {
+    "objectID": "assignments.html#problem-sets",
+    "href": "assignments.html#problem-sets",
+    "title": "Assignments",
+    "section": "Problem Sets",
+    "text": "Problem Sets\nProblem sets are distributed as .qmd files along with their rendered .html form. You should edit the provided .qmd file and render to .html when submitting the assignment. Additional files (e.g. datasets) are located in sub-folders. For convenience, all the combined files are also distributed as a .zip compressed archive.\n\nProblem Set 1\n\nGithub Repository\n.zip archive"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "PoliSci 813",
+    "section": "",
+    "text": "Causal Inference\nDesigning studies to uncover cause and effect from data\nPoliSci 813 • Spring 2026University of Wisconsin-Madison\n\n\n\n\n\n\n\n\nInstructor\n\n   Anton Strezhnev\n   North Hall 322D\n   strezhnev@wisc.edu\n\n\n\nTeaching Assistant\n\n   Junda Li\n   jli2479@wisc.edu\n\n\n\n\nCourse details\n\n   Mondays & Wednesdays\n   1/21/2026 - 5/4/2026\n   9:30am - 10:45am\n   North Hall 422\n\n\n\nContacting me\nE-mail is the best way to get in touch with me. My dedicated office hours are Tuesdays from 2pm-4pm if you want to meet in-person. I am also generally in my office on weekdays during normal hours and my door is open, so you are welcome to drop in. You can also feel free to e-mail me to confirm availability or to schedule a virtual meeting via Zoom."
+  },
+  {
+    "objectID": "resources.html",
+    "href": "resources.html",
+    "title": "Resources",
+    "section": "",
+    "text": "These textbooks provide a number of the readings that will be used through the course of the semester. Each is available either as a free online version or in digital form via UW-Madison library access.\n\nCunningham, Scott. Causal inference: The Mixtape. Yale University Press, 2021.\n\nFree online version\n\nHuntington-Klein, Nick. The Effect: An Introduction to Research Design and Causality. Chapman and Hall/CRC, 2021.\n\nFree online version\n\nHernán, Miguel A. and James M. Robins. Causal Inference: What If. Chapman & Hall/CRC. 2020.\n\nFree PDF available\n\nImbens, Guido W. and Donald B. Rubin. Causal Inference for Statistics, Social, and Biomedical Sciences. Cambridge University Press. 2015.\n\nUW-Madison Library Access\n\nMorgan, Stephen L., and Christopher Winship. Counterfactuals and Causal Inference. Cambridge University Press, 2015.\n\nUW-Madison Library Access\n\nWager, Stefan. Causal inference: A statistical learning approach.\n\nDraft PDF available here"
+  },
+  {
+    "objectID": "resources.html#textbooks",
+    "href": "resources.html#textbooks",
+    "title": "Resources",
+    "section": "",
+    "text": "These textbooks provide a number of the readings that will be used through the course of the semester. Each is available either as a free online version or in digital form via UW-Madison library access.\n\nCunningham, Scott. Causal inference: The Mixtape. Yale University Press, 2021.\n\nFree online version\n\nHuntington-Klein, Nick. The Effect: An Introduction to Research Design and Causality. Chapman and Hall/CRC, 2021.\n\nFree online version\n\nHernán, Miguel A. and James M. Robins. Causal Inference: What If. Chapman & Hall/CRC. 2020.\n\nFree PDF available\n\nImbens, Guido W. and Donald B. Rubin. Causal Inference for Statistics, Social, and Biomedical Sciences. Cambridge University Press. 2015.\n\nUW-Madison Library Access\n\nMorgan, Stephen L., and Christopher Winship. Counterfactuals and Causal Inference. Cambridge University Press, 2015.\n\nUW-Madison Library Access\n\nWager, Stefan. Causal inference: A statistical learning approach.\n\nDraft PDF available here"
+  },
+  {
+    "objectID": "resources.html#software",
+    "href": "resources.html#software",
+    "title": "Resources",
+    "section": "Software",
+    "text": "Software\n\nR and RStudio\nThis course uses R for all programming assignments. You are welcome to use the RStudio Interactive Development Environment (IDE) to write code and edit the assignment write-up. Due to the extensive integration of Quarto into Posit-developed IDEs, I encourage using either RStudio or the more recent Positron IDE.\n\nR: Download from https://www.r-project.org\nRStudio: Download from https://posit.co/download/rstudio-desktop/\nPositron: Download from https://positron.posit.co/\n\n\nRecommended Guides for R Programming\n\nR For Data Science Available at https://r4ds.hadley.nz/\nData Visualization: A Practical Introduction Available at https://socviz.co/\n\n\n\n\nQuarto and Markdown\nThe assignments are distributed as .qmd Quarto files. Quarto is the successor to R Markdown and lets you present your analysis, code, figures and written discussion all in a single document. It uses Markdown syntax for formatting text and supports embedded R code chunks that execute when you render the document. This lets you present your analysis, code, figures, and written discussion all in one place.\nTo complete assignments, you will edit the provided .qmd file, adding your code and written responses, then render it to an HTML file for submission. Both your .html output and .qmd file will be submitted via Gradescope\n\nQuarto: Download from https://quarto.org/docs/get-started/\nQuarto Guide: https://quarto.org/docs/guide/\nMarkdown Basics: https://quarto.org/docs/authoring/markdown-basics.html\nNote also the chapter on Quarto in R For Data Science"
   },
   {
     "objectID": "staff.html",
