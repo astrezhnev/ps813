@@ -1,0 +1,448 @@
+---
+title: "Week 2: Potential Outcomes and Experiments"
+subtitle: "PS 813 - Causal Inference"
+author:
+  - name: "Anton Strezhnev"
+    affiliation: "University of Wisconsin-Madison"
+    email: strezhnev@wisc.edu
+date: "January 26, 2026"
+date-format: "MMMM D, YYYY"
+editor:
+  render-on-save: true
+format:
+  revealjs:
+    theme: [default, custom.scss]
+    slide-number: true
+    overview: true
+    navigation-mode: vertical
+    progress: false
+    controls: true
+    link-external-newwindow: true
+    footer: "PS 813 - University of Wisconsin - Madison"
+    html-math-method:
+      method: mathjax
+      url: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+execute:
+  cache: false
+code:
+  execute:
+    - r
+    - python
+embed-resources: true
+
+---
+
+# 
+
+$$
+  \require{cancel}
+$$
+
+# This week
+
+::: {.incremental}
+
+- Defining **causal** estimands
+  - The "potential outcomes" model of causation
+- Causal **identification**
+  - Linking **causal estimands** to observable quantities
+- **Randomized experiments** as a solution to the identification problem
+  - Treatment assignment is **independent** of the potential outcomes
+- **Statistical inference** for completely randomized experiments
+  - Neyman's approach
+  - Fisher's approach
+
+:::
+
+# The potential outcomes model
+
+# Thinking about causal effects
+
+::: {.incremental}
+
+- Two types of causal questions **(Gelman and Rubin, 2013)**
+
+- **Causes of effects**
+  - What are the factors that generate some outcome $Y$?
+  - "Why?" questions: Why do states go to war? Why do politicians get re-elected?
+
+- **Effects of causes**
+  - If $X$ were to change, what might happen to $Y$?
+  - **"What if?"** questions: If a politician were an incumbent, would they be more likely to be re-elected compared to if they were a non-incumbent?
+
+- Our focus in this class is on **effects of causes**
+  - Why? We can connect them to well-defined statistical quantities of
+  interest (e.g. an "average treatment effect")
+  - "Causes of effects" are still important questions, but they're more questions of **theory**
+
+:::
+
+# Defining a causal effect
+
+::: {.incremental}
+
+- Historically, causality was seen as a *deterministic* process.
+  - **Hume (1740):** Causes are regularities in events of "constant conjunctions"
+  - **Mill (1843):** Method of difference
+
+- This became problematic -- empirical observation alone does not demonstrate causality.
+  - **Russell (1913):** Scientists aren't interested in causality!
+
+- How do we talk about causation that both incorporates *uncertainty* in measurement and clearly defines what we mean by **a "causal effect"**?
+
+:::
+
+# The potential outcomes model
+
+::: {.incremental}
+
+- **Rubin (1974)** - formalizes a framework for understanding causation from
+a statistical perspective.
+  - Inspired by earlier **Neyman (1923)** and **Fisher (1935)** on randomized experiments.
+- We'll spend most of our time with this approach, often called the **Rubin Causal Model**
+  or **potential outcomes** framework.
+
+- **Core idea:**
+   - Causal effects are effects of **interventions**
+   - Causal effects are **contrasts** in **counterfactuals**
+
+- It's very difficult to learn about vague causal statements:
+- The  **potential outcomes** framework clarifies:
+  1. **What** action is doing the causing?
+  2. Compared to **what** alternative action?
+  3. On **what** outcome metric?
+  4. How would we learn about the effect from data?
+
+:::
+
+# Statistical setup.
+
+::: {.incremental}
+
+- Population of units
+  - Finite population or infinite super-population
+
+- Sample of $N$ units from the population indexed by $i$
+- Observed outcome $Y_i$
+- Binary treatment indicator $D_i$.
+  - Units receiving "treatment": $D_i = 1$
+  - Units receiving "control": $D_i = 0$
+- Covariates (observed prior to treatment) $X_i$
+
+:::
+
+# Potential outcomes
+
+::: {.incremental}
+
+- Let $D_i$ be the value of a **treatment** assigned to each individual.
+- $Y_i(d)$ is the value that the outcome would take if $D_i$ were set to $d$.
+  - For binary $D_i$: $Y_i(1)$ is the value we would observe if unit $i$ were *treated*.
+  - $Y_i(0)$ is the value we would observe if unit $i$ were under *control*
+- We model the potential outcomes as **fixed** attributes of the units.
+- **Notation alert!** -- Sometimes you'll see potential outcomes written as:
+  - $Y_i^1$, $Y_i^0$ or $Y_i^{d=1}$, $Y_i^{d=0}$
+  - $Y_{i0}$, $Y_{i1}$
+  - $Y_1(i)$, $Y_0(i)$
+- Causal effects are contrasts in potential outcomes.
+  - Individual treatment effect: $\tau_i = Y_i(1) - Y_i(0)$
+  - Can consider ratios or other transformations (e.g. $\frac{Y_i(1)}{Y_i(0)}$)
+
+:::
+
+# Consistency/SUTVA
+
+::: {.incremental}
+
+- How do we link the potential outcomes to observed ones?
+- Consistency/Stable Unit Treatment Value (SUTVA) assumption
+
+  $$Y_i(d) = Y_i \text{ if } D_i = d$$
+
+- Sometimes you'll see this w/ binary $D_i$ (often in econometrics)
+
+  $$Y_i = Y_i(1)D_i + Y_i(0)(1-D_i)$$
+
+- Implications
+  1. No interference -- other units' treatments don't affect $i$'s potential outcomes.
+  2. Single version of treatment
+  3. $D$ is in principle manipulable -- a "well-defined intervention"
+  4. The means by which treatment is assigned is irrelevant (a version of 2)
+
+:::
+
+# Positivity/Overlap
+
+::: {.incremental}
+
+- We also need some assumptions on the treatment assignment mechanism $D_i$.
+- In order to be able to observe *some units'* values of $Y_i(1)$ or $Y_i(0)$ treatment can't be deterministic. For all $i$:
+
+  $$ 0 < Pr(D_i = 1) < 1 $$
+
+- If no units could ever receive treatment or control it would be impossible to learn about $E[Y_i | D_i = 1]$ or $E[Y_i | D_i = 0]$
+- This is sometimes called a **positivity** or overlap assumption.
+  - Pretty trivial in a randomized experiment, but can be tricky in observational studies when $D_i$ is perfectly determined by some covariates $X_i$
+
+:::
+
+# A missing data problem
+
+- It's useful to think of the causal inference problem in terms of *missingness*
+in the complete table of potential outcomes.
+
+Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$ | Observed $Y_i$   |
+:---------:|:-----------------:|:--------:|:--------:|:----------------:|
+ $1$       |  $1$              |  $5$     |   ?      |    $5$           |
+ $2$       |  $0$              |  ?       |  $-3$    |    $-3$          |
+ $3$       |  $1$              |  $9$     |   ?      |    $9$           |
+ $\vdots$  |   $\vdots$        |  $\vdots$| $\vdots$ |      $\vdots$    |
+ $N$       |  $0$              |   ?      |   $8$    |   $8$            |
+
+
+::: {.incremental}
+
+- If we could observe both $Y_i(1)$ and $Y_i(0)$ for each unit, then this would be easy!
+- But we can't - we only observe what we're given by $D_i$
+- **Holland (1986)** calls this "The Fundamental Problem of Causal Inference"
+
+:::
+
+# Causal Estimands
+
+::: {.incremental}
+
+- All causal inference starts with a definition of the estimand.
+- The individual causal effect: $\tau_i$
+
+  $$\tau_i = Y_i(1) - Y_i(0)$$
+  - **Problem**: Can't identify this without extremely strong assumptions!
+  - "The Fundamental Problem of Causal Inference"
+  
+:::
+
+# Causal Estimands
+
+::: {.incremental}
+
+- The **sample average treatment effect** (SATE): $\tau_s$
+
+  $$\tau_s = \frac{1}{N}\sum_{i=1}^N Y_i(1) - Y_i(0)$$
+  
+- The **population average treatment effect** (PATE) $\tau_p$
+
+  $$\tau_p = E[Y_i(1) - Y_i(0)] = E[Y_i(1)] - E[Y_i(0)]$$
+:::
+
+# Sample vs. Population Estimands
+
+::: {.incremental}
+
+- With the SATE and PATE, we've made an important distinction between **two** sources of uncertainty
+  - Random assignment of treatment (unobserved P.O.s)
+  - Sampling from a population.
+
+- Even if we're just interested in the treatment effect **within** our sample, there's still uncertainty
+- When can we go from **SATE** to **PATE**?
+  - If we have a random sample from the target population
+  - If there are no sources of **effect heterogeneity** that differ between sample and target population
+  - We'll spend Week 3 talking about this problem - **external validity**
+
+:::
+
+# Causal vs. Associational Estimands
+
+![](assets/association_causation.png){fig-align="center"}
+
+
+# Causal Identification
+
+::: {.incremental}
+
+- **Causal identification**: Can we learn about the value of a causal effect from the observed data?
+  - Can we express the causal estimand (e.g. $\tau_p = E[Y_i(1) - Y_i(0)]$) entirely in terms of *observable* quantities?
+- Causal identification comes prior to questions of estimation
+  - It doesn't matter whether you're using regression, weighting, matching, doubly-robust estimation, double-LASSO, etc...
+  - If you can't answer the question "What's your identification strategy?" then no amount of fancy stats will solve your problems.
+- Identification requires *assumptions* about the connection between the observed data $Y_i$, $D_i$ and the unobserved counterfactuals $Y_i(d)$
+  - (e.g.) Under what assumptions will the observed difference-in-means *identify* the average treatment effect?
+
+:::
+
+# Identifying the ATT
+
+::: {.incremental}
+
+- Suppose we want to identify the (population) Average Treatment Effect on the Treated (ATT)
+
+  $$\tau_{\text{ATT}} = E[Y_i(1) - Y_i(0) | D_i = 1]$$
+
+- Let's see what our consistency/SUTVA assumption gets us!
+
+- First, let's use linearity:
+
+  $$\tau_{\text{ATT}} = E[Y_i(1) | D_i = 1] -  E[Y_i(0) | D_i = 1]$$
+
+- Next, consistency
+
+  $$\tau_{\text{ATT}} = E[Y_i | D_i = 1] -  E[Y_i(0) | D_i = 1]$$
+
+:::
+
+# Identifying the ATT
+
+::: {.incremental}
+
+- Still not enough though. We have an *unobserved* term $E[Y_i(0) | D_i = 1]$. Why can't we observe this directly?
+
+  $$\tau_{\text{ATT}} = E[Y_i | D_i = 1] -  E[Y_i(0) | D_i = 1]$$
+
+- Let's see what the difference would be between the ATT and the simple difference-in-means $E[Y_i | D_i = 1] - E[Y_i | D_i = 0]$. Add and subtract $E[Y_i | D_i = 0]$
+
+  $$\tau_{\text{ATT}} = E[Y_i | D_i = 1] -  E[Y_i(0) | D_i = 1] - E[Y_i | D_i = 0] + E[Y_i | D_i = 0]$$
+
+- Rearranging terms
+
+  $$\tau_{\text{ATT}} = \bigg(E[Y_i | D_i = 1] -  E[Y_i | D_i = 0]\bigg) - \bigg(E[Y_i(0) | D_i = 1] -  E[Y_i | D_i = 0]\bigg)$$
+
+:::
+
+# Identifying the ATT
+
+::: {.incremental}
+
+- Now we have an expression for the ATT in terms of the difference-in-means and a bias term
+
+  $$\tau_{\text{ATT}} = \underbrace{\bigg(E[Y_i | D_i = 1] -  E[Y_i | D_i = 0]\bigg)}_{\text{Difference-in-means}} - \underbrace{\bigg(E[Y_i(0) | D_i = 1] -  E[Y_i(0) | D_i = 0]\bigg)}_{\text{Selection-into-treatment bias}}$$
+
+- What does this bias term represent? How can we interpret it?
+  - How much higher are the potential outcomes under control for units that receive treatment vs. those that receive control.
+  - Sometimes called a **selection-into-treatment** problem - units that choose treatment may have higher or lower potential outcomes than those that choose control.
+- Can do the same analysis for the **average treatment effect** under **control** (ATC) and by extension the **average treatment effect**
+
+:::
+
+# Selection-into-treatment bias
+
+::: {.incremental}
+
+- Can use theory to "sign the bias" of the difference-in-means.
+  - Suppose $Y_i$ was an indicator of whether someone voted in an election and $D_i$ was an indicator for whether they received a political mailer.
+  - Consider a world where the mailer was sent out non-randomly to everyone who had signed up for a politician's mailing list.
+  - If we took the difference in turnout rates between voters who received the mailer and voters who did not receive the mailer, would we be over-estimating or under-estimating the effect of treatment? Why?
+
+:::
+
+# Ignorability/Unconfoundedness
+
+::: {.incremental}
+
+- What assumption can we make for the difference-in-means to identify the ATT (or ATE)?
+- The selection-into-treatment bias is $0$
+
+  $$E[Y_i(0) | D_i = 1] = E[Y_i(0) | D_i = 0]$$
+  $$E[Y_i(1) | D_i = 1] = E[Y_i(1) | D_i = 0]$$
+
+- This will be true under an assumption that treatment is assigned **independent** of the potential outcomes.
+
+  $$\{Y_i(1), Y_i(0)\} {\perp \! \! \! \perp} D_i$$
+
+- Common names for this assumption:  **exogeneity**, **unconfoundedness**, **ignorability**
+  - In simple terms: Treatment is not systematically more/less likely to be assigned to units that have higher/lower potential outcomes.
+
+:::
+
+# Ignorability/Unconfoundedness
+
+::: {.incremental}
+
+- What does ignorability give us?
+- By independence
+
+  $$E[Y_i(1) | D_i = 1] = E[Y_i(1)]$$
+  $$E[Y_i(0) | D_i = 0] = E[Y_i(0)]$$
+- Technically we only need the above ("mean ignorability") and not full ignorability but there are few cases where we can justify former but not latter.
+- Combined with consistency, we get:
+
+  $$E[Y_i | D_i = 1] = E[Y_i(1)]$$
+
+  $$E[Y_i | D_i = 0] = E[Y_i(0)]$$
+
+
+- The observed data identify the ATE!
+
+:::
+
+# Ignorability/Unconfoundedness
+
+::: {.incremental}
+
+- To summarize:
+
+$$E[Y_i | D_i = 1] - E[Y_i | D_i = 0]$$
+
+$$E[Y_i(1) | D_i = 1] - E[Y_i(0) | D_i = 0]$$
+
+$$E[Y_i(1)] - E[Y_i(0)]$$
+
+$$E[Y_i(1) - Y_i(0)] = \tau$$
+
+:::
+
+# Ignorability/Unconfoundedness
+
+![](assets/association_causation.png){fig-align="center"}
+
+# Experiments
+
+# Randomized Experiments
+
+::: {.incremental}
+
+- What sort of research design justifies ignorability?
+  - One design is a randomized experiment!
+- An **experiment** is any study where a researcher knows and controls the treatment assignment probability $Pr(D_i = 1)$
+
+- A **randomized experiment** is an experiment that satisfies:
+  - **Positivity**: $0 < Pr(D_i = 1) < 1$ for all units
+  - **Ignorability**: $Pr(D_i = 1| \mathbf{Y}(1), \mathbf{Y}(0)) = Pr(D_i = 1)$
+    - Another implication of $\mathbf{Y}(1), \mathbf{Y}(0) {\perp \! \! \! \perp} D_i$
+    - Treatment assignment probabilities do not depend on the potential outcomes.
+
+:::
+
+
+# Types of experiments
+
+::: {.incremental}
+
+- Lots of ways in which we could design a randomized experiment where ignorability holds:
+- Let $N_t$ be the number of treated units, $N_c$ number of controls
+- **Bernoulli randomization**:
+  - Independent coin flips for each $D_i$. $Pr(D_i = 1) = p$
+  - $D_i {\perp \! \! \! \perp} D_j$ for all $i$, $j$.
+  - $N_t$, $N_c$ are random variables
+- **Complete randomization**
+  - Fix $N_t$ and $N_c$ in advance. Randomly select $N_t$ units to be treated.
+  - Each unit has an equal probability to be treated.
+  - Each assignment with $N_t$ treated units is equally likely to occur
+  - $D_i$ is independent of potential outcomes, but treatment assignment is slightly dependent across units.
+
+:::
+
+# Types of experiments
+
+::: {.incremental}
+
+- **Stratified randomization**
+  - Using covariates $X_i$, form $J$ total blocks or strata of units with similar or identical covariate values.
+  - Completely randomize *within* each of the $J$ blocks
+  - If treatment probabilities are identical within each block, can analyze as though completely random.
+- **Cluster randomization**
+  - Each unit $i$ belongs to some larger cluster. $C_i = \{1, 2, \dotsc, C\}$, $C < N$.
+  - Treatment is assigned at the cluster level - randomly select some number of clusters to be treated, remainder control.
+  - If units share cluster membership, they get the same treatment ( $C_i = C_j \leadsto D_i = D_j$ )
+
+:::
+
+

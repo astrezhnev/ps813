@@ -13,8 +13,8 @@ Lecture slides are available as self-contained `.html` files made with RevealJS 
 
 ### Week 2: Potential Outcomes + Randomized Experiments
 
-- Week 2 Github Repository
-- Week 2 `.html` slides
+- [Week 2 Github Repository](https://github.com/astrezhnev/ps813/tree/main/slides/week2/)
+- [Week 2 `.html` slides](https://www.antonstrezhnev.com/ps813/slides/week2/week2_potential_ouctomes_and_experiments.html)
 
 ### Week 3: Experiments: Attrition and Generalizability 
 
