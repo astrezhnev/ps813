@@ -38,6 +38,14 @@ $$
   \require{cancel}
 $$
 
+```{r}
+library(tidyverse)
+library(estimatr)
+library(haven)
+library(knitr)
+options(digits=3)
+```
+
 # This week
 
 ::: {.incremental}
@@ -106,7 +114,6 @@ a statistical perspective.
    - Causal effects are effects of **interventions**
    - Causal effects are **contrasts** in **counterfactuals**
 
-- It's very difficult to learn about vague causal statements:
 - The  **potential outcomes** framework clarifies:
   1. **What** action is doing the causing?
   2. Compared to **what** alternative action?
@@ -164,9 +171,9 @@ a statistical perspective.
   $$Y_i = Y_i(1)D_i + Y_i(0)(1-D_i)$$
 
 - Implications
-  1. No interference -- other units' treatments don't affect $i$'s potential outcomes.
+  1. **No interference** - other units' treatments don't affect $i$'s potential outcomes.
   2. Single version of treatment
-  3. $D$ is in principle manipulable -- a "well-defined intervention"
+  3. $D$ is in principle manipulable - a "well-defined intervention"
   4. The means by which treatment is assigned is irrelevant (a version of 2)
 
 :::
@@ -180,7 +187,7 @@ a statistical perspective.
 
   $$ 0 < Pr(D_i = 1) < 1 $$
 
-- If no units could ever receive treatment or control it would be impossible to learn about $E[Y_i | D_i = 1]$ or $E[Y_i | D_i = 0]$
+- If no units could ever receive treatment or control it would be impossible to learn about $\mathbb{E}[Y_i | D_i = 1]$ or $\mathbb{E}[Y_i | D_i = 0]$
 - This is sometimes called a **positivity** or overlap assumption.
   - Pretty trivial in a randomized experiment, but can be tricky in observational studies when $D_i$ is perfectly determined by some covariates $X_i$
 
@@ -212,18 +219,9 @@ Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$ | Observed $Y_i$   |
 
 ::: {.incremental}
 
-- All causal inference starts with a definition of the estimand.
-- The individual causal effect: $\tau_i$
+- The individual causal effect: $\tau_i$ (can't identify this w/o strong assumptions!)
 
   $$\tau_i = Y_i(1) - Y_i(0)$$
-  - **Problem**: Can't identify this without extremely strong assumptions!
-  - "The Fundamental Problem of Causal Inference"
-  
-:::
-
-# Causal Estimands
-
-::: {.incremental}
 
 - The **sample average treatment effect** (SATE): $\tau_s$
 
@@ -231,7 +229,8 @@ Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$ | Observed $Y_i$   |
   
 - The **population average treatment effect** (PATE) $\tau_p$
 
-  $$\tau_p = E[Y_i(1) - Y_i(0)] = E[Y_i(1)] - E[Y_i(0)]$$
+  $$\tau_p = \mathbb{E}[Y_i(1) - Y_i(0)] = \mathbb{E}[Y_i(1)] - \mathbb{E}[Y_i(0)]$$
+  
 :::
 
 # Sample vs. Population Estimands
@@ -260,7 +259,7 @@ Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$ | Observed $Y_i$   |
 ::: {.incremental}
 
 - **Causal identification**: Can we learn about the value of a causal effect from the observed data?
-  - Can we express the causal estimand (e.g. $\tau_p = E[Y_i(1) - Y_i(0)]$) entirely in terms of *observable* quantities?
+  - Can we express the causal estimand (e.g. $\tau_p = \mathbb{E}[Y_i(1) - Y_i(0)]$) entirely in terms of *observable* quantities?
 - Causal identification comes prior to questions of estimation
   - It doesn't matter whether you're using regression, weighting, matching, doubly-robust estimation, double-LASSO, etc...
   - If you can't answer the question "What's your identification strategy?" then no amount of fancy stats will solve your problems.
@@ -275,17 +274,17 @@ Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$ | Observed $Y_i$   |
 
 - Suppose we want to identify the (population) Average Treatment Effect on the Treated (ATT)
 
-  $$\tau_{\text{ATT}} = E[Y_i(1) - Y_i(0) | D_i = 1]$$
+  $$\tau_{\text{ATT}} = \mathbb{E}[Y_i(1) - Y_i(0) | D_i = 1]$$
 
 - Let's see what our consistency/SUTVA assumption gets us!
 
 - First, let's use linearity:
 
-  $$\tau_{\text{ATT}} = E[Y_i(1) | D_i = 1] -  E[Y_i(0) | D_i = 1]$$
+  $$\tau_{\text{ATT}} = \mathbb{E}[Y_i(1) | D_i = 1] -  \mathbb{E}[Y_i(0) | D_i = 1]$$
 
 - Next, consistency
 
-  $$\tau_{\text{ATT}} = E[Y_i | D_i = 1] -  E[Y_i(0) | D_i = 1]$$
+  $$\tau_{\text{ATT}} = \mathbb{E}[Y_i | D_i = 1] -  \mathbb{E}[Y_i(0) | D_i = 1]$$
 
 :::
 
@@ -293,17 +292,17 @@ Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$ | Observed $Y_i$   |
 
 ::: {.incremental}
 
-- Still not enough though. We have an *unobserved* term $E[Y_i(0) | D_i = 1]$. Why can't we observe this directly?
+- Still not enough though. We have an *unobserved* term $\mathbb{E}[Y_i(0) | D_i = 1]$. Why can't we observe this directly?
 
-  $$\tau_{\text{ATT}} = E[Y_i | D_i = 1] -  E[Y_i(0) | D_i = 1]$$
+  $$\tau_{\text{ATT}} = \mathbb{E}[Y_i | D_i = 1] -  \mathbb{E}[Y_i(0) | D_i = 1]$$
 
-- Let's see what the difference would be between the ATT and the simple difference-in-means $E[Y_i | D_i = 1] - E[Y_i | D_i = 0]$. Add and subtract $E[Y_i | D_i = 0]$
+- Let's see what the difference would be between the ATT and the simple difference-in-means $\mathbb{E}[Y_i | D_i = 1] - \mathbb{E}[Y_i | D_i = 0]$. Add and subtract $\mathbb{E}[Y_i | D_i = 0]$
 
-  $$\tau_{\text{ATT}} = E[Y_i | D_i = 1] -  E[Y_i(0) | D_i = 1] - E[Y_i | D_i = 0] + E[Y_i | D_i = 0]$$
+  $$\tau_{\text{ATT}} = \mathbb{E}[Y_i | D_i = 1] -  \mathbb{E}[Y_i(0) | D_i = 1] - \mathbb{E}[Y_i | D_i = 0] + \mathbb{E}[Y_i | D_i = 0]$$
 
 - Rearranging terms
 
-  $$\tau_{\text{ATT}} = \bigg(E[Y_i | D_i = 1] -  E[Y_i | D_i = 0]\bigg) - \bigg(E[Y_i(0) | D_i = 1] -  E[Y_i | D_i = 0]\bigg)$$
+  $$\tau_{\text{ATT}} = \bigg(\mathbb{E}[Y_i | D_i = 1] -  \mathbb{E}[Y_i | D_i = 0]\bigg) - \bigg(\mathbb{E}[Y_i(0) | D_i = 1] -  \mathbb{E}[Y_i | D_i = 0]\bigg)$$
 
 :::
 
@@ -313,7 +312,7 @@ Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$ | Observed $Y_i$   |
 
 - Now we have an expression for the ATT in terms of the difference-in-means and a bias term
 
-  $$\tau_{\text{ATT}} = \underbrace{\bigg(E[Y_i | D_i = 1] -  E[Y_i | D_i = 0]\bigg)}_{\text{Difference-in-means}} - \underbrace{\bigg(E[Y_i(0) | D_i = 1] -  E[Y_i(0) | D_i = 0]\bigg)}_{\text{Selection-into-treatment bias}}$$
+  $$\tau_{\text{ATT}} = \underbrace{\bigg(\mathbb{E}[Y_i | D_i = 1] -  \mathbb{E}[Y_i | D_i = 0]\bigg)}_{\text{Difference-in-means}} - \underbrace{\bigg(\mathbb{E}[Y_i(0) | D_i = 1] -  \mathbb{E}[Y_i(0) | D_i = 0]\bigg)}_{\text{Selection-into-treatment bias}}$$
 
 - What does this bias term represent? How can we interpret it?
   - How much higher are the potential outcomes under control for units that receive treatment vs. those that receive control.
@@ -326,10 +325,10 @@ Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$ | Observed $Y_i$   |
 
 ::: {.incremental}
 
-- Can use theory to "sign the bias" of the difference-in-means.
-  - Suppose $Y_i$ was an indicator of whether someone voted in an election and $D_i$ was an indicator for whether they received a political mailer.
-  - Consider a world where the mailer was sent out non-randomly to everyone who had signed up for a politician's mailing list.
-  - If we took the difference in turnout rates between voters who received the mailer and voters who did not receive the mailer, would we be over-estimating or under-estimating the effect of treatment? Why?
+- Can use theory to **"sign the bias"**:
+  - Suppose $Y_i$ was an indicator of **whether someone voted** in an election and $D_i$ was an indicator for whether they **received a political mailer**.
+  - Consider a world where the mailer was sent out **non-randomly** to everyone **who had signed up** for a politician's mailing list.
+  - If we took the **difference in turnout rates** between voters who received the mailer and voters who did not receive the mailer, would we be **over-estimating** or **under-estimating** the effect of treatment?
 
 :::
 
@@ -337,18 +336,20 @@ Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$ | Observed $Y_i$   |
 
 ::: {.incremental}
 
-- What assumption can we make for the difference-in-means to identify the ATT (or ATE)?
-- The selection-into-treatment bias is $0$
+- Suppose we want **point** identification and not just **bounds** on the causal effect?
+  - What assumption can we make such that the **difference-in-means** **identifies** the ATT (or ATE)?
+- **We assume**: the selection-into-treatment bias is $0$
 
-  $$E[Y_i(0) | D_i = 1] = E[Y_i(0) | D_i = 0]$$
-  $$E[Y_i(1) | D_i = 1] = E[Y_i(1) | D_i = 0]$$
+  $$\mathbb{E}[Y_i(0) | D_i = 1] = \mathbb{E}[Y_i(0) | D_i = 0]$$
+  
+  $$\mathbb{E}[Y_i(1) | D_i = 1] = \mathbb{E}[Y_i(1) | D_i = 0]$$
 
-- This will be true under an assumption that treatment is assigned **independent** of the potential outcomes.
+- This will be true if treatment is **independent** of the potential outcomes.
 
   $$\{Y_i(1), Y_i(0)\} {\perp \! \! \! \perp} D_i$$
 
 - Common names for this assumption:  **exogeneity**, **unconfoundedness**, **ignorability**
-  - In simple terms: Treatment is not systematically more/less likely to be assigned to units that have higher/lower potential outcomes.
+  - *In simple terms*: Treatment is not **systematically more/less likely** to be assigned to units that have **higher/lower potential outcomes**.
 
 :::
 
@@ -356,37 +357,18 @@ Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$ | Observed $Y_i$   |
 
 ::: {.incremental}
 
-- What does ignorability give us?
-- By independence
+- The **difference-in-means** identifies the **average treatment effect** under three assumptions:
+  1. **Consistency/SUTVA**
+  2. **Positivity/Overlap**
+  3. **Ignorability/Unconfoundedness**
+  
+- Consistency gives us:
 
-  $$E[Y_i(1) | D_i = 1] = E[Y_i(1)]$$
-  $$E[Y_i(0) | D_i = 0] = E[Y_i(0)]$$
-- Technically we only need the above ("mean ignorability") and not full ignorability but there are few cases where we can justify former but not latter.
-- Combined with consistency, we get:
+  $$\mathbb{E}[Y_i | D_i = 1] - \mathbb{E}[Y_i | D_i = 0] = \mathbb{E}[Y_i(1) | D_i = 1] - \mathbb{E}[Y_i(0) | D_i = 0]$$
+  
+- And ignorability gives us:
 
-  $$E[Y_i | D_i = 1] = E[Y_i(1)]$$
-
-  $$E[Y_i | D_i = 0] = E[Y_i(0)]$$
-
-
-- The observed data identify the ATE!
-
-:::
-
-# Ignorability/Unconfoundedness
-
-::: {.incremental}
-
-- To summarize:
-
-$$E[Y_i | D_i = 1] - E[Y_i | D_i = 0]$$
-
-$$E[Y_i(1) | D_i = 1] - E[Y_i(0) | D_i = 0]$$
-
-$$E[Y_i(1)] - E[Y_i(0)]$$
-
-$$E[Y_i(1) - Y_i(0)] = \tau$$
-
+  $$\mathbb{E}[Y_i(1) | D_i = 1] - \mathbb{E}[Y_i(0) | D_i = 0] = \mathbb{E}[Y_i(1)] - \mathbb{E}[Y_i(0)] = \tau$$
 :::
 
 # Ignorability/Unconfoundedness
@@ -399,8 +381,8 @@ $$E[Y_i(1) - Y_i(0)] = \tau$$
 
 ::: {.incremental}
 
-- What sort of research design justifies ignorability?
-  - One design is a randomized experiment!
+- What sort of research design **justifies ignorability**?
+  - A **randomized experiment**!
 - An **experiment** is any study where a researcher knows and controls the treatment assignment probability $Pr(D_i = 1)$
 
 - A **randomized experiment** is an experiment that satisfies:
@@ -424,8 +406,8 @@ $$E[Y_i(1) - Y_i(0)] = \tau$$
   - $N_t$, $N_c$ are random variables
 - **Complete randomization**
   - Fix $N_t$ and $N_c$ in advance. Randomly select $N_t$ units to be treated.
-  - Each unit has an equal probability to be treated.
-  - Each assignment with $N_t$ treated units is equally likely to occur
+  - Each unit has an **equal probability** to be treated.
+  - Each assignment with $N_t$ treated units is **equally likely** to occur
   - $D_i$ is independent of potential outcomes, but treatment assignment is slightly dependent across units.
 
 :::
@@ -435,14 +417,553 @@ $$E[Y_i(1) - Y_i(0)] = \tau$$
 ::: {.incremental}
 
 - **Stratified randomization**
-  - Using covariates $X_i$, form $J$ total blocks or strata of units with similar or identical covariate values.
+  - Using covariates $X_i$, form $J$ total **blocks** or **strata** of units with similar or identical covariate values.
   - Completely randomize *within* each of the $J$ blocks
-  - If treatment probabilities are identical within each block, can analyze as though completely random.
+  - In the limit, **pair**-randomization w/ strata of size $2$.
 - **Cluster randomization**
   - Each unit $i$ belongs to some larger cluster. $C_i = \{1, 2, \dotsc, C\}$, $C < N$.
-  - Treatment is assigned at the cluster level - randomly select some number of clusters to be treated, remainder control.
-  - If units share cluster membership, they get the same treatment ( $C_i = C_j \leadsto D_i = D_j$ )
+  - Treatment is assigned by **complete randomization** at the **cluster level** 
+    - Randomly select some number of clusters to be treated, remainder get control.
+  - If units share cluster membership, they get the same treatment ($C_i = C_j \leadsto D_i = D_j$)
 
 :::
+
+
+# Complete randomization
+
+::: {.incremental}
+
+- How do we do **estimation** and **inference** under complete randomization?
+  - We'll start with the **finite-sample setting** and illustrate the **Neyman (1923)** approach to inference for the **SATE**.
+
+- Define our quantity of interest, the **sample average treatment effect**
+  
+  $$\tau_{\text{s}} = \frac{1}{N}\sum_{i=1}^N Y_i(1) - Y_i(0)$$
+  
+- Our estimator is the sample difference-in-means.
+  
+  $$\hat{\tau} = \frac{1}{N_t} \sum_{i=1}^N Y_i D_i - \frac{1}{N_c} \sum_{i=1}^N Y_i (1 - D_i)$$
+
+:::
+
+  
+# Finite sample inference
+
+- Consider a study with $N_t = 3$, $N_c = 3$ and suppose we could see the true "table of science"
+  - Under one realization of the treatment $\mathbf{D}$, we have:
+  
+Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$   | Observed $Y_i$   |
+:---------:|:-----------------:|:--------:|:----------:|:----------------:|
+ $1$       |  $1$              |  $1$     |   $0$      |    $1$           |
+ $2$       |  $0$              |  $0$     |  $1$       |    $1$           |
+ $3$       |  $1$              |  $1$     |   $0$      |    $1$           |
+ $4$       |  $0$              |  $0$     |   $1$      |    $1$           |
+ $5$       |  $0$              |  $0$     |   $0$      |    $0$           |
+ $6$       |  $1$              |  $1$     |   $1$      |    $1$           |
+ 
+- For this assignment, our realization of $\hat{\tau}$ (our estimate) would be:
+  
+  $$\frac{1 + 1 + 1}{3} - \frac{1 + 1 + 0}{3} = \frac{1}{3}$$
+  
+# Finite sample inference
+
+- How about another, equally likely realization?
+  
+Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$   | Observed $Y_i$   |
+:---------:|:-----------------:|:--------:|:----------:|:----------------:|
+ $1$       |  $0$              |  $1$     |   $0$      |    $0$           |
+ $2$       |  $0$              |  $0$     |  $1$       |    $1$           |
+ $3$       |  $1$              |  $1$     |   $0$      |    $1$           |
+ $4$       |  $1$              |  $0$     |   $1$      |    $0$           |
+ $5$       |  $1$              |  $0$     |   $0$      |    $0$           |
+ $6$       |  $0$              |  $1$     |   $1$      |    $1$           |
+ 
+- For this randomization, our realization of $\hat{\tau}$ would be:
+
+  $$\frac{1 + 0 + 0}{3} - \frac{0 + 1 + 1}{3} = -\frac{1}{3}$$
+
+# Finite sample inference
+
+- Overall all possible randomizations, what is **the distribution**?
+  - We can run a quick **simulation** and find out
+  
+```{r, echo=T}
+### Define the data frame
+data <- data.frame(Y_1 = c(1,0,1,0,0,1), 
+                   Y_0 = c(0, 1, 0, 1, 0, 1))
+
+## Simulate the sampling distribution
+nIter = 10000
+sate_est = rep(NA, nIter)
+set.seed(53703)
+for(i in 1:nIter){
+  data$D = sample(rep(c(0,1), each=3))
+  data$Y = data$D*data$Y_1 + (1-data$D)*data$Y_0
+  sate_est[i] = mean(data$Y[data$D==1]) - mean(data$Y[data$D==0])
+}
+```
+
+# Finite sample inference
+
+- First, what's the **expectation** of our estimator?
+
+```{r, echo=T}
+mean(sate_est)
+```
+
+- Next, what's the **variance**?
+
+```{r, echo=T}
+var(sate_est)
+```
+
+
+# Finite sample inference
+
+```{r, echo=F, fig.align='center'}
+data.frame(x = sate_est) %>% ggplot(aes(x=x)) + geom_histogram(bins = 10) +
+  labs(x="Estimated SATE", y="Frequency", title = "Sampling distribution of difference-in-means",
+       subtitle = "N = 6; 50-50 treatment/control split; True SATE = 0") +
+  theme_minimal()
+```
+
+
+# Finite sample inference
+
+::: {.incremental}
+
+- Of course, in real data, we only get one estimate. 
+  - Need to rely on **theory** to understand the *distribution* that estimate came from in order to do inference.
+- Is $\hat{\tau}|\mathbf{Y}(1), \mathbf{Y}(0)$ unbiased for the SATE?
+  - Under **complete randomization**: **Yes!**
+- What is the sampling variance $Var(\hat{\tau})$ under a finite sample (fixed $\mathbf{Y}(1)$, $\mathbf{Y}(0)$)?
+  - Surprisingly, depends on the **amount of effect heterogeneity**
+- What should our estimator of the sampling variance $\widehat{Var(\hat{\tau})}$ be?
+  - Our conventional "difference-in-means" variance estimator is **conservative**
+  - Sadly, we can't leverage the effect heterogeneity part (w/o more assumptions)! 
+  - Fundamental problem of causal inference strikes again!
+  
+:::
+
+# Unbiasedness
+
+::: {.incremental}
+
+- Let's show $\hat{\tau}$ is unbiased for the SATE. First, by linearity of expectations:
+
+  $$\mathbb{E}[\hat{\tau} | \mathbf{Y}(1), \mathbf{Y}(0)] = \frac{1}{N_t} \sum_{i=1}^N \mathbb{E}\bigg[Y_i D_i \bigg| \mathbf{Y}(1), \mathbf{Y}(0)\bigg] - \frac{1}{N_c} \sum_{i=1}^N \mathbb{E}\bigg[Y_i (1 - D_i) \bigg| \mathbf{Y}(1), \mathbf{Y}(0) \bigg]$$
+  
+- By consistency $Y_iD_i = Y_i(1)D_i$ and $Y_i(1-D_i) = Y_i(0)(1-D_i)$
+  
+  $$\mathbb{E}[\hat{\tau}| \mathbf{Y}(1), \mathbf{Y}(0)] = \frac{1}{N_t} \sum_{i=1}^N \mathbb{E}\bigg[Y_i(1) D_i \bigg| \mathbf{Y}(1), \mathbf{Y}(0)\bigg] - \frac{1}{N_c} \sum_{i=1}^N \mathbb{E}\bigg[Y_i(0) (1 - D_i) \bigg| \mathbf{Y}(1), \mathbf{Y}(0)\bigg]$$ 
+
+- Conditional on the potential outcomes, $Y_i(1)$ and $Y_i(0)$ are constants
+  
+  $$\mathbb{E}[\hat{\tau}| \mathbb{Y}(1), \mathbb{Y}(0)] = \frac{1}{N_t} \sum_{i=1}^N Y_i(1) \mathbb{E}\bigg[ D_i\bigg| \mathbb{Y}(1), \mathbb{Y}(0)\bigg] - \frac{1}{N_c}  \sum_{i=1}^N Y_i(0) \mathbb{E}\bigg[(1 - D_i) \bigg| \mathbb{Y}(1), \mathbb{Y}(0)\bigg]$$ 
+:::
+
+# Unbiasedness
+
+::: {.incremental}
+
+- $D_i$ has a known distribution under complete randomization and its expectation is $Pr(D_i = 1)$, which is just $N_t/N$
+
+  $$\mathbb{E}[\hat{\tau}| \mathbf{Y}(1), \mathbf{Y}(0)] = \frac{1}{N_t} \sum_{i=1}^N Y_i(1) \frac{N_t}{N} - \frac{1}{N_c} \sum_{i=1}^N Y_i(0)  \frac{N_c}{N}$$ 
+
+- Pulling out the constants
+  
+  $$\mathbb{E}[\hat{\tau}| \mathbf{Y}(1), \mathbf{Y}(0)] = \frac{1}{N} \sum_{i=1}^N Y_i(1)  - \frac{1}{N} \sum_{i=1}^N Y_i(0)$$ 
+
+- And we have the SATE! 
+
+  $$\mathbb{E}[\hat{\tau}| \mathbf{Y}(1), \mathbf{Y}(0)] = \frac{1}{N} \sum_{i=1}^N  Y_i(1) - Y_i(0) = \tau_s$$ 
+:::
+
+
+# Sampling variance
+
+::: {.incremental}
+
+- What's the variance of $\hat{\tau}$ going to be (conditional on the sample)? Slightly tricky since $D_i$ is not independent of $D_j$. 
+ 
+ $$Var\bigg(\hat{\tau}| \mathbf{Y}(1), \mathbf{Y}(0)\bigg) = \frac{S^2_t}{N_t} + \frac{S^2_c}{N_c} - \frac{S^2_{\tau_i}}{N}$$
+
+- The **outcome variances** are:
+ 
+  $$S_t^2 = \frac{1}{N-1} \sum_{i=1}^N \bigg(Y_i(1) - \bar{Y(1)}\bigg)^2$$
+  $$S_c^2 = \frac{1}{N-1} \sum_{i=1}^N \bigg(Y_i(0) - \bar{Y(0)}\bigg)^2$$
+  
+- And the third term is the **sample variance** of the **treatment effects**
+ 
+  $$S_{\tau_i}^2 = \frac{1}{N-1} \sum_{i=1}^N \bigg((Y_i(1) - Y_i(0))- (\bar{Y(1)} - \bar{Y(0)}) \bigg)^2$$
+
+:::
+
+
+# Sampling variance
+
+::: {.incremental}
+
+- Can we estimate the sampling variance? 
+  - Well $S^2_t$ and $S^2_c$ can be estimated from their sample analogues (just the sample variances within treated/control groups)
+
+  $$s_t^2 = \frac{1}{N_t-1} \sum_{i:D_i = 1} \bigg(Y_i(1) - \bar{Y_t^{\text{obs}}}\bigg)^2$$
+
+  $$s_c^2 = \frac{1}{N_c-1} \sum_{i:D_i = 0} \bigg(Y_i(0) - \bar{Y_c^{\text{obs}}}\bigg)^2$$
+
+- But...we can't estimate $S^2_{\tau_i}$ directly from the sample!
+  - The **fundamental problem of causal inference**! Can't observe individual treatment effects.
+
+:::
+
+# Neyman variance
+ 
+::: {.incremental}
+ 
+- Neyman suggested just ignoring that third term and using our familiar estimator
+ 
+$$\widehat{\mathbb{V}}_{\text{Neyman}} = \frac{s_t^2}{N_t} + \frac{s_c^2}{N_c}$$
+
+- What are its properties?
+  - We know it's **conservative** since $S_{\tau_i}^2 \ge 0$.
+  - Confidence intervals using the Neyman standard error $\sqrt{\widehat{\mathbb{V}}_{\text{Neyman}}}$ will be no smaller than they should be.
+  - If treatment effects are constant, it's **unbiased**!
+
+:::
+
+# Neyman variance
+
+- Why do we see a difference between the true variance and the Neyman variance?
+  - Let's go back to our $N=6$ example!
+  
+Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$   | Observed $Y_i$   |
+:---------:|:-----------------:|:--------:|:----------:|:----------------:|
+ $1$       |  $1$              |  $1$     |   $0$      |    $1$           |
+ $2$       |  $0$              |  $0$     |  $1$       |    $1$           |
+ $3$       |  $1$              |  $1$     |   $0$      |    $1$           |
+ $4$       |  $0$              |  $0$     |   $1$      |    $1$           |
+ $5$       |  $0$              |  $0$     |   $0$      |    $0$           |
+ $6$       |  $1$              |  $1$     |   $1$      |    $1$           |
+ 
+# Neyman variance
+
+- The variance from our simulation was...
+ 
+```{r, echo=T}
+var(sate_est)
+```
+
+- We can verify our exact variance calculation from before...
+
+```{r}
+var(data$Y_1)/3 + var(data$Y_0)/3 - var(data$Y_1 - data$Y_0)/6
+```
+
+- But if we ignore the variance of the treatment effects...
+
+```{r, echo=T}
+var(data$Y_1)/3 + var(data$Y_0)/3
+```
+
+# Neyman variance
+
+::: {.incremental}
+
+- When is the **Neyman variance** estimator unbiased/consistent for the true variance of $\hat{\tau}$?
+  - When effects are **constant**...
+  - ...or when we're targeting the **population** ATE (under a "random sampling" assumption)
+
+- **Intuition:** With random sampling from a target population, can think of treated group and control group as two separate $N_t$ and $N_c$ size samples from the population $Y_i(1)$ and $Y_i(0)$ respectively.
+
+:::
+
+# Illustration: Gerber, Green and Larimer (2008)
+
+::: {.incremental}
+
+- Gerber, Green and Larimer (2008) want to know what causes people to vote.
+    - What sorts of **encouragements** will get people to **turn out** more or less?
+
+ - **Five** treatment conditions in a randomized GOTV mailer experiment:
+    - No mailer (0)
+    - "Researchers will be studying your turnout" mailer (Hawthorne) (1)
+    - "Voting is a civic duty" mailer (Civic Duty) (2)
+    - "Your and your neighbors' voting history" mailer (Neighbors) (3)
+    - "Your turnout history" mailer (Self) (4)
+
+ - Gerber, Green and Larimer first analyze households. Why?
+    - Is $Y_i(d)$ well-defined for an individual? Somewhat tricky - likely spillovers across household members.
+    - Treatment is randomized by household.
+
+:::
+
+ # Illustration: Gerber, Green and Larimer (2008)
+ 
+```{r, echo=T, message=F, warning=F, cache=T}
+# Load the data
+data <- read_dta('assets/data/ggr_2008_individual.dta')
+
+# Aggregate to the household level
+data_hh <- data %>% group_by(hh_id) %>% summarize(treatment = treatment[1], voted = mean(voted))
+
+# For each treatment condition, calculate N and share voting
+hh_means <- data_hh %>% group_by(treatment) %>% summarize(N = n(), voted = mean(voted))
+kable(hh_means)
+```
+
+# Illustration: Gerber, Green and Larimer (2008)
+ 
+- Let's estimate the ATE of the "Neighbors" treatment relative to control
+
+```{r, echo=T, message=F, warning=F}
+# Estimated ATE of Neighbors (3) vs. Control (0)
+ate <- mean(data_hh$voted[data_hh$treatment == 3]) -
+  mean(data_hh$voted[data_hh$treatment == 0])
+ate
+```
+
+- And let's compute the Neyman variance
+
+```{r, echo=T, message=F, warning=F}
+# Estimate the sampling variance
+var_ate = var(data_hh$voted[data_hh$treatment == 3])/sum(data_hh$treatment == 3) +
+  var(data_hh$voted[data_hh$treatment == 0])/sum(data_hh$treatment == 0)
+
+# Square root to get estimated SE
+sqrt(var_ate)
+```
+
+
+# Illustration: Gerber, Green and Larimer (2008)
+
+- 95% asymptotic confidence interval and p-value against null of no ATE.
+
+```{r, echo=T, message=F, warning=F}
+# Confidence interval (assuming asymptotic normality)
+ate_95CI = c(ate - qnorm(.975)*sqrt(var_ate),
+  ate + qnorm(.975)*sqrt(var_ate))
+ate_95CI
+
+# P-value H_0: \tau = 0, H_a: \tau \neq 0
+p_val = 2*pnorm(-abs(ate/sqrt(var_ate)))
+p_val
+```
+
+
+# Illustration: Gerber, Green and Larimer (2008)
+
+::: {.incremental}
+
+- Fun fact: You can get this via OLS regression! 
+  1. OLS with a single binary regressor is just the difference-in-means.
+  2. The classic OLS standard errors impose too many additional assumptions (homoskedasticity)
+  3. The usual "robust" SEs are close to the Neyman variance in large samples...
+  4. ...but **Samii and Aronow (2012)** show that the Neyman variance is *exactly* equal to robust SEs w/ HC2 correction
+  
+- That's the default for `lm_robust` in the `estimatr` package!
+
+```{r, echo =T, message=F, warning=F}
+lm_robust(voted ~ I(treatment==3), data=data_hh %>% filter(treatment == 3|treatment == 0))
+```
+
+:::
+
+# Fisher's Exact Test
+
+# Fisher's Exact Test
+
+::: {.incremental}
+
+- Neyman's framework:
+  - **Estimand**: Average Treatment Effect: $\tau = E[Y_i(1) - Y_i(0)]$
+  - Difference-in-means estimator: Known expectation and sampling variance
+  - **Hypothesis test.** Null of no ATE $H_0: \tau = 0$
+  - Large sample/asymptotic theory to get the distribution of $\hat{\tau}$ to calculate p-values
+
+- Fisher's framework:
+  - Can we get a p-value under (some) null hypothesis without the large-sample assumptions?
+  - What does randomization alone justify?
+  - Exact p-values under a *sharp* null of no individual treatment effect $Y_i(1) = Y_i(0)$ for all $i$.
+  - "Randomization test": a flexible framework for inference under any known randomization scheme
+
+:::
+
+# Hypothesis testing review
+
+::: {.incremental}
+
+- Four steps to conducting a hypothesis test
+
+1. Define the null hypothesis.
+  - Neyman framework: $H_0: \tau = \tau_0$
+  - The probability of observing a particular value of the test statistic depends on what is "true" about the underlying parameter.
+  - **Our thought experiment**: **If** the null were true, **how likely** would we see what we observe (or more extreme).
+2. Choose a test statistic
+  - In classical hypothesis testing, we pick something that has useful statistical properties:
+    
+    $$T = (\hat{\tau} - \tau_0)/\sqrt{\widehat{Var({\hat{\tau}})}}$$
+      
+:::
+
+# Hypothesis testing review
+
+::: {.incremental}
+
+3. Determine the distribution of the test statistic under the null
+  - In classical testing, by CLT, in large samples, $T \sim \mathcal{N}(0, 1)$
+  - In smaller samples, you may have made further assumptions (e.g. outcome is normally distributed) to show that $T$ follows a $t-$ distribution
+  - We need a distribution to get probabilities!
+  
+4. What is the probability of observing the test statistic $T$ that you observe in-sample (or a more extreme value) given the known distribution under the null?
+    - That's a **p-value**!
+
+:::
+
+# What's different about randomization testing?
+
+::: {.incremental}
+
+- Randomization tests are a hypothesis test but with 2 main differences from our usual approach
+  
+1. Different null hypothesis (a "sharp" null)
+2. No assumptions/asymptotics to derive the distribution of $T$
+  - We can instead literally just calculate the value under each possible realization of treatment.
+  - And we know the distribution of treatment assignments because we **control them** in an experiment. 
+
+:::
+
+# Sharp null of no effect.
+
+::: {.incremental}
+
+- The sharp null hypothesis states:
+  $$H_0: \tau_i = Y_i(1) - Y_i(0) = 0 \text{  } \forall i$$
+
+- Sharp null implies zero ATE
+  - But zero ATE does not imply sharp null!
+  
+- Why do we make this assumption? 
+  - Because now the observed data tells us **everything** we need to know about the potential outcomes
+
+:::
+
+# The sharp null
+
+- Remember our table of science? For a single realization of $\mathbf{D}$ we only observe half the potential outcomes?
+
+Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$   | Observed $Y_i$   |
+:---------:|:-----------------:|:--------:|:----------:|:----------------:|
+ $1$       |  $1$              |  $1$     |   **?**    |    $1$           |
+ $2$       |  $0$              |  **?**   |  $1$       |    $1$           |
+ $3$       |  $1$              |  $1$     |  **?**     |    $1$           |
+ $4$       |  $0$              |  **?**   |   $1$      |    $1$           |
+ $5$       |  $0$              |  **?**   |   $0$      |    $0$           |
+ $6$       |  $1$              |  $1$     |  **?**     |    $1$           |
+
+- But what does the sharp null imply about the unobserved potential outcomes? Can we fill in those question marks?
+
+# The sharp null
+
+- Yes! Under the sharp null, $Y_i(1) = Y_i(0)$
+
+Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$   | Observed $Y_i$   |
+:---------:|:-----------------:|:--------:|:----------:|:----------------:|
+ $1$       |  $1$              |  $1$     |   $1$      |    $1$           |
+ $2$       |  $0$              |  $1$     |  $1$       |    $1$           |
+ $3$       |  $1$              |  $1$     |  $1$       |    $1$           |
+ $4$       |  $0$              |  $1$     |   $1$      |    $1$           |
+ $5$       |  $0$              |  $0$     |   $0$      |    $0$           |
+ $6$       |  $1$              |  $1$     |  $1$       |    $1$           |
+
+- Why is this useful? 
+  - We can calculate the value of our test statistic *not only* under the observed $\mathbf{D}$ but under **all other possible**
+realizations of $\mathbf{D}$!
+
+
+# The test statistic
+
+::: {.incremental}
+
+- Our test statistic is any function of treatment assignments $\mathbf{D}$ and observed outcomes $\mathbf{Y}$.
+- Lots of choices with different degrees of **power** for different kinds of treatment effects.
+- We want to pick a test statistic that will return large values when the null is false and small values when it is true.
+- A reasonable default: (absolute) **difference-in-means**
+  
+  $$t(\mathbf{D}, \mathbf{Y}) = \bigg|\frac{1}{N_t} \sum_{i=1}^N Y_i D_i - \frac{1}{N_c} \sum_{i=1}^N Y_i (1 - D_i) \bigg|$$
+  
+- What sorts of alternatives might this be bad for?
+  - Offsetting positive and negative effects will return small values of $t(\mathbf{D}, \mathbf{Y})$ as would no effects.
+  - We might pick a different test statistic in this case!
+
+:::
+
+# The randomization distribution
+
+::: {.incremental}
+
+- Under the sharp null, we can calculate $t(\mathbf{D}, \mathbf{Y})$ for every possible realization of $\mathbf{D}$.
+  - Why? Because under the sharp null, observed $Y_i$ is unaffected by treatment assignment.
+- Then to get a distribution for $t(\mathbf{D}, \mathbf{Y})$, we just need to know the distribution of $\mathbf{D}$. We know this by designing the experiment!
+
+
+- We get our p-value by comparing the observed test statistic for our particular sample $t^*$ to the distribution of $t(\mathbf{D}, \mathbf{Y})$
+  - For complete randomization, each of the $K$ possible realizations of $\mathbf{D}$ is equally likely, so we just enumerate all possible assignments $\mathbf{d} \in \Omega$ and calculate the share that are greater than our observed test statistic.
+  
+  $$Pr(t^* \ge t(\mathbf{D}, \mathbf{Y})) = \frac{\sum_{\mathbf{d} \in \Omega} \mathbb{I}(t(\mathbf{d}, \mathbf{Y}) \ge t^*)}{K}$$
+
+- This is our p-value, which we compare to some threshold level $\alpha$ and reject the null when it's below that level.
+
+:::
+
+# Monte carlo approximation
+
+::: {.incremental}
+
+- We could enumerate every possible treatment vector and actually just calculate $t(\mathbf{D}, \mathbf{Y})$.
+- Even in fairly small samples this can involve quite a lot of computations! (e.g. ${20 \choose 10 } = 184756$)
+- We'll typically use a monte carlo approximation to the exact p-value.
+  - This is also easier for more complicated randomization schemes.
+- **Procedure:** 
+  - For $K$ iterations:
+    1. Draw a realization of the treatment vector $\mathbf{d}_k$ from the known distribution of $\mathbf{D}$.
+    2. Calculate the test statistic $t_k = t(\mathbf{d}_k, \mathbf{Y})$
+  - Our p-value is the share of these $K$ test statistics that are greater than the observed $t^*$
+
+:::
+
+# Putting it all together
+
+::: {.incremental}
+
+- To do randomization inference under the sharp null
+  1. Choose a test statistic
+  2. Calculate the observed test statistic in your sample $t^* = t(\mathbf{D}, \mathbf{Y})$
+  3. Draw another treatment vector $\mathbf{d}_1$ from the known distribution of $\mathbf{D}$
+  4. Calculate $t_1 = t(\mathbf{d}_1, \mathbf{Y})$
+  5. Repeat 3 and 4 as long as you want to get $K$ samples from the distribution of the test statistic under the null
+  6. Calculate $p = \frac{1}{K}\sum_{i=1}^K \mathbb{I}(t_k \ge t^*)$
+
+:::
+
+# Inverting tests to get confidence intervals
+
+::: {.incremental}
+
+ - Randomization tests alone give us p-values but no confidence intervals.
+ - One approach: "invert" the test - for what values of a "treatment effect" would we fail to reject the null
+    - A $100(1-\alpha)\%$ confidence interval contains the set of parameter values for which an $\alpha$-level hypothesis test
+    would fail to reject the null.
+
+- Slight complication: We now need to actually define a "treatment effect" parameter:
+  - For example, assume a *constant additive effect* for all units
+  
+    $$Y_i(1) - Y_i(0) = \tau_0$$
+    
+  - Our confidence set would be all of the values of $\tau_0$ for which we'd fail to reject the null
+  - Calculate via a grid search through possible values of $\tau_0$.
+
+:::
+
+  
 
 
