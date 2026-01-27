@@ -23,7 +23,7 @@ format:
       method: mathjax
       url: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 execute:
-  cache: false
+  cache: true
 code:
   execute:
     - r
@@ -142,11 +142,11 @@ a statistical perspective.
 
 ::: {.incremental}
 
-- Let $D_i$ be the value of a **treatment** assigned to each individual.
-- $Y_i(d)$ is the value that the outcome would take if $D_i$ were set to $d$.
+- The **potential outcome** $Y_i(d)$ is the value that the outcome would take if $D_i$ were set to $d$.
   - For binary $D_i$: $Y_i(1)$ is the value we would observe if unit $i$ were *treated*.
   - $Y_i(0)$ is the value we would observe if unit $i$ were under *control*
 - We model the potential outcomes as **fixed** attributes of the units.
+  - "Potential" in the sense that what is *actually* observed is a function of treatment assignment
 - **Notation alert!** -- Sometimes you'll see potential outcomes written as:
   - $Y_i^1$, $Y_i^0$ or $Y_i^{d=1}$, $Y_i^{d=0}$
   - $Y_{i0}$, $Y_{i1}$
@@ -539,7 +539,7 @@ data.frame(x = sate_est) %>% ggplot(aes(x=x)) + geom_histogram(bins = 10) +
 - What is the sampling variance $Var(\hat{\tau})$ under a finite sample (fixed $\mathbf{Y}(1)$, $\mathbf{Y}(0)$)?
   - Surprisingly, depends on the **amount of effect heterogeneity**
 - What should our estimator of the sampling variance $\widehat{Var(\hat{\tau})}$ be?
-  - Our conventional "difference-in-means" variance estimator is **conservative**
+  - Our conventional variance estimator for the difference-in-means is **conservative**
   - Sadly, we can't leverage the effect heterogeneity part (w/o more assumptions)! 
   - Fundamental problem of causal inference strikes again!
   
@@ -576,7 +576,8 @@ data.frame(x = sate_est) %>% ggplot(aes(x=x)) + geom_histogram(bins = 10) +
 
 - And we have the SATE! 
 
-  $$\mathbb{E}[\hat{\tau}| \mathbf{Y}(1), \mathbf{Y}(0)] = \frac{1}{N} \sum_{i=1}^N  Y_i(1) - Y_i(0) = \tau_s$$ 
+  $$\mathbb{E}[\hat{\tau}| \mathbf{Y}(1), \mathbf{Y}(0)] = \frac{1}{N} \sum_{i=1}^N  Y_i(1) - Y_i(0) = \tau_s$$
+  
 :::
 
 
@@ -584,9 +585,9 @@ data.frame(x = sate_est) %>% ggplot(aes(x=x)) + geom_histogram(bins = 10) +
 
 ::: {.incremental}
 
-- What's the variance of $\hat{\tau}$ going to be (conditional on the sample)? Slightly tricky since $D_i$ is not independent of $D_j$. 
+- What's the variance of $\hat{\tau}$, conditional on the sample? Slightly tricky: $D_i$ is not independent of $D_j$
  
- $$Var\bigg(\hat{\tau}| \mathbf{Y}(1), \mathbf{Y}(0)\bigg) = \frac{S^2_t}{N_t} + \frac{S^2_c}{N_c} - \frac{S^2_{\tau_i}}{N}$$
+  $$Var\bigg(\hat{\tau}| \mathbf{Y}(1), \mathbf{Y}(0)\bigg) = \frac{S^2_t}{N_t} + \frac{S^2_c}{N_c} - \frac{S^2_{\tau_i}}{N}$$
 
 - The **outcome variances** are:
  
@@ -605,7 +606,7 @@ data.frame(x = sate_est) %>% ggplot(aes(x=x)) + geom_histogram(bins = 10) +
 ::: {.incremental}
 
 - Can we estimate the sampling variance? 
-  - Well $S^2_t$ and $S^2_c$ can be estimated from their sample analogues (just the sample variances within treated/control groups)
+- $S^2_t$ and $S^2_c$ can be estimated from their sample analogues (just the sample variances within treated/control groups)
 
   $$s_t^2 = \frac{1}{N_t-1} \sum_{i:D_i = 1} \bigg(Y_i(1) - \bar{Y_t^{\text{obs}}}\bigg)^2$$
 
@@ -622,11 +623,11 @@ data.frame(x = sate_est) %>% ggplot(aes(x=x)) + geom_histogram(bins = 10) +
  
 - Neyman suggested just ignoring that third term and using our familiar estimator
  
-$$\widehat{\mathbb{V}}_{\text{Neyman}} = \frac{s_t^2}{N_t} + \frac{s_c^2}{N_c}$$
+  $$\widehat{\mathbb{V}}_{\text{Neyman}} = \frac{s_t^2}{N_t} + \frac{s_c^2}{N_c}$$
 
 - What are its properties?
   - We know it's **conservative** since $S_{\tau_i}^2 \ge 0$.
-  - Confidence intervals using the Neyman standard error $\sqrt{\widehat{\mathbb{V}}_{\text{Neyman}}}$ will be no smaller than they should be.
+  - Confidence intervals using the Neyman standard error $\sqrt{\widehat{\mathbb{V}}_{\text{Neyman}}}$ will be **no smaller** than they should be.
   - If treatment effects are constant, it's **unbiased**!
 
 :::
@@ -655,7 +656,7 @@ var(sate_est)
 
 - We can verify our exact variance calculation from before...
 
-```{r}
+```{r, echo=T}
 var(data$Y_1)/3 + var(data$Y_0)/3 - var(data$Y_1 - data$Y_0)/6
 ```
 
@@ -681,7 +682,7 @@ var(data$Y_1)/3 + var(data$Y_0)/3
 
 ::: {.incremental}
 
-- Gerber, Green and Larimer (2008) want to know what causes people to vote.
+- **Gerber, Green and Larimer (2008)** want to know what causes people to vote.
     - What sorts of **encouragements** will get people to **turn out** more or less?
 
  - **Five** treatment conditions in a randomized GOTV mailer experiment:
@@ -691,13 +692,13 @@ var(data$Y_1)/3 + var(data$Y_0)/3
     - "Your and your neighbors' voting history" mailer (Neighbors) (3)
     - "Your turnout history" mailer (Self) (4)
 
- - Gerber, Green and Larimer first analyze households. Why?
+ - We're going to analyze at the household level
+    - Treatment is randomized by household - useful to analyze at the level of randomization.
     - Is $Y_i(d)$ well-defined for an individual? Somewhat tricky - likely spillovers across household members.
-    - Treatment is randomized by household.
 
 :::
 
- # Illustration: Gerber, Green and Larimer (2008)
+# Illustration: Gerber, Green and Larimer (2008)
  
 ```{r, echo=T, message=F, warning=F, cache=T}
 # Load the data
@@ -752,21 +753,19 @@ p_val
 
 # Illustration: Gerber, Green and Larimer (2008)
 
-::: {.incremental}
 
 - Fun fact: You can get this via OLS regression! 
-  1. OLS with a single binary regressor is just the difference-in-means.
-  2. The classic OLS standard errors impose too many additional assumptions (homoskedasticity)
-  3. The usual "robust" SEs are close to the Neyman variance in large samples...
-  4. ...but **Samii and Aronow (2012)** show that the Neyman variance is *exactly* equal to robust SEs w/ HC2 correction
+  - OLS with a single binary regressor is just the difference-in-means.
+  - Take care w/ inference: the classic OLS standard errors impose too many additional assumptions **(homoskedasticity)**
+  - Heteroskedasticity-"robust" SEs are close to the Neyman variance in large samples...
+  - ...and **Samii and Aronow (2012)** show that the HC2 finite sample correction gets you the Neyman variance *exactly*.
   
-- That's the default for `lm_robust` in the `estimatr` package!
+- That's the default for `lm_robust()` in the `estimatr` package!
 
 ```{r, echo =T, message=F, warning=F}
 lm_robust(voted ~ I(treatment==3), data=data_hh %>% filter(treatment == 3|treatment == 0))
 ```
 
-:::
 
 # Fisher's Exact Test
 
@@ -784,7 +783,7 @@ lm_robust(voted ~ I(treatment==3), data=data_hh %>% filter(treatment == 3|treatm
   - Can we get a p-value under (some) null hypothesis without the large-sample assumptions?
   - What does randomization alone justify?
   - Exact p-values under a *sharp* null of no individual treatment effect $Y_i(1) = Y_i(0)$ for all $i$.
-  - "Randomization test": a flexible framework for inference under any known randomization scheme
+  - **"Randomization test"** approach to p-values under a known randomization scheme.
 
 :::
 
@@ -792,16 +791,14 @@ lm_robust(voted ~ I(treatment==3), data=data_hh %>% filter(treatment == 3|treatm
 
 ::: {.incremental}
 
-- Four steps to conducting a hypothesis test
-
 1. Define the null hypothesis.
-  - Neyman framework: $H_0: \tau = \tau_0$
-  - The probability of observing a particular value of the test statistic depends on what is "true" about the underlying parameter.
-  - **Our thought experiment**: **If** the null were true, **how likely** would we see what we observe (or more extreme).
+    - Neyman framework: $H_0: \tau = \tau_0$
+    - The probability of observing a particular value of the test statistic depends on what is "true" about the underlying parameter.
+    - **Our thought experiment**: If the null were true, **how likely** would we see what we observe (or more extreme).
 2. Choose a test statistic
-  - In classical hypothesis testing, we pick something that has useful statistical properties:
+    - In classical hypothesis testing, we pick something that has useful statistical properties:
     
-    $$T = (\hat{\tau} - \tau_0)/\sqrt{\widehat{Var({\hat{\tau}})}}$$
+      $$T = (\hat{\tau} - \tau_0)/\sqrt{\widehat{Var({\hat{\tau}})}}$$
       
 :::
 
@@ -810,9 +807,9 @@ lm_robust(voted ~ I(treatment==3), data=data_hh %>% filter(treatment == 3|treatm
 ::: {.incremental}
 
 3. Determine the distribution of the test statistic under the null
-  - In classical testing, by CLT, in large samples, $T \sim \mathcal{N}(0, 1)$
-  - In smaller samples, you may have made further assumptions (e.g. outcome is normally distributed) to show that $T$ follows a $t-$ distribution
-  - We need a distribution to get probabilities!
+    - In classical testing, by CLT, in large samples, $T \sim \mathcal{N}(0, 1)$
+    - In smaller samples, you may have made further assumptions (e.g. outcome is normally distributed) to get an exact distribution (e.g. $t-$ distribution)
+    - We need a **distribution** to compute **probabilities** from the CDF!
   
 4. What is the probability of observing the test statistic $T$ that you observe in-sample (or a more extreme value) given the known distribution under the null?
     - That's a **p-value**!
@@ -822,13 +819,11 @@ lm_robust(voted ~ I(treatment==3), data=data_hh %>% filter(treatment == 3|treatm
 # What's different about randomization testing?
 
 ::: {.incremental}
-
-- Randomization tests are a hypothesis test but with 2 main differences from our usual approach
   
-1. Different null hypothesis (a "sharp" null)
-2. No assumptions/asymptotics to derive the distribution of $T$
-  - We can instead literally just calculate the value under each possible realization of treatment.
-  - And we know the distribution of treatment assignments because we **control them** in an experiment. 
+1. Different null hypothesis (a **"sharp" null**)
+2. No distributional assumptions/asymptotics to derive the distribution of $T$
+    - We can instead literally just calculate the value under each possible realization of treatment.
+    - And we know the distribution of treatment assignments because we **control them** in an experiment. 
 
 :::
 
@@ -837,7 +832,9 @@ lm_robust(voted ~ I(treatment==3), data=data_hh %>% filter(treatment == 3|treatm
 ::: {.incremental}
 
 - The sharp null hypothesis states:
+
   $$H_0: \tau_i = Y_i(1) - Y_i(0) = 0 \text{  } \forall i$$
+- Zero **individual-level** treatment effect for **all** units
 
 - Sharp null implies zero ATE
   - But zero ATE does not imply sharp null!
@@ -888,7 +885,7 @@ realizations of $\mathbf{D}$!
 - Lots of choices with different degrees of **power** for different kinds of treatment effects.
 - We want to pick a test statistic that will return large values when the null is false and small values when it is true.
 - A reasonable default: (absolute) **difference-in-means**
-  
+
   $$t(\mathbf{D}, \mathbf{Y}) = \bigg|\frac{1}{N_t} \sum_{i=1}^N Y_i D_i - \frac{1}{N_c} \sum_{i=1}^N Y_i (1 - D_i) \bigg|$$
   
 - What sorts of alternatives might this be bad for?
@@ -908,8 +905,8 @@ realizations of $\mathbf{D}$!
 
 - We get our p-value by comparing the observed test statistic for our particular sample $t^*$ to the distribution of $t(\mathbf{D}, \mathbf{Y})$
   - For complete randomization, each of the $K$ possible realizations of $\mathbf{D}$ is equally likely, so we just enumerate all possible assignments $\mathbf{d} \in \Omega$ and calculate the share that are greater than our observed test statistic.
-  
-  $$Pr(t^* \ge t(\mathbf{D}, \mathbf{Y})) = \frac{\sum_{\mathbf{d} \in \Omega} \mathbb{I}(t(\mathbf{d}, \mathbf{Y}) \ge t^*)}{K}$$
+    
+    $$Pr(t^* \ge t(\mathbf{D}, \mathbf{Y})) = \frac{\sum_{\mathbf{d} \in \Omega} \mathbb{I}(t(\mathbf{d}, \mathbf{Y}) \ge t^*)}{K}$$
 
 - This is our p-value, which we compare to some threshold level $\alpha$ and reject the null when it's below that level.
 
@@ -921,7 +918,7 @@ realizations of $\mathbf{D}$!
 
 - We could enumerate every possible treatment vector and actually just calculate $t(\mathbf{D}, \mathbf{Y})$.
 - Even in fairly small samples this can involve quite a lot of computations! (e.g. ${20 \choose 10 } = 184756$)
-- We'll typically use a monte carlo approximation to the exact p-value.
+- We'll typically use a **monte carlo** approximation to the exact p-value.
   - This is also easier for more complicated randomization schemes.
 - **Procedure:** 
   - For $K$ iterations:
@@ -950,11 +947,11 @@ realizations of $\mathbf{D}$!
 ::: {.incremental}
 
  - Randomization tests alone give us p-values but no confidence intervals.
- - One approach: "invert" the test - for what values of a "treatment effect" would we fail to reject the null
+ - **One approach:** "invert" the test - for what values of a "treatment effect" would we fail to reject the null
     - A $100(1-\alpha)\%$ confidence interval contains the set of parameter values for which an $\alpha$-level hypothesis test
     would fail to reject the null.
 
-- Slight complication: We now need to actually define a "treatment effect" parameter:
+- **Slight complication:** We now need to actually define a "treatment effect" parameter:
   - For example, assume a *constant additive effect* for all units
   
     $$Y_i(1) - Y_i(0) = \tau_0$$
@@ -964,6 +961,40 @@ realizations of $\mathbf{D}$!
 
 :::
 
+
+# Conclusion
+
+::: {.incremental}
+
+- We've learned two frameworks for estimating and conducting inference for treatment effects in randomized experiments
+- **Neyman**
+  - Define an estimand
+    - the SATE: $\tau_s = \sum_{i=1}^N Y_i(1) - Y_i(0)$
+    - the PATE: $\tau_p = \mathbb{E}[Y_i(1) - Y_i(0)]$
+  - Choose an estimator
+    - The difference-in-means
+  - Estimator has known mean and variance under our design; asymptotically normal.
+- **Fisher**
+  - Forget the estimation process, let's just do an (exact) test.
+  - Sharp null of no effect ( $Y_i(1) = Y_i(0) \text{ } \forall i$ )
+  - No large-sample approximations - inference justified by randomization alone
+
+:::
+
+
+# Next week
+
+::: {.incremental}
+
+- What can **break** your experiment?
+  - Differential attrition
+  - Non-compliance
+  - Can we do **partial** identification/obtain **bounds**?
   
+- How do we generalize from experiments?
+  - Dimensions of **external validity**
+  - How to think about **aggregating** knowledge from many studies?
+
+:::
 
 
