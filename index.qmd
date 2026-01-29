@@ -37,7 +37,7 @@ page-layout: full
 ### Teaching Assistant
 
 - {{< fa user >}} &nbsp; [Junda Li](https://jundali.org)
-- {{< fa envelope >}} &nbsp; [jli2479@wisc.edu](mailto:jli2479@wisc.edu)
+- {{< fa envelope >}} &nbsp; [jli2458@wisc.edu](mailto:jli2458@wisc.edu)
 
 :::
 
