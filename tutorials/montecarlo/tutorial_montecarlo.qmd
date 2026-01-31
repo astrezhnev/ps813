@@ -1,5 +1,5 @@
 ---
-title: "PS813 - Tutorial - Monte Carlo Simulation"
+title: "Tutorial - Monte Carlo Simulation"
 format:
   html:
     theme:
@@ -21,19 +21,19 @@ A central topic in statistics is determining the properties of different random 
 
 A very common tool that is used to obtain numerical results in lieu of analytical ones is the *monte carlo* simulation. The principle is simple - the law of large numbers. 
 
-We can approximate the properties of some random variable $X$ -- typically expectations of functions (which includes the mean, the variance, etc...) -- by taking a repeated number of *i.i.d.* draws from that random variable from the empirical distribution. For example, if we wanted to know the expectation of some random variable, we can take a large number of independent, repeated draws from that random variable, store those draws, and compute the average. As we let the number of draws get arbitrarily large (our only limitation is computing resources and time), this will converge to the true mean.
+We can approximate the properties of some random variable $X$ -- typically expectations of functions (which includes the mean, the variance, etc...) -- by taking a repeated number of *i.i.d.* draws from that random variable and then computing the corresponding sample quantity of interest from the distribution of those draws. For example, if we wanted to know the expectation of some random variable, we can take a large number of independent, repeated draws from that random variable, store those draws, and compute the average. As we let the number of draws get arbitrarily large (our only limitation is computing resources and time), this will converge to the true expected value.
 
 In practice, you see simulations in statistical methods papers all the time, often to illustrate certain properties of an estimator where the intuition may not be clear just from the analytical result or to get some sense of properties that are difficult to derive. For example, in papers where much of the theory relies on asymptotic approximations, we may use simulations to get a sense of how good the approximation is in small samples or to compare the performance of different estimators across fixed sample sizes.
 
-You also will find simulations useful as a way of checking analytical results -- it's easy for a proof to go wrong or to be unsure of some of the steps, so it can help to use a simulation to understand what the correct answer *should* be at least for a particular set of parameter values. Simulations can be a great way of generating intuition when analytical results are hard to come by.
+You also will find simulations useful as a way of checking analytical results - it's easy for a proof to go wrong or to be unsure of some of the steps, so it can help to use a simulation to understand what the correct answer *should* be at least for a particular set of parameter values. Simulations can be a great way of generating intuition when analytical results are hard to come by.
 
-## Common tools of simulation
+# Common tools of simulation
 
 In conducting a simulation, you will typically rely on two sets of programming tools: random number generator functions and loops.
 
 ## Random number generators
 
-R has a suite of functions to allow you to generate (pseudo)-random numbers from particular distributions. These functions typically start with `r` and the name of the distribution. For example, the function to generate random draws from the normal is `rnorm`. Built-in functions cover most of the common ones: uniform, bernoulli, binomial, normal, poisson, etc... and other packages exist for more esoteric distributions. Because computers are deterministic, the algorithms that generate these numbers are not truly "random" in the sense that the exact sequence of random numbers can be reproduced if one knows the initial "seed" for the algorithm. These random number generators create sequences of numbers that have the *properties* of randomness (e.g. independence), but they can be replicated for a fixed seed. This is actually great for us researchers since it ensures replicability -- even if you are using a simulation, I can reproduce your exact numeric results if I fix the seed. However, this does mean that you need to be aware of when you set the seed in your algorithm. Set it once in your script or code fragment and don't change it.
+R has a suite of functions to allow you to generate (pseudo)-random numbers from particular distributions. These functions typically start with `r` and the name of the distribution. For example, the function to generate random draws from the normal is `rnorm`. Built-in functions cover most of the common ones: uniform, bernoulli, binomial, normal, poisson, etc... and other packages exist for more esoteric distributions. Because computers are deterministic, the algorithms that generate these numbers are not truly "random" in the sense that the exact sequence of random numbers can be reproduced if one knows the initial "seed" for the algorithm. These random number generators create sequences of numbers that have the *properties* of randomness (e.g. independence), but they can be replicated for a fixed seed. This is actually great for us researchers since it ensures replicability. Even if you are using a simulation, I can reproduce your exact numeric results if I fix the seed. However, this does mean that you need to be aware of when you set the seed in your algorithm. Set it once in your script or code fragment and don't change it.
 
 ```{r rng normal}
 # Set the seed for a random number generator
@@ -56,7 +56,8 @@ In a simulation, you will need to generate draws from a random variable *multipl
 Here we will use monte carlo simulation to approximate the mean of the sampling distribution of the sample mean with $N = 30$, $E[X_i] = .5$, $X_i \sim \text{Bernoulli}$ i.i.d.
 
 ```{r sim example}
-set.seed(60615) # Set random seed
+
+set.seed(53706) # Set random seed
 niter <- 100000 # Number of for loop iterations 
 sample_means <- replicate(niter, mean(rbinom(n=50, size=1, prob=.5)))
 # What's the mean of the sampling distribution? The population mean E[X_i]
@@ -64,7 +65,7 @@ mean(sample_means)
 
 # What's its distribution? It's not bernoulli! It's (roughly) normal (by the CLT)
 tibble(xbar = sample_means) %>% ggplot(aes(x=xbar)) +
-  geom_histogram(aes(y = ..density..), binwidth=.02) + 
+  geom_histogram(aes(y = after_stat(density)), binwidth=.02) + 
   xlab("Sample mean") +
   ylab("Density") +
   stat_function(fun=dnorm, args=list(mean=.5, sd=sqrt(.25/50)),
@@ -74,30 +75,31 @@ tibble(xbar = sample_means) %>% ggplot(aes(x=xbar)) +
 
 ```
 
-Recall the statement of the CLT: $X_{1}, X_{2}, ..., X_{n}$ are independent and identically distributed (i.i.d.) random variables with $V(X_{i}) = \sigma^2 < + \infty$, $\sqrt{n} (\frac{1}{n} \sum_{i = 1}^{n} X_i - \mathbb{E}[X_{i}]) \xrightarrow[]{D} N(0, \sigma^2)$. In the simulation below, we illustrate the convergence of the CDF. Again, we use i.i.d. Bernoulli random variable with $\mathbb{P}[X_{i} = 1] = 0.5$. Thus, $\mathbb{E}[X_{i}] = 0.5$ and $\sigma^2 = 0.25$.
+## Illustration: The central limit theorem
+
+Next, recall the Central Limit Theorem. If $X_{1}, X_{2}, ..., X_{n}$ are independent and identically distributed (i.i.d.) random variables with $E[X_i] < \infty$, $\mathbb{V}(X_{i}) = \sigma^2 < \infty$, $\sqrt{n} (\frac{1}{n} \sum_{i = 1}^{n} X_i - \mathbb{E}[X_{i}]) \xrightarrow[]{D} N(0, \sigma^2)$. 
+
+In the simulation below, we show how well the normal approximation holds for a given finite sample. We will use an i.i.d. Bernoulli random variable with $\mathbb{P}[X_{i} = 1] = 0.5$. Thus, $\mathbb{E}[X_{i}] = 0.5$ and $\sigma^2 = 0.25$.
 
 ```{r}
 # set seed to make results replicable
-set.seed(60615)
+set.seed(53706)
+
+# Loop over different sample sizes
+samp_sizes <- c(10, 30, 50, 100, 300, 500, 5000)
 
 # for each sample size, iterate 5000 times
 niter <- 5000
-
-# create a vector to store the results
-clt_seq <- rep(NA, niter)
-
 # loop over different n, i.e., sample size: 10, 30, 50, 100, 300, 500, 5000
-for(j in c(10, 30, 50, 100, 300, 500, 5000)){
+for(samp_size in samp_sizes){
+  clt_seq <- rep(NA, niter) # create a vector to store the results
   
-  samp_size <- j
-
+  # Run the monte carlo
   for(i in 1:niter){
-    
-    # compute the quantity in the CLT: 
+    # compute the (rescaled) draws
     clt_seq[i] <- sqrt(samp_size) * (mean(rbinom(n = samp_size, 
                                                  size = 1, 
                                                  prob = .5)) - 0.5)
-    
   }
   
   # save plot to compare the empirical CDF with normal CDF
@@ -106,7 +108,7 @@ for(j in c(10, 30, 50, 100, 300, 500, 5000)){
           xlab("x") + 
           ylab("CDF") + 
           stat_function(fun = pnorm, args =  list(mean = 0, sd = 0.5),
-                        col = "blue")+  theme_minimal()
+                        col = "blue")+  theme_minimal() + ggtitle(label = paste0("N = ", samp_size))
   
   # plot figures
   print(plot)
@@ -123,10 +125,9 @@ However, if we want to construct confidence intervals and do inference, we need 
 
 Let's show this via simulation! Start by defining the data-generating process for a fixed value of $N = 30$, $\mu = 0$, $\sigma^2 = 4$, We'll assume $X_i$ is normal, though this isn't strictly necessary.
 
-
 ```{r sampling variance bias}
 # Set seed
-set.seed(60615)
+set.seed(53706)
 
 # Define the parameters of the DGP
 N = 30
@@ -180,7 +181,7 @@ Let's see how these two estimators compare across different values of N. There a
 
 ```{r sampling variance by N}
 # Set seed
-set.seed(60615)
+set.seed(53706)
 
 # Parameters
 mu = 0
@@ -218,138 +219,6 @@ plot_frame %>% ggplot(aes(x=n, y=Bias, colour=Estimator)) +
 ```
 
 
-## Rejection Sampling
-Rejection sampling is a technique in Monte Carlo simulation, particularly useful in complex probability distributions. This method allows for sampling from a target distribution indirectly by using a more straightforward, auxiliary distribution. 
+# Acknowledgments
 
-The acceptance-rejection method is based on a simple idea: draw samples from an easy-to-sample distribution and accept or reject each sample based on a criterion related to the target distribution. This approach is particularly beneficial when the target distribution is complex or not straightforward to sample from directly.
-
-$$
-\begin{aligned}
-& \quad \text{Choose a proposal distribution, } q(x), \text{ which is easy to sample from.} \\
-& \quad \text{Find a constant } c \text{ such that } c \cdot q(x) \geq f(x) \text{ for all } x, \text{ where } f(x) \text{ is the target distribution.} \\
-& \quad \text{Sample } x^* \text{ from } q(x). \\
-& \quad \text{Sample } u \text{ from a Uniform distribution } U[0, c \cdot q(x^*)]. \\
-& \quad \text{If } u \leq f(x^), \text{ accept } x^; \text{ otherwise, reject it.} \\
-& \quad \text{Repeat steps 3-5 until a sufficient number of samples are accepted.}
-\end{aligned}
-$$
-
-### Example
-Suppose we want to sample from a Gamma distribution with shape parameter $\alpha = 2$ and rate parameter $\beta = 1$. The probability density function of the Gamma distribution is given by
-
-$$f(x) = \frac{\beta^\alpha}{\Gamma(\alpha)} x^{\alpha - 1} e^{-\beta x}$$
-
-where $\Gamma(\alpha)$ is the Gamma function. The Gamma function is defined as
-
-$$\Gamma(\alpha) = \int_0^\infty x^{\alpha - 1} e^{-x} dx$$
-
-and is a generalization of the factorial function. The Gamma function is not straightforward to evaluate, so we will use rejection sampling to sample from the Gamma distribution.
-
-First, we need to choose a proposal distribution. We will use a Normal distribution with mean $\mu = 0$ and standard deviation $\sigma = 1$ as our proposal distribution. The probability density function of the Normal distribution is given by
-
-$$q(x) = \frac{1}{\sqrt{2 \pi \sigma^2}} e^{-\frac{(x - \mu)^2}{2 \sigma^2}}$$
-
-We can plot the Gamma and Normal distributions to see how they compare.
-
-```{r}
-# Define the target distribution
-target_dist <- function(x) {
-  dnorm(x)
-}
-
-# Define the proposal distribution
-proposal_dist <- function(x) {
-  dunif(x, min = -3, max = 3)
-}
-```
-
-We need to find a constant $c$ such that $c \cdot q(x) \geq f(x)$ for all $x$. We can plot the two distributions to see where the Normal distribution is greater than the Uniform distribution.
-
-```{r}
-# Plot the target and proposal distributions
-x <- seq(-3, 3, length.out = 1000)
-y_target <- target_dist(x)
-y_proposal <- proposal_dist(x)
-
-ggplot() +
-  geom_line(aes(x, y_target), color = "blue") +
-  geom_line(aes(x, y_proposal), color = "red") +
-  theme_minimal()
-```
-
-We can see that the Normal distribution is greater than the Uniform distribution for some $x$ values. We can find the maximum value of the normal distribution.
-
-```{r}
-# Find the maximum value of the proposal distribution
-max_proposal <- max(y_proposal)
-```
-
-We can then find the maximum value of the target distribution.
-
-```{r}
-# Find the maximum value of the target distribution
-max_target <- max(y_target)
-```
-
-We can then find the constant $c$ such that $c \cdot q(x) \geq f(x)$ for all $x$.
-
-```{r}
-# Find the constant c
-c <- max_target / max_proposal
-```
-
-We can plot the two distributions again to see where the Normal distribution is smaller than the Uniform distribution.
-
-```{r}
-# Plot the target and proposal distributions
-x <- seq(-3, 3, length.out = 1000)
-y_target <- target_dist(x)
-y_proposal <- proposal_dist(x)
-
-ggplot() +
-  geom_line(aes(x, y_target), color = "blue") +
-  geom_line(aes(x, y_proposal * c), color = "red") +
-  theme_minimal()
-```
-
-We can now use the $c$ to sample from the target distribution. We will sample 1000 values from the target distribution.
-
-```{r}
-# Sample from the target distribution
-n <- 1000
-x <- numeric(n)
-i <- 1
-
-while (i <= n) {
-  # Sample from the proposal distribution
-  x_star <- runif(1, min = -3, max = 3)
-  
-  # Sample from a Uniform distribution
-  u <- runif(1, min = 0, max = c * proposal_dist(x_star))
-  
-  # Accept or reject the sample
-  if (u <= target_dist(x_star)) {
-    x[i] <- x_star
-    i <- i + 1
-  }
-}
-```
-
-We can plot the empirical distribution of the samples.
-
-```{r}
-# Plot the samples
-ggplot() +
-  geom_histogram(aes(x, y = ..density..), data = tibble(x), binwidth = 0.1) +
-  theme_minimal()
-```
-
-We can also plot target distribution on top of the histogram.
-
-```{r}
-# Plot the samples
-ggplot() +
-  geom_histogram(aes(x, y = ..density..), data = tibble(x), binwidth = 0.1) +
-  stat_function(fun = target_dist, color = "blue") +
-  theme_minimal()
-```
+Special thanks to Zikai Li for developing an earlier version of this tutorial for PLSC 30600 at the University of Chicago.
