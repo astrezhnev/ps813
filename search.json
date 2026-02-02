@@ -56,74 +56,431 @@
     "text": "Contact Policy\n\nCourse questions: Please post questions about course content on the Ed discussion forum so that all students can benefit from the answers.\nPersonal matters: Email the instructor directly.\nProblem set questions: Post on the discussion forum or come to office hours.\nExpected response time: We aim to respond to discussion posts within 24 hours on weekdays."
   },
   {
-    "objectID": "resources.html",
-    "href": "resources.html",
-    "title": "Resources",
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#section",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#section",
+    "title": "Week 2: Potential Outcomes and Experiments",
     "section": "",
-    "text": "These textbooks provide a number of the readings that will be used through the course of the semester. Each is available either as a free online version or in digital form via UW-Madison library access.\n\nCunningham, Scott. Causal inference: The Mixtape. Yale University Press, 2021.\n\nFree online version\n\nHuntington-Klein, Nick. The Effect: An Introduction to Research Design and Causality. Chapman and Hall/CRC, 2021.\n\nFree online version\n\nHernán, Miguel A. and James M. Robins. Causal Inference: What If. Chapman & Hall/CRC. 2020.\n\nFree PDF available\n\nImbens, Guido W. and Donald B. Rubin. Causal Inference for Statistics, Social, and Biomedical Sciences. Cambridge University Press. 2015.\n\nUW-Madison Library Access\n\nMorgan, Stephen L., and Christopher Winship. Counterfactuals and Causal Inference. Cambridge University Press, 2015.\n\nUW-Madison Library Access\n\nWager, Stefan. Causal inference: A statistical learning approach.\n\nDraft PDF available here"
+    "text": "\\[\n  \\require{cancel}\n\\]"
   },
   {
-    "objectID": "resources.html#textbooks",
-    "href": "resources.html#textbooks",
-    "title": "Resources",
-    "section": "",
-    "text": "These textbooks provide a number of the readings that will be used through the course of the semester. Each is available either as a free online version or in digital form via UW-Madison library access.\n\nCunningham, Scott. Causal inference: The Mixtape. Yale University Press, 2021.\n\nFree online version\n\nHuntington-Klein, Nick. The Effect: An Introduction to Research Design and Causality. Chapman and Hall/CRC, 2021.\n\nFree online version\n\nHernán, Miguel A. and James M. Robins. Causal Inference: What If. Chapman & Hall/CRC. 2020.\n\nFree PDF available\n\nImbens, Guido W. and Donald B. Rubin. Causal Inference for Statistics, Social, and Biomedical Sciences. Cambridge University Press. 2015.\n\nUW-Madison Library Access\n\nMorgan, Stephen L., and Christopher Winship. Counterfactuals and Causal Inference. Cambridge University Press, 2015.\n\nUW-Madison Library Access\n\nWager, Stefan. Causal inference: A statistical learning approach.\n\nDraft PDF available here"
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#this-week",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#this-week",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "This week",
+    "text": "This week\n\nDefining causal estimands\n\nThe “potential outcomes” model of causation\n\nCausal identification\n\nLinking causal estimands to observable quantities\n\nRandomized experiments as a solution to the identification problem\n\nTreatment assignment is independent of the potential outcomes\n\nStatistical inference for completely randomized experiments\n\nNeyman’s approach\nFisher’s approach"
   },
   {
-    "objectID": "resources.html#software",
-    "href": "resources.html#software",
-    "title": "Resources",
-    "section": "Software",
-    "text": "Software\n\nR and RStudio\nThis course uses R for all programming assignments. You are welcome to use the RStudio Interactive Development Environment (IDE) to write code and edit the assignment write-up. Due to the extensive integration of Quarto into Posit-developed IDEs, I encourage using either RStudio or the more recent Positron IDE.\n\nR: Download from https://www.r-project.org\nRStudio: Download from https://posit.co/download/rstudio-desktop/\nPositron: Download from https://positron.posit.co/\n\n\nRecommended Guides for R Programming\n\nR For Data Science Available at https://r4ds.hadley.nz/\nData Visualization: A Practical Introduction Available at https://socviz.co/\n\n\n\n\nQuarto and Markdown\nThe assignments are distributed as .qmd Quarto files. Quarto is the successor to R Markdown and lets you present your analysis, code, figures and written discussion all in a single document. It uses Markdown syntax for formatting text and supports embedded R code chunks that execute when you render the document. This lets you present your analysis, code, figures, and written discussion all in one place.\nTo complete assignments, you will edit the provided .qmd file, adding your code and written responses, then render it to an HTML file for submission. Both your .html output and .qmd file will be submitted via Gradescope\n\nQuarto: Download from https://quarto.org/docs/get-started/\nQuarto Guide: https://quarto.org/docs/guide/\nMarkdown Basics: https://quarto.org/docs/authoring/markdown-basics.html\nNote also the chapter on Quarto in R For Data Science"
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#the-potential-outcomes-model",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#the-potential-outcomes-model",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "The potential outcomes model",
+    "text": "The potential outcomes model"
   },
   {
-    "objectID": "resources.html#tutorials",
-    "href": "resources.html#tutorials",
-    "title": "Resources",
-    "section": "Tutorials",
-    "text": "Tutorials\nBelow are some additional tutorials to help supplement the main course material. They will generally focus on specific topics in statistical computing and things that we did not have time to cover as part of the main set of lectures.\n\nBasics of Monte Carlo simulations"
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#thinking-about-causal-effects",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#thinking-about-causal-effects",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Thinking about causal effects",
+    "text": "Thinking about causal effects\n\nTwo types of causal questions (Gelman and Rubin, 2013)\nCauses of effects\n\nWhat are the factors that generate some outcome \\(Y\\)?\n“Why?” questions: Why do states go to war? Why do politicians get re-elected?\n\nEffects of causes\n\nIf \\(X\\) were to change, what might happen to \\(Y\\)?\n“What if?” questions: If a politician were an incumbent, would they be more likely to be re-elected compared to if they were a non-incumbent?\n\nOur focus in this class is on effects of causes\n\nWhy? We can connect them to well-defined statistical quantities of interest (e.g. an “average treatment effect”)\n“Causes of effects” are still important questions, but they’re more questions of theory"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "PoliSci 813",
-    "section": "",
-    "text": "Causal Inference\nDesigning studies to uncover cause and effect from data\nPoliSci 813 • Spring 2026University of Wisconsin-Madison\n\n\n\n\n\n\n\n\nInstructor\n\n   Anton Strezhnev\n   North Hall 322D\n   strezhnev@wisc.edu\n\n\n\nTeaching Assistant\n\n   Junda Li\n   jli2458@wisc.edu\n\n\n\n\nCourse details\n\n   Mondays & Wednesdays\n   1/21/2026 - 5/4/2026\n   9:30am - 10:45am\n   North Hall 422\n\n\n\nContacting me\nE-mail is the best way to get in touch with me. My dedicated office hours are Tuesdays from 2pm-4pm if you want to meet in-person. I am also generally in my office on weekdays during normal hours and my door is open, so you are welcome to drop in. You can also feel free to e-mail me to confirm availability or to schedule a virtual meeting via Zoom."
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#defining-a-causal-effect",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#defining-a-causal-effect",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Defining a causal effect",
+    "text": "Defining a causal effect\n\nHistorically, causality was seen as a deterministic process.\n\nHume (1740): Causes are regularities in events of “constant conjunctions”\nMill (1843): Method of difference\n\nThis became problematic – empirical observation alone does not demonstrate causality.\n\nRussell (1913): Scientists aren’t interested in causality!\n\nHow do we talk about causation that both incorporates uncertainty in measurement and clearly defines what we mean by a “causal effect”?"
   },
   {
-    "objectID": "assignments.html",
-    "href": "assignments.html",
-    "title": "Assignments",
-    "section": "",
-    "text": "Assignment\nAssigned\nDue\n\n\n\n\nProblem Set 1\nJan 21 (Week 1)\nFeb 4 (Week 3)\n\n\nProblem Set 2\nFeb 4 (Week 3)\nFeb 18 (Week 5)\n\n\nProblem Set 3\nFeb 18 (Week 5)\nMarch 4 (Week 7)\n\n\nMidterm Exam\nMarch 4 (Week 7)\nIn-Class\n\n\nProblem Set 4\nMarch 11 (Week 8)\nMarch 25 (Week 10)\n\n\nProblem Set 5\nApril 8 (Week 11)\nApril 22 (Week 13)\n\n\nFinal Exam\nMay 4 (Exam Week)\nLocation TBA"
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#the-potential-outcomes-model-1",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#the-potential-outcomes-model-1",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "The potential outcomes model",
+    "text": "The potential outcomes model\n\nRubin (1974) - formalizes a framework for understanding causation from a statistical perspective.\n\nInspired by earlier Neyman (1923) and Fisher (1935) on randomized experiments.\n\nWe’ll spend most of our time with this approach, often called the Rubin Causal Model or potential outcomes framework.\nCore idea:\n\nCausal effects are effects of interventions\nCausal effects are contrasts in counterfactuals\n\nThe potential outcomes framework clarifies:\n\nWhat action is doing the causing?\nCompared to what alternative action?\nOn what outcome metric?\nHow would we learn about the effect from data?"
   },
   {
-    "objectID": "assignments.html#schedule",
-    "href": "assignments.html#schedule",
-    "title": "Assignments",
-    "section": "",
-    "text": "Assignment\nAssigned\nDue\n\n\n\n\nProblem Set 1\nJan 21 (Week 1)\nFeb 4 (Week 3)\n\n\nProblem Set 2\nFeb 4 (Week 3)\nFeb 18 (Week 5)\n\n\nProblem Set 3\nFeb 18 (Week 5)\nMarch 4 (Week 7)\n\n\nMidterm Exam\nMarch 4 (Week 7)\nIn-Class\n\n\nProblem Set 4\nMarch 11 (Week 8)\nMarch 25 (Week 10)\n\n\nProblem Set 5\nApril 8 (Week 11)\nApril 22 (Week 13)\n\n\nFinal Exam\nMay 4 (Exam Week)\nLocation TBA"
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#statistical-setup.",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#statistical-setup.",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Statistical setup.",
+    "text": "Statistical setup.\n\nPopulation of units\n\nFinite population or infinite super-population\n\nSample of \\(N\\) units from the population indexed by \\(i\\)\nObserved outcome \\(Y_i\\)\nBinary treatment indicator \\(D_i\\).\n\nUnits receiving “treatment”: \\(D_i = 1\\)\nUnits receiving “control”: \\(D_i = 0\\)\n\nCovariates (observed prior to treatment) \\(X_i\\)"
   },
   {
-    "objectID": "assignments.html#problem-sets",
-    "href": "assignments.html#problem-sets",
-    "title": "Assignments",
-    "section": "Problem Sets",
-    "text": "Problem Sets\nProblem sets are distributed as .qmd files along with their rendered .html form. You should edit the provided .qmd file and render to .html when submitting the assignment. Additional files (e.g. datasets) are located in sub-folders. For convenience, all the combined files are also distributed as a .zip compressed archive.\n\nProblem Set 1\n\nGithub Repository\n.zip archive"
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#potential-outcomes",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#potential-outcomes",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Potential outcomes",
+    "text": "Potential outcomes\n\nThe potential outcome \\(Y_i(d)\\) is the value that the outcome would take if \\(D_i\\) were set to \\(d\\).\n\nFor binary \\(D_i\\): \\(Y_i(1)\\) is the value we would observe if unit \\(i\\) were treated.\n\\(Y_i(0)\\) is the value we would observe if unit \\(i\\) were under control\n\nWe model the potential outcomes as fixed attributes of the units.\n\n“Potential” in the sense that what is actually observed is a function of treatment assignment\n\nNotation alert! – Sometimes you’ll see potential outcomes written as:\n\n\\(Y_i^1\\), \\(Y_i^0\\) or \\(Y_i^{d=1}\\), \\(Y_i^{d=0}\\)\n\\(Y_{i0}\\), \\(Y_{i1}\\)\n\\(Y_1(i)\\), \\(Y_0(i)\\)\n\nCausal effects are contrasts in potential outcomes.\n\nIndividual treatment effect: \\(\\tau_i = Y_i(1) - Y_i(0)\\)\nCan consider ratios or other transformations (e.g. \\(\\frac{Y_i(1)}{Y_i(0)}\\))"
   },
   {
-    "objectID": "lectures.html",
-    "href": "lectures.html",
-    "title": "Lectures",
-    "section": "",
-    "text": "Lecture slides are available as self-contained .html files made with RevealJS from a Quarto .qmd file. You can choose to print these to a PDF document by using the “PDF Export Mode” in the Tools menu accessed via the settings button in the lower left-hand side of the page. You are also welcome to directly download the .qmd file and supporting data/images/etc… from the Github repository. Slides are organized by week and combine Monday and Wednesday’s lectures.\n\n\n\nWeek 1 Github Repository\nWeek 1 .html slides\n\n\n\n\n\nWeek 2 Github Repository\nWeek 2 .html slides\n\n\n\n\n\nWeek 3 Github Repository\nWeek 3 .html slides\n\n\n\n\n\nWeek 4 Github Repository\nWeek 4 .html slides\n\n\n\n\n\nWeek 5 Github Repository\nWeek 5 .html slides\n\n\n\n\n\nWeek 6 Github Repository\nWeek 6 .html slides\n\n\n\n\n\nWeek 7 Github Repository\nWeek 7 .html slides\n\n\n\n\n\nWeek 8 Github Repository\nWeek 8 .html slides\n\n\n\n\n\nWeek 9 Github Repository\nWeek 9 .html slides\n\n\n\n\n\nWeek 10 Github Repository\nWeek 10 .html slides\n\n\n\n\n\nWeek 11 Github Repository\nWeek 11 .html slides\n\n\n\n\n\nWeek 12 Github Repository\nWeek 12 .html slides\n\n\n\n\n\nWeek 13 Github Repository\nWeek 13 .html slides\n\n\n\n\n\nWeek 14 Github Repository\nWeek 14 .html slides"
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#consistencysutva",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#consistencysutva",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Consistency/SUTVA",
+    "text": "Consistency/SUTVA\n\nHow do we link the potential outcomes to observed ones?\nConsistency/Stable Unit Treatment Value (SUTVA) assumption\n\\[Y_i(d) = Y_i \\text{ if } D_i = d\\]\nSometimes you’ll see this w/ binary \\(D_i\\) (often in econometrics)\n\\[Y_i = Y_i(1)D_i + Y_i(0)(1-D_i)\\]\nImplications\n\nNo interference - other units’ treatments don’t affect \\(i\\)’s potential outcomes.\nSingle version of treatment\n\\(D\\) is in principle manipulable - a “well-defined intervention”\nThe means by which treatment is assigned is irrelevant (a version of 2)"
   },
   {
-    "objectID": "lectures.html#lecture-slides",
-    "href": "lectures.html#lecture-slides",
-    "title": "Lectures",
-    "section": "",
-    "text": "Lecture slides are available as self-contained .html files made with RevealJS from a Quarto .qmd file. You can choose to print these to a PDF document by using the “PDF Export Mode” in the Tools menu accessed via the settings button in the lower left-hand side of the page. You are also welcome to directly download the .qmd file and supporting data/images/etc… from the Github repository. Slides are organized by week and combine Monday and Wednesday’s lectures.\n\n\n\nWeek 1 Github Repository\nWeek 1 .html slides\n\n\n\n\n\nWeek 2 Github Repository\nWeek 2 .html slides\n\n\n\n\n\nWeek 3 Github Repository\nWeek 3 .html slides\n\n\n\n\n\nWeek 4 Github Repository\nWeek 4 .html slides\n\n\n\n\n\nWeek 5 Github Repository\nWeek 5 .html slides\n\n\n\n\n\nWeek 6 Github Repository\nWeek 6 .html slides\n\n\n\n\n\nWeek 7 Github Repository\nWeek 7 .html slides\n\n\n\n\n\nWeek 8 Github Repository\nWeek 8 .html slides\n\n\n\n\n\nWeek 9 Github Repository\nWeek 9 .html slides\n\n\n\n\n\nWeek 10 Github Repository\nWeek 10 .html slides\n\n\n\n\n\nWeek 11 Github Repository\nWeek 11 .html slides\n\n\n\n\n\nWeek 12 Github Repository\nWeek 12 .html slides\n\n\n\n\n\nWeek 13 Github Repository\nWeek 13 .html slides\n\n\n\n\n\nWeek 14 Github Repository\nWeek 14 .html slides"
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#positivityoverlap",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#positivityoverlap",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Positivity/Overlap",
+    "text": "Positivity/Overlap\n\nWe also need some assumptions on the treatment assignment mechanism \\(D_i\\).\nIn order to be able to observe some units’ values of \\(Y_i(1)\\) or \\(Y_i(0)\\) treatment can’t be deterministic. For all \\(i\\):\n\\[ 0 &lt; Pr(D_i = 1) &lt; 1 \\]\nIf no units could ever receive treatment or control it would be impossible to learn about \\(\\mathbb{E}[Y_i | D_i = 1]\\) or \\(\\mathbb{E}[Y_i | D_i = 0]\\)\nThis is sometimes called a positivity or overlap assumption.\n\nPretty trivial in a randomized experiment, but can be tricky in observational studies when \\(D_i\\) is perfectly determined by some covariates \\(X_i\\)"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#a-missing-data-problem",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#a-missing-data-problem",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "A missing data problem",
+    "text": "A missing data problem\n\nIt’s useful to think of the causal inference problem in terms of missingness in the complete table of potential outcomes.\n\n\n\n\n\n\n\n\n\n\n\nUnit \\(i\\)\nTreatment \\(D_i\\)\n\\(Y_i(1)\\)\n\\(Y_i(0)\\)\nObserved \\(Y_i\\)\n\n\n\n\n\\(1\\)\n\\(1\\)\n\\(5\\)\n?\n\\(5\\)\n\n\n\\(2\\)\n\\(0\\)\n?\n\\(-3\\)\n\\(-3\\)\n\n\n\\(3\\)\n\\(1\\)\n\\(9\\)\n?\n\\(9\\)\n\n\n\\(\\vdots\\)\n\\(\\vdots\\)\n\\(\\vdots\\)\n\\(\\vdots\\)\n\\(\\vdots\\)\n\n\n\\(N\\)\n\\(0\\)\n?\n\\(8\\)\n\\(8\\)\n\n\n\n\nIf we could observe both \\(Y_i(1)\\) and \\(Y_i(0)\\) for each unit, then this would be easy!\nBut we can’t - we only observe what we’re given by \\(D_i\\)\nHolland (1986) calls this “The Fundamental Problem of Causal Inference”"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#causal-estimands",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#causal-estimands",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Causal Estimands",
+    "text": "Causal Estimands\n\nThe individual causal effect: \\(\\tau_i\\) (can’t identify this w/o strong assumptions!)\n\\[\\tau_i = Y_i(1) - Y_i(0)\\]\nThe sample average treatment effect (SATE): \\(\\tau_s\\)\n\\[\\tau_s = \\frac{1}{N}\\sum_{i=1}^N Y_i(1) - Y_i(0)\\]\nThe population average treatment effect (PATE) \\(\\tau_p\\)\n\\[\\tau_p = \\mathbb{E}[Y_i(1) - Y_i(0)] = \\mathbb{E}[Y_i(1)] - \\mathbb{E}[Y_i(0)]\\]"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#sample-vs.-population-estimands",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#sample-vs.-population-estimands",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Sample vs. Population Estimands",
+    "text": "Sample vs. Population Estimands\n\nWith the SATE and PATE, we’ve made an important distinction between two sources of uncertainty\n\nRandom assignment of treatment (unobserved P.O.s)\nSampling from a population.\n\nEven if we’re just interested in the treatment effect within our sample, there’s still uncertainty\nWhen can we go from SATE to PATE?\n\nIf we have a random sample from the target population\nIf there are no sources of effect heterogeneity that differ between sample and target population\nWe’ll spend Week 3 talking about this problem - external validity"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#causal-vs.-associational-estimands",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#causal-vs.-associational-estimands",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Causal vs. Associational Estimands",
+    "text": "Causal vs. Associational Estimands"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#causal-identification",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#causal-identification",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Causal Identification",
+    "text": "Causal Identification\n\nCausal identification: Can we learn about the value of a causal effect from the observed data?\n\nCan we express the causal estimand (e.g. \\(\\tau_p = \\mathbb{E}[Y_i(1) - Y_i(0)]\\)) entirely in terms of observable quantities?\n\nCausal identification comes prior to questions of estimation\n\nIt doesn’t matter whether you’re using regression, weighting, matching, doubly-robust estimation, double-LASSO, etc…\nIf you can’t answer the question “What’s your identification strategy?” then no amount of fancy stats will solve your problems.\n\nIdentification requires assumptions about the connection between the observed data \\(Y_i\\), \\(D_i\\) and the unobserved counterfactuals \\(Y_i(d)\\)\n\n(e.g.) Under what assumptions will the observed difference-in-means identify the average treatment effect?"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#identifying-the-att",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#identifying-the-att",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Identifying the ATT",
+    "text": "Identifying the ATT\n\nSuppose we want to identify the (population) Average Treatment Effect on the Treated (ATT)\n\\[\\tau_{\\text{ATT}} = \\mathbb{E}[Y_i(1) - Y_i(0) | D_i = 1]\\]\nLet’s see what our consistency/SUTVA assumption gets us!\nFirst, let’s use linearity:\n\\[\\tau_{\\text{ATT}} = \\mathbb{E}[Y_i(1) | D_i = 1] -  \\mathbb{E}[Y_i(0) | D_i = 1]\\]\nNext, consistency\n\\[\\tau_{\\text{ATT}} = \\mathbb{E}[Y_i | D_i = 1] -  \\mathbb{E}[Y_i(0) | D_i = 1]\\]"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#identifying-the-att-1",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#identifying-the-att-1",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Identifying the ATT",
+    "text": "Identifying the ATT\n\nStill not enough though. We have an unobserved term \\(\\mathbb{E}[Y_i(0) | D_i = 1]\\). Why can’t we observe this directly?\n\\[\\tau_{\\text{ATT}} = \\mathbb{E}[Y_i | D_i = 1] -  \\mathbb{E}[Y_i(0) | D_i = 1]\\]\nLet’s see what the difference would be between the ATT and the simple difference-in-means \\(\\mathbb{E}[Y_i | D_i = 1] - \\mathbb{E}[Y_i | D_i = 0]\\). Add and subtract \\(\\mathbb{E}[Y_i | D_i = 0]\\)\n\\[\\tau_{\\text{ATT}} = \\mathbb{E}[Y_i | D_i = 1] -  \\mathbb{E}[Y_i(0) | D_i = 1] - \\mathbb{E}[Y_i | D_i = 0] + \\mathbb{E}[Y_i | D_i = 0]\\]\nRearranging terms\n\\[\\tau_{\\text{ATT}} = \\bigg(\\mathbb{E}[Y_i | D_i = 1] -  \\mathbb{E}[Y_i | D_i = 0]\\bigg) - \\bigg(\\mathbb{E}[Y_i(0) | D_i = 1] -  \\mathbb{E}[Y_i | D_i = 0]\\bigg)\\]"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#identifying-the-att-2",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#identifying-the-att-2",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Identifying the ATT",
+    "text": "Identifying the ATT\n\nNow we have an expression for the ATT in terms of the difference-in-means and a bias term\n\\[\\tau_{\\text{ATT}} = \\underbrace{\\bigg(\\mathbb{E}[Y_i | D_i = 1] -  \\mathbb{E}[Y_i | D_i = 0]\\bigg)}_{\\text{Difference-in-means}} - \\underbrace{\\bigg(\\mathbb{E}[Y_i(0) | D_i = 1] -  \\mathbb{E}[Y_i(0) | D_i = 0]\\bigg)}_{\\text{Selection-into-treatment bias}}\\]\nWhat does this bias term represent? How can we interpret it?\n\nHow much higher are the potential outcomes under control for units that receive treatment vs. those that receive control.\nSometimes called a selection-into-treatment problem - units that choose treatment may have higher or lower potential outcomes than those that choose control.\n\nCan do the same analysis for the average treatment effect under control (ATC) and by extension the average treatment effect"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#selection-into-treatment-bias",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#selection-into-treatment-bias",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Selection-into-treatment bias",
+    "text": "Selection-into-treatment bias\n\nCan use theory to “sign the bias”:\n\nSuppose \\(Y_i\\) was an indicator of whether someone voted in an election and \\(D_i\\) was an indicator for whether they received a political mailer.\nConsider a world where the mailer was sent out non-randomly to everyone who had signed up for a politician’s mailing list.\nIf we took the difference in turnout rates between voters who received the mailer and voters who did not receive the mailer, would we be over-estimating or under-estimating the effect of treatment?"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#ignorabilityunconfoundedness",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#ignorabilityunconfoundedness",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Ignorability/Unconfoundedness",
+    "text": "Ignorability/Unconfoundedness\n\nSuppose we want point identification and not just bounds on the causal effect?\n\nWhat assumption can we make such that the difference-in-means identifies the ATT (or ATE)?\n\nWe assume: the selection-into-treatment bias is \\(0\\)\n\\[\\mathbb{E}[Y_i(0) | D_i = 1] = \\mathbb{E}[Y_i(0) | D_i = 0]\\]\n\\[\\mathbb{E}[Y_i(1) | D_i = 1] = \\mathbb{E}[Y_i(1) | D_i = 0]\\]\nThis will be true if treatment is independent of the potential outcomes.\n\\[\\{Y_i(1), Y_i(0)\\} {\\perp \\! \\! \\! \\perp} D_i\\]\nCommon names for this assumption: exogeneity, unconfoundedness, ignorability\n\nIn simple terms: Treatment is not systematically more/less likely to be assigned to units that have higher/lower potential outcomes."
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#ignorabilityunconfoundedness-1",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#ignorabilityunconfoundedness-1",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Ignorability/Unconfoundedness",
+    "text": "Ignorability/Unconfoundedness\n\nThe difference-in-means identifies the average treatment effect under three assumptions:\n\nConsistency/SUTVA\nPositivity/Overlap\nIgnorability/Unconfoundedness\n\nConsistency gives us:\n\\[\\mathbb{E}[Y_i | D_i = 1] - \\mathbb{E}[Y_i | D_i = 0] = \\mathbb{E}[Y_i(1) | D_i = 1] - \\mathbb{E}[Y_i(0) | D_i = 0]\\]\nAnd ignorability gives us:\n\\[\\mathbb{E}[Y_i(1) | D_i = 1] - \\mathbb{E}[Y_i(0) | D_i = 0] = \\mathbb{E}[Y_i(1)] - \\mathbb{E}[Y_i(0)] = \\tau\\]"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#ignorabilityunconfoundedness-2",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#ignorabilityunconfoundedness-2",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Ignorability/Unconfoundedness",
+    "text": "Ignorability/Unconfoundedness"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#experiments",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#experiments",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Experiments",
+    "text": "Experiments"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#randomized-experiments",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#randomized-experiments",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Randomized Experiments",
+    "text": "Randomized Experiments\n\nWhat sort of research design justifies ignorability?\n\nA randomized experiment!\n\nAn experiment is any study where a researcher knows and controls the treatment assignment probability \\(Pr(D_i = 1)\\)\nA randomized experiment is an experiment that satisfies:\n\nPositivity: \\(0 &lt; Pr(D_i = 1) &lt; 1\\) for all units\nIgnorability: \\(Pr(D_i = 1| \\mathbf{Y}(1), \\mathbf{Y}(0)) = Pr(D_i = 1)\\)\n\nAnother implication of \\(\\mathbf{Y}(1), \\mathbf{Y}(0) {\\perp \\! \\! \\! \\perp} D_i\\)\nTreatment assignment probabilities do not depend on the potential outcomes."
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#types-of-experiments",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#types-of-experiments",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Types of experiments",
+    "text": "Types of experiments\n\nLots of ways in which we could design a randomized experiment where ignorability holds:\nLet \\(N_t\\) be the number of treated units, \\(N_c\\) number of controls\nBernoulli randomization:\n\nIndependent coin flips for each \\(D_i\\). \\(Pr(D_i = 1) = p\\)\n\\(D_i {\\perp \\! \\! \\! \\perp} D_j\\) for all \\(i\\), \\(j\\).\n\\(N_t\\), \\(N_c\\) are random variables\n\nComplete randomization\n\nFix \\(N_t\\) and \\(N_c\\) in advance. Randomly select \\(N_t\\) units to be treated.\nEach unit has an equal probability to be treated.\nEach assignment with \\(N_t\\) treated units is equally likely to occur\n\\(D_i\\) is independent of potential outcomes, but treatment assignment is slightly dependent across units."
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#types-of-experiments-1",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#types-of-experiments-1",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Types of experiments",
+    "text": "Types of experiments\n\nStratified randomization\n\nUsing covariates \\(X_i\\), form \\(J\\) total blocks or strata of units with similar or identical covariate values.\nCompletely randomize within each of the \\(J\\) blocks\nIn the limit, pair-randomization w/ strata of size \\(2\\).\n\nCluster randomization\n\nEach unit \\(i\\) belongs to some larger cluster. \\(C_i = \\{1, 2, \\dotsc, C\\}\\), \\(C &lt; N\\).\nTreatment is assigned by complete randomization at the cluster level\n\nRandomly select some number of clusters to be treated, remainder get control.\n\nIf units share cluster membership, they get the same treatment (\\(C_i = C_j \\leadsto D_i = D_j\\))"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#complete-randomization",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#complete-randomization",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Complete randomization",
+    "text": "Complete randomization\n\nHow do we do estimation and inference under complete randomization?\n\nWe’ll start with the finite-sample setting and illustrate the Neyman (1923) approach to inference for the SATE.\n\nDefine our quantity of interest, the sample average treatment effect\n\\[\\tau_{\\text{s}} = \\frac{1}{N}\\sum_{i=1}^N Y_i(1) - Y_i(0)\\]\nOur estimator is the sample difference-in-means.\n\\[\\hat{\\tau} = \\frac{1}{N_t} \\sum_{i=1}^N Y_i D_i - \\frac{1}{N_c} \\sum_{i=1}^N Y_i (1 - D_i)\\]"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#finite-sample-inference",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#finite-sample-inference",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Finite sample inference",
+    "text": "Finite sample inference\n\nConsider a study with \\(N_t = 3\\), \\(N_c = 3\\) and suppose we could see the true “table of science”\n\nUnder one realization of the treatment \\(\\mathbf{D}\\), we have:\n\n\n\n\n\n\n\n\n\n\n\n\nUnit \\(i\\)\nTreatment \\(D_i\\)\n\\(Y_i(1)\\)\n\\(Y_i(0)\\)\nObserved \\(Y_i\\)\n\n\n\n\n\\(1\\)\n\\(1\\)\n\\(1\\)\n\\(0\\)\n\\(1\\)\n\n\n\\(2\\)\n\\(0\\)\n\\(0\\)\n\\(1\\)\n\\(1\\)\n\n\n\\(3\\)\n\\(1\\)\n\\(1\\)\n\\(0\\)\n\\(1\\)\n\n\n\\(4\\)\n\\(0\\)\n\\(0\\)\n\\(1\\)\n\\(1\\)\n\n\n\\(5\\)\n\\(0\\)\n\\(0\\)\n\\(0\\)\n\\(0\\)\n\n\n\\(6\\)\n\\(1\\)\n\\(1\\)\n\\(1\\)\n\\(1\\)\n\n\n\n\nFor this assignment, our realization of \\(\\hat{\\tau}\\) (our estimate) would be:\n\\[\\frac{1 + 1 + 1}{3} - \\frac{1 + 1 + 0}{3} = \\frac{1}{3}\\]"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#finite-sample-inference-1",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#finite-sample-inference-1",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Finite sample inference",
+    "text": "Finite sample inference\n\nHow about another, equally likely realization?\n\n\n\n\n\n\n\n\n\n\n\nUnit \\(i\\)\nTreatment \\(D_i\\)\n\\(Y_i(1)\\)\n\\(Y_i(0)\\)\nObserved \\(Y_i\\)\n\n\n\n\n\\(1\\)\n\\(0\\)\n\\(1\\)\n\\(0\\)\n\\(0\\)\n\n\n\\(2\\)\n\\(0\\)\n\\(0\\)\n\\(1\\)\n\\(1\\)\n\n\n\\(3\\)\n\\(1\\)\n\\(1\\)\n\\(0\\)\n\\(1\\)\n\n\n\\(4\\)\n\\(1\\)\n\\(0\\)\n\\(1\\)\n\\(0\\)\n\n\n\\(5\\)\n\\(1\\)\n\\(0\\)\n\\(0\\)\n\\(0\\)\n\n\n\\(6\\)\n\\(0\\)\n\\(1\\)\n\\(1\\)\n\\(1\\)\n\n\n\n\nFor this randomization, our realization of \\(\\hat{\\tau}\\) would be:\n\\[\\frac{1 + 0 + 0}{3} - \\frac{0 + 1 + 1}{3} = -\\frac{1}{3}\\]"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#finite-sample-inference-2",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#finite-sample-inference-2",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Finite sample inference",
+    "text": "Finite sample inference\n\nOverall all possible randomizations, what is the distribution?\n\nWe can run a quick simulation and find out\n\n\n\n### Define the data frame\ndata &lt;- data.frame(Y_1 = c(1,0,1,0,0,1), \n                   Y_0 = c(0, 1, 0, 1, 0, 1))\n\n## Simulate the sampling distribution\nnIter = 10000\nsate_est = rep(NA, nIter)\nset.seed(53703)\nfor(i in 1:nIter){\n  data$D = sample(rep(c(0,1), each=3))\n  data$Y = data$D*data$Y_1 + (1-data$D)*data$Y_0\n  sate_est[i] = mean(data$Y[data$D==1]) - mean(data$Y[data$D==0])\n}"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#finite-sample-inference-3",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#finite-sample-inference-3",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Finite sample inference",
+    "text": "Finite sample inference\n\nFirst, what’s the expectation of our estimator?\n\n\nmean(sate_est)\n\n[1] -0.00387\n\n\n\nNext, what’s the variance?\n\n\nvar(sate_est)\n\n[1] 0.0661"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#finite-sample-inference-4",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#finite-sample-inference-4",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Finite sample inference",
+    "text": "Finite sample inference"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#finite-sample-inference-5",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#finite-sample-inference-5",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Finite sample inference",
+    "text": "Finite sample inference\n\nOf course, in real data, we only get one estimate.\n\nNeed to rely on theory to understand the distribution that estimate came from in order to do inference.\n\nIs \\(\\hat{\\tau}|\\mathbf{Y}(1), \\mathbf{Y}(0)\\) unbiased for the SATE?\n\nUnder complete randomization: Yes!\n\nWhat is the sampling variance \\(Var(\\hat{\\tau})\\) under a finite sample (fixed \\(\\mathbf{Y}(1)\\), \\(\\mathbf{Y}(0)\\))?\n\nSurprisingly, depends on the amount of effect heterogeneity\n\nWhat should our estimator of the sampling variance \\(\\widehat{Var(\\hat{\\tau})}\\) be?\n\nOur conventional variance estimator for the difference-in-means is conservative\nSadly, we can’t leverage the effect heterogeneity part (w/o more assumptions)!\nFundamental problem of causal inference strikes again!"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#unbiasedness",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#unbiasedness",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Unbiasedness",
+    "text": "Unbiasedness\n\nLet’s show \\(\\hat{\\tau}\\) is unbiased for the SATE. First, by linearity of expectations:\n\\[\\mathbb{E}[\\hat{\\tau} | \\mathbf{Y}(1), \\mathbf{Y}(0)] = \\frac{1}{N_t} \\sum_{i=1}^N \\mathbb{E}\\bigg[Y_i D_i \\bigg| \\mathbf{Y}(1), \\mathbf{Y}(0)\\bigg] - \\frac{1}{N_c} \\sum_{i=1}^N \\mathbb{E}\\bigg[Y_i (1 - D_i) \\bigg| \\mathbf{Y}(1), \\mathbf{Y}(0) \\bigg]\\]\nBy consistency \\(Y_iD_i = Y_i(1)D_i\\) and \\(Y_i(1-D_i) = Y_i(0)(1-D_i)\\)\n\\[\\mathbb{E}[\\hat{\\tau}| \\mathbf{Y}(1), \\mathbf{Y}(0)] = \\frac{1}{N_t} \\sum_{i=1}^N \\mathbb{E}\\bigg[Y_i(1) D_i \\bigg| \\mathbf{Y}(1), \\mathbf{Y}(0)\\bigg] - \\frac{1}{N_c} \\sum_{i=1}^N \\mathbb{E}\\bigg[Y_i(0) (1 - D_i) \\bigg| \\mathbf{Y}(1), \\mathbf{Y}(0)\\bigg]\\]\nConditional on the potential outcomes, \\(Y_i(1)\\) and \\(Y_i(0)\\) are constants\n\\[\\mathbb{E}[\\hat{\\tau}| \\mathbb{Y}(1), \\mathbb{Y}(0)] = \\frac{1}{N_t} \\sum_{i=1}^N Y_i(1) \\mathbb{E}\\bigg[ D_i\\bigg| \\mathbb{Y}(1), \\mathbb{Y}(0)\\bigg] - \\frac{1}{N_c}  \\sum_{i=1}^N Y_i(0) \\mathbb{E}\\bigg[(1 - D_i) \\bigg| \\mathbb{Y}(1), \\mathbb{Y}(0)\\bigg]\\]"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#unbiasedness-1",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#unbiasedness-1",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Unbiasedness",
+    "text": "Unbiasedness\n\n\\(D_i\\) has a known distribution under complete randomization and its expectation is \\(Pr(D_i = 1)\\), which is just \\(N_t/N\\)\n\\[\\mathbb{E}[\\hat{\\tau}| \\mathbf{Y}(1), \\mathbf{Y}(0)] = \\frac{1}{N_t} \\sum_{i=1}^N Y_i(1) \\frac{N_t}{N} - \\frac{1}{N_c} \\sum_{i=1}^N Y_i(0)  \\frac{N_c}{N}\\]\nPulling out the constants\n\\[\\mathbb{E}[\\hat{\\tau}| \\mathbf{Y}(1), \\mathbf{Y}(0)] = \\frac{1}{N} \\sum_{i=1}^N Y_i(1)  - \\frac{1}{N} \\sum_{i=1}^N Y_i(0)\\]\nAnd we have the SATE!\n\\[\\mathbb{E}[\\hat{\\tau}| \\mathbf{Y}(1), \\mathbf{Y}(0)] = \\frac{1}{N} \\sum_{i=1}^N  Y_i(1) - Y_i(0) = \\tau_s\\]"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#sampling-variance",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#sampling-variance",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Sampling variance",
+    "text": "Sampling variance\n\nWhat’s the variance of \\(\\hat{\\tau}\\), conditional on the sample? Slightly tricky: \\(D_i\\) is not independent of \\(D_j\\)\n\\[Var\\bigg(\\hat{\\tau}| \\mathbf{Y}(1), \\mathbf{Y}(0)\\bigg) = \\frac{S^2_t}{N_t} + \\frac{S^2_c}{N_c} - \\frac{S^2_{\\tau_i}}{N}\\]\nThe outcome variances are:\n\\[S_t^2 = \\frac{1}{N-1} \\sum_{i=1}^N \\bigg(Y_i(1) - \\bar{Y(1)}\\bigg)^2\\] \\[S_c^2 = \\frac{1}{N-1} \\sum_{i=1}^N \\bigg(Y_i(0) - \\bar{Y(0)}\\bigg)^2\\]\nAnd the third term is the sample variance of the treatment effects\n\\[S_{\\tau_i}^2 = \\frac{1}{N-1} \\sum_{i=1}^N \\bigg((Y_i(1) - Y_i(0))- (\\bar{Y(1)} - \\bar{Y(0)}) \\bigg)^2\\]"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#sampling-variance-1",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#sampling-variance-1",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Sampling variance",
+    "text": "Sampling variance\n\nCan we estimate the sampling variance?\n\\(S^2_t\\) and \\(S^2_c\\) can be estimated from their sample analogues (just the sample variances within treated/control groups)\n\\[s_t^2 = \\frac{1}{N_t-1} \\sum_{i:D_i = 1} \\bigg(Y_i(1) - \\bar{Y_t^{\\text{obs}}}\\bigg)^2\\]\n\\[s_c^2 = \\frac{1}{N_c-1} \\sum_{i:D_i = 0} \\bigg(Y_i(0) - \\bar{Y_c^{\\text{obs}}}\\bigg)^2\\]\nBut…we can’t estimate \\(S^2_{\\tau_i}\\) directly from the sample!\n\nThe fundamental problem of causal inference! Can’t observe individual treatment effects."
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#neyman-variance",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#neyman-variance",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Neyman variance",
+    "text": "Neyman variance\n\nNeyman suggested just ignoring that third term and using our familiar estimator\n\\[\\widehat{\\mathbb{V}}_{\\text{Neyman}} = \\frac{s_t^2}{N_t} + \\frac{s_c^2}{N_c}\\]\nWhat are its properties?\n\nWe know it’s conservative since \\(S_{\\tau_i}^2 \\ge 0\\).\nConfidence intervals using the Neyman standard error \\(\\sqrt{\\widehat{\\mathbb{V}}_{\\text{Neyman}}}\\) will be no smaller than they should be.\nIf treatment effects are constant, it’s unbiased!"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#neyman-variance-1",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#neyman-variance-1",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Neyman variance",
+    "text": "Neyman variance\n\nWhy do we see a difference between the true variance and the Neyman variance?\n\nLet’s go back to our \\(N=6\\) example!\n\n\n\n\n\n\n\n\n\n\n\n\nUnit \\(i\\)\nTreatment \\(D_i\\)\n\\(Y_i(1)\\)\n\\(Y_i(0)\\)\nObserved \\(Y_i\\)\n\n\n\n\n\\(1\\)\n\\(1\\)\n\\(1\\)\n\\(0\\)\n\\(1\\)\n\n\n\\(2\\)\n\\(0\\)\n\\(0\\)\n\\(1\\)\n\\(1\\)\n\n\n\\(3\\)\n\\(1\\)\n\\(1\\)\n\\(0\\)\n\\(1\\)\n\n\n\\(4\\)\n\\(0\\)\n\\(0\\)\n\\(1\\)\n\\(1\\)\n\n\n\\(5\\)\n\\(0\\)\n\\(0\\)\n\\(0\\)\n\\(0\\)\n\n\n\\(6\\)\n\\(1\\)\n\\(1\\)\n\\(1\\)\n\\(1\\)"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#neyman-variance-2",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#neyman-variance-2",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Neyman variance",
+    "text": "Neyman variance\n\nThe variance from our simulation was…\n\n\nvar(sate_est)\n\n[1] 0.0661\n\n\n\nWe can verify our exact variance calculation from before…\n\n\nvar(data$Y_1)/3 + var(data$Y_0)/3 - var(data$Y_1 - data$Y_0)/6\n\n[1] 0.0667\n\n\n\nBut if we ignore the variance of the treatment effects…\n\n\nvar(data$Y_1)/3 + var(data$Y_0)/3\n\n[1] 0.2"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#neyman-variance-3",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#neyman-variance-3",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Neyman variance",
+    "text": "Neyman variance\n\nWhen is the Neyman variance estimator unbiased/consistent for the true variance of \\(\\hat{\\tau}\\)?\n\nWhen effects are constant…\n…or when we’re targeting the population ATE (under a “random sampling” assumption)\n\nIntuition: With random sampling from a target population, can think of treated group and control group as two separate \\(N_t\\) and \\(N_c\\) size samples from the population \\(Y_i(1)\\) and \\(Y_i(0)\\) respectively."
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#illustration-gerber-green-and-larimer-2008",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#illustration-gerber-green-and-larimer-2008",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Illustration: Gerber, Green and Larimer (2008)",
+    "text": "Illustration: Gerber, Green and Larimer (2008)\n\nGerber, Green and Larimer (2008) want to know what causes people to vote.\n\nWhat sorts of encouragements will get people to turn out more or less?\n\nFive treatment conditions in a randomized GOTV mailer experiment:\n\nNo mailer (0)\n“Researchers will be studying your turnout” mailer (Hawthorne) (1)\n“Voting is a civic duty” mailer (Civic Duty) (2)\n“Your and your neighbors’ voting history” mailer (Neighbors) (3)\n“Your turnout history” mailer (Self) (4)\n\nWe’re going to analyze at the household level\n\nTreatment is randomized by household - useful to analyze at the level of randomization.\nIs \\(Y_i(d)\\) well-defined for an individual? Somewhat tricky - likely spillovers across household members."
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#illustration-gerber-green-and-larimer-2008-1",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#illustration-gerber-green-and-larimer-2008-1",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Illustration: Gerber, Green and Larimer (2008)",
+    "text": "Illustration: Gerber, Green and Larimer (2008)\n\n# Load the data\ndata &lt;- read_dta('assets/data/ggr_2008_individual.dta')\n\n# Aggregate to the household level\ndata_hh &lt;- data %&gt;% group_by(hh_id) %&gt;% summarize(treatment = treatment[1], voted = mean(voted))\n\n# For each treatment condition, calculate N and share voting\nhh_means &lt;- data_hh %&gt;% group_by(treatment) %&gt;% summarize(N = n(), voted = mean(voted))\nkable(hh_means)\n\n\n\n\ntreatment\nN\nvoted\n\n\n\n\n0\n99999\n0.304\n\n\n1\n20002\n0.332\n\n\n2\n20001\n0.325\n\n\n3\n20000\n0.389\n\n\n4\n20000\n0.357"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#illustration-gerber-green-and-larimer-2008-2",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#illustration-gerber-green-and-larimer-2008-2",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Illustration: Gerber, Green and Larimer (2008)",
+    "text": "Illustration: Gerber, Green and Larimer (2008)\n\nLet’s estimate the ATE of the “Neighbors” treatment relative to control\n\n\n# Estimated ATE of Neighbors (3) vs. Control (0)\nate &lt;- mean(data_hh$voted[data_hh$treatment == 3]) -\n  mean(data_hh$voted[data_hh$treatment == 0])\nate\n\n[1] 0.0848\n\n\n\nAnd let’s compute the Neyman variance\n\n\n# Estimate the sampling variance\nvar_ate = var(data_hh$voted[data_hh$treatment == 3])/sum(data_hh$treatment == 3) +\n  var(data_hh$voted[data_hh$treatment == 0])/sum(data_hh$treatment == 0)\n\n# Square root to get estimated SE\nsqrt(var_ate)\n\n[1] 0.0034"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#illustration-gerber-green-and-larimer-2008-3",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#illustration-gerber-green-and-larimer-2008-3",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Illustration: Gerber, Green and Larimer (2008)",
+    "text": "Illustration: Gerber, Green and Larimer (2008)\n\n95% asymptotic confidence interval and p-value against null of no ATE.\n\n\n# Confidence interval (assuming asymptotic normality)\nate_95CI = c(ate - qnorm(.975)*sqrt(var_ate),\n  ate + qnorm(.975)*sqrt(var_ate))\nate_95CI\n\n[1] 0.0781 0.0915\n\n# P-value H_0: \\tau = 0, H_a: \\tau \\neq 0\np_val = 2*pnorm(-abs(ate/sqrt(var_ate)))\np_val\n\n[1] 3.64e-137"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#illustration-gerber-green-and-larimer-2008-4",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#illustration-gerber-green-and-larimer-2008-4",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Illustration: Gerber, Green and Larimer (2008)",
+    "text": "Illustration: Gerber, Green and Larimer (2008)\n\nFun fact: You can get this via OLS regression!\n\nOLS with a single binary regressor is just the difference-in-means.\nTake care w/ inference: the classic OLS standard errors impose too many additional assumptions (homoskedasticity)\nHeteroskedasticity-“robust” SEs are close to the Neyman variance in large samples…\n…and Samii and Aronow (2012) show that the HC2 finite sample correction gets you the Neyman variance exactly.\n\nThat’s the default for lm_robust() in the estimatr package!\n\n\nlm_robust(voted ~ I(treatment==3), data=data_hh %&gt;% filter(treatment == 3|treatment == 0))\n\n                      Estimate Std. Error t value  Pr(&gt;|t|) CI Lower CI Upper\n(Intercept)             0.3043    0.00132   230.2  0.00e+00   0.3017   0.3069\nI(treatment == 3)TRUE   0.0848    0.00340    24.9 8.13e-137   0.0781   0.0915\n                          DF\n(Intercept)           119997\nI(treatment == 3)TRUE 119997"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#fishers-exact-test",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#fishers-exact-test",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Fisher’s Exact Test",
+    "text": "Fisher’s Exact Test"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#fishers-exact-test-1",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#fishers-exact-test-1",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Fisher’s Exact Test",
+    "text": "Fisher’s Exact Test\n\nNeyman’s framework:\n\nEstimand: Average Treatment Effect: \\(\\tau = E[Y_i(1) - Y_i(0)]\\)\nDifference-in-means estimator: Known expectation and sampling variance\nHypothesis test. Null of no ATE \\(H_0: \\tau = 0\\)\nLarge sample/asymptotic theory to get the distribution of \\(\\hat{\\tau}\\) to calculate p-values\n\nFisher’s framework:\n\nCan we get a p-value under (some) null hypothesis without the large-sample assumptions?\nWhat does randomization alone justify?\nExact p-values under a sharp null of no individual treatment effect \\(Y_i(1) = Y_i(0)\\) for all \\(i\\).\n“Randomization test” approach to p-values under a known randomization scheme."
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#hypothesis-testing-review",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#hypothesis-testing-review",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Hypothesis testing review",
+    "text": "Hypothesis testing review\n\nDefine the null hypothesis.\n\nNeyman framework: \\(H_0: \\tau = \\tau_0\\)\nThe probability of observing a particular value of the test statistic depends on what is “true” about the underlying parameter.\nOur thought experiment: If the null were true, how likely would we see what we observe (or more extreme).\n\nChoose a test statistic\n\nIn classical hypothesis testing, we pick something that has useful statistical properties:\n\\[T = (\\hat{\\tau} - \\tau_0)/\\sqrt{\\widehat{Var({\\hat{\\tau}})}}\\]"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#hypothesis-testing-review-1",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#hypothesis-testing-review-1",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Hypothesis testing review",
+    "text": "Hypothesis testing review\n\nDetermine the distribution of the test statistic under the null\n\nIn classical testing, by CLT, in large samples, \\(T \\sim \\mathcal{N}(0, 1)\\)\nIn smaller samples, you may have made further assumptions (e.g. outcome is normally distributed) to get an exact distribution (e.g. \\(t-\\) distribution)\nWe need a distribution to compute probabilities from the CDF!\n\nWhat is the probability of observing the test statistic \\(T\\) that you observe in-sample (or a more extreme value) given the known distribution under the null?\n\nThat’s a p-value!"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#whats-different-about-randomization-testing",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#whats-different-about-randomization-testing",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "What’s different about randomization testing?",
+    "text": "What’s different about randomization testing?\n\nDifferent null hypothesis (a “sharp” null)\nNo distributional assumptions/asymptotics to derive the distribution of \\(T\\)\n\nWe can instead literally just calculate the value under each possible realization of treatment.\nAnd we know the distribution of treatment assignments because we control them in an experiment."
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#sharp-null-of-no-effect.",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#sharp-null-of-no-effect.",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Sharp null of no effect.",
+    "text": "Sharp null of no effect.\n\nThe sharp null hypothesis states:\n\\[H_0: \\tau_i = Y_i(1) - Y_i(0) = 0 \\text{  } \\forall i\\]\nZero individual-level treatment effect for all units\nSharp null implies zero ATE\n\nBut zero ATE does not imply sharp null!\n\nWhy do we make this assumption?\n\nBecause now the observed data tells us everything we need to know about the potential outcomes"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#the-sharp-null",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#the-sharp-null",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "The sharp null",
+    "text": "The sharp null\n\nRemember our table of science? For a single realization of \\(\\mathbf{D}\\) we only observe half the potential outcomes?\n\n\n\n\n\n\n\n\n\n\n\nUnit \\(i\\)\nTreatment \\(D_i\\)\n\\(Y_i(1)\\)\n\\(Y_i(0)\\)\nObserved \\(Y_i\\)\n\n\n\n\n\\(1\\)\n\\(1\\)\n\\(1\\)\n?\n\\(1\\)\n\n\n\\(2\\)\n\\(0\\)\n?\n\\(1\\)\n\\(1\\)\n\n\n\\(3\\)\n\\(1\\)\n\\(1\\)\n?\n\\(1\\)\n\n\n\\(4\\)\n\\(0\\)\n?\n\\(1\\)\n\\(1\\)\n\n\n\\(5\\)\n\\(0\\)\n?\n\\(0\\)\n\\(0\\)\n\n\n\\(6\\)\n\\(1\\)\n\\(1\\)\n?\n\\(1\\)\n\n\n\n\nBut what does the sharp null imply about the unobserved potential outcomes? Can we fill in those question marks?"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#the-sharp-null-1",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#the-sharp-null-1",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "The sharp null",
+    "text": "The sharp null\n\nYes! Under the sharp null, \\(Y_i(1) = Y_i(0)\\)\n\n\n\n\n\n\n\n\n\n\n\nUnit \\(i\\)\nTreatment \\(D_i\\)\n\\(Y_i(1)\\)\n\\(Y_i(0)\\)\nObserved \\(Y_i\\)\n\n\n\n\n\\(1\\)\n\\(1\\)\n\\(1\\)\n\\(1\\)\n\\(1\\)\n\n\n\\(2\\)\n\\(0\\)\n\\(1\\)\n\\(1\\)\n\\(1\\)\n\n\n\\(3\\)\n\\(1\\)\n\\(1\\)\n\\(1\\)\n\\(1\\)\n\n\n\\(4\\)\n\\(0\\)\n\\(1\\)\n\\(1\\)\n\\(1\\)\n\n\n\\(5\\)\n\\(0\\)\n\\(0\\)\n\\(0\\)\n\\(0\\)\n\n\n\\(6\\)\n\\(1\\)\n\\(1\\)\n\\(1\\)\n\\(1\\)\n\n\n\n\nWhy is this useful?\n\nWe can calculate the value of our test statistic not only under the observed \\(\\mathbf{D}\\) but under all other possible realizations of \\(\\mathbf{D}\\)!"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#the-test-statistic",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#the-test-statistic",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "The test statistic",
+    "text": "The test statistic\n\nOur test statistic is any function of treatment assignments \\(\\mathbf{D}\\) and observed outcomes \\(\\mathbf{Y}\\).\nLots of choices with different degrees of power for different kinds of treatment effects.\nWe want to pick a test statistic that will return large values when the null is false and small values when it is true.\nA reasonable default: (absolute) difference-in-means\n\\[t(\\mathbf{D}, \\mathbf{Y}) = \\bigg|\\frac{1}{N_t} \\sum_{i=1}^N Y_i D_i - \\frac{1}{N_c} \\sum_{i=1}^N Y_i (1 - D_i) \\bigg|\\]\nWhat sorts of alternatives might this be bad for?\n\nOffsetting positive and negative effects will return small values of \\(t(\\mathbf{D}, \\mathbf{Y})\\) as would no effects.\nWe might pick a different test statistic in this case!"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#the-randomization-distribution",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#the-randomization-distribution",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "The randomization distribution",
+    "text": "The randomization distribution\n\nUnder the sharp null, we can calculate \\(t(\\mathbf{D}, \\mathbf{Y})\\) for every possible realization of \\(\\mathbf{D}\\).\n\nWhy? Because under the sharp null, observed \\(Y_i\\) is unaffected by treatment assignment.\n\nThen to get a distribution for \\(t(\\mathbf{D}, \\mathbf{Y})\\), we just need to know the distribution of \\(\\mathbf{D}\\). We know this by designing the experiment!\nWe get our p-value by comparing the observed test statistic for our particular sample \\(t^*\\) to the distribution of \\(t(\\mathbf{D}, \\mathbf{Y})\\)\n\nFor complete randomization, each of the \\(K\\) possible realizations of \\(\\mathbf{D}\\) is equally likely, so we just enumerate all possible assignments \\(\\mathbf{d} \\in \\Omega\\) and calculate the share that are greater than our observed test statistic.\n\\[Pr(t^* \\ge t(\\mathbf{D}, \\mathbf{Y})) = \\frac{\\sum_{\\mathbf{d} \\in \\Omega} \\mathbb{I}(t(\\mathbf{d}, \\mathbf{Y}) \\ge t^*)}{K}\\]\n\nThis is our p-value, which we compare to some threshold level \\(\\alpha\\) and reject the null when it’s below that level."
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#monte-carlo-approximation",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#monte-carlo-approximation",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Monte carlo approximation",
+    "text": "Monte carlo approximation\n\nWe could enumerate every possible treatment vector and actually just calculate \\(t(\\mathbf{D}, \\mathbf{Y})\\).\nEven in fairly small samples this can involve quite a lot of computations! (e.g. \\({20 \\choose 10 } = 184756\\))\nWe’ll typically use a monte carlo approximation to the exact p-value.\n\nThis is also easier for more complicated randomization schemes.\n\nProcedure:\n\nFor \\(K\\) iterations:\n\nDraw a realization of the treatment vector \\(\\mathbf{d}_k\\) from the known distribution of \\(\\mathbf{D}\\).\nCalculate the test statistic \\(t_k = t(\\mathbf{d}_k, \\mathbf{Y})\\)\n\nOur p-value is the share of these \\(K\\) test statistics that are greater than the observed \\(t^*\\)"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#putting-it-all-together",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#putting-it-all-together",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Putting it all together",
+    "text": "Putting it all together\n\nTo do randomization inference under the sharp null\n\nChoose a test statistic\nCalculate the observed test statistic in your sample \\(t^* = t(\\mathbf{D}, \\mathbf{Y})\\)\nDraw another treatment vector \\(\\mathbf{d}_1\\) from the known distribution of \\(\\mathbf{D}\\)\nCalculate \\(t_1 = t(\\mathbf{d}_1, \\mathbf{Y})\\)\nRepeat 3 and 4 as long as you want to get \\(K\\) samples from the distribution of the test statistic under the null\nCalculate \\(p = \\frac{1}{K}\\sum_{i=1}^K \\mathbb{I}(t_k \\ge t^*)\\)"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#inverting-tests-to-get-confidence-intervals",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#inverting-tests-to-get-confidence-intervals",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Inverting tests to get confidence intervals",
+    "text": "Inverting tests to get confidence intervals\n\nRandomization tests alone give us p-values but no confidence intervals.\nOne approach: “invert” the test - for what values of a “treatment effect” would we fail to reject the null\n\nA \\(100(1-\\alpha)\\%\\) confidence interval contains the set of parameter values for which an \\(\\alpha\\)-level hypothesis test would fail to reject the null.\n\nSlight complication: We now need to actually define a “treatment effect” parameter:\n\nFor example, assume a constant additive effect for all units\n\\[Y_i(1) - Y_i(0) = \\tau_0\\]\nOur confidence set would be all of the values of \\(\\tau_0\\) for which we’d fail to reject the null\nCalculate via a grid search through possible values of \\(\\tau_0\\)."
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#conclusion",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#conclusion",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Conclusion",
+    "text": "Conclusion\n\nWe’ve learned two frameworks for estimating and conducting inference for treatment effects in randomized experiments\nNeyman\n\nDefine an estimand\n\nthe SATE: \\(\\tau_s = \\sum_{i=1}^N Y_i(1) - Y_i(0)\\)\nthe PATE: \\(\\tau_p = \\mathbb{E}[Y_i(1) - Y_i(0)]\\)\n\nChoose an estimator\n\nThe difference-in-means\n\nEstimator has known mean and variance under our design; asymptotically normal.\n\nFisher\n\nForget the estimation process, let’s just do an (exact) test.\nSharp null of no effect ( \\(Y_i(1) = Y_i(0) \\text{ } \\forall i\\) )\nNo large-sample approximations - inference justified by randomization alone"
+  },
+  {
+    "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#next-week",
+    "href": "slides/week2/week2_potential_outcomes_and_experiments.html#next-week",
+    "title": "Week 2: Potential Outcomes and Experiments",
+    "section": "Next week",
+    "text": "Next week\n\nWhat can break your experiment?\n\nDifferential attrition\nNon-compliance\nCan we do partial identification/obtain bounds?\n\nHow do we generalize from experiments?\n\nDimensions of external validity\nHow to think about aggregating knowledge from many studies?"
   },
   {
     "objectID": "schedule.html",
@@ -236,6 +593,482 @@
     "title": "Schedule",
     "section": "Week 14: Shift-share designs and experiments with interference",
     "text": "Week 14: Shift-share designs and experiments with interference\nMonday, April 27 & Wednesday, April 29\nTopics:\n\nIdentification with instruments that are inner products of unit-specific “shares” and independent global “shifts”\n“Share-exogeneity” and connections to differences-in-differences/“multiple instruments”\n“Shift-exogeneity” and connections to experiments with interference\n\nReadings:\n\nBorusyak, Kirill, Peter Hull, and Xavier Jaravel. 2025. “A Practical Guide to Shift-Share Instruments.” Journal of Economic Perspectives 39 (1): 181–204.\nBorusyak, Kirill, Peter Hull, and Xavier Jaravel. 2025. “Design-Based Identification with Formula Instruments: A Review.” Econometrics Journal 28 (1): 83–108.\nAronow, P. M., and Cyrus Samii. 2017. “Estimating Average Causal Effects under General Interference, with Application to a Social Network Experiment.” Annals of Applied Statistics 11 (4): 1912–1947.\n\nApplications:\n\nFouka, Vasiliki, and Marco Tabellini. 2022. “Changing In-Group Boundaries: The Effect of Immigration on Race Relations in the United States.” American Political Science Review 116 (3): 968–984.\nGulotty, Robert, and Anton Strezhnev. 2024. “The Political Benefits of the Monoculture: Estimating the Electoral Effect of the Market Facilitation Program.” Working paper."
+  },
+  {
+    "objectID": "lectures.html",
+    "href": "lectures.html",
+    "title": "Lectures",
+    "section": "",
+    "text": "Lecture slides are available as self-contained .html files made with RevealJS from a Quarto .qmd file. You can choose to print these to a PDF document by using the “PDF Export Mode” in the Tools menu accessed via the settings button in the lower left-hand side of the page. You are also welcome to directly download the .qmd file and supporting data/images/etc… from the Github repository. Slides are organized by week and combine Monday and Wednesday’s lectures.\n\n\n\nWeek 1 Github Repository\nWeek 1 .html slides\n\n\n\n\n\nWeek 2 Github Repository\nWeek 2 .html slides\n\n\n\n\n\nWeek 3 Github Repository\nWeek 3 .html slides\n\n\n\n\n\nWeek 4 Github Repository\nWeek 4 .html slides\n\n\n\n\n\nWeek 5 Github Repository\nWeek 5 .html slides\n\n\n\n\n\nWeek 6 Github Repository\nWeek 6 .html slides\n\n\n\n\n\nWeek 7 Github Repository\nWeek 7 .html slides\n\n\n\n\n\nWeek 8 Github Repository\nWeek 8 .html slides\n\n\n\n\n\nWeek 9 Github Repository\nWeek 9 .html slides\n\n\n\n\n\nWeek 10 Github Repository\nWeek 10 .html slides\n\n\n\n\n\nWeek 11 Github Repository\nWeek 11 .html slides\n\n\n\n\n\nWeek 12 Github Repository\nWeek 12 .html slides\n\n\n\n\n\nWeek 13 Github Repository\nWeek 13 .html slides\n\n\n\n\n\nWeek 14 Github Repository\nWeek 14 .html slides"
+  },
+  {
+    "objectID": "lectures.html#lecture-slides",
+    "href": "lectures.html#lecture-slides",
+    "title": "Lectures",
+    "section": "",
+    "text": "Lecture slides are available as self-contained .html files made with RevealJS from a Quarto .qmd file. You can choose to print these to a PDF document by using the “PDF Export Mode” in the Tools menu accessed via the settings button in the lower left-hand side of the page. You are also welcome to directly download the .qmd file and supporting data/images/etc… from the Github repository. Slides are organized by week and combine Monday and Wednesday’s lectures.\n\n\n\nWeek 1 Github Repository\nWeek 1 .html slides\n\n\n\n\n\nWeek 2 Github Repository\nWeek 2 .html slides\n\n\n\n\n\nWeek 3 Github Repository\nWeek 3 .html slides\n\n\n\n\n\nWeek 4 Github Repository\nWeek 4 .html slides\n\n\n\n\n\nWeek 5 Github Repository\nWeek 5 .html slides\n\n\n\n\n\nWeek 6 Github Repository\nWeek 6 .html slides\n\n\n\n\n\nWeek 7 Github Repository\nWeek 7 .html slides\n\n\n\n\n\nWeek 8 Github Repository\nWeek 8 .html slides\n\n\n\n\n\nWeek 9 Github Repository\nWeek 9 .html slides\n\n\n\n\n\nWeek 10 Github Repository\nWeek 10 .html slides\n\n\n\n\n\nWeek 11 Github Repository\nWeek 11 .html slides\n\n\n\n\n\nWeek 12 Github Repository\nWeek 12 .html slides\n\n\n\n\n\nWeek 13 Github Repository\nWeek 13 .html slides\n\n\n\n\n\nWeek 14 Github Repository\nWeek 14 .html slides"
+  },
+  {
+    "objectID": "assignments.html",
+    "href": "assignments.html",
+    "title": "Assignments",
+    "section": "",
+    "text": "Assignment\nAssigned\nDue\n\n\n\n\nProblem Set 1\nJan 21 (Week 1)\nFeb 4 (Week 3)\n\n\nProblem Set 2\nFeb 4 (Week 3)\nFeb 18 (Week 5)\n\n\nProblem Set 3\nFeb 18 (Week 5)\nMarch 4 (Week 7)\n\n\nMidterm Exam\nMarch 4 (Week 7)\nIn-Class\n\n\nProblem Set 4\nMarch 11 (Week 8)\nMarch 25 (Week 10)\n\n\nProblem Set 5\nApril 8 (Week 11)\nApril 22 (Week 13)\n\n\nFinal Exam\nMay 4 (Exam Week)\nLocation TBA"
+  },
+  {
+    "objectID": "assignments.html#schedule",
+    "href": "assignments.html#schedule",
+    "title": "Assignments",
+    "section": "",
+    "text": "Assignment\nAssigned\nDue\n\n\n\n\nProblem Set 1\nJan 21 (Week 1)\nFeb 4 (Week 3)\n\n\nProblem Set 2\nFeb 4 (Week 3)\nFeb 18 (Week 5)\n\n\nProblem Set 3\nFeb 18 (Week 5)\nMarch 4 (Week 7)\n\n\nMidterm Exam\nMarch 4 (Week 7)\nIn-Class\n\n\nProblem Set 4\nMarch 11 (Week 8)\nMarch 25 (Week 10)\n\n\nProblem Set 5\nApril 8 (Week 11)\nApril 22 (Week 13)\n\n\nFinal Exam\nMay 4 (Exam Week)\nLocation TBA"
+  },
+  {
+    "objectID": "assignments.html#problem-sets",
+    "href": "assignments.html#problem-sets",
+    "title": "Assignments",
+    "section": "Problem Sets",
+    "text": "Problem Sets\nProblem sets are distributed as .qmd files along with their rendered .html form. You should edit the provided .qmd file and render to .html when submitting the assignment. Additional files (e.g. datasets) are located in sub-folders. For convenience, all the combined files are also distributed as a .zip compressed archive.\n\nProblem Set 1\n\nGithub Repository\n.zip archive"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "PoliSci 813",
+    "section": "",
+    "text": "Causal Inference\nDesigning studies to uncover cause and effect from data\nPoliSci 813 • Spring 2026University of Wisconsin-Madison\n\n\n\n\n\n\n\n\nInstructor\n\n   Anton Strezhnev\n   North Hall 322D\n   strezhnev@wisc.edu\n\n\n\nTeaching Assistant\n\n   Junda Li\n   jli2458@wisc.edu\n\n\n\n\nCourse details\n\n   Mondays & Wednesdays\n   1/21/2026 - 5/4/2026\n   9:30am - 10:45am\n   North Hall 422\n\n\n\nContacting me\nE-mail is the best way to get in touch with me. My dedicated office hours are Tuesdays from 2pm-4pm if you want to meet in-person. I am also generally in my office on weekdays during normal hours and my door is open, so you are welcome to drop in. You can also feel free to e-mail me to confirm availability or to schedule a virtual meeting via Zoom."
+  },
+  {
+    "objectID": "resources.html",
+    "href": "resources.html",
+    "title": "Resources",
+    "section": "",
+    "text": "These textbooks provide a number of the readings that will be used through the course of the semester. Each is available either as a free online version or in digital form via UW-Madison library access.\n\nCunningham, Scott. Causal inference: The Mixtape. Yale University Press, 2021.\n\nFree online version\n\nHuntington-Klein, Nick. The Effect: An Introduction to Research Design and Causality. Chapman and Hall/CRC, 2021.\n\nFree online version\n\nHernán, Miguel A. and James M. Robins. Causal Inference: What If. Chapman & Hall/CRC. 2020.\n\nFree PDF available\n\nImbens, Guido W. and Donald B. Rubin. Causal Inference for Statistics, Social, and Biomedical Sciences. Cambridge University Press. 2015.\n\nUW-Madison Library Access\n\nMorgan, Stephen L., and Christopher Winship. Counterfactuals and Causal Inference. Cambridge University Press, 2015.\n\nUW-Madison Library Access\n\nWager, Stefan. Causal inference: A statistical learning approach.\n\nDraft PDF available here"
+  },
+  {
+    "objectID": "resources.html#textbooks",
+    "href": "resources.html#textbooks",
+    "title": "Resources",
+    "section": "",
+    "text": "These textbooks provide a number of the readings that will be used through the course of the semester. Each is available either as a free online version or in digital form via UW-Madison library access.\n\nCunningham, Scott. Causal inference: The Mixtape. Yale University Press, 2021.\n\nFree online version\n\nHuntington-Klein, Nick. The Effect: An Introduction to Research Design and Causality. Chapman and Hall/CRC, 2021.\n\nFree online version\n\nHernán, Miguel A. and James M. Robins. Causal Inference: What If. Chapman & Hall/CRC. 2020.\n\nFree PDF available\n\nImbens, Guido W. and Donald B. Rubin. Causal Inference for Statistics, Social, and Biomedical Sciences. Cambridge University Press. 2015.\n\nUW-Madison Library Access\n\nMorgan, Stephen L., and Christopher Winship. Counterfactuals and Causal Inference. Cambridge University Press, 2015.\n\nUW-Madison Library Access\n\nWager, Stefan. Causal inference: A statistical learning approach.\n\nDraft PDF available here"
+  },
+  {
+    "objectID": "resources.html#software",
+    "href": "resources.html#software",
+    "title": "Resources",
+    "section": "Software",
+    "text": "Software\n\nR and RStudio\nThis course uses R for all programming assignments. You are welcome to use the RStudio Interactive Development Environment (IDE) to write code and edit the assignment write-up. Due to the extensive integration of Quarto into Posit-developed IDEs, I encourage using either RStudio or the more recent Positron IDE.\n\nR: Download from https://www.r-project.org\nRStudio: Download from https://posit.co/download/rstudio-desktop/\nPositron: Download from https://positron.posit.co/\n\n\nRecommended Guides for R Programming\n\nR For Data Science Available at https://r4ds.hadley.nz/\nData Visualization: A Practical Introduction Available at https://socviz.co/\n\n\n\n\nQuarto and Markdown\nThe assignments are distributed as .qmd Quarto files. Quarto is the successor to R Markdown and lets you present your analysis, code, figures and written discussion all in a single document. It uses Markdown syntax for formatting text and supports embedded R code chunks that execute when you render the document. This lets you present your analysis, code, figures, and written discussion all in one place.\nTo complete assignments, you will edit the provided .qmd file, adding your code and written responses, then render it to an HTML file for submission. Both your .html output and .qmd file will be submitted via Gradescope\n\nQuarto: Download from https://quarto.org/docs/get-started/\nQuarto Guide: https://quarto.org/docs/guide/\nMarkdown Basics: https://quarto.org/docs/authoring/markdown-basics.html\nNote also the chapter on Quarto in R For Data Science"
+  },
+  {
+    "objectID": "resources.html#tutorials",
+    "href": "resources.html#tutorials",
+    "title": "Resources",
+    "section": "Tutorials",
+    "text": "Tutorials\nBelow are some additional tutorials to help supplement the main course material. They will generally focus on specific topics in statistical computing and things that we did not have time to cover as part of the main set of lectures.\n\nBasics of Monte Carlo simulations"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#welcome",
+    "href": "slides/week1/week1_intro_and_review.html#welcome",
+    "title": "Week 1: Review!",
+    "section": "Welcome!",
+    "text": "Welcome!\n\\[\n  \\require{cancel}\n\\]"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#course-overview",
+    "href": "slides/week1/week1_intro_and_review.html#course-overview",
+    "title": "Week 1: Review!",
+    "section": "Course Overview",
+    "text": "Course Overview\n\nInstructor: Anton Strezhnev\nTA: Junda Li\nLogistics:\n\nLectures M/W - 9:30am - 10:45am\n5 Problem Sets (~ 2 weeks)\nIn-class midterm (March 4th)\nIn-class final (May 4th)\nMy office hours: Tuesdays 2pm-4pm (North Hall 322D)\nJunda’s office hours: Thursdays, 1:30pm-3:30pm, (North Hall 101/Grad Lounge)\nCourse Website: https://www.antonstrezhnev.com/ps813\nAnnouncements will be posted on Ed - please let me know if you do not have access."
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#course-objectives",
+    "href": "slides/week1/week1_intro_and_review.html#course-objectives",
+    "title": "Week 1: Review!",
+    "section": "Course Objectives",
+    "text": "Course Objectives\n\nWhat is this course about?\n\nDefining causal effects w/ a structured statistical framework (potential outcomes)\nOutlining assumptions necessary to identify causal effects from data\nEstimating and conducting inference on causal effects\n\nGoals for the course\n\nGive you the tools you need to develop your own causal research designs and comment on others’ designs.\nEquip you with an understanding of the fundamentals of causal inference to enable you to learn new methods.\nProfessionalization - how did causal inference emerge as a field and how do different disciplines approach the topic?"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#course-workflow",
+    "href": "slides/week1/week1_intro_and_review.html#course-workflow",
+    "title": "Week 1: Review!",
+    "section": "Course workflow",
+    "text": "Course workflow\n\nLectures\n\nOne set of slides for each of the two lectures in each week\nYour primary point of instruction - goal is to synthesize the core material + give you the tools to learn more.\nI want lectures to be interactive - you should ask questions and interrupt!\nYou should do the readings prior to each week, but definitely be sure to do them before the Wednesday.\n\nReadings\n\nMix of textbooks and papers\nCombination of “theory” readings w/ selected applications to political science (and sociology/econ)\nOrganized on the syllabus by priority. Try to do all of them, but if you need to prioritize, start with the first ones on the list for the week.\nAll readings available digitally on the course website."
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#course-workflow-1",
+    "href": "slides/week1/week1_intro_and_review.html#course-workflow-1",
+    "title": "Week 1: Review!",
+    "section": "Course workflow",
+    "text": "Course workflow\n\nProblem sets (25% of your grade)\n\nMain day-to-day component of the class – meant to get you working with your colleagues and thinking hard about the material.\nCollaboration is strongly encouraged – you should ask and answer questions on our class Ed Discussion board\nSubmit on the Gradescope assignment platform\nGrading is on a plus/check/minus scale.\n\nConversion to grade point is somewhat holistic.\nMajority plusses is an A, Majority checks is an AB, Majority minus is a B\n\nSolutions will be posted after the due-date."
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#course-workflow-2",
+    "href": "slides/week1/week1_intro_and_review.html#course-workflow-2",
+    "title": "Week 1: Review!",
+    "section": "Course workflow",
+    "text": "Course workflow\n\nMidterm Exam (30% of your grade)\n\nThe midterm will be in-class on March 4th\n\nCovers all material up to that point (experiments + selection-on-observables)\nCombination of theoretical questions and code/results analysis.\n\n\nFinal Exam (35% of your grade)\n\nThe final exam will be in-person and written during the exam period (May 4th)\nA longer version of the midterm exam (to cover the 2 hour exam block).\n\nParticipation (10% of your grade)\n\nIt is important that you actively engage with lecture and with the teaching staff – ask and answer questions.\nDo the reading!\nParticipating on Ed counts towards this as well."
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#class-requirements",
+    "href": "slides/week1/week1_intro_and_review.html#class-requirements",
+    "title": "Week 1: Review!",
+    "section": "Class Requirements",
+    "text": "Class Requirements\n\nOverall: An interest in learning and willingness to ask questions.\nGenerally assume some background in probability theory and statistics (e.g. an intro course taught in most departments)\nMain concepts to be familiar with:\n\nproperties of random variables\nestimands and estimators\nbias, variance, consistency\ncentral limit theorem\nconfidence intervals; hypothesis testing"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#a-brief-overview",
+    "href": "slides/week1/week1_intro_and_review.html#a-brief-overview",
+    "title": "Week 1: Review!",
+    "section": "A brief overview",
+    "text": "A brief overview\n\nWeek 1: Review of the properties of estimators\nWeek 2-4: Experiments\nWeek 5-7: Selection-on-observables\nWeek 8: Instrumental variables\nWeek 9-10: Differences-in-differences\nWeek 11: Panel data causal inference\nWeek 12: Regression discontinuity designs\nWeek 13: Causal mediation; sensitivity analysis\nWeek 14: Shift-share designs and experiments with interference"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#review-estimators-and-their-properties",
+    "href": "slides/week1/week1_intro_and_review.html#review-estimators-and-their-properties",
+    "title": "Week 1: Review!",
+    "section": "Review: Estimators and their properties",
+    "text": "Review: Estimators and their properties"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#estimation",
+    "href": "slides/week1/week1_intro_and_review.html#estimation",
+    "title": "Week 1: Review!",
+    "section": "Estimation",
+    "text": "Estimation\n\nOne critical use of statistical theory is understanding how to learn about things we don’t observe using things that we do observe. We call this estimation.\n\nWhat is the share of voters in Wisconsin who will turn out in the 2026 election?\nWhat is the share of voters who turn out among those assigned to receive a GOTV phone call?\n\nEstimand: The unobserved quantity that we want to learn about. Often denoted via a greek letter (e.g. \\(\\mu\\), \\(\\pi\\))\n\nOften a “population” characteristic that we want to learn about via a sample.\n\nBut in this class, you’ll learn another reason why we sometimes can’t observe a quantity of interest even in a sample!\n\nImportant to define your estimand well. (Lundberg, Johnson and Stewart, 2022)"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#estimation-1",
+    "href": "slides/week1/week1_intro_and_review.html#estimation-1",
+    "title": "Week 1: Review!",
+    "section": "Estimation",
+    "text": "Estimation\n\nEstimator: The function of random variables that we will use to try to estimate the quantity of interest. Often denoted with a hat on the parameter of interest (e.g. \\(\\hat{\\mu}\\), \\(\\hat{\\pi}\\))\n\nWhy are the variables random?\n\nClassic inference: We have a random sample from the population - if we took another sample, we would obtain a different realization when applying our estimator to the new sample.\nDesign-based inference: We have a randomly assigned treatment - if we were to re-run the experiment, we would observe a different treatment/control difference b/c of different allocation of units.\n\n\nEstimate: A single realization of our estimator (e.g. 0.3, 9.535)\n\nWe often report both point estimates (“best guess”) and interval estimates (e.g. confidence intervals).\nCareful not to confuse properties of estimators with properties of the estimates themselves."
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#estimation-2",
+    "href": "slides/week1/week1_intro_and_review.html#estimation-2",
+    "title": "Week 1: Review!",
+    "section": "Estimation",
+    "text": "Estimation\n\n\n\nIllustrating Estimation"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#estimation-3",
+    "href": "slides/week1/week1_intro_and_review.html#estimation-3",
+    "title": "Week 1: Review!",
+    "section": "Estimation",
+    "text": "Estimation\n\nThe classic estimation problem in statistics is to estimate some unknown population mean \\(\\mu\\) from an i.i.d. sample of \\(n\\) observations \\(Y_1, Y_2, \\dotsc, Y_n\\).\n\nWe assume that each \\(Y_i\\) is a draw from the target population with mean \\(\\mu\\) and population variance \\(\\sigma^2\\) (identically distributed) - therefore \\(E[Y_i] = \\mu\\) and \\(Var(Y_i) = \\sigma^2\\)\nWe’ll also assume that conditioning on \\(Y_i\\) tells us nothing about any other \\(Y_j\\)\n\\(Y_i \\perp \\!\\!\\! \\perp Y_j\\) (independently distributed) - this implies \\(Cov(Y_i, Y_j) = 0\\)\n\nOur estimand: \\(\\mu\\)\nOur estimator: The sample mean \\(\\hat{\\mu} = \\bar{Y} = \\frac{1}{n}\\sum_{i=1}^n Y_i\\)\nOur estimate: A particular realization of that estimator based on our observed sample (e.g. \\(0.4\\))\nNote that our estimator is a random variable – it’s a function of \\(Y_i\\)s which are random variables.\n\nTherefore it has an expectation \\(E[\\hat{\\mu}]\\)\nIt has a variance \\(Var(\\hat{\\mu})\\)\nIt has a distribution (which we may or may not know)."
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#estimation-4",
+    "href": "slides/week1/week1_intro_and_review.html#estimation-4",
+    "title": "Week 1: Review!",
+    "section": "Estimation",
+    "text": "Estimation\n\nHow do we know if we’ve picked a good estimator? Will it be close to the truth? Will it be systematically higher or lower than the target?\nWe want to derive some of its properties\n\nBias: \\(E[\\hat{\\mu}] - \\mu\\)\nVariance: \\(Var(\\hat{\\mu})\\)\nConsistency: Does \\(\\hat{\\mu}\\) converge in probability to \\(\\mu\\) as \\(n\\) goes to infinity?\nAsymptotic distribution: Is the sampling distribution of \\(\\hat{\\mu}\\) well approximated by a known distribution?"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#estimation-5",
+    "href": "slides/week1/week1_intro_and_review.html#estimation-5",
+    "title": "Week 1: Review!",
+    "section": "Estimation",
+    "text": "Estimation\n\n\n\nProperties of Estimators"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#unbiasedness",
+    "href": "slides/week1/week1_intro_and_review.html#unbiasedness",
+    "title": "Week 1: Review!",
+    "section": "Unbiasedness",
+    "text": "Unbiasedness\n\nIs the expectation of \\(\\hat{\\mu}\\) equal to \\(\\mu\\)?\nFirst we pull out the constant.\n\\[E[\\hat{\\mu}] = E\\left[\\frac{1}{n}\\sum_{i=1}^n Y_i\\right] = \\frac{1}{n}E\\left[\\sum_{i=1}^n Y_i\\right]\\]\nNext we use linearity of expectations\n\\[\\frac{1}{n}E\\left[\\sum_{i=1}^n Y_i\\right] = \\frac{1}{n}\\sum_{i=1}^n E\\left[Y_i\\right]\\]\nFinally, under our i.i.d. assumption\n\\[\\frac{1}{n}\\sum_{i=1}^n E\\left[Y_i\\right] = \\frac{1}{n}\\sum_{i=1}^n \\mu = \\frac{n \\mu}{n} = \\mu\\]\nTherefore, the bias, \\(\\text{Bias}(\\hat{\\mu}) = E[\\hat{\\mu}] - \\mu = 0\\)"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#variance",
+    "href": "slides/week1/week1_intro_and_review.html#variance",
+    "title": "Week 1: Review!",
+    "section": "Variance",
+    "text": "Variance\n\nWhat is the variance of \\(\\hat{\\mu}\\)? Again, start by pulling out the constant.\n\\[Var(\\hat{\\mu}) = Var\\left[\\frac{1}{n}\\sum_{i=1}^n Y_i\\right] = \\frac{1}{n^2}Var\\left[\\sum_{i=1}^n Y_i\\right]\\]\nWe can further simplify by using our i.i.d. assumption. The variance of a sum of i.i.d. random variables is the sum of the variances.\n\\[\\frac{1}{n^2}Var\\left[\\sum_{i=1}^n Y_i\\right] = \\frac{1}{n^2}\\sum_{i=1}^n Var\\left[Y_i\\right]\\]\n“identically distributed”\n\\[\\frac{1}{n^2}\\sum_{i=1}^n Var\\left[Y_i\\right] = \\frac{1}{n^2}\\sum_{i=1}^n \\sigma^2 = \\frac{n\\sigma^2}{n^2} = \\frac{\\sigma^2}{n}\\]\nTherefore, the variance is \\(\\frac{\\sigma^2}{n}\\)"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#asymptotic-properties",
+    "href": "slides/week1/week1_intro_and_review.html#asymptotic-properties",
+    "title": "Week 1: Review!",
+    "section": "Asymptotic properties",
+    "text": "Asymptotic properties\n\nAnother way of talking about properties of estimators is to consider how they behave as the sample size gets large.\n\nSometimes this is just easier than working with finite sample expectations.\nAdditionally, we might have a biased estimator. Does that bias “go away” in large samples?\n\nThis requires us to talk about sequences of estimators indexed (typically) by sample size.\n\nWe’ll typically denote this sequence with a subscript - for example, for the sample mean…\n\n\\[\\bar{Y}_n = \\{\\bar{Y}_1, \\bar{Y}_2, \\bar{Y}_3, \\dotsc\\}\\]\nCan we characterize the limit of this sequence of estimators?\n\nIt’s a random variable…so we need a slightly different language compared to deterministic series.\nBut a lot of intuitions from convergence of series carry over!"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#convergence-in-probability",
+    "href": "slides/week1/week1_intro_and_review.html#convergence-in-probability",
+    "title": "Week 1: Review!",
+    "section": "Convergence in probability",
+    "text": "Convergence in probability\n\nFirst, we can talk about the convergence of a sequence to a single value\n\nThere are lots of different forms of convergence here, but the most common that we use is convergence in probability\nThis is the form of convergence in the “weak” law of large numbers\n\nConvergence in probability\n\nA sequence of random variables \\(\\hat{\\mu}_n\\) is said to converge in probability to some value \\(\\mu\\) if for every \\(\\epsilon &gt; 0\\),\n\\[\\Pr(|\\hat{\\mu}_n - \\mu| \\ge \\epsilon) \\to 0\\] as \\(n \\to \\infty\\).\n\nWe’ll denote this as \\(\\hat{\\mu_n} \\xrightarrow{p} \\mu\\). You’ll see other texts use the term “plim”\nAn estimator that converges in probability to the target estimand is called consistent."
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#properties-of-convergence-in-probability",
+    "href": "slides/week1/week1_intro_and_review.html#properties-of-convergence-in-probability",
+    "title": "Week 1: Review!",
+    "section": "Properties of convergence in probability",
+    "text": "Properties of convergence in probability\n\nConsider two sequences \\(X_n \\xrightarrow{p} x\\) and \\(Y_n \\xrightarrow{p} y\\) and continuous function \\(g()\\). By the continuous mapping theorem\n\n\n\\(X_n + Y_n \\xrightarrow{p} x + y\\)\n\\(X_nY_n \\xrightarrow{p} xy\\)\n\\(X_n/Y_n \\xrightarrow{p} x/y\\) if \\(y \\neq 0\\)\n\\(g(X_n) \\xrightarrow{p} g(x)\\)"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#convergence-in-distribution",
+    "href": "slides/week1/week1_intro_and_review.html#convergence-in-distribution",
+    "title": "Week 1: Review!",
+    "section": "Convergence in distribution",
+    "text": "Convergence in distribution\n\nIn addition to asking whether the estimator will get closer to our target as \\(n\\) gets large, we also want to know whether its sampling distribution will be well approximated by a known distribution\n\nSpecifically, we care about whether it is approximately normally distributed\nThis lets us use our typical hypothesis tests and confidence intervals that rely on normal distribution critical values!\n\nConvergence in distribution\n\nA sequence of random variables \\(X_n\\) with CDF \\(F_n(x)\\) is said to converge in distribution to some random variable \\(X\\) with CDF \\(F(x)\\) if\n\\[\\lim_{n \\to \\infty} F_n(x) = F(x)\\]\n\nWe’ll typically denote this as as \\(X_n \\xrightarrow{d} X\\)."
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#properties-of-convergence-in-distribution",
+    "href": "slides/week1/week1_intro_and_review.html#properties-of-convergence-in-distribution",
+    "title": "Week 1: Review!",
+    "section": "Properties of convergence in distribution",
+    "text": "Properties of convergence in distribution\n\nIn addition to the continuous mapping theorem from before, it is also useful to know Slutsky’s theorem which involves one sequence converging in distribution and another converging in probability\nConsider two sequences \\(X_n \\xrightarrow{d} X\\) and \\(Y_n \\xrightarrow{p} y\\)\n\n\n\\(X_n + Y_n \\xrightarrow{d} X + y\\)\n\\(X_nY_n \\xrightarrow{d} Xy\\)\n\\(X_n/Y_n \\xrightarrow{d} X/y\\) if \\(y \\neq 0\\)"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#the-central-limit-theorem",
+    "href": "slides/week1/week1_intro_and_review.html#the-central-limit-theorem",
+    "title": "Week 1: Review!",
+    "section": "The Central Limit Theorem",
+    "text": "The Central Limit Theorem\n\nThe most famous convergence in distribution result is the central limit theorem\n\nThe mean of \\(n\\) independent and identically distributed random variables converges in distribution to a normal distribution\nMany other central limit theorems under different assumptions on the random variables (e.g. “weak” dependence)\nShowing that an estimator is asymptotically normal often involves showing we can write it in a form that admits one of these CLTs\n\nBy the central limit theorem\n\\[\\sqrt{n}(\\hat{\\mu}_n - \\mu) \\xrightarrow{d} \\mathcal{N}(0, \\sigma^2)\\]\nAnd we’ll use this result to justify our asymptotic approximation of the sampling distribution of \\(\\hat{\\mu}_n\\)\n\\[\\hat{\\mu}_n \\overset{a}{\\sim} \\mathcal{N}\\bigg(\\mu, \\frac{\\sigma^2}{n}\\bigg)\\]"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#big-o_p-and-little-o_p-notation",
+    "href": "slides/week1/week1_intro_and_review.html#big-o_p-and-little-o_p-notation",
+    "title": "Week 1: Review!",
+    "section": "Big-\\(O_p\\) and little-\\(o_p\\) notation",
+    "text": "Big-\\(O_p\\) and little-\\(o_p\\) notation\n\nSometimes we’ll want to use shorthand to characterize the asymptotic behavior of a given term\nLittle-\\(o_p\\) notation denotes convergence (in probability) to zero\n\n\\(Y_n = o_p(1)\\) means \\(\\Pr(|Y_n| \\ge \\epsilon) \\to 0\\) as \\(n \\to \\infty\\)\ne.g. for a consistent estimator, we can write \\(\\hat{\\mu}_n = \\mu + o_p(1)\\)\n\nBig-\\(O_p\\) notation denotes boundedness of a sequence as \\(n \\to \\infty\\)\n\n\\(Y_n = O_p(1)\\) means that \\(Pr(|Y_n| &gt; M) &lt; \\epsilon\\) for sufficiently large \\(n\\)"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#big-o_p-and-little-o_p-notation-1",
+    "href": "slides/week1/week1_intro_and_review.html#big-o_p-and-little-o_p-notation-1",
+    "title": "Week 1: Review!",
+    "section": "Big-\\(O_p\\) and little-\\(o_p\\) notation",
+    "text": "Big-\\(O_p\\) and little-\\(o_p\\) notation\n\nThe rest of the orders are defined recursively\n\nSo \\(Y_n = O_p(a_n)\\) means that \\(\\frac{Y_n}{a_n} = O_p(1)\\)\n\nUseful properties\n\n\\(o_p(1) + o_p(1) = o_p(1)\\)\n\\(o_p(1) + O_p(1) = O_p(1)\\)\n\\(O_p(1)o_p(1) = o_p(1)\\)\nIf a sequence is \\(o_p(1)\\), it is \\(O_p(1)\\) but not vice-versa."
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#sqrtn-consistency",
+    "href": "slides/week1/week1_intro_and_review.html#sqrtn-consistency",
+    "title": "Week 1: Review!",
+    "section": "\\(\\sqrt{n}\\)-consistency",
+    "text": "\\(\\sqrt{n}\\)-consistency\n\nMost common place where you will see Big-\\(O_p\\) notation is in discussion of convergence rates of estimators\n\nNot just whether \\(\\hat{\\mu}\\) converges to \\(\\mu\\), but how quickly?\nThis matters for determining whether our approximation is going to be good quality in finite samples!\n\nAn estimator \\(\\hat{\\mu}_n\\) has a convergence rate \\(r_n \\to \\infty\\) if\n\\[r_n(\\hat{\\mu}_n - \\mu) = O_p(1)\\]\nThis implies that the estimation error \\(\\hat{\\mu}_n - \\mu\\) is \\(O_p(1/r_n)\\) or in other words bounded in probability by \\(1/r_n \\to 0\\)."
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#sqrtn-consistency-1",
+    "href": "slides/week1/week1_intro_and_review.html#sqrtn-consistency-1",
+    "title": "Week 1: Review!",
+    "section": "\\(\\sqrt{n}\\)-consistency",
+    "text": "\\(\\sqrt{n}\\)-consistency\n\nFrom the central limit theorem, the most common convergence rate that you’ll encounter is \\(\\sqrt{n}\\)\n\nSlower rates appear in nonparametrics and machine learning and create challenges for inference!\n\nSuppose the central limit theorem holds w.r.t. \\(\\hat{\\mu}_n\\) (e.g. it’s the sample mean).\n\\[\\sqrt{n}(\\hat{\\mu}_n - \\mu) \\sim \\mathcal{N}(0, \\sigma^2)\\]\nThe variance is finite, does not depend on \\(n\\), and the distribution is normal\n\nSo we can always find an \\(M\\) sufficiently large that the probability of observing \\(|\\hat{\\mu}_n - \\mu|\\) greater than that \\(M\\) is less than any arbitrary \\(\\epsilon &gt; 0\\).\n\nAnd therefore\n\\[\\sqrt{n}(\\hat{\\mu}_n - \\mu) = O_p(1)\\]"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#next-week",
+    "href": "slides/week1/week1_intro_and_review.html#next-week",
+    "title": "Week 1: Review!",
+    "section": "Next week",
+    "text": "Next week\n\nPotential outcomes model\n\nDefining treatment effects as contrasts in counterfactuals\n\nCausal identification\n\nHow do we connect something we can observe (e.g. a difference-in-means) to something we can’t observe (an average treatment effect)?\nWe need to make assumptions!\nEvery identification assumption imposes some outside knowledge on the data-generating process.\n\nRandomized experiments\n\nRandomized experiments solve the identification problem (for the sample ATE)\nWhat can we get just with randomization of treatment?"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#last-week",
+    "href": "slides/week3/week3_experiments_part_2.html#last-week",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Last week",
+    "text": "Last week\n\nWhy randomized experiments work\n\nGuarantee treatment \\(D_i\\) is independent of potential outcomes \\(\\{Y_i(1), Y_i(0)\\}\\)\n\n\n\n\nInference for treatment effects\n\nFisher: Can get exact p-values under the sharp null just knowing the distribution of treatment assignments.\nNeyman: A conservative variance estimator for the difference-in-means + large-sample asymptotics\n\n\\[\\widehat{Var(\\hat{\\tau})} = \\frac{s^2_t}{N_t} + \\frac{s_c^2}{N_c}\\]"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#this-week",
+    "href": "slides/week3/week3_experiments_part_2.html#this-week",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "This week",
+    "text": "This week\n\nOne post-experiment use of covariates\n\nBalance checking\n\n\n\n\nWhen should we not condition on covariates?\n\nWhen they’re post-treatment!\nAttrition/Non-compliance\nBounds when we have to condition\n\n\n\n\n\nHow do we generalize from a single experiment?\n\nWhat are the dimensions of external validity?\nWhat do we have to believe to transport a treatment effect?"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#balance-checking",
+    "href": "slides/week3/week3_experiments_part_2.html#balance-checking",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Balance checking",
+    "text": "Balance checking\n\\[\n  \\require{cancel}\n\\]"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#balance-tests",
+    "href": "slides/week3/week3_experiments_part_2.html#balance-tests",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Balance tests",
+    "text": "Balance tests\n\nOne reason to use covariates even in completely randomized designs is to check whether the experiment actually did what it was supposed to do.\n\n\n\nUnder any randomization scheme that satisfies ignorability:\n\n\\[X_i {\\perp \\! \\! \\! \\perp} D_i\\]\n\\[E[X_i | D_i = 1] = E[X_i | D_i = 0]\\]\n\n\n\nIf we correctly randomized treatment, then the expectation (and the distribution) of covariates should be the same in treatment and control.\n\n\n\n\nBut in any given sample, we’ll observe a difference just by chance – how do we know if this is a problem?"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#against-balance-tests",
+    "href": "slides/week3/week3_experiments_part_2.html#against-balance-tests",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Against balance tests",
+    "text": "Against balance tests\n\nOne view in some experimentally-focused fields is that you should never waste time checking balance\n\n\n\nSenn (1994) Statistics in Medicine\n\nRandomization ensures balance over all randomizations.\nObserving any particular imbalance in our sample doesn’t disprove 1\n\n\n\n\n\nWhat if we did screw up? What if the randomization software had a bug? What if there was some implementation issue?\n\nMaybe a balance test helps here?\n\n\n\n\n\nBut how would we interpret a “failed” balance test?\n\nA reason to go back and check the randomization process - if we think that it did actually work as intended, we may just have gotten unlucky.\nMight want a stricter threshold than \\(p &lt; .05\\) if we really believe treatment was randomized."
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#against-balance-tests-1",
+    "href": "slides/week3/week3_experiments_part_2.html#against-balance-tests-1",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Against balance tests",
+    "text": "Against balance tests\n\nAnother more nuanced argument is that you shouldn’t use balance tests to decide whether to include or not include covariates in the analysis.\n\n\n\nMutz, Pemantle and Pham (2019)\n\nSometimes, researchers run a lot of univariate balance tests in an experiment.\nIf a test for some covariate fails, they include that covariate in adjustment.\nThis process risks raising false-positive rates through researcher “degrees-of-freedom”\n\n\n\n\n\nThis is a correct argument, but is less an argument against balance testing per-se and more against ad-hoc or data-dependent covariate choices.\n\n\n\n\nWhen we talk about covariates in experiments next week, we’ll emphasize the importance of ex-ante choices.\n\nDon’t decide on what to include in your analysis based on tests conducted after the experiment is run and using information from the experiment outcomes"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#example-broockman-and-kalla-2023",
+    "href": "slides/week3/week3_experiments_part_2.html#example-broockman-and-kalla-2023",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Example: Broockman and Kalla (2023)",
+    "text": "Example: Broockman and Kalla (2023)\n\nBroockman and Kalla (2023) “Consuming cross-cutting media causes learning and moderates attitudes: A field experiment with Fox News viewers”\n\nSample of 763 individuals in 695 households who regularly watch FOX News\nTreatment: Incentivized to watch CNN instead of Fox News for one month (304 individuals)\nControl: No incentive (continue normal viewing habits) (459 individuals)\n\n\n\n\nRandomization was done at the household level, stratified by baseline characteristics\nLet’s check balance on pre-treatment covariates!"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#broockman-and-kalla-loading-the-data",
+    "href": "slides/week3/week3_experiments_part_2.html#broockman-and-kalla-loading-the-data",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Broockman and Kalla: Loading the data",
+    "text": "Broockman and Kalla: Loading the data\n\nlibrary(haven)\nlibrary(cobalt)\n\n# Load the Broockman and Kalla data\nbk &lt;- read_dta(\"assets/data/primary_dataset_unstd.dta\")\n\n# Treatment variable: treat (1 = CNN incentive, 0 = control)\ntable(bk$treat)\n\n\n  0   1 \n459 304 \n\n\n\n# Key pre-treatment covariates from baseline survey (t1_) and voter file (vf_)\nbaseline_covs &lt;- c(\n  # Demographics from voter file\n  \"vf_age\",                    # Age\n  # Baseline survey measures (t1_ = time 1, pre-treatment)\n  \"t1_pid7\",                   # 7-point party ID (1 = Strong Dem to 7 = Strong Rep)\n  \"t1_ideo_self\",              # Self-reported ideology\n  \"t1_therm_trump\",            # Feeling thermometer: Trump\n  \"t1_therm_biden\",            # Feeling thermometer: Biden\n  \"t1_therm_fox\",              # Feeling thermometer: Fox News\n  \"t1_therm_cnn\",              # Feeling thermometer: CNN\n  \"t1_trust_fox\",              # Trust in Fox News\n  \"t1_trust_cnn\",              # Trust in CNN\n  # Pre-treatment TV viewership (from set-top box data)\n  \"pre_treat_fox_minutes\",     # Minutes watching Fox pre-treatment\n  \"pre_treat_cnn_minutes\"      # Minutes watching CNN pre-treatment\n)"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#broockman-and-kalla-aggregate-to-household-level",
+    "href": "slides/week3/week3_experiments_part_2.html#broockman-and-kalla-aggregate-to-household-level",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Broockman and Kalla: Aggregate to household level",
+    "text": "Broockman and Kalla: Aggregate to household level\n\n# Randomization was at the household level, so aggregate covariates\nbk_hh &lt;- bk %&gt;%\n  group_by(hh_id) %&gt;%\n  summarize(\n    treat = first(treat),\n    # Take the mean of covariates within household\n    across(all_of(baseline_covs), ~mean(.x, na.rm = TRUE))\n  ) %&gt;%\n  ungroup()\n\n# Check: 695 households\nnrow(bk_hh)\n\n[1] 695\n\n# Check treatment assignments\ntable(bk_hh$treat)\n\n\n  0   1 \n417 278"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#broockman-and-kalla-balance-table",
+    "href": "slides/week3/week3_experiments_part_2.html#broockman-and-kalla-balance-table",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Broockman and Kalla: Balance table",
+    "text": "Broockman and Kalla: Balance table\n\n# Use cobalt to create a balance table (at household level)\nbal_tab &lt;- bal.tab(\n  x = bk_hh %&gt;% select(all_of(baseline_covs)),   # Covariate data\n  treat = bk_hh$treat,           # Treatment indicator\n  binary = \"std\",                # Standardize binary variables\n  continuous = \"std\",            # Standardize continuous variables\n  s.d.denom = \"pooled\"           # Use pooled SD for standardization\n)\nprint(bal_tab)"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#broockman-and-kalla-balance-table-output",
+    "href": "slides/week3/week3_experiments_part_2.html#broockman-and-kalla-balance-table-output",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Broockman and Kalla: Balance table",
+    "text": "Broockman and Kalla: Balance table\n\nBalance Measures\n                         Type Diff.Un\nvf_age                Contin.  0.0352\nt1_pid7               Contin.  0.0367\nt1_ideo_self          Contin.  0.0130\nt1_ideo_self:&lt;NA&gt;      Binary  0.0000\nt1_therm_trump        Contin.  0.1688\nt1_therm_biden        Contin. -0.0855\nt1_therm_fox          Contin. -0.0224\nt1_therm_cnn          Contin. -0.0086\nt1_trust_fox          Contin.  0.0421\nt1_trust_cnn          Contin.  0.0755\npre_treat_fox_minutes Contin.  0.0480\npre_treat_cnn_minutes Contin. -0.1350\n\nSample sizes\n    Control Treated\nAll     417     278"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#broockman-and-kalla-love-plot",
+    "href": "slides/week3/week3_experiments_part_2.html#broockman-and-kalla-love-plot",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Broockman and Kalla: Love plot",
+    "text": "Broockman and Kalla: Love plot"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#multiple-testing",
+    "href": "slides/week3/week3_experiments_part_2.html#multiple-testing",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Multiple testing",
+    "text": "Multiple testing\n\nWe could put a simple difference-in-means hypothesis test on each of these covariates.\n\nBut with enough covariates, we’d find a \\(p &lt; .05\\) just by chance!\n\n\n\nlm_robust(t1_therm_trump ~ treat, data=bk_hh)\n\n             Estimate Std. Error   t value   Pr(&gt;|t|)   CI Lower  CI Upper  DF\n(Intercept) 81.758593   1.040406 78.583337 0.00000000 79.7158668 83.801319 693\ntreat        3.360112   1.519283  2.211643 0.02731688  0.3771622  6.343062 693\n\n\n\n\nIs there a quick way to deal with multiple testing in balance checks?\n\nCould correct for multiple comparisons…\n…or construct a single test.\nHow? With randomization inference!"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#permutationrandomization-testing-for-balance",
+    "href": "slides/week3/week3_experiments_part_2.html#permutationrandomization-testing-for-balance",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Permutation/Randomization Testing for Balance",
+    "text": "Permutation/Randomization Testing for Balance\n\nStep 1: Run a regression predicting treatment using all the covariates. Store the F-statistic (or any statistic summarizing “goodness of fit”)\n\n\ntreat_reg &lt;- lm_robust(treat ~ vf_age + t1_pid7 + t1_ideo_self + t1_therm_trump + t1_therm_biden +\n                         t1_therm_fox + t1_therm_cnn + t1_trust_fox + t1_trust_cnn + pre_treat_fox_minutes +\n                         pre_treat_cnn_minutes, data=bk_hh)\ntstat_obs &lt;- treat_reg$fstatistic[1]"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#permutationrandomization-testing-for-balance-1",
+    "href": "slides/week3/week3_experiments_part_2.html#permutationrandomization-testing-for-balance-1",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Permutation/Randomization Testing for Balance",
+    "text": "Permutation/Randomization Testing for Balance\n\nStep 2: Permute the treatment assignment based on the known assignment scheme\nStep 3: Calculate the test statistic under alternative assignments\n\n\nset.seed(53706)\niterations &lt;- 10000\ntstat_null &lt;- rep(NA, iterations)\nfor (i in 1:iterations){\n  bk_hh$treat_perm &lt;- sample(bk_hh$treat)\n  treat_reg_null &lt;- lm_robust(treat_perm ~ vf_age + t1_pid7 + t1_ideo_self + t1_therm_trump + t1_therm_biden +\n                         t1_therm_fox + t1_therm_cnn + t1_trust_fox + t1_trust_cnn + pre_treat_fox_minutes +\n                         pre_treat_cnn_minutes, data=bk_hh)\n  tstat_null[i] &lt;- treat_reg_null$fstatistic[1]\n}"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#permutationrandomization-testing-for-balance-2",
+    "href": "slides/week3/week3_experiments_part_2.html#permutationrandomization-testing-for-balance-2",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Permutation/Randomization Testing for Balance",
+    "text": "Permutation/Randomization Testing for Balance\n\nStep 4: Compare the observed statistic to the permuted null distribution\n\n\nmean(tstat_null &gt; tstat_obs)\n\n[1] 0.0808"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#guidelines-for-balance-testing",
+    "href": "slides/week3/week3_experiments_part_2.html#guidelines-for-balance-testing",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Guidelines for balance testing",
+    "text": "Guidelines for balance testing\n\nTesting for balance to assess whether randomization occurred as intended: Good\n\nCareful with multiple testing/false positives\n\\(p &lt; .05\\) is probably too low of a threshold, but you should probably be concerned if \\(p &lt; 1 \\times 10^{-6}\\)\nWhat do do if a balance check fails? Check your experiment!\n\n\n\n\nTesting for balance to pick which covariates to adjust for: Bad\n\n“Garden of forking paths”\nYou should choose covariates ex-ante (even if not blocking)\nPick covariates that predict \\(Y\\) - balance checks are the wrong criteria."
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#post-treatment-bias",
+    "href": "slides/week3/week3_experiments_part_2.html#post-treatment-bias",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Post-treatment bias",
+    "text": "Post-treatment bias"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#post-treatment-covariates",
+    "href": "slides/week3/week3_experiments_part_2.html#post-treatment-covariates",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Post-treatment covariates",
+    "text": "Post-treatment covariates\n\nWhen talking about covariates, we’ve emphasized that \\(X_i\\) must be pre-treatment\nWhat happens when we condition on some post-treatment variable (call it \\(M_i\\)).\nIntuition: \\(M_i\\) is post-treatment. It has potential outcomes: \\(\\{M_i(1), M_i(0)\\}\\)\n\nBut we can’t condition on the latent potential outcomes, we only condition on the observed \\(M_i\\)\nThis induces a form of enodgenous “selection bias”\n\n\n\n\nMany cases in political science\n\nExperiments with non-compliance\nAttention checks in survey experiments.\nAdministrative data (police interactions are only recorded if a stop occurs)\nAttrition induced by treatment (e.g. court proceedings that settle)"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#post-treatment-bias-1",
+    "href": "slides/week3/week3_experiments_part_2.html#post-treatment-bias-1",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Post-treatment bias",
+    "text": "Post-treatment bias\n\nLet \\(M_i\\) denote the post-treatment covariate. Since it’s post-treatment, it has potential outcomes \\(\\{M_i(1), M_i(0)\\}\\) as though it were any other outcome.\n\n\n\nBy randomization\n\n\\[\\{M_i(1), M_i(0)\\} {\\perp \\! \\! \\! \\perp} D_i\\]\n\n\n\nWhat happens if we take the difference-in-means conditional on \\(M_i = 1\\)\n\n\\[E[Y_i | D_i = 1, M_i = 1] - E[Y_i | D_i = 0, M_i = 1]\\]\n\n\n\nBy consistency:\n\n\\[E[Y_i(1) | D_i = 1, M_i(1) = 1] - E[Y_i(0) | D_i = 0, M_i(0) = 1]\\]"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#post-treatment-bias-2",
+    "href": "slides/week3/week3_experiments_part_2.html#post-treatment-bias-2",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Post-treatment bias",
+    "text": "Post-treatment bias\n\nIgnorability gets us\n\n\\[E[Y_i(1) |  M_i(1) = 1] - E[Y_i(0) |  M_i(0) = 1]\\]\n\n\nIs this the ATE?\n\nNo! \\(M_i(1) = 1\\) and \\(M_i(0) = 1\\) define two different subsets of the sample\n\nUnder what assumptions would we get the ATE?\n\n\n\n\nEither:\n\nNo individual effect of treatment on \\(M_i\\): \\(M_i(1) = M_i(0) \\text{   } \\forall i\\)\n\\(\\{M_i(1), M_i(0)\\} {\\perp \\! \\! \\! \\perp} \\{Y_i(1), Y_i(0\\}\\)\n\n\n\n\n\nNeither of these assumptions is guaranteed by an experiment since we don’t randomize \\(M_i\\)\nTherefore, conditioning on a post-treatment quantity breaks the experiment – now it’s an observational study."
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#principal-strata",
+    "href": "slides/week3/week3_experiments_part_2.html#principal-strata",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Principal strata",
+    "text": "Principal strata\n\nWe can think of the combination of \\(D_i\\) and \\(M_i\\) as defining a “sub-group” of units - these are referred to as “principal strata”\n\nThey have different names in the literature - one common convention comes from the compliance literature\n\n\n\n\n\nStratum\n\\(M_i(1)\\)\n\\(M_i(0)\\)\n\n\n\n\n“Always-takers”\n\\(1\\)\n\\(1\\)\n\n\n“Never-takers”\n\\(0\\)\n\\(0\\)\n\n\n“Compliers”\n\\(1\\)\n\\(0\\)\n\n\n“Defiers”\n\\(0\\)\n\\(1\\)\n\n\n\n\n\nUnits with \\(M_i = 1\\) could be any three of these strata. Even observing \\(D_i\\) narrows it down to only two - we can’t observe the strata directly.\nStrata aren’t necessarily independent of potential outcomes \\(Y_i(d)\\)!"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#example-administrative-data",
+    "href": "slides/week3/week3_experiments_part_2.html#example-administrative-data",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Example: Administrative data",
+    "text": "Example: Administrative data\n\nKnox, Lowe and Mummolo (2020) consider the problem of estimating the effect of civilian race on police use of force.\n\nTypically, past studies would use administrative data from police departments on stops\nCompare police use of force among Black civilians who are stopped and white civilians who are stopped.\nProblem: Stops are post-treatment!\n\n\n\n\nDefine \\(D_i\\) as the treatment (race of civilian), \\(M_i\\) is an indicator for whether a stop occurs, \\(Y_i\\) is severe use of force\nThe difference-in-means does not identify the treatment effect - instead, we get:\n\n\\[E[Y_i(1) |  M_i(1) = 1] - E[Y_i(0) | M_i(0) = 1]\\]"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#bounding-the-survivor-average-causal-effect",
+    "href": "slides/week3/week3_experiments_part_2.html#bounding-the-survivor-average-causal-effect",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Bounding the Survivor Average Causal Effect",
+    "text": "Bounding the Survivor Average Causal Effect\n\nCan we say anything about the treatment effect?\n\nFirst - we need to define which treatment effect we’re interested in to begin with!\n\n\n\n\nWe can define meaningful causal quantities conditional on the principal strata\n\nBecause these are pre-treatment\n\n\n\n\n\nFor example, the complier average causal effect\n\\[\\tau_{\\text{CACE}} = E[Y_i(1) - Y_i(0) | M_i(1) = 1, M_i(0) = 0]\\]\nWe’ll talk more about this when we get to instrumental variables"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#the-survivor-average-causal-effect",
+    "href": "slides/week3/week3_experiments_part_2.html#the-survivor-average-causal-effect",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "The Survivor Average Causal Effect",
+    "text": "The Survivor Average Causal Effect\n\nIn the attrition setting, we focus on the Survivor Average Causal Effect (SACE)\n\nThe ATE among those who would be observed irrespective of treatment status\n\n\n\\[\\tau_{\\text{SACE}} = E[Y_i(1) - Y_i(0) | M_i(1) = 1, M_i(0) = 1]\\]\n\n\nRecall that the difference-in-means only gets us\n\n\\[E[Y_i(1) |  M_i(1) = 1] - E[Y_i(0) | M_i(0) = 1]\\]\n\n\n\n\\(M_i(1) = 1\\) is not the same subset of units as \\(M_i(0) = 1\\)\n\n\\(M_i(1) = 1\\) includes both survivors and the “compliers”\n\\(M_i(0) = 1\\) includes both survivors and the “defiers”"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#monotonicity",
+    "href": "slides/week3/week3_experiments_part_2.html#monotonicity",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Monotonicity",
+    "text": "Monotonicity\n\nOne approach to bounding from Lee (2009) relies on an additional monotonicity assumption\n\n\\[M_i(1) \\ge M_i(0) \\text{  } \\forall i \\quad \\text{or} \\quad M_i(1) \\le M_i(0) \\text{  } \\forall i\\]\n\n\nTreatment affects selection in only one direction\n\nEither treatment can only increase the probability of being observed (no “defiers”)\nOr treatment can only decrease the probability of being observed (no “compliers”)"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#intuition-for-lee-bounds",
+    "href": "slides/week3/week3_experiments_part_2.html#intuition-for-lee-bounds",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Intuition for Lee bounds",
+    "text": "Intuition for Lee bounds\n\nSuppose treatment increases observation probability: \\(M_i(1) \\ge M_i(0)\\)\n\nMore units observed in the treated group than control group\n\n\n\n\nAmong observed treated units:\n\nSome are “survivors” (would be observed even under control)\nSome are “compliers” (observed only because they got treatment)\n\n\n\n\n\nAmong observed control units:\n\nAll are “survivors” (they’re observed despite being in control)\n\n\n\n\n\nIf we could figure out who the compliers are and remove them - we could get point identification.\n\nWe can’t - but we can get the share of compliers.\nAnd we can worst-case which units those happen to be."
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#the-trimming-procedure",
+    "href": "slides/week3/week3_experiments_part_2.html#the-trimming-procedure",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "The trimming procedure",
+    "text": "The trimming procedure\n\nLet \\(p_1 = Pr(M_i = 1 | D_i = 1)\\) and \\(p_0 = Pr(M_i = 1 | D_i = 0)\\)\nUnder monotonicity with \\(M_i(1) \\ge M_i(0)\\): \\(p_1 \\ge p_0\\)\n\n\n\nThe fraction of treated-and-observed who are “compliers” is:\n\n\\[q = \\frac{p_1 - p_0}{p_1}\\]\n\n\n\nIdea: Trim proportion \\(q\\) of the treated group’s outcome distribution\n\nTrimming from the top gives a lower bound on \\(\\tau_{\\text{SACE}}\\)\nTrimming from the bottom gives an upper bound on \\(\\tau_{\\text{SACE}}\\)\n\n\n\n\n\nWhy does this work?\n\nWe don’t know which units are compliers, but we know how many there are\nTrimming the extremes gives us worst-case bounds"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#lee-2009-bounds",
+    "href": "slides/week3/week3_experiments_part_2.html#lee-2009-bounds",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Lee (2009) bounds",
+    "text": "Lee (2009) bounds\n\nUnder random assignment and monotonicity, the SACE is bounded by:\n\n\\[\\tau^{LB} \\le \\tau_{\\text{SACE}} \\le \\tau^{UB}\\]\n\n\nLower bound: Trim the top \\(q\\) proportion of treated outcomes\n\n\\[\\tau^{LB} = \\mathbb{E}[Y_i | D_i = 1, M_i = 1, Y_i \\le y^{1-q}_1] - \\mathbb{E}[Y_i | D_i = 0, M_i = 1]\\]\n\nUpper bound: Trim the bottom \\(q\\) proportion of treated outcomes\n\n\\[\\tau^{UB} = E[Y_i | D_i = 1, M_i = 1, Y_i \\ge y^{q}_1] - E[Y_i | D_i = 0, M_i = 1]\\]\n\n\n\nWhere \\(y^{q}_1\\) is the \\(q\\)-th quantile of the treated outcome distribution"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#properties-of-lee-bounds",
+    "href": "slides/week3/week3_experiments_part_2.html#properties-of-lee-bounds",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Properties of Lee bounds",
+    "text": "Properties of Lee bounds\n\nSharp bounds: Cannot be tightened without additional assumptions\n\nAny value within the bounds is consistent with the data and assumptions\n\n\n\n\nBounds collapse to a point when:\n\nTreatment has no effect on selection (\\(p_1 = p_0\\), so \\(q = 0\\))\nIn this case, SACE = ATE (no selection problem!)\nBut the monotonicity assumption is key here!\n\n\n\n\n\nCan construct confidence intervals for bounds using bootstrap or analytical standard errors\n\nNote that the bounds reflect fundamental uncertainty in mapping from observed outcomes to potential outcomes\nFurther uncertainty is driven by the usual sources (random sampling/treatment assignment)"
   },
   {
     "objectID": "syllabus.html",
