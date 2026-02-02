@@ -32,7 +32,7 @@ embed-resources: true
 
 ---
 
-# 
+##
 
 $$
   \require{cancel}
@@ -46,7 +46,7 @@ library(knitr)
 options(digits=3)
 ```
 
-# This week
+## This week
 
 ::: {.incremental}
 
@@ -62,9 +62,9 @@ options(digits=3)
 
 :::
 
-# The potential outcomes model
+## The potential outcomes model
 
-# Thinking about causal effects
+## Thinking about causal effects
 
 ::: {.incremental}
 
@@ -85,7 +85,7 @@ options(digits=3)
 
 :::
 
-# Defining a causal effect
+## Defining a causal effect
 
 ::: {.incremental}
 
@@ -100,7 +100,7 @@ options(digits=3)
 
 :::
 
-# The potential outcomes model
+## The potential outcomes model
 
 ::: {.incremental}
 
@@ -122,7 +122,7 @@ a statistical perspective.
 
 :::
 
-# Statistical setup.
+## Statistical setup.
 
 ::: {.incremental}
 
@@ -138,7 +138,7 @@ a statistical perspective.
 
 :::
 
-# Potential outcomes
+## Potential outcomes
 
 ::: {.incremental}
 
@@ -157,7 +157,7 @@ a statistical perspective.
 
 :::
 
-# Consistency/SUTVA
+## Consistency/SUTVA
 
 ::: {.incremental}
 
@@ -178,7 +178,7 @@ a statistical perspective.
 
 :::
 
-# Positivity/Overlap
+## Positivity/Overlap
 
 ::: {.incremental}
 
@@ -193,7 +193,7 @@ a statistical perspective.
 
 :::
 
-# A missing data problem
+## A missing data problem
 
 - It's useful to think of the causal inference problem in terms of *missingness*
 in the complete table of potential outcomes.
@@ -215,7 +215,7 @@ Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$ | Observed $Y_i$   |
 
 :::
 
-# Causal Estimands
+## Causal Estimands
 
 ::: {.incremental}
 
@@ -233,7 +233,7 @@ Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$ | Observed $Y_i$   |
   
 :::
 
-# Sample vs. Population Estimands
+## Sample vs. Population Estimands
 
 ::: {.incremental}
 
@@ -249,12 +249,12 @@ Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$ | Observed $Y_i$   |
 
 :::
 
-# Causal vs. Associational Estimands
+## Causal vs. Associational Estimands
 
 ![](assets/association_causation.png){fig-align="center"}
 
 
-# Causal Identification
+## Causal Identification
 
 ::: {.incremental}
 
@@ -268,7 +268,7 @@ Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$ | Observed $Y_i$   |
 
 :::
 
-# Identifying the ATT
+## Identifying the ATT
 
 ::: {.incremental}
 
@@ -288,7 +288,7 @@ Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$ | Observed $Y_i$   |
 
 :::
 
-# Identifying the ATT
+## Identifying the ATT
 
 ::: {.incremental}
 
@@ -306,7 +306,7 @@ Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$ | Observed $Y_i$   |
 
 :::
 
-# Identifying the ATT
+## Identifying the ATT
 
 ::: {.incremental}
 
@@ -321,7 +321,7 @@ Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$ | Observed $Y_i$   |
 
 :::
 
-# Selection-into-treatment bias
+## Selection-into-treatment bias
 
 ::: {.incremental}
 
@@ -332,7 +332,7 @@ Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$ | Observed $Y_i$   |
 
 :::
 
-# Ignorability/Unconfoundedness
+## Ignorability/Unconfoundedness
 
 ::: {.incremental}
 
@@ -353,7 +353,7 @@ Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$ | Observed $Y_i$   |
 
 :::
 
-# Ignorability/Unconfoundedness
+## Ignorability/Unconfoundedness
 
 ::: {.incremental}
 
@@ -371,13 +371,13 @@ Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$ | Observed $Y_i$   |
   $$\mathbb{E}[Y_i(1) | D_i = 1] - \mathbb{E}[Y_i(0) | D_i = 0] = \mathbb{E}[Y_i(1)] - \mathbb{E}[Y_i(0)] = \tau$$
 :::
 
-# Ignorability/Unconfoundedness
+## Ignorability/Unconfoundedness
 
 ![](assets/association_causation.png){fig-align="center"}
 
-# Experiments
+## Experiments
 
-# Randomized Experiments
+## Randomized Experiments
 
 ::: {.incremental}
 
@@ -394,7 +394,7 @@ Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$ | Observed $Y_i$   |
 :::
 
 
-# Types of experiments
+## Types of experiments
 
 ::: {.incremental}
 
@@ -412,7 +412,7 @@ Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$ | Observed $Y_i$   |
 
 :::
 
-# Types of experiments
+## Types of experiments
 
 ::: {.incremental}
 
@@ -429,7 +429,7 @@ Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$ | Observed $Y_i$   |
 :::
 
 
-# Complete randomization
+## Complete randomization
 
 ::: {.incremental}
 
@@ -447,7 +447,7 @@ Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$ | Observed $Y_i$   |
 :::
 
   
-# Finite sample inference
+## Finite sample inference
 
 - Consider a study with $N_t = 3$, $N_c = 3$ and suppose we could see the true "table of science"
   - Under one realization of the treatment $\mathbf{D}$, we have:
@@ -465,7 +465,7 @@ Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$   | Observed $Y_i$   |
   
   $$\frac{1 + 1 + 1}{3} - \frac{1 + 1 + 0}{3} = \frac{1}{3}$$
   
-# Finite sample inference
+## Finite sample inference
 
 - How about another, equally likely realization?
   
@@ -482,7 +482,7 @@ Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$   | Observed $Y_i$   |
 
   $$\frac{1 + 0 + 0}{3} - \frac{0 + 1 + 1}{3} = -\frac{1}{3}$$
 
-# Finite sample inference
+## Finite sample inference
 
 - Overall all possible randomizations, what is **the distribution**?
   - We can run a quick **simulation** and find out
@@ -503,7 +503,7 @@ for(i in 1:nIter){
 }
 ```
 
-# Finite sample inference
+## Finite sample inference
 
 - First, what's the **expectation** of our estimator?
 
@@ -518,7 +518,7 @@ var(sate_est)
 ```
 
 
-# Finite sample inference
+## Finite sample inference
 
 ```{r, echo=F, fig.align='center'}
 data.frame(x = sate_est) %>% ggplot(aes(x=x)) + geom_histogram(bins = 10) +
@@ -528,7 +528,7 @@ data.frame(x = sate_est) %>% ggplot(aes(x=x)) + geom_histogram(bins = 10) +
 ```
 
 
-# Finite sample inference
+## Finite sample inference
 
 ::: {.incremental}
 
@@ -545,7 +545,7 @@ data.frame(x = sate_est) %>% ggplot(aes(x=x)) + geom_histogram(bins = 10) +
   
 :::
 
-# Unbiasedness
+## Unbiasedness
 
 ::: {.incremental}
 
@@ -562,7 +562,7 @@ data.frame(x = sate_est) %>% ggplot(aes(x=x)) + geom_histogram(bins = 10) +
   $$\mathbb{E}[\hat{\tau}| \mathbb{Y}(1), \mathbb{Y}(0)] = \frac{1}{N_t} \sum_{i=1}^N Y_i(1) \mathbb{E}\bigg[ D_i\bigg| \mathbb{Y}(1), \mathbb{Y}(0)\bigg] - \frac{1}{N_c}  \sum_{i=1}^N Y_i(0) \mathbb{E}\bigg[(1 - D_i) \bigg| \mathbb{Y}(1), \mathbb{Y}(0)\bigg]$$ 
 :::
 
-# Unbiasedness
+## Unbiasedness
 
 ::: {.incremental}
 
@@ -581,7 +581,7 @@ data.frame(x = sate_est) %>% ggplot(aes(x=x)) + geom_histogram(bins = 10) +
 :::
 
 
-# Sampling variance
+## Sampling variance
 
 ::: {.incremental}
 
@@ -601,7 +601,7 @@ data.frame(x = sate_est) %>% ggplot(aes(x=x)) + geom_histogram(bins = 10) +
 :::
 
 
-# Sampling variance
+## Sampling variance
 
 ::: {.incremental}
 
@@ -617,7 +617,7 @@ data.frame(x = sate_est) %>% ggplot(aes(x=x)) + geom_histogram(bins = 10) +
 
 :::
 
-# Neyman variance
+## Neyman variance
  
 ::: {.incremental}
  
@@ -632,7 +632,7 @@ data.frame(x = sate_est) %>% ggplot(aes(x=x)) + geom_histogram(bins = 10) +
 
 :::
 
-# Neyman variance
+## Neyman variance
 
 - Why do we see a difference between the true variance and the Neyman variance?
   - Let's go back to our $N=6$ example!
@@ -646,7 +646,7 @@ Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$   | Observed $Y_i$   |
  $5$       |  $0$              |  $0$     |   $0$      |    $0$           |
  $6$       |  $1$              |  $1$     |   $1$      |    $1$           |
  
-# Neyman variance
+## Neyman variance
 
 - The variance from our simulation was...
  
@@ -666,7 +666,7 @@ var(data$Y_1)/3 + var(data$Y_0)/3 - var(data$Y_1 - data$Y_0)/6
 var(data$Y_1)/3 + var(data$Y_0)/3
 ```
 
-# Neyman variance
+## Neyman variance
 
 ::: {.incremental}
 
@@ -678,7 +678,7 @@ var(data$Y_1)/3 + var(data$Y_0)/3
 
 :::
 
-# Illustration: Gerber, Green and Larimer (2008)
+## Illustration: Gerber, Green and Larimer (2008)
 
 ::: {.incremental}
 
@@ -698,7 +698,7 @@ var(data$Y_1)/3 + var(data$Y_0)/3
 
 :::
 
-# Illustration: Gerber, Green and Larimer (2008)
+## Illustration: Gerber, Green and Larimer (2008)
  
 ```{r, echo=T, message=F, warning=F, cache=T}
 # Load the data
@@ -712,7 +712,7 @@ hh_means <- data_hh %>% group_by(treatment) %>% summarize(N = n(), voted = mean(
 kable(hh_means)
 ```
 
-# Illustration: Gerber, Green and Larimer (2008)
+## Illustration: Gerber, Green and Larimer (2008)
  
 - Let's estimate the ATE of the "Neighbors" treatment relative to control
 
@@ -735,7 +735,7 @@ sqrt(var_ate)
 ```
 
 
-# Illustration: Gerber, Green and Larimer (2008)
+## Illustration: Gerber, Green and Larimer (2008)
 
 - 95% asymptotic confidence interval and p-value against null of no ATE.
 
@@ -751,7 +751,7 @@ p_val
 ```
 
 
-# Illustration: Gerber, Green and Larimer (2008)
+## Illustration: Gerber, Green and Larimer (2008)
 
 
 - Fun fact: You can get this via OLS regression! 
@@ -767,9 +767,9 @@ lm_robust(voted ~ I(treatment==3), data=data_hh %>% filter(treatment == 3|treatm
 ```
 
 
-# Fisher's Exact Test
+## Fisher's Exact Test
 
-# Fisher's Exact Test
+## Fisher's Exact Test
 
 ::: {.incremental}
 
@@ -787,7 +787,7 @@ lm_robust(voted ~ I(treatment==3), data=data_hh %>% filter(treatment == 3|treatm
 
 :::
 
-# Hypothesis testing review
+## Hypothesis testing review
 
 ::: {.incremental}
 
@@ -802,7 +802,7 @@ lm_robust(voted ~ I(treatment==3), data=data_hh %>% filter(treatment == 3|treatm
       
 :::
 
-# Hypothesis testing review
+## Hypothesis testing review
 
 ::: {.incremental}
 
@@ -816,7 +816,7 @@ lm_robust(voted ~ I(treatment==3), data=data_hh %>% filter(treatment == 3|treatm
 
 :::
 
-# What's different about randomization testing?
+## What's different about randomization testing?
 
 ::: {.incremental}
   
@@ -827,7 +827,7 @@ lm_robust(voted ~ I(treatment==3), data=data_hh %>% filter(treatment == 3|treatm
 
 :::
 
-# Sharp null of no effect.
+## Sharp null of no effect.
 
 ::: {.incremental}
 
@@ -844,7 +844,7 @@ lm_robust(voted ~ I(treatment==3), data=data_hh %>% filter(treatment == 3|treatm
 
 :::
 
-# The sharp null
+## The sharp null
 
 - Remember our table of science? For a single realization of $\mathbf{D}$ we only observe half the potential outcomes?
 
@@ -859,7 +859,7 @@ Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$   | Observed $Y_i$   |
 
 - But what does the sharp null imply about the unobserved potential outcomes? Can we fill in those question marks?
 
-# The sharp null
+## The sharp null
 
 - Yes! Under the sharp null, $Y_i(1) = Y_i(0)$
 
@@ -877,7 +877,7 @@ Unit  $i$  | Treatment  $D_i$  | $Y_i(1)$ | $Y_i(0)$   | Observed $Y_i$   |
 realizations of $\mathbf{D}$!
 
 
-# The test statistic
+## The test statistic
 
 ::: {.incremental}
 
@@ -894,7 +894,7 @@ realizations of $\mathbf{D}$!
 
 :::
 
-# The randomization distribution
+## The randomization distribution
 
 ::: {.incremental}
 
@@ -912,7 +912,7 @@ realizations of $\mathbf{D}$!
 
 :::
 
-# Monte carlo approximation
+## Monte carlo approximation
 
 ::: {.incremental}
 
@@ -928,7 +928,7 @@ realizations of $\mathbf{D}$!
 
 :::
 
-# Putting it all together
+## Putting it all together
 
 ::: {.incremental}
 
@@ -942,7 +942,7 @@ realizations of $\mathbf{D}$!
 
 :::
 
-# Inverting tests to get confidence intervals
+## Inverting tests to get confidence intervals
 
 ::: {.incremental}
 
@@ -962,7 +962,7 @@ realizations of $\mathbf{D}$!
 :::
 
 
-# Conclusion
+## Conclusion
 
 ::: {.incremental}
 
@@ -982,7 +982,7 @@ realizations of $\mathbf{D}$!
 :::
 
 
-# Next week
+## Next week
 
 ::: {.incremental}
 

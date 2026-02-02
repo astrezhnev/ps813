@@ -1,0 +1,560 @@
+---
+title: "Week 3: Experiments - Part 2"
+subtitle: "PS 813 - Causal Inference"
+author:
+  - name: "Anton Strezhnev"
+    affiliation: "University of Wisconsin-Madison"
+    email: strezhnev@wisc.edu
+date: "February 2, 2026"
+date-format: "MMMM D, YYYY"
+editor:
+  render-on-save: true
+format:
+  revealjs:
+    theme: [default, custom.scss]
+    slide-number: true
+    overview: true
+    navigation-mode: vertical
+    progress: false
+    controls: true
+    link-external-newwindow: true
+    footer: "PS 813 - University of Wisconsin - Madison"
+    html-math-method:
+      method: mathjax
+      url: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+execute:
+  cache: true
+code:
+  execute:
+    - r
+    - python
+embed-resources: true
+
+---
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tidyverse)
+library(estimatr)
+options(digits=3)
+```
+
+## Last week
+
+  - Why randomized experiments work
+    - Guarantee treatment $D_i$ is independent of potential outcomes $\{Y_i(1), Y_i(0)\}$
+
+. . .
+
+  - Inference for treatment effects
+    - **Fisher**: Can get exact p-values under the sharp null just knowing the
+    distribution of treatment assignments.
+    - **Neyman**: A conservative variance estimator for the difference-in-means + large-sample asymptotics
+
+    $$\widehat{Var(\hat{\tau})} = \frac{s^2_t}{N_t} + \frac{s_c^2}{N_c}$$
+
+## This week
+
+- One post-experiment use of covariates
+  - Balance checking
+
+. . .
+
+- When should we *not* condition on covariates?
+  - When they're **post-treatment**!
+  - Attrition/Non-compliance
+  - Bounds when we *have* to condition
+  
+. . .
+  
+- How do we **generalize** from a single experiment?
+  - What are the dimensions of **external validity**?
+  - What do we have to believe to **transport** a treatment effect?
+
+## Balance checking {.title-slide}
+
+$$
+  \require{cancel}
+$$
+
+## Balance tests
+
+  - One reason to use covariates even in completely randomized designs is to check
+whether the experiment **actually** did what it was supposed to do.
+
+. . .
+
+- Under any randomization scheme that satisfies **ignorability**:
+
+$$X_i {\perp \! \! \! \perp} D_i$$
+
+
+$$E[X_i | D_i = 1] = E[X_i | D_i = 0]$$
+
+. . .
+
+- If we correctly randomized treatment, then the expectation (and the distribution)
+of covariates should be **the same** in treatment and control.
+
+. . .
+
+- But in any given sample, we'll observe a difference just by chance -- how do we
+know if this **is a problem**?
+
+## Against balance tests
+
+- One view in some experimentally-focused fields is that you should **never** waste time
+checking balance
+
+. . .
+
+- **Senn (1994)** *Statistics in Medicine*
+  1. Randomization ensures balance over all randomizations.
+  2. Observing any particular imbalance in our sample doesn't disprove 1
+
+. . .
+
+- What if we did screw up? What if the randomization software had a bug? What if there was
+some implementation issue?
+  - Maybe a balance test helps here?
+
+. . .
+
+- But how would we interpret a "failed" balance test?
+  - A reason to go back and check the randomization process - if we think that it *did* actually work
+  as intended, we may just have gotten unlucky.
+  - Might want a stricter threshold than $p < .05$ if we **really** believe treatment was randomized.
+
+
+## Against balance tests
+
+- Another more nuanced argument is that you shouldn't use balance tests to decide
+whether to **include or not include** covariates in the analysis.
+
+. . .
+
+- **Mutz, Pemantle and Pham (2019)**
+  - Sometimes, researchers run a lot of univariate balance tests in an experiment.
+  - If a test for some covariate fails, they include that covariate in adjustment.
+  - This process risks raising false-positive rates through researcher "degrees-of-freedom"
+
+. . .
+
+- This is a correct argument, but is less an argument against *balance testing* per-se and
+more against ad-hoc or data-dependent covariate choices.
+
+. . .
+
+- When we talk about covariates in experiments next week, we'll emphasize the importance of **ex-ante** choices.
+  - Don't decide on **what** to include in your analysis based on tests conducted **after the experiment is run** and using **information from the experiment outcomes**
+  
+## Example: Broockman and Kalla (2023)
+
+- **Broockman and Kalla (2023)** "Consuming cross-cutting media causes learning and moderates attitudes: A field experiment with Fox News viewers"
+  - Sample of **763** individuals in **695** households who regularly watch FOX News
+  - **Treatment**: Incentivized to watch CNN instead of Fox News for one month (**304** individuals)
+  - **Control**: No incentive (continue normal viewing habits) (**459** individuals)
+
+. . .
+
+- Randomization was done at the household level, stratified by baseline characteristics
+- Let's check balance on pre-treatment covariates!
+
+## Broockman and Kalla: Loading the data
+
+```{r bk-load}
+#| echo: true
+#| message: false
+#| warning: false
+library(haven)
+library(cobalt)
+
+# Load the Broockman and Kalla data
+bk <- read_dta("assets/data/primary_dataset_unstd.dta")
+
+# Treatment variable: treat (1 = CNN incentive, 0 = control)
+table(bk$treat)
+```
+
+```{r bk-covariates}
+#| echo: true
+# Key pre-treatment covariates from baseline survey (t1_) and voter file (vf_)
+baseline_covs <- c(
+  # Demographics from voter file
+  "vf_age",                    # Age
+  # Baseline survey measures (t1_ = time 1, pre-treatment)
+  "t1_pid7",                   # 7-point party ID (1 = Strong Dem to 7 = Strong Rep)
+  "t1_ideo_self",              # Self-reported ideology
+  "t1_therm_trump",            # Feeling thermometer: Trump
+  "t1_therm_biden",            # Feeling thermometer: Biden
+  "t1_therm_fox",              # Feeling thermometer: Fox News
+  "t1_therm_cnn",              # Feeling thermometer: CNN
+  "t1_trust_fox",              # Trust in Fox News
+  "t1_trust_cnn",              # Trust in CNN
+  # Pre-treatment TV viewership (from set-top box data)
+  "pre_treat_fox_minutes",     # Minutes watching Fox pre-treatment
+  "pre_treat_cnn_minutes"      # Minutes watching CNN pre-treatment
+)
+```
+
+## Broockman and Kalla: Aggregate to household level
+
+```{r bk-aggregate}
+#| echo: true
+# Randomization was at the household level, so aggregate covariates
+bk_hh <- bk %>%
+  group_by(hh_id) %>%
+  summarize(
+    treat = first(treat),
+    # Take the mean of covariates within household
+    across(all_of(baseline_covs), ~mean(.x, na.rm = TRUE))
+  ) %>%
+  ungroup()
+
+# Check: 695 households
+nrow(bk_hh)
+
+# Check treatment assignments
+table(bk_hh$treat)
+```
+
+## Broockman and Kalla: Balance table
+
+```{r bk-balance}
+#| echo: true
+#| output-location: slide
+# Use cobalt to create a balance table (at household level)
+bal_tab <- bal.tab(
+  x = bk_hh %>% select(all_of(baseline_covs)),   # Covariate data
+  treat = bk_hh$treat,           # Treatment indicator
+  binary = "std",                # Standardize binary variables
+  continuous = "std",            # Standardize continuous variables
+  s.d.denom = "pooled"           # Use pooled SD for standardization
+)
+print(bal_tab)
+```
+
+## Broockman and Kalla: Love plot
+
+```{r bk-love, message = F}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 6
+#| fig-align: center
+# Create a Love plot to visualize balance (at household level)
+love.plot(
+  x = bk_hh %>% select(all_of(baseline_covs)),
+  treat = bk_hh$treat,
+  binary = "std",
+  s.d.denom = "pooled",
+  thresholds = c(m = 0.1),      # Show threshold at 0.1 SMD
+  var.order = "unadjusted",
+  abs = TRUE,                    # Show absolute values
+  title = "Covariate Balance: Broockman & Kalla (2023)"
+)
+```
+
+## Multiple testing
+
+- We could put a simple difference-in-means hypothesis test on each of these covariates.
+  - But with enough covariates, we'd find a $p < .05$ just by chance!
+
+```{r, echo=T}
+lm_robust(t1_therm_trump ~ treat, data=bk_hh)
+```
+
+. . . 
+
+- Is there a quick way to deal with multiple testing in balance checks?
+  - Could correct for multiple comparisons...
+  - ...or construct a **single** test.
+  - How? With randomization inference!
+  
+## Permutation/Randomization Testing for Balance
+
+- **Step 1:** Run a regression predicting treatment using all the covariates. Store the F-statistic (or any statistic summarizing "goodness of fit")
+
+```{r, echo=T}
+treat_reg <- lm_robust(treat ~ vf_age + t1_pid7 + t1_ideo_self + t1_therm_trump + t1_therm_biden +
+                         t1_therm_fox + t1_therm_cnn + t1_trust_fox + t1_trust_cnn + pre_treat_fox_minutes +
+                         pre_treat_cnn_minutes, data=bk_hh)
+tstat_obs <- treat_reg$fstatistic[1]
+```
+
+## Permutation/Randomization Testing for Balance
+
+- **Step 2:** Permute the treatment assignment based on the known assignment scheme
+- **Step 3:** Calculate the test statistic under alternative assignments
+
+```{r, echo=T}
+set.seed(53706)
+iterations <- 10000
+tstat_null <- rep(NA, iterations)
+for (i in 1:iterations){
+  bk_hh$treat_perm <- sample(bk_hh$treat)
+  treat_reg_null <- lm_robust(treat_perm ~ vf_age + t1_pid7 + t1_ideo_self + t1_therm_trump + t1_therm_biden +
+                         t1_therm_fox + t1_therm_cnn + t1_trust_fox + t1_trust_cnn + pre_treat_fox_minutes +
+                         pre_treat_cnn_minutes, data=bk_hh)
+  tstat_null[i] <- treat_reg_null$fstatistic[1]
+}
+```
+
+## Permutation/Randomization Testing for Balance
+
+- **Step 4:** Compare the observed statistic to the permuted null distribution
+
+```{r, echo=T}
+mean(tstat_null > tstat_obs)
+```
+
+## Guidelines for balance testing
+
+- Testing for balance to assess whether randomization occurred as intended: [Good]{.green}
+  - Careful with multiple testing/false positives
+  - $p < .05$ is probably too low of a threshold, but you should probably be concerned if $p < 1 \times 10^{-6}$
+  - What do do if a balance check fails? Check your experiment!
+
+. . .
+
+- Testing for balance to pick which covariates to adjust for: [Bad]{.red}
+  - "Garden of forking paths"
+  - You should choose covariates ex-ante (even if not blocking)
+  - Pick covariates that predict $Y$ - balance checks are the wrong criteria.
+
+## Post-treatment bias {.title-slide}
+
+## Post-treatment covariates
+
+- When talking about covariates, we've emphasized that $X_i$ must be **pre-treatment**
+- What happens when we condition on some post-treatment variable (call it $M_i$).
+- **Intuition**: $M_i$ is post-treatment. It has potential outcomes: $\{M_i(1), M_i(0)\}$
+  - But we can't condition on the *latent* potential outcomes, we only condition on the observed $M_i$
+  - This induces a form of enodgenous "selection bias"
+
+. . .
+
+- Many cases in political science
+  - Experiments with **non-compliance**
+  - **Attention checks** in survey experiments.
+  - **Administrative data** (police interactions are only recorded if a stop occurs)
+  - **Attrition** induced by treatment (e.g. court proceedings that settle)
+
+
+## Post-treatment bias
+
+- Let $M_i$ denote the post-treatment covariate. Since it's post-treatment, it has potential outcomes $\{M_i(1), M_i(0)\}$ as
+though it were any other outcome.
+
+. . .
+
+- By randomization
+
+$$\{M_i(1), M_i(0)\} {\perp \! \! \! \perp} D_i$$
+
+. . .
+
+- What happens if we take the difference-in-means conditional on $M_i = 1$
+
+$$E[Y_i | D_i = 1, M_i = 1] - E[Y_i | D_i = 0, M_i = 1]$$
+
+. . .
+
+- By consistency:
+
+$$E[Y_i(1) | D_i = 1, M_i(1) = 1] - E[Y_i(0) | D_i = 0, M_i(0) = 1]$$
+
+
+## Post-treatment bias
+
+- Ignorability gets us
+
+$$E[Y_i(1) |  M_i(1) = 1] - E[Y_i(0) |  M_i(0) = 1]$$
+
+. . .
+
+- Is this the ATE?
+  - No! $M_i(1) = 1$ and $M_i(0) = 1$ define *two different subsets of the sample*
+- Under what assumptions would we get the ATE?
+
+. . .
+
+- Either:
+  1. No individual effect of treatment on $M_i$: $M_i(1) = M_i(0) \text{   } \forall i$
+  2. $\{M_i(1), M_i(0)\} {\perp \! \! \! \perp} \{Y_i(1), Y_i(0\}$
+
+. . .
+
+- Neither of these assumptions is guaranteed by an experiment since we don't randomize $M_i$
+- Therefore, conditioning on a post-treatment quantity **breaks** the experiment -- now it's an observational study.
+
+## Principal strata
+
+- We can think of the combination of $D_i$ and $M_i$ as defining a "sub-group" of units - these are referred to as "principal strata"
+  - They have different names in the literature - one common convention comes from the **compliance** literature
+  
+Stratum              | $M_i(1)$          |  $M_i(0)$ |
+:-------------------:|:-----------------:|:---------:|
+"Always-takers"      |  $1$              |  $1$      |
+"Never-takers"       |  $0$              |  $0$      |
+"Compliers"          |  $1$              |  $0$      |
+"Defiers"            |  $0$              |  $1$      |
+
+. . .
+
+- Units with $M_i = 1$ could be any three of these strata. Even observing $D_i$ narrows it down to only two - we can't observe the strata directly.
+- Strata aren't necessarily independent of potential outcomes $Y_i(d)$!
+
+## Example: Administrative data
+
+- **Knox, Lowe and Mummolo (2020)** consider the problem of estimating the effect of civilian race on police use of force.
+  - Typically, past studies would use administrative data from police departments on stops
+  - Compare police use of force among Black civilians who are stopped and white civilians who are stopped.
+  - **Problem**: Stops are post-treatment!
+
+. . .
+
+- Define $D_i$ as the treatment (race of civilian), $M_i$ is an indicator for whether a stop occurs, $Y_i$ is severe use of force
+- The difference-in-means does not identify the treatment effect - instead, we get:
+
+$$E[Y_i(1) |  M_i(1) = 1] - E[Y_i(0) | M_i(0) = 1]$$
+
+
+## Bounding the Survivor Average Causal Effect
+
+- Can we say anything about the treatment effect?
+  - First - we need to define *which* treatment effect we're interested in to begin with!
+
+. . .
+
+- We can define meaningful causal quantities **conditional** on the principal strata
+  - Because these are *pre-treatment*
+  
+. . .
+
+- For example, the **complier** average causal effect
+
+  $$\tau_{\text{CACE}} = E[Y_i(1) - Y_i(0) | M_i(1) = 1, M_i(0) = 0]$$
+
+- We'll talk more about this when we get to **instrumental variables**
+
+## The Survivor Average Causal Effect
+
+- In the attrition setting, we focus on the **Survivor Average Causal Effect (SACE)**
+  - The ATE among those who would be observed irrespective of treatment status
+
+$$\tau_{\text{SACE}} = E[Y_i(1) - Y_i(0) | M_i(1) = 1, M_i(0) = 1]$$
+
+. . .
+
+- Recall that the difference-in-means only gets us 
+
+$$E[Y_i(1) |  M_i(1) = 1] - E[Y_i(0) | M_i(0) = 1]$$
+
+. . . 
+
+- $M_i(1) = 1$ is not the same subset of units as $M_i(0) = 1$
+  - $M_i(1) = 1$ includes both **survivors** and the "compliers" 
+  - $M_i(0) = 1$ includes both **survivors** and the "defiers"
+
+## Monotonicity
+
+- One approach to bounding from **Lee (2009)** relies on an additional **monotonicity** assumption
+
+$$M_i(1) \ge M_i(0) \text{  } \forall i \quad \text{or} \quad M_i(1) \le M_i(0) \text{  } \forall i$$
+
+. . .
+
+- Treatment affects selection in **only one direction**
+  - Either treatment can only *increase* the probability of being observed (no "defiers")
+  - Or treatment can only *decrease* the probability of being observed (no "compliers")
+
+
+## Intuition for Lee bounds
+
+- Suppose treatment *increases* observation probability: $M_i(1) \ge M_i(0)$
+  - More units observed in the treated group than control group
+
+. . .
+
+- Among observed treated units:
+  - Some are "survivors" (would be observed even under control)
+  - Some are "compliers" (observed *only because* they got treatment)
+
+. . .
+
+- Among observed control units:
+  - **All** are "survivors" (they're observed despite being in control)
+
+. . .
+
+- If we could figure out who the compliers are and remove them - we could get point identification.
+  - We **can't** - but we can get the **share** of compliers.
+  - And we can **worst-case** which units those happen to be.
+
+## The trimming procedure
+
+- Let $p_1 = Pr(M_i = 1 | D_i = 1)$ and $p_0 = Pr(M_i = 1 | D_i = 0)$
+- Under monotonicity with $M_i(1) \ge M_i(0)$: $p_1 \ge p_0$
+
+. . .
+
+- The fraction of treated-and-observed who are "compliers" is:
+
+$$q = \frac{p_1 - p_0}{p_1}$$
+
+. . .
+
+- **Idea:** Trim proportion $q$ of the treated group's outcome distribution
+  - Trimming from the **top** gives a **lower bound** on $\tau_{\text{SACE}}$
+  - Trimming from the **bottom** gives an **upper bound** on $\tau_{\text{SACE}}$
+
+. . .
+
+- Why does this work?
+  - We don't know *which* units are compliers, but we know *how many* there are
+  - Trimming the extremes gives us worst-case bounds
+
+## Lee (2009) bounds
+
+- Under **random assignment** and **monotonicity**, the SACE is bounded by:
+
+$$\tau^{LB} \le \tau_{\text{SACE}} \le \tau^{UB}$$
+
+. . .
+
+- **Lower bound**: Trim the top $q$ proportion of treated outcomes
+
+$$\tau^{LB} = \mathbb{E}[Y_i | D_i = 1, M_i = 1, Y_i \le y^{1-q}_1] - \mathbb{E}[Y_i | D_i = 0, M_i = 1]$$
+
+- **Upper bound**: Trim the bottom $q$ proportion of treated outcomes
+
+$$\tau^{UB} = E[Y_i | D_i = 1, M_i = 1, Y_i \ge y^{q}_1] - E[Y_i | D_i = 0, M_i = 1]$$
+
+. . .
+
+- Where $y^{q}_1$ is the $q$-th quantile of the treated outcome distribution
+
+
+## Properties of Lee bounds
+
+- **Sharp bounds**: Cannot be tightened without additional assumptions
+  - Any value within the bounds is consistent with the data and assumptions
+
+. . .
+
+- Bounds **collapse to a point** when:
+  - Treatment has no effect on selection ($p_1 = p_0$, so $q = 0$)
+  - In this case, SACE = ATE (no selection problem!)
+  - But the **monotonicity** assumption is key here!
+
+. . .
+
+- Can construct confidence intervals for bounds using bootstrap or analytical standard errors
+  - Note that the **bounds** reflect fundamental uncertainty in mapping from **observed outcomes** to **potential outcomes**
+  - Further uncertainty is driven by the usual sources (random sampling/treatment assignment)
+
+
+

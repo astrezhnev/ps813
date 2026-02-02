@@ -32,12 +32,12 @@ embed-resources: true
 
 ---
 
-# Welcome! {.title-slide}
+## Welcome! {.title-slide}
 $$
   \require{cancel}
 $$
 
-# Course Overview
+## Course Overview
 
 ::: {.incremental}
 
@@ -55,7 +55,7 @@ $$
   
 :::
 
-# Course Objectives
+## Course Objectives
 
 ::: {.incremental}
 
@@ -73,7 +73,7 @@ $$
   
 :::
 
-# Course workflow
+## Course workflow
 
 ::: {.incremental}
 - **Lectures**
@@ -90,7 +90,7 @@ $$
   
 :::
 
-# Course workflow
+## Course workflow
 
 
 ::: {.incremental}
@@ -108,7 +108,7 @@ $$
 
 :::
 
-# Course workflow
+## Course workflow
 
 ::: {.incremental}
 
@@ -129,7 +129,7 @@ $$
 
 
 
-# Class Requirements
+## Class Requirements
 
 ::: {.incremental}
 
@@ -147,7 +147,7 @@ intro course taught in most departments)
 
 
 
-# A brief overview
+## A brief overview
 
 ::: {.incremental}
 
@@ -163,9 +163,9 @@ intro course taught in most departments)
   
 :::
 
-# Review: Estimators and their properties {.title-slide}
+## Review: Estimators and their properties {.title-slide}
 
-# Estimation
+## Estimation
 
 ::: {.incremental}
 
@@ -183,7 +183,7 @@ via a greek letter (e.g. $\mu$, $\pi$)
 :::
 
 
-# Estimation
+## Estimation
 
 ::: {.incremental}
 
@@ -202,12 +202,12 @@ estimate the quantity of interest. Often denoted with a hat on the parameter of 
 :::
 
 
-# Estimation
+## Estimation
 
 ![Illustrating Estimation](assets/estimation.jpeg){height="500px"}
 
 
-# Estimation
+## Estimation
 
 ::: {.incremental}
 
@@ -230,7 +230,7 @@ $\mu$ from an i.i.d. sample of $n$ observations $Y_1, Y_2, \dotsc, Y_n$.
 :::
 
 
-# Estimation
+## Estimation
 
 ::: {.incremental}
 
@@ -244,12 +244,12 @@ systematically higher or lower than the target?
   
 :::
 
-# Estimation
+## Estimation
 
 ![Properties of Estimators](assets/bias-variance.png){height="500px"}
 
 
-# Unbiasedness
+## Unbiasedness
 
 ::: {.incremental}
 
@@ -271,7 +271,7 @@ systematically higher or lower than the target?
 :::
 
 
-# Variance
+## Variance
 
 ::: {.incremental}
 
@@ -291,7 +291,7 @@ systematically higher or lower than the target?
 
 :::
 
-# Asymptotic properties
+## Asymptotic properties
 
 ::: {.incremental}
 
@@ -310,7 +310,7 @@ systematically higher or lower than the target?
  
 :::
 
-# Convergence in probability
+## Convergence in probability
 
 ::: {.incremental}
 
@@ -328,7 +328,7 @@ systematically higher or lower than the target?
 
 :::
 
-# Properties of convergence in probability
+## Properties of convergence in probability
 
 - Consider two sequences $X_n \xrightarrow{p} x$ and $Y_n \xrightarrow{p} y$ and continuous function $g()$. By the continuous mapping theorem
 
@@ -337,7 +337,7 @@ systematically higher or lower than the target?
 3. $X_n/Y_n \xrightarrow{p} x/y$ if $y \neq 0$
 4. $g(X_n) \xrightarrow{p} g(x)$
 
-# Convergence in distribution
+## Convergence in distribution
 
 ::: {.incremental}
 
@@ -354,7 +354,7 @@ systematically higher or lower than the target?
     
 :::
 
-# Properties of convergence in distribution
+## Properties of convergence in distribution
 
 ::: {.incremental}
 
@@ -367,7 +367,7 @@ systematically higher or lower than the target?
     
 :::
 
-# The Central Limit Theorem
+## The Central Limit Theorem
 
 ::: {.incremental}
 
@@ -386,7 +386,7 @@ systematically higher or lower than the target?
 
 :::
 
-# Big-$O_p$ and little-$o_p$ notation
+## Big-$O_p$ and little-$o_p$ notation
 
 ::: {.incremental}
 
@@ -402,7 +402,7 @@ systematically higher or lower than the target?
 :::
 
 
-# Big-$O_p$ and little-$o_p$ notation
+## Big-$O_p$ and little-$o_p$ notation
 
 ::: {.incremental}
 
@@ -417,7 +417,7 @@ systematically higher or lower than the target?
 
 :::
 
-# $\sqrt{n}$-consistency
+## $\sqrt{n}$-consistency
 
 ::: {.incremental}
 
@@ -432,7 +432,7 @@ systematically higher or lower than the target?
 
 :::
 
-# $\sqrt{n}$-consistency
+## $\sqrt{n}$-consistency
 
 ::: {.incremental}
 
@@ -450,7 +450,7 @@ systematically higher or lower than the target?
   
 :::
 
-# Next week
+## Next week
 
 ::: {.incremental}
 
