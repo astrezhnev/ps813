@@ -39,6 +39,7 @@ embed-resources: true
 #| warning: false
 library(tidyverse)
 library(estimatr)
+knitr::opts_chunk$set(digits = 3)
 options(digits=3)
 ```
 
@@ -406,6 +407,7 @@ Stratum              | $M_i(1)$          |  $M_i(0)$ |
 
 - Units with $M_i = 1$ could be any three of these strata. Even observing $D_i$ narrows it down to only two - we can't observe the strata directly.
 - Strata aren't necessarily independent of potential outcomes $Y_i(d)$!
+  - (e.g.) Units that would **never** respond to a door-to-door canvasser likely have **lower** propensity to vote.
 
 ## Example: Administrative data
 
@@ -417,35 +419,21 @@ Stratum              | $M_i(1)$          |  $M_i(0)$ |
 . . .
 
 - Define $D_i$ as the treatment (race of civilian), $M_i$ is an indicator for whether a stop occurs, $Y_i$ is severe use of force
-- The difference-in-means does not identify the treatment effect - instead, we get:
-
-$$E[Y_i(1) |  M_i(1) = 1] - E[Y_i(0) | M_i(0) = 1]$$
-
-
-## Bounding the Survivor Average Causal Effect
-
-- Can we say anything about the treatment effect?
-  - First - we need to define *which* treatment effect we're interested in to begin with!
+- The difference-in-means does not identify the treatment effect unless...
+  - $D_i$ has no effect on $M_i$ (race of civilian doesn't affect whether an officer makes a stop)
+  - $M_i(1), M_i(0)$ is independent of $Y_i(1), Y_i(0)$ (civilian propensity to be stopped (net of race) is uncorrelated with propensity to use force)
 
 . . .
 
-- We can define meaningful causal quantities **conditional** on the principal strata
-  - Because these are *pre-treatment*
-  
-. . .
-
-- For example, the **complier** average causal effect
-
-  $$\tau_{\text{CACE}} = E[Y_i(1) - Y_i(0) | M_i(1) = 1, M_i(0) = 0]$$
-
-- We'll talk more about this when we get to **instrumental variables**
+- Given substantive knowledge of this setting, both assumptions seem **implausible**.
 
 ## The Survivor Average Causal Effect
 
 - In the attrition setting, we focus on the **Survivor Average Causal Effect (SACE)**
   - The ATE among those who would be observed irrespective of treatment status
+  - In the **Knox, Lowe and Mummolo (2020)** setting: the ATE of civilian race on use of force among civilians who would be stopped irrespective of their race.
 
-$$\tau_{\text{SACE}} = E[Y_i(1) - Y_i(0) | M_i(1) = 1, M_i(0) = 1]$$
+  $$\tau_{\text{SACE}} = E[Y_i(1) - Y_i(0) | M_i(1) = 1, M_i(0) = 1]$$
 
 . . .
 
@@ -456,8 +444,8 @@ $$E[Y_i(1) |  M_i(1) = 1] - E[Y_i(0) | M_i(0) = 1]$$
 . . . 
 
 - $M_i(1) = 1$ is not the same subset of units as $M_i(0) = 1$
-  - $M_i(1) = 1$ includes both **survivors** and the "compliers" 
-  - $M_i(0) = 1$ includes both **survivors** and the "defiers"
+  - $M_i(1) = 1$ includes both **survivors** and the "compliers" (or "helped by treatment")
+  - $M_i(0) = 1$ includes both **survivors** and the "defiers" (or "hurt by treatment")
 
 ## Monotonicity
 
@@ -470,16 +458,22 @@ $$M_i(1) \ge M_i(0) \text{  } \forall i \quad \text{or} \quad M_i(1) \le M_i(0) 
 - Treatment affects selection in **only one direction**
   - Either treatment can only *increase* the probability of being observed (no "defiers")
   - Or treatment can only *decrease* the probability of being observed (no "compliers")
+  
+. . .
+
+- In the **Knox, Lowe and Mummolo (2020)** setting
+  - **Monotonicity**: non-minorities who are stopped **would also have been stopped** had they been a minority.
 
 
 ## Intuition for Lee bounds
 
 - Suppose treatment *increases* observation probability: $M_i(1) \ge M_i(0)$
   - More units observed in the treated group than control group
+- Monotonicity lets us pin down more of the **principal strata**.
 
 . . .
 
-- Among observed treated units:
+- Among observed **treated units**:
   - Some are "survivors" (would be observed even under control)
   - Some are "compliers" (observed *only because* they got treatment)
 
@@ -490,38 +484,54 @@ $$M_i(1) \ge M_i(0) \text{  } \forall i \quad \text{or} \quad M_i(1) \le M_i(0) 
 
 . . .
 
+## Intuition for Lee bounds
+
 - If we could figure out who the compliers are and remove them - we could get point identification.
   - We **can't** - but we can get the **share** of compliers.
   - And we can **worst-case** which units those happen to be.
+  
+. . .
+
+- Additionally, the share of survivors is **balanced** between treated and control
+
+  $$Pr(M_i(1) = M_i(0) = 1 | D_i = 0) = Pr(M_i(1) = M_i(0) = 1 | D_i = 1)$$
+  
+. . .
+
+- All observed units in the control group are survivors
+
+  $$Pr(M_i = 1 | D_i = 0) = Pr(M_i(1) = M_i(0) = 1 | D_i = 0)$$
+  
+- And observed units in the treated group are survivors + compliers 
+
+  $$Pr(M_i = 1 | D_i = 1) = Pr(M_i(1) = M_i(0) = 1 | D_i = 1) +  Pr(M_i(1) = 1, M_i(0) = 0 | D_i = 1)$$W
 
 ## The trimming procedure
 
 - Let $p_1 = Pr(M_i = 1 | D_i = 1)$ and $p_0 = Pr(M_i = 1 | D_i = 0)$
-- Under monotonicity with $M_i(1) \ge M_i(0)$: $p_1 \ge p_0$
+  - Under monotonicity with $M_i(1) \ge M_i(0)$: $p_1 \ge p_0$
 
 . . .
 
-- The fraction of treated-and-observed who are "compliers" is:
+- We can use the proportion of survivors identified in the control group to identify the share of "compliers" in the treated group by **differencing**
+  - Treated group is **survivors + compliers** - we subtract the **survivors** using what we observe in control
+
+- So the fraction of treated-and-observed who are "compliers" is:
 
 $$q = \frac{p_1 - p_0}{p_1}$$
 
 . . .
 
-- **Idea:** Trim proportion $q$ of the treated group's outcome distribution
-  - Trimming from the **top** gives a **lower bound** on $\tau_{\text{SACE}}$
-  - Trimming from the **bottom** gives an **upper bound** on $\tau_{\text{SACE}}$
+- The premise of **bounds** and **partial identification** is that we want to characterize the **set** of treatment effects consistent with the observed data.
+  - When we have point identification, only *one* ATE is consistent with the observed data.
+  - But sometimes **a range** of effects is consistent with what we see because the data only partially pins down the potential outcomes.
 
-. . .
+## The trimming procedure
 
-- Why does this work?
-  - We don't know *which* units are compliers, but we know *how many* there are
-  - Trimming the extremes gives us worst-case bounds
-
-## Lee (2009) bounds
-
-- Under **random assignment** and **monotonicity**, the SACE is bounded by:
-
-$$\tau^{LB} \le \tau_{\text{SACE}} \le \tau^{UB}$$
+- Under the monotonicity assumption, we can apply a **trimming procedure** to obtain a "worst case" and a "best case" for the ATE
+  - The identification problem comes from the fact that the treated group has some share of compliers - we identify that quantity $q$
+  - Trimming the **top** $q$ observations (in terms of the outcome) gives a **lower bound** on $\tau_{\text{SACE}}$
+  - Trimming the **bottom** $q$ observations (in terms of the outcome) gives an **upper bound** on $\tau_{\text{SACE}}$
 
 . . .
 
@@ -533,9 +543,96 @@ $$\tau^{LB} = \mathbb{E}[Y_i | D_i = 1, M_i = 1, Y_i \le y^{1-q}_1] - \mathbb{E}
 
 $$\tau^{UB} = E[Y_i | D_i = 1, M_i = 1, Y_i \ge y^{q}_1] - E[Y_i | D_i = 0, M_i = 1]$$
 
-. . .
-
 - Where $y^{q}_1$ is the $q$-th quantile of the treated outcome distribution
+
+
+## Visualizing the Lee Bounds
+
+- Let's run a quick simulation to show how the bounds work.
+- Consider a case with $0$ **treatment effect**, standard normal outcome, but selection associated with both **treatment** and **outcome**
+  - $Y > 0$ - $70\%$ chance of being a survivor, $30\%$ chance of being a "complier"/"helped by treatment"
+  - $Y < 0$ - $30\%$ chance of being a survivor, $70\%$ chance of being a "complier"/"helped by treatment"
+- Marginally, half of all observations are **compliers** and half are **survivors**.
+  
+- Generate $5000$ observations, and look at their outcome distributions?
+
+```{r, echo=T}
+set.seed(53706)
+N <- 5000
+lee_df <- data.frame(Y = rnorm(n = N), D = rbinom(N, 1, .5))
+lee_df <- lee_df %>% mutate(treatment = case_when(D == 1 ~ "Treated",
+                                                  D == 0 ~ "Control"))
+lee_df <- lee_df %>% mutate(survivor_prob = case_when(Y > 0 ~ .7,
+                                                      Y < 0 ~ .3))
+lee_df <- lee_df %>% mutate(survivor = rbinom(N, 1, survivor_prob))
+lee_df <- lee_df %>% mutate(M = as.numeric(D == 0)*survivor + as.numeric(D == 1))
+```
+
+## Visualizing the Lee Bounds
+
+- What do the **observed** outcome distributions look like?
+
+```{r}
+lee_df %>% filter(M == 1) %>% ggplot(aes(x=Y, fill = treatment)) + geom_density(alpha = .5) +
+  theme_bw() + scale_fill_manual(values = c("indianred", "dodgerblue")) +
+  labs(fill = "Treatment Group") + geom_vline(xintercept = mean(lee_df %>% filter(M == 1&D == 0) %>% pull(Y)), lwd = 2, lty = 2, colour = "indianred") +
+ geom_vline(xintercept = mean(lee_df %>% filter(M == 1&D == 1) %>% pull(Y)), lwd = 2, lty = 2, colour = "dodgerblue") +
+  ggtitle("Naive Comparison among M = 1")
+```
+
+- It looks like there's a **negative** effect?
+  - There isn't - this is selection! 
+  - We're systematically filtering out the treated high $Y$ outcomes at a higher rate to control.
+
+## Visualizing the Lee Bounds
+
+- What's our estimated share of compliers in the treatment group?
+
+```{r, echo = T}
+q_complier <- (mean(lee_df$M[lee_df$D == 1]) - mean(lee_df$M[lee_df$D == 0]))/
+  (mean(lee_df$M[lee_df$D == 1]))
+q_complier
+```
+
+- Consistent with our simulation, about half of the units in the treated group are **compliers**
+- Our bounds are going to be constructed by dropping either...
+  - ...the **top** half of the distribution (lower bound)...
+  - ...or the **bottom** half of the distribution (upper bound)
+  
+- What quantiles are we cutting at?
+
+```{r}
+cutpoints <- quantile(lee_df$Y[lee_df$M == 1&lee_df$D == 1], c(q_complier, 1-q_complier))
+cutpoints
+```
+  
+## Visualizing the Lee Bounds
+
+- What happens when we trim the bottom
+
+```{r}
+lee_df %>% filter(M == 1) %>% filter(D == 0|D==1&Y > cutpoints[2]) %>% ggplot(aes(x=Y, fill = treatment)) + geom_density(alpha = .5) +
+  theme_bw() + scale_fill_manual(values = c("indianred", "dodgerblue")) +
+  labs(fill = "Treatment Group") + geom_vline(xintercept = mean(lee_df %>% filter(M == 1&D == 0) %>% pull(Y)), lwd = 2, lty = 2, colour = "indianred") +
+ geom_vline(xintercept = mean(lee_df %>% filter(M == 1&D == 1&Y > cutpoints[2]) %>% pull(Y)), lwd = 2, lty = 2, colour = "dodgerblue") +
+  ggtitle("Lee Bounds - Upper Bound - Trim *bottom* half of treated")
+```
+
+- Upper bound is **positive**
+
+## Visualizing the Lee Bounds
+
+- What happens when we trim the top
+
+```{r}
+lee_df %>% filter(M == 1) %>% filter(D == 0|D==1&Y < cutpoints[1]) %>% ggplot(aes(x=Y, fill = treatment)) + geom_density(alpha = .5) +
+  theme_bw() + scale_fill_manual(values = c("indianred", "dodgerblue")) +
+  labs(fill = "Treatment Group") + geom_vline(xintercept = mean(lee_df %>% filter(M == 1&D == 0) %>% pull(Y)), lwd = 2, lty = 2, colour = "indianred") +
+ geom_vline(xintercept = mean(lee_df %>% filter(M == 1&D == 1&Y < cutpoints[1]) %>% pull(Y)), lwd = 2, lty = 2, colour = "dodgerblue") +
+  ggtitle("Lee Bounds - Lower Bound - Trim *top* half of treated")
+```
+
+- Lower bound is **negative** - The bounds contain the true effect of **zero**
 
 
 ## Properties of Lee bounds
@@ -557,4 +654,328 @@ $$\tau^{UB} = E[Y_i | D_i = 1, M_i = 1, Y_i \ge y^{q}_1] - E[Y_i | D_i = 0, M_i 
   - Further uncertainty is driven by the usual sources (random sampling/treatment assignment)
 
 
+## Effect Heterogeneity and External Validity {.title-slide}
 
+## Heterogeneous treatment effects (HTE)
+
+- When targeting the **average treatment effect**, we (try to be) entirely agnostic about the variation in $\tau_i$ between units in the sample
+
+  $$\tau_{\text{ATE}} = \mathbb{E}[Y_i(1) - Y_i(0)]$$
+  
+. . .
+
+- But often we have **predictions** about average effects for different **sub-groups** in the sample.
+  - Effects of treatment are **rarely homogeneous**: **Republicans** respond to cues from Trump differently than **Democrats**!
+  - Can we target a different quantity of interest?
+  
+. . .
+
+- The **Conditional Average Treatment Effect (CATE)**
+
+  $$\tau(x) =  \underbrace{E[Y_i(1) | X_i = x]}_{\text{Mean P.O. under treatment among units with } X_i = x} -  \underbrace{E[Y_i(0) | X_i = x]}_{\text{Mean P.O. under control among units with } X_i = x}$$
+  
+## Estimating the CATE
+
+- In a **completely randomized experiment**, it's straightforward to estimate the CATE
+  - Just subset down to units with $X_i = x$ and take the difference-in-means
+  - Conventional inference using the Neyman variance (though be careful assuming asymptotic normality when sub-groups are small!)
+
+. . .
+
+$$\hat{\tau}(x) = \frac{1}{N_{t,x}}\sum_{i: X_i = x}^N Y_i D_i - \frac{1}{N_{c,x}}\sum_{i: X_i = x}^N Y_i (1 - D_i)$$
+
+where $N_{t, x}$ is the number of units with $D_i = 1, X_i = x$ and $N_{c, x}$ is the number of units with $D_i = 0, X_i = x$
+
+. . . 
+
+- Be **careful** in interpretation - CATEs assign no **causal** interpretation to $X_i$
+  - (e.g.) A difference in treatment effects between **Democrats** and **Republicans** tells us nothing about the question "what if person $i$ were a Democrat rather than a Republican.
+  - Many $X_i$ are **non-manipulable**
+  
+## Illustration: Gerber, Green and Larimer (2008)
+
+- Let's return to the **Gerber, Green and Larimer (2008)** example
+  - Does **social pressure** get people to vote more?
+ 
+```{r, echo=T, message=F, warning=F, cache=T}
+# Load the data
+data <- read_dta('assets/data/ggr_2008_individual.dta')
+
+# Aggregate to the household level
+data_hh <- data %>% group_by(hh_id) %>% summarize(treatment = treatment[1], voted = mean(voted),
+                                                   voted_p2004 = mean(p2004))
+```
+
+## Illustration: Gerber, Green and Larimer (2008)
+ 
+- We might ask whether **social pressure** works more on the **less habitual voters**
+  - Were voters who turned out in the 2004 primary affected differently by the Neighbors treatment?
+
+```{r, echo=T, message=F, warning=F}
+# Estimated ATE of Neighbors (3) vs. Control (0)
+# At least one member of the household voted in Primary 2004
+ate_voters <- mean(data_hh$voted[data_hh$treatment == 3&data_hh$voted_p2004 > 0]) -
+  mean(data_hh$voted[data_hh$treatment == 0&data_hh$voted_p2004 > 0])
+ate_voters
+
+# No member of the household voted in Primary 2004
+ate_nonvoters <- mean(data_hh$voted[data_hh$treatment == 3&data_hh$voted_p2004 == 0]) -
+  mean(data_hh$voted[data_hh$treatment == 0&data_hh$voted_p2004 == 0])
+ate_nonvoters
+```
+
+## Illustration: Gerber, Green and Larimer (2008)
+ 
+- Let's compute the Neyman variance
+
+```{r, echo=T, message=F, warning=F}
+# Estimate the sampling variance
+# At least one member of the household voted in Primary 2004
+var_ate_voters = var(data_hh$voted[data_hh$treatment == 3&data_hh$voted_p2004 > 0])/sum(data_hh$treatment == 3&data_hh$voted_p2004 > 0) +
+  var(data_hh$voted[data_hh$treatment == 0&data_hh$voted_p2004 > 0])/sum(data_hh$treatment == 0&data_hh$voted_p2004 > 0)
+
+# No member of the household voted in Primary 2004
+var_ate_nonvoters = var(data_hh$voted[data_hh$treatment == 3&data_hh$voted_p2004 == 0])/sum(data_hh$treatment == 3&data_hh$voted_p2004 == 0) +
+  var(data_hh$voted[data_hh$treatment == 0&data_hh$voted_p2004 == 0])/sum(data_hh$treatment == 0&data_hh$voted_p2004 == 0)
+
+```
+
+
+## Illustration: Gerber, Green and Larimer (2008)
+
+- 95% asymptotic confidence intervals
+
+```{r, echo=T, message=F, warning=F}
+# Confidence intervals (assuming asymptotic normality)
+ate_95CI_voters = c(ate_voters - qnorm(.975)*sqrt(var_ate_voters),
+  ate_voters + qnorm(.975)*sqrt(var_ate_voters))
+# At least one member of the household voted in Primary 2004
+ate_95CI_voters
+
+ate_95CI_nonvoters = c(ate_nonvoters - qnorm(.975)*sqrt(var_ate_nonvoters),
+  ate_nonvoters + qnorm(.975)*sqrt(var_ate_nonvoters))
+# No member of the household voted in Primary 2004
+ate_95CI_nonvoters
+```
+
+## Illustration: Gerber, Green and Larimer (2008)
+
+- It looks like more regular voters were actually **more** affected by treatment than the less regular voters.
+  - But is this just due to chance?
+  
+. . .
+
+- Suppose we're interested in the difference in the population CATEs
+  - We need to construct a hypothesis test **explicitly** for this difference!
+  - The difference between **significant** and **not significant** is not necessarily **significant**!
+  
+. . .
+
+- Remember, the **variance** of the difference in our CATE estimators is **larger** than the variance of any one CATE
+  - Estimates of the CATEs themselves are less noisy than the **difference** in the estimates.
+
+. . . 
+
+- For inference on the population difference in CATEs, remember that the variances are **additive** 
+
+  $$\widehat{Var}(\hat{\tau}_{\text{voter}} - \hat{\tau}_{\text{non-voter}}) = \frac{s_{t, \text{voter}}^2}{N_{t, \text{voter}}} + \frac{s_{c, \text{voter}}^2}{N_{c, \text{voter}}} +  \frac{s_{t, \text{non-voter}}^2}{N_{t, \text{non-voter}}} + \frac{s_{c, \text{non-voter}}^2}{N_{c, \text{non-voter}}}$$
+
+## Illustration: Gerber, Green and Larimer (2008)
+
+```{r, echo=T}
+# Confidence intervals for the **difference** in CATEs
+ate_95CI_voters = c(ate_voters - ate_nonvoters - qnorm(.975)*sqrt(var_ate_voters + var_ate_nonvoters),
+  ate_voters - ate_nonvoters + qnorm(.975)*sqrt(var_ate_voters + var_ate_nonvoters))
+
+ate_voters - ate_nonvoters
+
+ate_95CI_voters
+```
+
+## Illustration: Gerber, Green and Larimer (2008)
+
+- Again, with a binary treatment/binary covariate, you can do this with **OLS** and an **interaction term**
+
+```{r, echo =T, message=F, warning=F}
+lm_robust(voted ~ I(treatment==3)*I(voted_p2004 > 0), data=data_hh %>% filter(treatment == 3|treatment == 0))
+```
+
+## Illustration: Gerber, Green and Larimer (2008)
+
+- Voters who voted in the 2004 primary were **more** affected by the social pressure mailer (we'll reveal your voting history to your neighbors) than voters who did not.
+
+. . .
+
+- Is this because...
+  - ...these voters are the **types** of people to be more susceptible to social pressure (they already do pro-social things like voting)?
+  - ...these voters received a different treatment **content** (the treatment told them they were *voters*)?
+  - ...other explanations?
+
+. . .
+
+- Does this tell us anything about the **effect** of voting in the 2004 primary?
+
+. . .
+
+- If we re-ran this experiment in a place that exhibits generally lower turnout, do we expect effects...
+  - ...to be larger?
+  - ...to be smaller?
+  - ...to be the same?
+  
+## External validity {.title-slide}
+
+## External validity
+
+- Two types of **validity** in experiments **(Shadish, Cook and Campbell, 2002)**
+  - **Internal validity** - Does the study identify a **causal parameter**
+  - **External validity** - Does the study identify the **causal parameter** that we **care about**?
+
+. . .
+
+- Experiments guarantee the first, but only **theory** can give us the latter.
+
+. . .
+
+- Often also characterized in terms of **generalization** and **transportability**
+
+  - **Generalization**: Does the sample average treatment effect generalize to the ATE in the population from which the sample was drawn?
+  - **Transportability**: Does an effect from one population "transport" to another, different, population?
+  - Personally, I don't think this distinction is *that* important, but it's sometimes made.
+
+## External validity
+
+![Findley, Kikuta, Denly (2021) "External Validity" *Annual Review of Political Science*](assets/generalization.png){width="100%"}
+
+
+## Typology of External Validity
+
+::: {.incremental}
+
+- **Egami and Hartman (2022)** - My preferred take
+  - **Starting point**: The experiment identifies the **Sample Average Treatment Effect** $\tau_{\text{SATE}}$
+  - **Goal**: What do we need to assume to generalize to the **Target-Population Average Treatment Effect**: $\tau_{\text{T-PATE}}$
+  - Combines *generalization* (sample to population) and *transportation* (source to target)
+  
+- What do we need to **assume** in order to generalize? **Four** sources of **variability** between SATE and T-PATE
+  - **X-validity** - Differences in characteristics of **units**
+  - **D-validity** - Differences in characteristics of **treatments**
+  - **Y-validity** - Differences in characteristics of **outcomes**
+  - **C-validity** - Differences in the **contexts**
+
+:::
+
+## X-validity
+
+::: {.incremental}
+
+- Often samples and target populations differ in the types of units they contain
+  - Convenience samples, demographic variation between study site and target site, etc...
+  
+- What assumption do we need to make in order to address this threat to inference?
+  - **Treatment effects** do not vary systematically in the **differences** in $X_i$ between sample and target.
+  
+- Two ways this could be satisfied
+  1. Genuine random sampling assumptions (sample vs. population don't systematically differ)
+  2. **Effect homogeneity** assumption - the covariates that drive sample vs. target differences are not correlated with **treatment effects**
+  
+- If we knew the relevant $X_i$, we could also **re-weight** the sample to match the target distribution.
+  - We'll talk about IPW for causal inference later on - this is the same idea!
+
+- Significant cross-discipline and cross-sub-discipline variation in **belief** in effect homogeneity
+  - **Lab experimentalists** tend towards belief in homogeneity (e.g. political psychology)
+  - **Field experimentalists** tend towards belief in **heterogeneity** (e.g. "Metaketa" project)
+  
+:::
+
+## D-validity
+
+::: {.incremental}
+
+- Often the way we run our study and implement our treatment is **not** how it will be done in the "real world"
+  - Realism vs. abstraction in our intervention
+  - "Hawthorne effects"/observation 
+  - "Real world" effects are sometimes bundles of interventions
+  
+- What assumption do we need to make in order to address this threat to inference?
+  - **Effect homogeneity** across variations of treatment 
+  - Note that "random sampling" doesn't really solve anything here since it's a characteristic of the **intervention** being studied!
+
+- Examples: Brutger, R., Kertzer, J.D., Renshon, J., Tingley, D. and Weiss, C.M., 2023. **Abstraction and detail in experimental design**. *American Journal of Political Science*, 67(4), pp.979-995.
+  - Debates in IR vignette experiments about how much abstraction to use (e.g. real event or hypothetical; China or "a country")
+  - **Findings**: No variation effects across degrees of "hypotheticality" but some heterogeneity based on additional **contextual** detail and actor identity
+
+:::
+
+## Y-validity
+
+::: {.incremental}
+  
+- Sometimes we can't actually measure the outcome we're interested in evaluating
+  - e.g. In medicine - sometimes need to use a **surrogate** endpoint $Y^*$ when outcome of interest $Y$ is costly to obtain.
+  - In surveys - We observe a **stated preference** but are actually interested in **revealed preferences** and **behavior**
+  
+- What assumption do we need to make in order to address this threat to inference?
+  - It's **effect homogeneity** again! Type of outcome doesn't modify treatment effect
+  
+- Here we can sometimes use evidence about the **predictive power** of the outcome we measure $Y^*$ on the outcome of interest $Y$
+  - "Surrogate endpoint" literature in medicine
+  - But beware the **surrogacy paradox**! 
+  - Positive effect of $D$ on $Y^*$ and a positive association between $Y^*$ and $Y$ does not guarantee a positive effect of $D$ on $Y$
+
+:::
+
+
+## C-validity
+
+::: {.incremental}
+
+- Treatment effects may depend on the **context** in which the study was conducted
+  - Different cities
+  - Different countries
+  - Different times **(Munger, 2023)**
+
+- What assumption do we need to make in order to address this threat to inference?
+  - Once again, it's **effect homogeneity** by context!
+  - C-validity is basically just X-validity with **no overlap**
+  - So even if we knew the covariate distributions in both, we can't **reweight** the sample to match the target population.
+  
+- How do we figure out whether context matters?
+  - Run **many studies** in **many settings** and compare the results!
+  
+:::
+
+## Summary
+
+::: {.incremental}
+
+- Questions of **external validity** are questions of **effect heterogeneity**
+  - Is the average effect of treatment the same for **these** units as it is for **those** units
+  
+- The degree of **effect heterogeneity** is a question of **scientific knowledge**
+  - Highly discipline dependent! Some fields think we can generalize more than others.
+  
+- Think about the **dimensions** across which **sample** and **target population** can vary
+  - Units
+  - Outcomes
+  - Treatments
+  - Settings
+  - **Mechanisms**
+
+:::
+
+## Next week
+
+::: {.incremental}
+
+- Using covariates to improve **precision** in experiments
+  - Why blocking/stratification can't hurt you!
+  - Covariate adjustment using **linear regression**
+  
+- **Agnostic** approach to linear regression
+  - Linear regression as the **best linear predictor**
+  - What assumptions do we **really** need to justify OLS as an estimator
+  - Why (properly specified) OLS regression is fine in a randomized experiment **even if** you get the model wrong!
+  
+- Analysis of cluster-randomized experiments (time permitting!)
+
+:::
