@@ -1012,56 +1012,91 @@
     "href": "slides/week3/week3_experiments_part_2.html#principal-strata",
     "title": "Week 3: Experiments - Part 2",
     "section": "Principal strata",
-    "text": "Principal strata\n\nWe can think of the combination of \\(D_i\\) and \\(M_i\\) as defining a “sub-group” of units - these are referred to as “principal strata”\n\nThey have different names in the literature - one common convention comes from the compliance literature\n\n\n\n\n\nStratum\n\\(M_i(1)\\)\n\\(M_i(0)\\)\n\n\n\n\n“Always-takers”\n\\(1\\)\n\\(1\\)\n\n\n“Never-takers”\n\\(0\\)\n\\(0\\)\n\n\n“Compliers”\n\\(1\\)\n\\(0\\)\n\n\n“Defiers”\n\\(0\\)\n\\(1\\)\n\n\n\n\n\nUnits with \\(M_i = 1\\) could be any three of these strata. Even observing \\(D_i\\) narrows it down to only two - we can’t observe the strata directly.\nStrata aren’t necessarily independent of potential outcomes \\(Y_i(d)\\)!"
+    "text": "Principal strata\n\nWe can think of the combination of \\(D_i\\) and \\(M_i\\) as defining a “sub-group” of units - these are referred to as “principal strata”\n\nThey have different names in the literature - one common convention comes from the compliance literature\n\n\n\n\n\nStratum\n\\(M_i(1)\\)\n\\(M_i(0)\\)\n\n\n\n\n“Always-takers”\n\\(1\\)\n\\(1\\)\n\n\n“Never-takers”\n\\(0\\)\n\\(0\\)\n\n\n“Compliers”\n\\(1\\)\n\\(0\\)\n\n\n“Defiers”\n\\(0\\)\n\\(1\\)\n\n\n\n\n\nUnits with \\(M_i = 1\\) could be any three of these strata. Even observing \\(D_i\\) narrows it down to only two - we can’t observe the strata directly.\nStrata aren’t necessarily independent of potential outcomes \\(Y_i(d)\\)!\n\n(e.g.) Units that would never respond to a door-to-door canvasser likely have lower propensity to vote."
   },
   {
     "objectID": "slides/week3/week3_experiments_part_2.html#example-administrative-data",
     "href": "slides/week3/week3_experiments_part_2.html#example-administrative-data",
     "title": "Week 3: Experiments - Part 2",
     "section": "Example: Administrative data",
-    "text": "Example: Administrative data\n\nKnox, Lowe and Mummolo (2020) consider the problem of estimating the effect of civilian race on police use of force.\n\nTypically, past studies would use administrative data from police departments on stops\nCompare police use of force among Black civilians who are stopped and white civilians who are stopped.\nProblem: Stops are post-treatment!\n\n\n\n\nDefine \\(D_i\\) as the treatment (race of civilian), \\(M_i\\) is an indicator for whether a stop occurs, \\(Y_i\\) is severe use of force\nThe difference-in-means does not identify the treatment effect - instead, we get:\n\n\\[E[Y_i(1) |  M_i(1) = 1] - E[Y_i(0) | M_i(0) = 1]\\]"
-  },
-  {
-    "objectID": "slides/week3/week3_experiments_part_2.html#bounding-the-survivor-average-causal-effect",
-    "href": "slides/week3/week3_experiments_part_2.html#bounding-the-survivor-average-causal-effect",
-    "title": "Week 3: Experiments - Part 2",
-    "section": "Bounding the Survivor Average Causal Effect",
-    "text": "Bounding the Survivor Average Causal Effect\n\nCan we say anything about the treatment effect?\n\nFirst - we need to define which treatment effect we’re interested in to begin with!\n\n\n\n\nWe can define meaningful causal quantities conditional on the principal strata\n\nBecause these are pre-treatment\n\n\n\n\n\nFor example, the complier average causal effect\n\\[\\tau_{\\text{CACE}} = E[Y_i(1) - Y_i(0) | M_i(1) = 1, M_i(0) = 0]\\]\nWe’ll talk more about this when we get to instrumental variables"
+    "text": "Example: Administrative data\n\nKnox, Lowe and Mummolo (2020) consider the problem of estimating the effect of civilian race on police use of force.\n\nTypically, past studies would use administrative data from police departments on stops\nCompare police use of force among Black civilians who are stopped and white civilians who are stopped.\nProblem: Stops are post-treatment!\n\n\n\n\nDefine \\(D_i\\) as the treatment (race of civilian), \\(M_i\\) is an indicator for whether a stop occurs, \\(Y_i\\) is severe use of force\nThe difference-in-means does not identify the treatment effect unless…\n\n\\(D_i\\) has no effect on \\(M_i\\) (race of civilian doesn’t affect whether an officer makes a stop)\n\\(M_i(1), M_i(0)\\) is independent of \\(Y_i(1), Y_i(0)\\) (civilian propensity to be stopped (net of race) is uncorrelated with propensity to use force)\n\n\n\n\n\nGiven substantive knowledge of this setting, both assumptions seem implausible."
   },
   {
     "objectID": "slides/week3/week3_experiments_part_2.html#the-survivor-average-causal-effect",
     "href": "slides/week3/week3_experiments_part_2.html#the-survivor-average-causal-effect",
     "title": "Week 3: Experiments - Part 2",
     "section": "The Survivor Average Causal Effect",
-    "text": "The Survivor Average Causal Effect\n\nIn the attrition setting, we focus on the Survivor Average Causal Effect (SACE)\n\nThe ATE among those who would be observed irrespective of treatment status\n\n\n\\[\\tau_{\\text{SACE}} = E[Y_i(1) - Y_i(0) | M_i(1) = 1, M_i(0) = 1]\\]\n\n\nRecall that the difference-in-means only gets us\n\n\\[E[Y_i(1) |  M_i(1) = 1] - E[Y_i(0) | M_i(0) = 1]\\]\n\n\n\n\\(M_i(1) = 1\\) is not the same subset of units as \\(M_i(0) = 1\\)\n\n\\(M_i(1) = 1\\) includes both survivors and the “compliers”\n\\(M_i(0) = 1\\) includes both survivors and the “defiers”"
+    "text": "The Survivor Average Causal Effect\n\nIn the attrition setting, we focus on the Survivor Average Causal Effect (SACE)\n\nThe ATE among those who would be observed irrespective of treatment status\nIn the Knox, Lowe and Mummolo (2020) setting: the ATE of civilian race on use of force among civilians who would be stopped irrespective of their race.\n\n\\[\\tau_{\\text{SACE}} = E[Y_i(1) - Y_i(0) | M_i(1) = 1, M_i(0) = 1]\\]\n\n\n\nRecall that the difference-in-means only gets us\n\n\\[E[Y_i(1) |  M_i(1) = 1] - E[Y_i(0) | M_i(0) = 1]\\]\n\n\n\n\\(M_i(1) = 1\\) is not the same subset of units as \\(M_i(0) = 1\\)\n\n\\(M_i(1) = 1\\) includes both survivors and the “compliers” (or “helped by treatment”)\n\\(M_i(0) = 1\\) includes both survivors and the “defiers” (or “hurt by treatment”)"
   },
   {
     "objectID": "slides/week3/week3_experiments_part_2.html#monotonicity",
     "href": "slides/week3/week3_experiments_part_2.html#monotonicity",
     "title": "Week 3: Experiments - Part 2",
     "section": "Monotonicity",
-    "text": "Monotonicity\n\nOne approach to bounding from Lee (2009) relies on an additional monotonicity assumption\n\n\\[M_i(1) \\ge M_i(0) \\text{  } \\forall i \\quad \\text{or} \\quad M_i(1) \\le M_i(0) \\text{  } \\forall i\\]\n\n\nTreatment affects selection in only one direction\n\nEither treatment can only increase the probability of being observed (no “defiers”)\nOr treatment can only decrease the probability of being observed (no “compliers”)"
+    "text": "Monotonicity\n\nOne approach to bounding from Lee (2009) relies on an additional monotonicity assumption\n\n\\[M_i(1) \\ge M_i(0) \\text{  } \\forall i \\quad \\text{or} \\quad M_i(1) \\le M_i(0) \\text{  } \\forall i\\]\n\n\nTreatment affects selection in only one direction\n\nEither treatment can only increase the probability of being observed (no “defiers”)\nOr treatment can only decrease the probability of being observed (no “compliers”)\n\n\n\n\n\nIn the Knox, Lowe and Mummolo (2020) setting\n\nMonotonicity: non-minorities who are stopped would also have been stopped had they been a minority."
   },
   {
     "objectID": "slides/week3/week3_experiments_part_2.html#intuition-for-lee-bounds",
     "href": "slides/week3/week3_experiments_part_2.html#intuition-for-lee-bounds",
     "title": "Week 3: Experiments - Part 2",
     "section": "Intuition for Lee bounds",
-    "text": "Intuition for Lee bounds\n\nSuppose treatment increases observation probability: \\(M_i(1) \\ge M_i(0)\\)\n\nMore units observed in the treated group than control group\n\n\n\n\nAmong observed treated units:\n\nSome are “survivors” (would be observed even under control)\nSome are “compliers” (observed only because they got treatment)\n\n\n\n\n\nAmong observed control units:\n\nAll are “survivors” (they’re observed despite being in control)\n\n\n\n\n\nIf we could figure out who the compliers are and remove them - we could get point identification.\n\nWe can’t - but we can get the share of compliers.\nAnd we can worst-case which units those happen to be."
+    "text": "Intuition for Lee bounds\n\nSuppose treatment increases observation probability: \\(M_i(1) \\ge M_i(0)\\)\n\nMore units observed in the treated group than control group\n\nMonotonicity lets us pin down more of the principal strata.\n\n\n\nAmong observed treated units:\n\nSome are “survivors” (would be observed even under control)\nSome are “compliers” (observed only because they got treatment)\n\n\n\n\n\nAmong observed control units:\n\nAll are “survivors” (they’re observed despite being in control)"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#intuition-for-lee-bounds-1",
+    "href": "slides/week3/week3_experiments_part_2.html#intuition-for-lee-bounds-1",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Intuition for Lee bounds",
+    "text": "Intuition for Lee bounds\n\nIf we could figure out who the compliers are and remove them - we could get point identification.\n\nWe can’t - but we can get the share of compliers.\nAnd we can worst-case which units those happen to be.\n\n\n\n\nAdditionally, the share of survivors is balanced between treated and control\n\\[Pr(M_i(1) = M_i(0) = 1 | D_i = 0) = Pr(M_i(1) = M_i(0) = 1 | D_i = 1)\\]\n\n\n\n\nAll observed units in the control group are survivors\n\\[Pr(M_i = 1 | D_i = 0) = Pr(M_i(1) = M_i(0) = 1 | D_i = 0)\\]\nAnd observed units in the treated group are survivors + compliers\n\\[Pr(M_i = 1 | D_i = 1) = Pr(M_i(1) = M_i(0) = 1 | D_i = 1) +  Pr(M_i(1) = 1, M_i(0) = 0 | D_i = 1)\\]W"
   },
   {
     "objectID": "slides/week3/week3_experiments_part_2.html#the-trimming-procedure",
     "href": "slides/week3/week3_experiments_part_2.html#the-trimming-procedure",
     "title": "Week 3: Experiments - Part 2",
     "section": "The trimming procedure",
-    "text": "The trimming procedure\n\nLet \\(p_1 = Pr(M_i = 1 | D_i = 1)\\) and \\(p_0 = Pr(M_i = 1 | D_i = 0)\\)\nUnder monotonicity with \\(M_i(1) \\ge M_i(0)\\): \\(p_1 \\ge p_0\\)\n\n\n\nThe fraction of treated-and-observed who are “compliers” is:\n\n\\[q = \\frac{p_1 - p_0}{p_1}\\]\n\n\n\nIdea: Trim proportion \\(q\\) of the treated group’s outcome distribution\n\nTrimming from the top gives a lower bound on \\(\\tau_{\\text{SACE}}\\)\nTrimming from the bottom gives an upper bound on \\(\\tau_{\\text{SACE}}\\)\n\n\n\n\n\nWhy does this work?\n\nWe don’t know which units are compliers, but we know how many there are\nTrimming the extremes gives us worst-case bounds"
+    "text": "The trimming procedure\n\nLet \\(p_1 = Pr(M_i = 1 | D_i = 1)\\) and \\(p_0 = Pr(M_i = 1 | D_i = 0)\\)\n\nUnder monotonicity with \\(M_i(1) \\ge M_i(0)\\): \\(p_1 \\ge p_0\\)\n\n\n\n\nWe can use the proportion of survivors identified in the control group to identify the share of “compliers” in the treated group by differencing\n\nTreated group is survivors + compliers - we subtract the survivors using what we observe in control\n\nSo the fraction of treated-and-observed who are “compliers” is:\n\n\\[q = \\frac{p_1 - p_0}{p_1}\\]\n\n\n\nThe premise of bounds and partial identification is that we want to characterize the set of treatment effects consistent with the observed data.\n\nWhen we have point identification, only one ATE is consistent with the observed data.\nBut sometimes a range of effects is consistent with what we see because the data only partially pins down the potential outcomes."
   },
   {
-    "objectID": "slides/week3/week3_experiments_part_2.html#lee-2009-bounds",
-    "href": "slides/week3/week3_experiments_part_2.html#lee-2009-bounds",
+    "objectID": "slides/week3/week3_experiments_part_2.html#the-trimming-procedure-1",
+    "href": "slides/week3/week3_experiments_part_2.html#the-trimming-procedure-1",
     "title": "Week 3: Experiments - Part 2",
-    "section": "Lee (2009) bounds",
-    "text": "Lee (2009) bounds\n\nUnder random assignment and monotonicity, the SACE is bounded by:\n\n\\[\\tau^{LB} \\le \\tau_{\\text{SACE}} \\le \\tau^{UB}\\]\n\n\nLower bound: Trim the top \\(q\\) proportion of treated outcomes\n\n\\[\\tau^{LB} = \\mathbb{E}[Y_i | D_i = 1, M_i = 1, Y_i \\le y^{1-q}_1] - \\mathbb{E}[Y_i | D_i = 0, M_i = 1]\\]\n\nUpper bound: Trim the bottom \\(q\\) proportion of treated outcomes\n\n\\[\\tau^{UB} = E[Y_i | D_i = 1, M_i = 1, Y_i \\ge y^{q}_1] - E[Y_i | D_i = 0, M_i = 1]\\]\n\n\n\nWhere \\(y^{q}_1\\) is the \\(q\\)-th quantile of the treated outcome distribution"
+    "section": "The trimming procedure",
+    "text": "The trimming procedure\n\nUnder the monotonicity assumption, we can apply a trimming procedure to obtain a “worst case” and a “best case” for the ATE\n\nThe identification problem comes from the fact that the treated group has some share of compliers - we identify that quantity \\(q\\)\nTrimming the top \\(q\\) observations (in terms of the outcome) gives a lower bound on \\(\\tau_{\\text{SACE}}\\)\nTrimming the bottom \\(q\\) observations (in terms of the outcome) gives an upper bound on \\(\\tau_{\\text{SACE}}\\)\n\n\n\n\nLower bound: Trim the top \\(q\\) proportion of treated outcomes\n\n\\[\\tau^{LB} = \\mathbb{E}[Y_i | D_i = 1, M_i = 1, Y_i \\le y^{1-q}_1] - \\mathbb{E}[Y_i | D_i = 0, M_i = 1]\\]\n\nUpper bound: Trim the bottom \\(q\\) proportion of treated outcomes\n\n\\[\\tau^{UB} = E[Y_i | D_i = 1, M_i = 1, Y_i \\ge y^{q}_1] - E[Y_i | D_i = 0, M_i = 1]\\]\n\nWhere \\(y^{q}_1\\) is the \\(q\\)-th quantile of the treated outcome distribution"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#visualizing-the-lee-bounds",
+    "href": "slides/week3/week3_experiments_part_2.html#visualizing-the-lee-bounds",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Visualizing the Lee Bounds",
+    "text": "Visualizing the Lee Bounds\n\nLet’s run a quick simulation to show how the bounds work.\nConsider a case with \\(0\\) treatment effect, standard normal outcome, but selection associated with both treatment and outcome\n\n\\(Y &gt; 0\\) - \\(70\\%\\) chance of being a survivor, \\(30\\%\\) chance of being a “complier”/“helped by treatment”\n\\(Y &lt; 0\\) - \\(30\\%\\) chance of being a survivor, \\(70\\%\\) chance of being a “complier”/“helped by treatment”\n\nMarginally, half of all observations are compliers and half are survivors.\nGenerate \\(5000\\) observations, and look at their outcome distributions?\n\n\nset.seed(53706)\nN &lt;- 5000\nlee_df &lt;- data.frame(Y = rnorm(n = N), D = rbinom(N, 1, .5))\nlee_df &lt;- lee_df %&gt;% mutate(treatment = case_when(D == 1 ~ \"Treated\",\n                                                  D == 0 ~ \"Control\"))\nlee_df &lt;- lee_df %&gt;% mutate(survivor_prob = case_when(Y &gt; 0 ~ .7,\n                                                      Y &lt; 0 ~ .3))\nlee_df &lt;- lee_df %&gt;% mutate(survivor = rbinom(N, 1, survivor_prob))\nlee_df &lt;- lee_df %&gt;% mutate(M = as.numeric(D == 0)*survivor + as.numeric(D == 1))"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#visualizing-the-lee-bounds-1",
+    "href": "slides/week3/week3_experiments_part_2.html#visualizing-the-lee-bounds-1",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Visualizing the Lee Bounds",
+    "text": "Visualizing the Lee Bounds\n\nWhat do the observed outcome distributions look like?\n\n\n\nIt looks like there’s a negative effect?\n\nThere isn’t - this is selection!\nWe’re systematically filtering out the treated high \\(Y\\) outcomes at a higher rate to control."
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#visualizing-the-lee-bounds-2",
+    "href": "slides/week3/week3_experiments_part_2.html#visualizing-the-lee-bounds-2",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Visualizing the Lee Bounds",
+    "text": "Visualizing the Lee Bounds\n\nWhat’s our estimated share of compliers in the treatment group?\n\n\nq_complier &lt;- (mean(lee_df$M[lee_df$D == 1]) - mean(lee_df$M[lee_df$D == 0]))/\n  (mean(lee_df$M[lee_df$D == 1]))\nq_complier\n\n[1] 0.4968127\n\n\n\nConsistent with our simulation, about half of the units in the treated group are compliers\nOur bounds are going to be constructed by dropping either…\n\n…the top half of the distribution (lower bound)…\n…or the bottom half of the distribution (upper bound)\n\nWhat quantiles are we cutting at?\n\n\n\n 49.68127%  50.31873% \n0.02370004 0.03848793"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#visualizing-the-lee-bounds-3",
+    "href": "slides/week3/week3_experiments_part_2.html#visualizing-the-lee-bounds-3",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Visualizing the Lee Bounds",
+    "text": "Visualizing the Lee Bounds\n\nWhat happens when we trim the bottom\n\n\n\nUpper bound is positive"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#visualizing-the-lee-bounds-4",
+    "href": "slides/week3/week3_experiments_part_2.html#visualizing-the-lee-bounds-4",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Visualizing the Lee Bounds",
+    "text": "Visualizing the Lee Bounds\n\nWhat happens when we trim the top\n\n\n\nLower bound is negative - The bounds contain the true effect of zero"
   },
   {
     "objectID": "slides/week3/week3_experiments_part_2.html#properties-of-lee-bounds",
@@ -1069,6 +1104,153 @@
     "title": "Week 3: Experiments - Part 2",
     "section": "Properties of Lee bounds",
     "text": "Properties of Lee bounds\n\nSharp bounds: Cannot be tightened without additional assumptions\n\nAny value within the bounds is consistent with the data and assumptions\n\n\n\n\nBounds collapse to a point when:\n\nTreatment has no effect on selection (\\(p_1 = p_0\\), so \\(q = 0\\))\nIn this case, SACE = ATE (no selection problem!)\nBut the monotonicity assumption is key here!\n\n\n\n\n\nCan construct confidence intervals for bounds using bootstrap or analytical standard errors\n\nNote that the bounds reflect fundamental uncertainty in mapping from observed outcomes to potential outcomes\nFurther uncertainty is driven by the usual sources (random sampling/treatment assignment)"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#effect-heterogeneity-and-external-validity",
+    "href": "slides/week3/week3_experiments_part_2.html#effect-heterogeneity-and-external-validity",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Effect Heterogeneity and External Validity",
+    "text": "Effect Heterogeneity and External Validity"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#heterogeneous-treatment-effects-hte",
+    "href": "slides/week3/week3_experiments_part_2.html#heterogeneous-treatment-effects-hte",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Heterogeneous treatment effects (HTE)",
+    "text": "Heterogeneous treatment effects (HTE)\n\nWhen targeting the average treatment effect, we (try to be) entirely agnostic about the variation in \\(\\tau_i\\) between units in the sample\n\\[\\tau_{\\text{ATE}} = \\mathbb{E}[Y_i(1) - Y_i(0)]\\]\n\n\n\nBut often we have predictions about average effects for different sub-groups in the sample.\n\nEffects of treatment are rarely homogeneous: Republicans respond to cues from Trump differently than Democrats!\nCan we target a different quantity of interest?\n\n\n\n\n\nThe Conditional Average Treatment Effect (CATE)\n\\[\\tau(x) =  \\underbrace{E[Y_i(1) | X_i = x]}_{\\text{Mean P.O. under treatment among units with } X_i = x} -  \\underbrace{E[Y_i(0) | X_i = x]}_{\\text{Mean P.O. under control among units with } X_i = x}\\]"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#estimating-the-cate",
+    "href": "slides/week3/week3_experiments_part_2.html#estimating-the-cate",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Estimating the CATE",
+    "text": "Estimating the CATE\n\nIn a completely randomized experiment, it’s straightforward to estimate the CATE\n\nJust subset down to units with \\(X_i = x\\) and take the difference-in-means\nConventional inference using the Neyman variance (though be careful assuming asymptotic normality when sub-groups are small!)\n\n\n\n\\[\\hat{\\tau}(x) = \\frac{1}{N_{t,x}}\\sum_{i: X_i = x}^N Y_i D_i - \\frac{1}{N_{c,x}}\\sum_{i: X_i = x}^N Y_i (1 - D_i)\\]\nwhere \\(N_{t, x}\\) is the number of units with \\(D_i = 1, X_i = x\\) and \\(N_{c, x}\\) is the number of units with \\(D_i = 0, X_i = x\\)\n\n\n\nBe careful in interpretation - CATEs assign no causal interpretation to \\(X_i\\)\n\n(e.g.) A difference in treatment effects between Democrats and Republicans tells us nothing about the question “what if person \\(i\\) were a Democrat rather than a Republican.\nMany \\(X_i\\) are non-manipulable"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#illustration-gerber-green-and-larimer-2008",
+    "href": "slides/week3/week3_experiments_part_2.html#illustration-gerber-green-and-larimer-2008",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Illustration: Gerber, Green and Larimer (2008)",
+    "text": "Illustration: Gerber, Green and Larimer (2008)\n\nLet’s return to the Gerber, Green and Larimer (2008) example\n\nDoes social pressure get people to vote more?\n\n\n\n# Load the data\ndata &lt;- read_dta('assets/data/ggr_2008_individual.dta')\n\n# Aggregate to the household level\ndata_hh &lt;- data %&gt;% group_by(hh_id) %&gt;% summarize(treatment = treatment[1], voted = mean(voted),\n                                                   voted_p2004 = mean(p2004))"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#illustration-gerber-green-and-larimer-2008-1",
+    "href": "slides/week3/week3_experiments_part_2.html#illustration-gerber-green-and-larimer-2008-1",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Illustration: Gerber, Green and Larimer (2008)",
+    "text": "Illustration: Gerber, Green and Larimer (2008)\n\nWe might ask whether social pressure works more on the less habitual voters\n\nWere voters who turned out in the 2004 primary affected differently by the Neighbors treatment?\n\n\n\n# Estimated ATE of Neighbors (3) vs. Control (0)\n# At least one member of the household voted in Primary 2004\nate_voters &lt;- mean(data_hh$voted[data_hh$treatment == 3&data_hh$voted_p2004 &gt; 0]) -\n  mean(data_hh$voted[data_hh$treatment == 0&data_hh$voted_p2004 &gt; 0])\nate_voters\n\n[1] 0.09209231\n\n# No member of the household voted in Primary 2004\nate_nonvoters &lt;- mean(data_hh$voted[data_hh$treatment == 3&data_hh$voted_p2004 == 0]) -\n  mean(data_hh$voted[data_hh$treatment == 0&data_hh$voted_p2004 == 0])\nate_nonvoters\n\n[1] 0.07612996"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#illustration-gerber-green-and-larimer-2008-2",
+    "href": "slides/week3/week3_experiments_part_2.html#illustration-gerber-green-and-larimer-2008-2",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Illustration: Gerber, Green and Larimer (2008)",
+    "text": "Illustration: Gerber, Green and Larimer (2008)\n\nLet’s compute the Neyman variance\n\n\n# Estimate the sampling variance\n# At least one member of the household voted in Primary 2004\nvar_ate_voters = var(data_hh$voted[data_hh$treatment == 3&data_hh$voted_p2004 &gt; 0])/sum(data_hh$treatment == 3&data_hh$voted_p2004 &gt; 0) +\n  var(data_hh$voted[data_hh$treatment == 0&data_hh$voted_p2004 &gt; 0])/sum(data_hh$treatment == 0&data_hh$voted_p2004 &gt; 0)\n\n# No member of the household voted in Primary 2004\nvar_ate_nonvoters = var(data_hh$voted[data_hh$treatment == 3&data_hh$voted_p2004 == 0])/sum(data_hh$treatment == 3&data_hh$voted_p2004 == 0) +\n  var(data_hh$voted[data_hh$treatment == 0&data_hh$voted_p2004 == 0])/sum(data_hh$treatment == 0&data_hh$voted_p2004 == 0)"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#illustration-gerber-green-and-larimer-2008-3",
+    "href": "slides/week3/week3_experiments_part_2.html#illustration-gerber-green-and-larimer-2008-3",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Illustration: Gerber, Green and Larimer (2008)",
+    "text": "Illustration: Gerber, Green and Larimer (2008)\n\n95% asymptotic confidence intervals\n\n\n# Confidence intervals (assuming asymptotic normality)\nate_95CI_voters = c(ate_voters - qnorm(.975)*sqrt(var_ate_voters),\n  ate_voters + qnorm(.975)*sqrt(var_ate_voters))\n# At least one member of the household voted in Primary 2004\nate_95CI_voters\n\n[1] 0.08272279 0.10146183\n\nate_95CI_nonvoters = c(ate_nonvoters - qnorm(.975)*sqrt(var_ate_nonvoters),\n  ate_nonvoters + qnorm(.975)*sqrt(var_ate_nonvoters))\n# No member of the household voted in Primary 2004\nate_95CI_nonvoters\n\n[1] 0.06678196 0.08547795"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#illustration-gerber-green-and-larimer-2008-4",
+    "href": "slides/week3/week3_experiments_part_2.html#illustration-gerber-green-and-larimer-2008-4",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Illustration: Gerber, Green and Larimer (2008)",
+    "text": "Illustration: Gerber, Green and Larimer (2008)\n\nIt looks like more regular voters were actually more affected by treatment than the less regular voters.\n\nBut is this just due to chance?\n\n\n\n\nSuppose we’re interested in the difference in the population CATEs\n\nWe need to construct a hypothesis test explicitly for this difference!\nThe difference between significant and not significant is not necessarily significant!\n\n\n\n\n\nRemember, the variance of the difference in our CATE estimators is larger than the variance of any one CATE\n\nEstimates of the CATEs themselves are less noisy than the difference in the estimates.\n\n\n\n\n\nFor inference on the population difference in CATEs, remember that the variances are additive\n\\[\\widehat{Var}(\\hat{\\tau}_{\\text{voter}} - \\hat{\\tau}_{\\text{non-voter}}) = \\frac{s_{t, \\text{voter}}^2}{N_{t, \\text{voter}}} + \\frac{s_{c, \\text{voter}}^2}{N_{c, \\text{voter}}} +  \\frac{s_{t, \\text{non-voter}}^2}{N_{t, \\text{non-voter}}} + \\frac{s_{c, \\text{non-voter}}^2}{N_{c, \\text{non-voter}}}\\]"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#illustration-gerber-green-and-larimer-2008-5",
+    "href": "slides/week3/week3_experiments_part_2.html#illustration-gerber-green-and-larimer-2008-5",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Illustration: Gerber, Green and Larimer (2008)",
+    "text": "Illustration: Gerber, Green and Larimer (2008)\n\n# Confidence intervals for the **difference** in CATEs\nate_95CI_voters = c(ate_voters - ate_nonvoters - qnorm(.975)*sqrt(var_ate_voters + var_ate_nonvoters),\n  ate_voters - ate_nonvoters + qnorm(.975)*sqrt(var_ate_voters + var_ate_nonvoters))\n\nate_voters - ate_nonvoters\n\n[1] 0.01596235\n\nate_95CI_voters\n\n[1] 0.002727064 0.029197645"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#illustration-gerber-green-and-larimer-2008-6",
+    "href": "slides/week3/week3_experiments_part_2.html#illustration-gerber-green-and-larimer-2008-6",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Illustration: Gerber, Green and Larimer (2008)",
+    "text": "Illustration: Gerber, Green and Larimer (2008)\n\nAgain, with a binary treatment/binary covariate, you can do this with OLS and an interaction term\n\n\nlm_robust(voted ~ I(treatment==3)*I(voted_p2004 &gt; 0), data=data_hh %&gt;% filter(treatment == 3|treatment == 0))\n\n                                               Estimate  Std. Error    t value\n(Intercept)                                  0.25896339 0.001821941 142.135971\nI(treatment == 3)TRUE                        0.07612996 0.004769472  15.961924\nI(voted_p2004 &gt; 0)TRUE                       0.08847971 0.002625902  33.694977\nI(treatment == 3)TRUE:I(voted_p2004 &gt; 0)TRUE 0.01596235 0.006752823   2.363805\n                                                  Pr(&gt;|t|)    CI Lower\n(Intercept)                                   0.000000e+00 0.255392418\nI(treatment == 3)TRUE                         2.696797e-57 0.066781869\nI(voted_p2004 &gt; 0)TRUE                       9.922548e-248 0.083332984\nI(treatment == 3)TRUE:I(voted_p2004 &gt; 0)TRUE  1.808993e-02 0.002726931\n                                               CI Upper     DF\n(Intercept)                                  0.26253437 119995\nI(treatment == 3)TRUE                        0.08547805 119995\nI(voted_p2004 &gt; 0)TRUE                       0.09362643 119995\nI(treatment == 3)TRUE:I(voted_p2004 &gt; 0)TRUE 0.02919778 119995"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#illustration-gerber-green-and-larimer-2008-7",
+    "href": "slides/week3/week3_experiments_part_2.html#illustration-gerber-green-and-larimer-2008-7",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Illustration: Gerber, Green and Larimer (2008)",
+    "text": "Illustration: Gerber, Green and Larimer (2008)\n\nVoters who voted in the 2004 primary were more affected by the social pressure mailer (we’ll reveal your voting history to your neighbors) than voters who did not.\n\n\n\nIs this because…\n\n…these voters are the types of people to be more susceptible to social pressure (they already do pro-social things like voting)?\n…these voters received a different treatment content (the treatment told them they were voters)?\n…other explanations?\n\n\n\n\n\nDoes this tell us anything about the effect of voting in the 2004 primary?\n\n\n\n\nIf we re-ran this experiment in a place that exhibits generally lower turnout, do we expect effects…\n\n…to be larger?\n…to be smaller?\n…to be the same?"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#external-validity",
+    "href": "slides/week3/week3_experiments_part_2.html#external-validity",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "External validity",
+    "text": "External validity"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#external-validity-1",
+    "href": "slides/week3/week3_experiments_part_2.html#external-validity-1",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "External validity",
+    "text": "External validity\n\nTwo types of validity in experiments (Shadish, Cook and Campbell, 2002)\n\nInternal validity - Does the study identify a causal parameter\nExternal validity - Does the study identify the causal parameter that we care about?\n\n\n\n\nExperiments guarantee the first, but only theory can give us the latter.\n\n\n\n\nOften also characterized in terms of generalization and transportability\n\nGeneralization: Does the sample average treatment effect generalize to the ATE in the population from which the sample was drawn?\nTransportability: Does an effect from one population “transport” to another, different, population?\nPersonally, I don’t think this distinction is that important, but it’s sometimes made."
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#external-validity-2",
+    "href": "slides/week3/week3_experiments_part_2.html#external-validity-2",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "External validity",
+    "text": "External validity\n\nFindley, Kikuta, Denly (2021) “External Validity” Annual Review of Political Science"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#typology-of-external-validity",
+    "href": "slides/week3/week3_experiments_part_2.html#typology-of-external-validity",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Typology of External Validity",
+    "text": "Typology of External Validity\n\nEgami and Hartman (2022) - My preferred take\n\nStarting point: The experiment identifies the Sample Average Treatment Effect \\(\\tau_{\\text{SATE}}\\)\nGoal: What do we need to assume to generalize to the Target-Population Average Treatment Effect: \\(\\tau_{\\text{T-PATE}}\\)\nCombines generalization (sample to population) and transportation (source to target)\n\nWhat do we need to assume in order to generalize? Four sources of variability between SATE and T-PATE\n\nX-validity - Differences in characteristics of units\nD-validity - Differences in characteristics of treatments\nY-validity - Differences in characteristics of outcomes\nC-validity - Differences in the contexts"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#x-validity",
+    "href": "slides/week3/week3_experiments_part_2.html#x-validity",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "X-validity",
+    "text": "X-validity\n\nOften samples and target populations differ in the types of units they contain\n\nConvenience samples, demographic variation between study site and target site, etc…\n\nWhat assumption do we need to make in order to address this threat to inference?\n\nTreatment effects do not vary systematically in the differences in \\(X_i\\) between sample and target.\n\nTwo ways this could be satisfied\n\nGenuine random sampling assumptions (sample vs. population don’t systematically differ)\nEffect homogeneity assumption - the covariates that drive sample vs. target differences are not correlated with treatment effects\n\nIf we knew the relevant \\(X_i\\), we could also re-weight the sample to match the target distribution.\n\nWe’ll talk about IPW for causal inference later on - this is the same idea!\n\nSignificant cross-discipline and cross-sub-discipline variation in belief in effect homogeneity\n\nLab experimentalists tend towards belief in homogeneity (e.g. political psychology)\nField experimentalists tend towards belief in heterogeneity (e.g. “Metaketa” project)"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#d-validity",
+    "href": "slides/week3/week3_experiments_part_2.html#d-validity",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "D-validity",
+    "text": "D-validity\n\nOften the way we run our study and implement our treatment is not how it will be done in the “real world”\n\nRealism vs. abstraction in our intervention\n“Hawthorne effects”/observation\n“Real world” effects are sometimes bundles of interventions\n\nWhat assumption do we need to make in order to address this threat to inference?\n\nEffect homogeneity across variations of treatment\nNote that “random sampling” doesn’t really solve anything here since it’s a characteristic of the intervention being studied!\n\nExamples: Brutger, R., Kertzer, J.D., Renshon, J., Tingley, D. and Weiss, C.M., 2023. Abstraction and detail in experimental design. American Journal of Political Science, 67(4), pp.979-995.\n\nDebates in IR vignette experiments about how much abstraction to use (e.g. real event or hypothetical; China or “a country”)\nFindings: No variation effects across degrees of “hypotheticality” but some heterogeneity based on additional contextual detail and actor identity"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#y-validity",
+    "href": "slides/week3/week3_experiments_part_2.html#y-validity",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Y-validity",
+    "text": "Y-validity\n\nSometimes we can’t actually measure the outcome we’re interested in evaluating\n\ne.g. In medicine - sometimes need to use a surrogate endpoint \\(Y^*\\) when outcome of interest \\(Y\\) is costly to obtain.\nIn surveys - We observe a stated preference but are actually interested in revealed preferences and behavior\n\nWhat assumption do we need to make in order to address this threat to inference?\n\nIt’s effect homogeneity again! Type of outcome doesn’t modify treatment effect\n\nHere we can sometimes use evidence about the predictive power of the outcome we measure \\(Y^*\\) on the outcome of interest \\(Y\\)\n\n“Surrogate endpoint” literature in medicine\nBut beware the surrogacy paradox!\nPositive effect of \\(D\\) on \\(Y^*\\) and a positive association between \\(Y^*\\) and \\(Y\\) does not guarantee a positive effect of \\(D\\) on \\(Y\\)"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#c-validity",
+    "href": "slides/week3/week3_experiments_part_2.html#c-validity",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "C-validity",
+    "text": "C-validity\n\nTreatment effects may depend on the context in which the study was conducted\n\nDifferent cities\nDifferent countries\nDifferent times (Munger, 2023)\n\nWhat assumption do we need to make in order to address this threat to inference?\n\nOnce again, it’s effect homogeneity by context!\nC-validity is basically just X-validity with no overlap\nSo even if we knew the covariate distributions in both, we can’t reweight the sample to match the target population.\n\nHow do we figure out whether context matters?\n\nRun many studies in many settings and compare the results!"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#summary",
+    "href": "slides/week3/week3_experiments_part_2.html#summary",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Summary",
+    "text": "Summary\n\nQuestions of external validity are questions of effect heterogeneity\n\nIs the average effect of treatment the same for these units as it is for those units\n\nThe degree of effect heterogeneity is a question of scientific knowledge\n\nHighly discipline dependent! Some fields think we can generalize more than others.\n\nThink about the dimensions across which sample and target population can vary\n\nUnits\nOutcomes\nTreatments\nSettings\nMechanisms"
+  },
+  {
+    "objectID": "slides/week3/week3_experiments_part_2.html#next-week",
+    "href": "slides/week3/week3_experiments_part_2.html#next-week",
+    "title": "Week 3: Experiments - Part 2",
+    "section": "Next week",
+    "text": "Next week\n\nUsing covariates to improve precision in experiments\n\nWhy blocking/stratification can’t hurt you!\nCovariate adjustment using linear regression\n\nAgnostic approach to linear regression\n\nLinear regression as the best linear predictor\nWhat assumptions do we really need to justify OLS as an estimator\nWhy (properly specified) OLS regression is fine in a randomized experiment even if you get the model wrong!\n\nAnalysis of cluster-randomized experiments (time permitting!)"
   },
   {
     "objectID": "syllabus.html",
