@@ -504,7 +504,7 @@ $$M_i(1) \ge M_i(0) \text{  } \forall i \quad \text{or} \quad M_i(1) \le M_i(0) 
   
 - And observed units in the treated group are survivors + compliers 
 
-  $$Pr(M_i = 1 | D_i = 1) = Pr(M_i(1) = M_i(0) = 1 | D_i = 1) +  Pr(M_i(1) = 1, M_i(0) = 0 | D_i = 1)$$W
+  $$Pr(M_i = 1 | D_i = 1) = Pr(M_i(1) = M_i(0) = 1 | D_i = 1) +  Pr(M_i(1) = 1, M_i(0) = 0 | D_i = 1)$$
 
 ## The trimming procedure
 
