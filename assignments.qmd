@@ -27,5 +27,5 @@ Problem sets are distributed as `.qmd` files along with their rendered `.html` f
 
 ### Problem Set 2
 
-- [Github Repository](https://github.com/astrezhnev/;s813/tree/main/psets/ps2)
+- [Github Repository](https://github.com/astrezhnev/ps813/tree/main/psets/ps2)
 - [`.zip` archive](https://www.antonstrezhnev.com/ps813/psets/ps2.zip)
