@@ -627,7 +627,7 @@
     "href": "assignments.html#problem-sets",
     "title": "Assignments",
     "section": "Problem Sets",
-    "text": "Problem Sets\nProblem sets are distributed as .qmd files along with their rendered .html form. You should edit the provided .qmd file and render to .html when submitting the assignment. Additional files (e.g. datasets) are located in sub-folders. For convenience, all the combined files are also distributed as a .zip compressed archive.\n\nProblem Set 1\n\nGithub Repository\n.zip archive"
+    "text": "Problem Sets\nProblem sets are distributed as .qmd files along with their rendered .html form. You should edit the provided .qmd file and render to .html when submitting the assignment. Additional files (e.g. datasets) are located in sub-folders. For convenience, all the combined files are also distributed as a .zip compressed archive.\n\nProblem Set 1\n\nGithub Repository\n.zip archive\n\n\n\nProblem Set 2\n\nGithub Repository\n.zip archive"
   },
   {
     "objectID": "index.html",
@@ -935,7 +935,7 @@
     "href": "slides/week3/week3_experiments_part_2.html#broockman-and-kalla-balance-table-output",
     "title": "Week 3: Experiments - Part 2",
     "section": "Broockman and Kalla: Balance table",
-    "text": "Broockman and Kalla: Balance table\n\nBalance Measures\n                         Type Diff.Un\nvf_age                Contin.   0.035\nt1_pid7               Contin.   0.037\nt1_ideo_self          Contin.   0.013\nt1_ideo_self:&lt;NA&gt;      Binary   0.000\nt1_therm_trump        Contin.   0.169\nt1_therm_biden        Contin.  -0.085\nt1_therm_fox          Contin.  -0.022\nt1_therm_cnn          Contin.  -0.009\nt1_trust_fox          Contin.   0.042\nt1_trust_cnn          Contin.   0.076\npre_treat_fox_minutes Contin.   0.048\npre_treat_cnn_minutes Contin.  -0.135\n\nSample sizes\n    Control Treated\nAll     417     278"
+    "text": "Broockman and Kalla: Balance table\n\nBalance Measures\n                         Type Diff.Un\nvf_age                Contin.  0.0352\nt1_pid7               Contin.  0.0367\nt1_ideo_self          Contin.  0.0130\nt1_ideo_self:&lt;NA&gt;      Binary  0.0000\nt1_therm_trump        Contin.  0.1688\nt1_therm_biden        Contin. -0.0855\nt1_therm_fox          Contin. -0.0224\nt1_therm_cnn          Contin. -0.0086\nt1_trust_fox          Contin.  0.0421\nt1_trust_cnn          Contin.  0.0755\npre_treat_fox_minutes Contin.  0.0480\npre_treat_cnn_minutes Contin. -0.1350\n\nSample sizes\n    Control Treated\nAll     417     278"
   },
   {
     "objectID": "slides/week3/week3_experiments_part_2.html#broockman-and-kalla-love-plot",
@@ -949,7 +949,7 @@
     "href": "slides/week3/week3_experiments_part_2.html#multiple-testing",
     "title": "Week 3: Experiments - Part 2",
     "section": "Multiple testing",
-    "text": "Multiple testing\n\nWe could put a simple difference-in-means hypothesis test on each of these covariates.\n\nBut with enough covariates, we’d find a \\(p &lt; .05\\) just by chance!\n\n\n\nlm_robust(t1_therm_trump ~ treat, data=bk_hh)\n\n            Estimate Std. Error t value Pr(&gt;|t|) CI Lower CI Upper  DF\n(Intercept)    81.76       1.04   78.58   0.0000   79.716    83.80 693\ntreat           3.36       1.52    2.21   0.0273    0.377     6.34 693\n\n\n\n\nIs there a quick way to deal with multiple testing in balance checks?\n\nCould correct for multiple comparisons…\n…or construct a single test.\nHow? With randomization inference!"
+    "text": "Multiple testing\n\nWe could put a simple difference-in-means hypothesis test on each of these covariates.\n\nBut with enough covariates, we’d find a \\(p &lt; .05\\) just by chance!\n\n\n\nlm_robust(t1_therm_trump ~ treat, data=bk_hh)\n\n             Estimate Std. Error   t value   Pr(&gt;|t|)   CI Lower  CI Upper  DF\n(Intercept) 81.758593   1.040406 78.583337 0.00000000 79.7158668 83.801319 693\ntreat        3.360112   1.519283  2.211643 0.02731688  0.3771622  6.343062 693\n\n\n\n\nIs there a quick way to deal with multiple testing in balance checks?\n\nCould correct for multiple comparisons…\n…or construct a single test.\nHow? With randomization inference!"
   },
   {
     "objectID": "slides/week3/week3_experiments_part_2.html#permutationrandomization-testing-for-balance",
@@ -1047,7 +1047,7 @@
     "href": "slides/week3/week3_experiments_part_2.html#intuition-for-lee-bounds-1",
     "title": "Week 3: Experiments - Part 2",
     "section": "Intuition for Lee bounds",
-    "text": "Intuition for Lee bounds\n\nIf we could figure out who the compliers are and remove them - we could get point identification.\n\nWe can’t - but we can get the share of compliers.\nAnd we can worst-case which units those happen to be.\n\n\n\n\nAdditionally, the share of survivors is balanced between treated and control\n\\[Pr(M_i(1) = M_i(0) = 1 | D_i = 0) = Pr(M_i(1) = M_i(0) = 1 | D_i = 1)\\]\n\n\n\n\nAll observed units in the control group are survivors\n\\[Pr(M_i = 1 | D_i = 0) = Pr(M_i(1) = M_i(0) = 1 | D_i = 0)\\]\nAnd observed units in the treated group are survivors + compliers\n\\[Pr(M_i = 1 | D_i = 1) = Pr(M_i(1) = M_i(0) = 1 | D_i = 1) +  Pr(M_i(1) = 1, M_i(0) = 0 | D_i = 1)\\]W"
+    "text": "Intuition for Lee bounds\n\nIf we could figure out who the compliers are and remove them - we could get point identification.\n\nWe can’t - but we can get the share of compliers.\nAnd we can worst-case which units those happen to be.\n\n\n\n\nAdditionally, the share of survivors is balanced between treated and control\n\\[Pr(M_i(1) = M_i(0) = 1 | D_i = 0) = Pr(M_i(1) = M_i(0) = 1 | D_i = 1)\\]\n\n\n\n\nAll observed units in the control group are survivors\n\\[Pr(M_i = 1 | D_i = 0) = Pr(M_i(1) = M_i(0) = 1 | D_i = 0)\\]\nAnd observed units in the treated group are survivors + compliers\n\\[Pr(M_i = 1 | D_i = 1) = Pr(M_i(1) = M_i(0) = 1 | D_i = 1) +  Pr(M_i(1) = 1, M_i(0) = 0 | D_i = 1)\\]"
   },
   {
     "objectID": "slides/week3/week3_experiments_part_2.html#the-trimming-procedure",
@@ -1082,7 +1082,7 @@
     "href": "slides/week3/week3_experiments_part_2.html#visualizing-the-lee-bounds-2",
     "title": "Week 3: Experiments - Part 2",
     "section": "Visualizing the Lee Bounds",
-    "text": "Visualizing the Lee Bounds\n\nWhat’s our estimated share of compliers in the treatment group?\n\n\nq_complier &lt;- (mean(lee_df$M[lee_df$D == 1]) - mean(lee_df$M[lee_df$D == 0]))/\n  (mean(lee_df$M[lee_df$D == 1]))\nq_complier\n\n[1] 0.497\n\n\n\nConsistent with our simulation, about half of the units in the treated group are compliers\nOur bounds are going to be constructed by dropping either…\n\n…the top half of the distribution (lower bound)…\n…or the bottom half of the distribution (upper bound)\n\nWhat quantiles are we cutting at?\n\n\n\n49.68127% 50.31873% \n   0.0237    0.0385"
+    "text": "Visualizing the Lee Bounds\n\nWhat’s our estimated share of compliers in the treatment group?\n\n\nq_complier &lt;- (mean(lee_df$M[lee_df$D == 1]) - mean(lee_df$M[lee_df$D == 0]))/\n  (mean(lee_df$M[lee_df$D == 1]))\nq_complier\n\n[1] 0.4968127\n\n\n\nConsistent with our simulation, about half of the units in the treated group are compliers\nOur bounds are going to be constructed by dropping either…\n\n…the top half of the distribution (lower bound)…\n…or the bottom half of the distribution (upper bound)\n\nWhat quantiles are we cutting at?\n\n\n\n 49.68127%  50.31873% \n0.02370004 0.03848793"
   },
   {
     "objectID": "slides/week3/week3_experiments_part_2.html#visualizing-the-lee-bounds-3",
@@ -1138,7 +1138,7 @@
     "href": "slides/week3/week3_experiments_part_2.html#illustration-gerber-green-and-larimer-2008-1",
     "title": "Week 3: Experiments - Part 2",
     "section": "Illustration: Gerber, Green and Larimer (2008)",
-    "text": "Illustration: Gerber, Green and Larimer (2008)\n\nWe might ask whether social pressure works more on the less habitual voters\n\nWere voters who turned out in the 2004 primary affected differently by the Neighbors treatment?\n\n\n\n# Estimated ATE of Neighbors (3) vs. Control (0)\n# At least one member of the household voted in Primary 2004\nate_voters &lt;- mean(data_hh$voted[data_hh$treatment == 3&data_hh$voted_p2004 &gt; 0]) -\n  mean(data_hh$voted[data_hh$treatment == 0&data_hh$voted_p2004 &gt; 0])\nate_voters\n\n[1] 0.0921\n\n# No member of the household voted in Primary 2004\nate_nonvoters &lt;- mean(data_hh$voted[data_hh$treatment == 3&data_hh$voted_p2004 == 0]) -\n  mean(data_hh$voted[data_hh$treatment == 0&data_hh$voted_p2004 == 0])\nate_nonvoters\n\n[1] 0.0761"
+    "text": "Illustration: Gerber, Green and Larimer (2008)\n\nWe might ask whether social pressure works more on the less habitual voters\n\nWere voters who turned out in the 2004 primary affected differently by the Neighbors treatment?\n\n\n\n# Estimated ATE of Neighbors (3) vs. Control (0)\n# At least one member of the household voted in Primary 2004\nate_voters &lt;- mean(data_hh$voted[data_hh$treatment == 3&data_hh$voted_p2004 &gt; 0]) -\n  mean(data_hh$voted[data_hh$treatment == 0&data_hh$voted_p2004 &gt; 0])\nate_voters\n\n[1] 0.09209231\n\n# No member of the household voted in Primary 2004\nate_nonvoters &lt;- mean(data_hh$voted[data_hh$treatment == 3&data_hh$voted_p2004 == 0]) -\n  mean(data_hh$voted[data_hh$treatment == 0&data_hh$voted_p2004 == 0])\nate_nonvoters\n\n[1] 0.07612996"
   },
   {
     "objectID": "slides/week3/week3_experiments_part_2.html#illustration-gerber-green-and-larimer-2008-2",
@@ -1152,7 +1152,7 @@
     "href": "slides/week3/week3_experiments_part_2.html#illustration-gerber-green-and-larimer-2008-3",
     "title": "Week 3: Experiments - Part 2",
     "section": "Illustration: Gerber, Green and Larimer (2008)",
-    "text": "Illustration: Gerber, Green and Larimer (2008)\n\n95% asymptotic confidence intervals\n\n\n# Confidence intervals (assuming asymptotic normality)\nate_95CI_voters = c(ate_voters - qnorm(.975)*sqrt(var_ate_voters),\n  ate_voters + qnorm(.975)*sqrt(var_ate_voters))\n# At least one member of the household voted in Primary 2004\nate_95CI_voters\n\n[1] 0.0827 0.1015\n\nate_95CI_nonvoters = c(ate_nonvoters - qnorm(.975)*sqrt(var_ate_nonvoters),\n  ate_nonvoters + qnorm(.975)*sqrt(var_ate_nonvoters))\n# No member of the household voted in Primary 2004\nate_95CI_nonvoters\n\n[1] 0.0668 0.0855"
+    "text": "Illustration: Gerber, Green and Larimer (2008)\n\n95% asymptotic confidence intervals\n\n\n# Confidence intervals (assuming asymptotic normality)\nate_95CI_voters = c(ate_voters - qnorm(.975)*sqrt(var_ate_voters),\n  ate_voters + qnorm(.975)*sqrt(var_ate_voters))\n# At least one member of the household voted in Primary 2004\nate_95CI_voters\n\n[1] 0.08272279 0.10146183\n\nate_95CI_nonvoters = c(ate_nonvoters - qnorm(.975)*sqrt(var_ate_nonvoters),\n  ate_nonvoters + qnorm(.975)*sqrt(var_ate_nonvoters))\n# No member of the household voted in Primary 2004\nate_95CI_nonvoters\n\n[1] 0.06678196 0.08547795"
   },
   {
     "objectID": "slides/week3/week3_experiments_part_2.html#illustration-gerber-green-and-larimer-2008-4",
@@ -1166,14 +1166,14 @@
     "href": "slides/week3/week3_experiments_part_2.html#illustration-gerber-green-and-larimer-2008-5",
     "title": "Week 3: Experiments - Part 2",
     "section": "Illustration: Gerber, Green and Larimer (2008)",
-    "text": "Illustration: Gerber, Green and Larimer (2008)\n\n# Confidence intervals for the **difference** in CATEs\nate_95CI_voters = c(ate_voters - ate_nonvoters - qnorm(.975)*sqrt(var_ate_voters + var_ate_nonvoters),\n  ate_voters - ate_nonvoters + qnorm(.975)*sqrt(var_ate_voters + var_ate_nonvoters))\n\nate_voters - ate_nonvoters\n\n[1] 0.016\n\nate_95CI_voters\n\n[1] 0.00273 0.02920"
+    "text": "Illustration: Gerber, Green and Larimer (2008)\n\n# Confidence intervals for the **difference** in CATEs\nate_95CI_voters = c(ate_voters - ate_nonvoters - qnorm(.975)*sqrt(var_ate_voters + var_ate_nonvoters),\n  ate_voters - ate_nonvoters + qnorm(.975)*sqrt(var_ate_voters + var_ate_nonvoters))\n\nate_voters - ate_nonvoters\n\n[1] 0.01596235\n\nate_95CI_voters\n\n[1] 0.002727064 0.029197645"
   },
   {
     "objectID": "slides/week3/week3_experiments_part_2.html#illustration-gerber-green-and-larimer-2008-6",
     "href": "slides/week3/week3_experiments_part_2.html#illustration-gerber-green-and-larimer-2008-6",
     "title": "Week 3: Experiments - Part 2",
     "section": "Illustration: Gerber, Green and Larimer (2008)",
-    "text": "Illustration: Gerber, Green and Larimer (2008)\n\nAgain, with a binary treatment/binary covariate, you can do this with OLS and an interaction term\n\n\nlm_robust(voted ~ I(treatment==3)*I(voted_p2004 &gt; 0), data=data_hh %&gt;% filter(treatment == 3|treatment == 0))\n\n                                             Estimate Std. Error t value\n(Intercept)                                    0.2590    0.00182  142.14\nI(treatment == 3)TRUE                          0.0761    0.00477   15.96\nI(voted_p2004 &gt; 0)TRUE                         0.0885    0.00263   33.69\nI(treatment == 3)TRUE:I(voted_p2004 &gt; 0)TRUE   0.0160    0.00675    2.36\n                                              Pr(&gt;|t|) CI Lower CI Upper     DF\n(Intercept)                                   0.00e+00  0.25539   0.2625 119995\nI(treatment == 3)TRUE                         2.70e-57  0.06678   0.0855 119995\nI(voted_p2004 &gt; 0)TRUE                       9.92e-248  0.08333   0.0936 119995\nI(treatment == 3)TRUE:I(voted_p2004 &gt; 0)TRUE  1.81e-02  0.00273   0.0292 119995"
+    "text": "Illustration: Gerber, Green and Larimer (2008)\n\nAgain, with a binary treatment/binary covariate, you can do this with OLS and an interaction term\n\n\nlm_robust(voted ~ I(treatment==3)*I(voted_p2004 &gt; 0), data=data_hh %&gt;% filter(treatment == 3|treatment == 0))\n\n                                               Estimate  Std. Error    t value\n(Intercept)                                  0.25896339 0.001821941 142.135971\nI(treatment == 3)TRUE                        0.07612996 0.004769472  15.961924\nI(voted_p2004 &gt; 0)TRUE                       0.08847971 0.002625902  33.694977\nI(treatment == 3)TRUE:I(voted_p2004 &gt; 0)TRUE 0.01596235 0.006752823   2.363805\n                                                  Pr(&gt;|t|)    CI Lower\n(Intercept)                                   0.000000e+00 0.255392418\nI(treatment == 3)TRUE                         2.696797e-57 0.066781869\nI(voted_p2004 &gt; 0)TRUE                       9.922548e-248 0.083332984\nI(treatment == 3)TRUE:I(voted_p2004 &gt; 0)TRUE  1.808993e-02 0.002726931\n                                               CI Upper     DF\n(Intercept)                                  0.26253437 119995\nI(treatment == 3)TRUE                        0.08547805 119995\nI(voted_p2004 &gt; 0)TRUE                       0.09362643 119995\nI(treatment == 3)TRUE:I(voted_p2004 &gt; 0)TRUE 0.02919778 119995"
   },
   {
     "objectID": "slides/week3/week3_experiments_part_2.html#illustration-gerber-green-and-larimer-2008-7",

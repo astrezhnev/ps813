@@ -1309,18 +1309,18 @@ Anton Strezhnev
 <div class="cell-output cell-output-stdout">
 <pre><code>Balance Measures
                          Type Diff.Un
-vf_age                Contin.   0.035
-t1_pid7               Contin.   0.037
-t1_ideo_self          Contin.   0.013
-t1_ideo_self:&lt;NA&gt;      Binary   0.000
-t1_therm_trump        Contin.   0.169
-t1_therm_biden        Contin.  -0.085
-t1_therm_fox          Contin.  -0.022
-t1_therm_cnn          Contin.  -0.009
-t1_trust_fox          Contin.   0.042
-t1_trust_cnn          Contin.   0.076
-pre_treat_fox_minutes Contin.   0.048
-pre_treat_cnn_minutes Contin.  -0.135
+vf_age                Contin.  0.0352
+t1_pid7               Contin.  0.0367
+t1_ideo_self          Contin.  0.0130
+t1_ideo_self:&lt;NA&gt;      Binary  0.0000
+t1_therm_trump        Contin.  0.1688
+t1_therm_biden        Contin. -0.0855
+t1_therm_fox          Contin. -0.0224
+t1_therm_cnn          Contin. -0.0086
+t1_trust_fox          Contin.  0.0421
+t1_trust_cnn          Contin.  0.0755
+pre_treat_fox_minutes Contin.  0.0480
+pre_treat_cnn_minutes Contin. -0.1350
 
 Sample sizes
     Control Treated
@@ -1341,9 +1341,9 @@ All     417     278</code></pre>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">lm_robust</span>(t1_therm_trump <span class="sc">~</span> treat, <span class="at">data=</span>bk_hh)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>            Estimate Std. Error t value Pr(&gt;|t|) CI Lower CI Upper  DF
-(Intercept)    81.76       1.04   78.58   0.0000   79.716    83.80 693
-treat           3.36       1.52    2.21   0.0273    0.377     6.34 693</code></pre>
+<pre><code>             Estimate Std. Error   t value   Pr(&gt;|t|)   CI Lower  CI Upper  DF
+(Intercept) 81.758593   1.040406 78.583337 0.00000000 79.7158668 83.801319 693
+treat        3.360112   1.519283  2.211643 0.02731688  0.3771622  6.343062 693</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -1674,7 +1674,7 @@ treat           3.36       1.52    2.21   0.0273    0.377     6.34 693</code></p
 <li><p>All observed units in the control group are survivors</p>
 <p><span class="math display">\[Pr(M_i = 1 | D_i = 0) = Pr(M_i(1) = M_i(0) = 1 | D_i = 0)\]</span></p></li>
 <li><p>And observed units in the treated group are survivors + compliers</p>
-<p><span class="math display">\[Pr(M_i = 1 | D_i = 1) = Pr(M_i(1) = M_i(0) = 1 | D_i = 1) +  Pr(M_i(1) = 1, M_i(0) = 0 | D_i = 1)\]</span>W</p></li>
+<p><span class="math display">\[Pr(M_i = 1 | D_i = 1) = Pr(M_i(1) = M_i(0) = 1 | D_i = 1) +  Pr(M_i(1) = 1, M_i(0) = 0 | D_i = 1)\]</span></p></li>
 </ul>
 </div>
 </section>
@@ -1778,7 +1778,7 @@ treat           3.36       1.52    2.21   0.0273    0.377     6.34 693</code></p
 <span id="cb17-2"><a></a>  (<span class="fu">mean</span>(lee_df<span class="sc">$</span>M[lee_df<span class="sc">$</span>D <span class="sc">==</span> <span class="dv">1</span>]))</span>
 <span id="cb17-3"><a></a>q_complier</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.497</code></pre>
+<pre><code>[1] 0.4968127</code></pre>
 </div>
 </div>
 <ul>
@@ -1792,8 +1792,8 @@ treat           3.36       1.52    2.21   0.0273    0.377     6.34 693</code></p
 </ul>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>49.68127% 50.31873% 
-   0.0237    0.0385 </code></pre>
+<pre><code> 49.68127%  50.31873% 
+0.02370004 0.03848793 </code></pre>
 </div>
 </div>
 </section>
@@ -1925,14 +1925,14 @@ treat           3.36       1.52    2.21   0.0273    0.377     6.34 693</code></p
 <span id="cb21-4"><a></a>  <span class="fu">mean</span>(data_hh<span class="sc">$</span>voted[data_hh<span class="sc">$</span>treatment <span class="sc">==</span> <span class="dv">0</span><span class="sc">&amp;</span>data_hh<span class="sc">$</span>voted_p2004 <span class="sc">&gt;</span> <span class="dv">0</span>])</span>
 <span id="cb21-5"><a></a>ate_voters</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.0921</code></pre>
+<pre><code>[1] 0.09209231</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="co"># No member of the household voted in Primary 2004</span></span>
 <span id="cb23-2"><a></a>ate_nonvoters <span class="ot">&lt;-</span> <span class="fu">mean</span>(data_hh<span class="sc">$</span>voted[data_hh<span class="sc">$</span>treatment <span class="sc">==</span> <span class="dv">3</span><span class="sc">&amp;</span>data_hh<span class="sc">$</span>voted_p2004 <span class="sc">==</span> <span class="dv">0</span>]) <span class="sc">-</span></span>
 <span id="cb23-3"><a></a>  <span class="fu">mean</span>(data_hh<span class="sc">$</span>voted[data_hh<span class="sc">$</span>treatment <span class="sc">==</span> <span class="dv">0</span><span class="sc">&amp;</span>data_hh<span class="sc">$</span>voted_p2004 <span class="sc">==</span> <span class="dv">0</span>])</span>
 <span id="cb23-4"><a></a>ate_nonvoters</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.0761</code></pre>
+<pre><code>[1] 0.07612996</code></pre>
 </div>
 </div>
 </section>
@@ -1964,14 +1964,14 @@ treat           3.36       1.52    2.21   0.0273    0.377     6.34 693</code></p
 <span id="cb26-4"><a></a><span class="co"># At least one member of the household voted in Primary 2004</span></span>
 <span id="cb26-5"><a></a>ate_95CI_voters</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.0827 0.1015</code></pre>
+<pre><code>[1] 0.08272279 0.10146183</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>ate_95CI_nonvoters <span class="ot">=</span> <span class="fu">c</span>(ate_nonvoters <span class="sc">-</span> <span class="fu">qnorm</span>(.<span class="dv">975</span>)<span class="sc">*</span><span class="fu">sqrt</span>(var_ate_nonvoters),</span>
 <span id="cb28-2"><a></a>  ate_nonvoters <span class="sc">+</span> <span class="fu">qnorm</span>(.<span class="dv">975</span>)<span class="sc">*</span><span class="fu">sqrt</span>(var_ate_nonvoters))</span>
 <span id="cb28-3"><a></a><span class="co"># No member of the household voted in Primary 2004</span></span>
 <span id="cb28-4"><a></a>ate_95CI_nonvoters</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.0668 0.0855</code></pre>
+<pre><code>[1] 0.06678196 0.08547795</code></pre>
 </div>
 </div>
 </section>
@@ -2016,11 +2016,11 @@ treat           3.36       1.52    2.21   0.0273    0.377     6.34 693</code></p
 <span id="cb30-4"><a></a></span>
 <span id="cb30-5"><a></a>ate_voters <span class="sc">-</span> ate_nonvoters</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.016</code></pre>
+<pre><code>[1] 0.01596235</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a>ate_95CI_voters</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.00273 0.02920</code></pre>
+<pre><code>[1] 0.002727064 0.029197645</code></pre>
 </div>
 </div>
 </section>
@@ -2032,16 +2032,21 @@ treat           3.36       1.52    2.21   0.0273    0.377     6.34 693</code></p
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a><span class="fu">lm_robust</span>(voted <span class="sc">~</span> <span class="fu">I</span>(treatment<span class="sc">==</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">I</span>(voted_p2004 <span class="sc">&gt;</span> <span class="dv">0</span>), <span class="at">data=</span>data_hh <span class="sc">%&gt;%</span> <span class="fu">filter</span>(treatment <span class="sc">==</span> <span class="dv">3</span><span class="sc">|</span>treatment <span class="sc">==</span> <span class="dv">0</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                                             Estimate Std. Error t value
-(Intercept)                                    0.2590    0.00182  142.14
-I(treatment == 3)TRUE                          0.0761    0.00477   15.96
-I(voted_p2004 &gt; 0)TRUE                         0.0885    0.00263   33.69
-I(treatment == 3)TRUE:I(voted_p2004 &gt; 0)TRUE   0.0160    0.00675    2.36
-                                              Pr(&gt;|t|) CI Lower CI Upper     DF
-(Intercept)                                   0.00e+00  0.25539   0.2625 119995
-I(treatment == 3)TRUE                         2.70e-57  0.06678   0.0855 119995
-I(voted_p2004 &gt; 0)TRUE                       9.92e-248  0.08333   0.0936 119995
-I(treatment == 3)TRUE:I(voted_p2004 &gt; 0)TRUE  1.81e-02  0.00273   0.0292 119995</code></pre>
+<pre><code>                                               Estimate  Std. Error    t value
+(Intercept)                                  0.25896339 0.001821941 142.135971
+I(treatment == 3)TRUE                        0.07612996 0.004769472  15.961924
+I(voted_p2004 &gt; 0)TRUE                       0.08847971 0.002625902  33.694977
+I(treatment == 3)TRUE:I(voted_p2004 &gt; 0)TRUE 0.01596235 0.006752823   2.363805
+                                                  Pr(&gt;|t|)    CI Lower
+(Intercept)                                   0.000000e+00 0.255392418
+I(treatment == 3)TRUE                         2.696797e-57 0.066781869
+I(voted_p2004 &gt; 0)TRUE                       9.922548e-248 0.083332984
+I(treatment == 3)TRUE:I(voted_p2004 &gt; 0)TRUE  1.808993e-02 0.002726931
+                                               CI Upper     DF
+(Intercept)                                  0.26253437 119995
+I(treatment == 3)TRUE                        0.08547805 119995
+I(voted_p2004 &gt; 0)TRUE                       0.09362643 119995
+I(treatment == 3)TRUE:I(voted_p2004 &gt; 0)TRUE 0.02919778 119995</code></pre>
 </div>
 </div>
 </section>
