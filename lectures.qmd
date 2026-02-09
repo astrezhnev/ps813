@@ -23,8 +23,8 @@ Lecture slides are available as self-contained `.html` files made with RevealJS 
 
 ### Week 4: Experiments: Incorporating Covariates
 
-- Week 4 Github Repository
-- Week 4 `.html` slides
+- [Week 4 Github Repository](https://github.com/astrezhnev/ps813/tree/main/slides/week4/)
+- [Week 4 `.html` slides](https://www.antonstrezhnev.com/ps813/slides/week4/week4_experiments_covariate_adjustment.html)
 
 ### Week 5: Selection-on-Observables
 
