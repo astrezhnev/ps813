@@ -753,7 +753,7 @@
     "href": "schedule.html#week-5-selection-on-observables",
     "title": "Schedule",
     "section": "Week 5: Selection-on-Observables",
-    "text": "Week 5: Selection-on-Observables\nMonday, February 16 & Wednesday, February 18\nTopics:\n\nWhat to do when random assignment of treatment is not possible - common challenges of observational designs\nAssumptions behind “no unobserved confounding” designs\nRepresenting assumptions using graphical models\nCovariate adjustment using stratification\n\nReadings:\n\nChapter 12; Imbens, Guido W., and Donald B. Rubin. 2015. Causal Inference for Statistics, Social, and Biomedical Sciences: An Introduction. Cambridge: Cambridge University Press.\nChapters 3, 6–8; Hernán, Miguel A., and James M. Robins. 2020. Causal Inference: What If. Boca Raton: Chapman & Hall/CRC.\nChapters 6–8; Huntington-Klein, Nick. 2021. The Effect: An Introduction to Research Design and Causality. Boca Raton: Chapman and Hall/CRC.\nSupplementary: Cinelli, Carlos, Andrew Forney, and Judea Pearl. 2024. “A Crash Course in Good and Bad Controls.” Sociological Methods & Research 53 (3): 1071–1104.\nSupplementary: Rohrer, Julia M. 2018. “Thinking Clearly about Correlations and Causation: Graphical Causal Models for Observational Data.” Advances in Methods and Practices in Psychological Science 1 (1): 27–42.\n\nApplications:\n\nWashington, Ebonya L. 2008. “Female Socialization: How Daughters Affect Their Legislator Fathers.” American Economic Review 98 (1): 311–332.\nBa, Bocar A., Dean Knox, Jonathan Mummolo, and Roman Rivera. 2021. “The Role of Officer Race and Gender in Police-Civilian Interactions in Chicago.” Science 371 (6530): 696–702."
+    "text": "Week 5: Selection-on-Observables\nMonday, February 16 & Wednesday, February 18\nTopics:\n\nWhat to do when random assignment of treatment is not possible - common challenges of observational designs\nAssumptions behind “no unobserved confounding” designs\nRepresenting assumptions using graphical models\nCovariate adjustment using stratification\n\nReadings:\n\nChapter 12; Imbens, Guido W., and Donald B. Rubin. 2015. Causal Inference for Statistics, Social, and Biomedical Sciences: An Introduction. Cambridge: Cambridge University Press.\nChapters 3, 6–8; Hernán, Miguel A., and James M. Robins. 2020. Causal Inference: What If. Boca Raton: Chapman & Hall/CRC.\nChapters 6–8; Huntington-Klein, Nick. 2021. The Effect: An Introduction to Research Design and Causality. Boca Raton: Chapman and Hall/CRC.\nSupplementary: Cinelli, Carlos, Andrew Forney, and Judea Pearl. 2024. “A Crash Course in Good and Bad Controls.” Sociological Methods & Research 53 (3): 1071–1104.\nSupplementary: Rohrer, Julia M. 2018. “Thinking Clearly about Correlations and Causation: Graphical Causal Models for Observational Data.” Advances in Methods and Practices in Psychological Science 1 (1): 27–42.\n\nApplications:\n\nWashington, Ebonya L. 2008. “Female Socialization: How Daughters Affect Their Legislator Fathers.” American Economic Review 98 (1): 311–332.\nBa, Bocar A., Dean Knox, Jonathan Mummolo, and Roman Rivera. 2021. “The Role of Officer Race and Gender in Police-Civilian Interactions in Chicago.” Science 371 (6530): 696–702.\nKnox, Dean, Will Lowe, and Jonathan Mummolo. 2020. “Administrative records mask racially biased policing.” American Political Science Review 114 (3): 619-637."
   },
   {
     "objectID": "schedule.html#week-6-selection-on-observables---regression-and-weighting",
@@ -1348,7 +1348,7 @@
     "href": "slides/week4/week4_experiments_covariate_adjustment.html#example-nyhan-and-reifler-2015-1",
     "title": "Week 4: Experiments - Covariate Adjustment",
     "section": "Example: Nyhan and Reifler (2015)",
-    "text": "Example: Nyhan and Reifler (2015)\n\nFor the main analysis, the paper combines the Placebo/Control conditions.\n\n\nfactcheck &lt;- haven::read_dta(\"assets/data/nyhan-reifler-fe.dta\")\ntable(factcheck$treatment)\n\n\n  0   1 \n777 392 \n\n\n\nLet’s check balance\n\nWe know balance is exact on state/party/chamber and whether there is a past fact check.\nCoarse balance on fundraising and voteshare\nOther covariates observed but not explicitly “blocked” on (e.g. leadership position)"
+    "text": "Example: Nyhan and Reifler (2015)\n\nFor the main analysis, the paper combines the Placebo/Control conditions.\n\n\nfactcheck &lt;- haven::read_dta(\"assets/data/nyhan-reifler-fe.dta\")\ntable(factcheck$treatment)\n\n\n  0   1 \n777 392 \n\n\n\nLet’s check balance\n\nWe know balance is exact on state/party/chamber and whether there is a past fact check.\nCoarse balance on fundraising and vote share\nOther covariates observed but not explicitly “blocked” on (e.g. leadership position)"
   },
   {
     "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#example-nyhan-and-reifler-2015-2",
@@ -1390,14 +1390,14 @@
     "href": "slides/week4/week4_experiments_covariate_adjustment.html#example-nyhan-and-reifler-2015-7",
     "title": "Week 4: Experiments - Covariate Adjustment",
     "section": "Example: Nyhan and Reifler (2015)",
-    "text": "Example: Nyhan and Reifler (2015)\n\nWe use the Lin (2013) estimator in the estimatr package\n\nMathematically equivalent to our stratified difference-in-means estimator from above with a single covariate representing our stratum dummies (we’ll show you why later)\n\n\n\nstratified_est &lt;- tidy(estimatr::lm_lin(combined ~ treatment, covariates = ~ groupedblocks, data=factcheck, weights=aw))\nstratified_est %&gt;% filter(term == \"treatment\") %&gt;% select(estimate, std.error, statistic, p.value)\n\n     estimate   std.error statistic p.value\n1 -0.01568843 0.008138779 -1.927615 0.05416\n\n\n\nCompare with the case where we use the conservative variance estimator that ignores the strata\n\n\ndm_est %&gt;% filter(term == \"treatment\") %&gt;% select(estimate, std.error, statistic, p.value)\n\n     estimate   std.error statistic    p.value\n1 -0.01568843 0.008225802 -1.907223 0.05673708"
+    "text": "Example: Nyhan and Reifler (2015)\n\nWe use the Lin (2013) estimator in the estimatr package\n\nMathematically equivalent to our stratified difference-in-means estimator when using dummy indicators for strata (we’ll show you why later)\n\n\n\nstratified_est &lt;- tidy(estimatr::lm_lin(combined ~ treatment, covariates = ~ groupedblocks, data=factcheck, weights=aw))\nstratified_est %&gt;% filter(term == \"treatment\") %&gt;% select(estimate, std.error, statistic, p.value)\n\n     estimate   std.error statistic p.value\n1 -0.01568843 0.008138779 -1.927615 0.05416\n\n\n\nCompare with the case where we use the conservative variance estimator that ignores the strata\n\n\ndm_est %&gt;% filter(term == \"treatment\") %&gt;% select(estimate, std.error, statistic, p.value)\n\n     estimate   std.error statistic    p.value\n1 -0.01568843 0.008225802 -1.907223 0.05673708"
   },
   {
     "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#summary",
     "href": "slides/week4/week4_experiments_covariate_adjustment.html#summary",
     "title": "Week 4: Experiments - Covariate Adjustment",
     "section": "Summary",
-    "text": "Summary\n\nStratification/Blocking is a tool for reducing the variance of your treatment effect estimator\n\nEx-ante - Doesn’t hurt\nEx-post - Usually doesn’t hurt if the covariates are predictive enough.\n\nTake care to use an estimator that actually leverages the variance-reduction\n\nA stratified difference-in-means\nEquivalent to a correctly specified regression! (the “Lin” estimator - we’ll show you this shortly)\n\nWhat to block on?\n\nThings that predict the outcome\nSurprisingly hard to find good ones! Best ones tend to be prior measures of the outcome."
+    "text": "Summary\n\nStratification/Blocking is a tool for reducing the variance of your treatment effect estimator\n\nEx-ante - Doesn’t hurt\nEx-post - Usually doesn’t hurt if the covariates are predictive enough.\n\nTake care to use an estimator that actually leverages the variance-reduction\n\nA stratified difference-in-means\nEquivalent to OLS with de-meaned dummies for the strata interacted with the treatment indicator (the “Lin” estimator)\n\nWhat to block on?\n\nThings that predict the outcome\nSurprisingly hard to find good ones! Best ones tend to be prior measures of the outcome."
   },
   {
     "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#linear-regression",
@@ -1411,42 +1411,35 @@
     "href": "slides/week4/week4_experiments_covariate_adjustment.html#linear-regression-1",
     "title": "Week 4: Experiments - Covariate Adjustment",
     "section": "Linear Regression",
-    "text": "Linear Regression\n\nWe often want to adjust for additional covariates when trying to estimate a treatment effect\n\nIn an RCT - prognostic covariates that reduce variance in Y\nIn an observational design - both prognostic covariates and confounders of Y and X\n\nBy the law of total expectation, we can write the ATE as an expectation over the distribution of CATEs\n\\[\\tau = \\mathbb{E}_X\\bigg[\\mathbb{E}[Y_i(1) | X_i] - \\mathbb{E}[Y_i(0) | X_i]\\bigg]\\]\nUnder consistency and conditional ignorability (conditional on \\(X_i\\))\n\\[E[Y_i(1) | X_i] = E[Y_i | D_i = 1, X_i]\\]\nNow we have a statistical problem, estimating the CEF of \\(Y_i\\) given \\(X_i\\)"
+    "text": "Linear Regression\n\nWe often want to adjust for additional covariates when trying to estimate a treatment effect\n\nIn an RCT - prognostic covariates that reduce variance in Y\n(Next week) - In an observational design - both prognostic covariates and confounders of Y and X\n\nBy the law of total expectation, we can write the ATE as an expectation over the distribution of CATEs\n\\[\\tau = \\mathbb{E}_X\\bigg[\\mathbb{E}[Y_i(1) | X_i] - \\mathbb{E}[Y_i(0) | X_i]\\bigg]\\]\nUnder our consistency + ignorability assumptions:\n\\[E[Y_i(1) | X_i] = E[Y_i | D_i = 1, X_i]\\]\nNow we have a statistical problem, estimating the CEF of \\(Y_i\\) given \\(X_i\\) and \\(D_i\\)\n\nThis is the task of regression\nA ubiquitous regression estimator is ordinary least squares"
   },
   {
     "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#set-up",
     "href": "slides/week4/week4_experiments_covariate_adjustment.html#set-up",
     "title": "Week 4: Experiments - Covariate Adjustment",
     "section": "Set-up",
-    "text": "Set-up\n\nWe’ll denote our vector of observed observations with \\(Y = \\{Y_1, Y_2, Y_3, Y_4, \\dotsc\\}\\)\nWe observe \\(K\\) predictors for each unit \\(i\\) collected in a matrix \\(\\mathbf{X}\\)\n\n\\[\\mathbf{X} = \\begin{bmatrix} — & X_1 & — \\\\ — & X_2 & — \\\\ & \\vdots & \\\\ — & X_N & — \\end{bmatrix}_{N \\times K}\\]\n\nWe assume an \\(i.i.d.\\) random sample from the target population of interest (though can relax this!)"
+    "text": "Set-up\n\nWe’ll denote our vector of \\(N\\) observed outcomes with \\(Y\\)\nWe observe \\(K\\) predictors for each unit \\(i\\) collected in a matrix \\(\\mathbf{X}\\)\n\nEach row is a \\(K\\)-length vector \\(X_i\\) denoting the covariates observed for unit \\(i\\)\n\n\\[\\mathbf{X} = \\begin{pmatrix} X_1^\\prime \\\\ X_2^\\prime \\\\ \\vdots \\\\ X_N^\\prime \\end{pmatrix}_{N \\times K} \\qquad Y = \\begin{pmatrix} Y_1 \\\\ Y_2 \\\\ \\vdots \\\\ Y_N \\end{pmatrix}_{N \\times 1}\\]\nWe’ll use the \\(\\prime\\) notation to denote the transpose of a matrix and treat vectors by default as column vectors (so \\(X_i^\\prime\\) is a \\(1 \\times K\\) row-vector)\nWe assume an \\(i.i.d.\\) random sample from the target population of interest (though can relax this!)"
   },
   {
     "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#best-linear-predictor-blp",
     "href": "slides/week4/week4_experiments_covariate_adjustment.html#best-linear-predictor-blp",
     "title": "Week 4: Experiments - Covariate Adjustment",
     "section": "Best Linear Predictor (BLP)",
-    "text": "Best Linear Predictor (BLP)\n\nThe Best Linear Predictor or population regression is a function of some input vector \\(x\\)\n\\[m(x) = x^\\prime\\beta = \\beta_0 + \\beta_1 x_1 + \\beta_2 x_2 + \\beta_3 x_3 + \\dotsc\\]\nThe \\(\\beta\\) parameters minimize the expected prediction error\n\\[\\beta = \\argmin_b \\ \\mathbb{E}[(Y_i - X_i^\\prime b)^2]\\]\nNote that this is a population quantity\n\n\\(m(x)\\) is an estimand like any other estimand we’ve talked about\n\\(m(x)\\) and \\(E[Y|X]\\) might differ substantially!"
+    "text": "Best Linear Predictor (BLP)\n\nThe Best Linear Predictor or population regression is a function of some input vector \\(x\\) of length \\(K\\)\n\\[m(x_i) = x^\\prime\\beta = \\beta_0 + \\beta_1 x_1 + \\beta_2 x_2 + \\beta_3 x_3 + \\dotsc + \\beta_K x_K\\]\nThe \\(\\beta\\) parameters minimize the expected prediction error\n\\[\\beta = \\argmin_b \\ \\mathbb{E}[(Y_i - X_i^\\prime b)^2]\\]\nNote that this is a population quantity\n\n\\(m(x)\\) is an estimand like any other estimand we’ve talked about\n\\(m(x)\\) and \\(E[Y|X]\\) might differ substantially!"
   },
   {
     "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#best-linear-predictor-blp-1",
     "href": "slides/week4/week4_experiments_covariate_adjustment.html#best-linear-predictor-blp-1",
     "title": "Week 4: Experiments - Covariate Adjustment",
     "section": "Best Linear Predictor (BLP)",
-    "text": "Best Linear Predictor (BLP)\n\nIs there a closed form expression for the population regression coefficients \\(\\beta\\)?\n\nYes - with some algebra (solving for the first order conditions), we get\n\n\\[\\beta = (\\mathbb{E}[X_iX_i^\\prime])^{-1}\\mathbb{E}[X_iY_i]\\]\nRecall from intro that in the bivariate case, that the expression for the slope coefficient \\(\\beta_1\\) can be written as:\n\\[\\beta_1 = \\frac{Cov(X_i, Y_i)}{Var(X_i)}\\]"
-  },
-  {
-    "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#properties",
-    "href": "slides/week4/week4_experiments_covariate_adjustment.html#properties",
-    "title": "Week 4: Experiments - Covariate Adjustment",
-    "section": "Properties",
-    "text": "Properties\n\nWhat have we assumed so far?\n\nFinite mean/variance/covariances for \\(Y\\) and \\(X\\)\nColumns of \\(X\\) are linearly independent (no perfect collinearity)"
+    "text": "Best Linear Predictor (BLP)\n\nIs there a closed form expression for the population regression coefficients \\(\\beta\\)?\n\nYes - with some algebra (solving the optimization problem), we get\n\n\\[\\beta = (\\mathbb{E}[X_iX_i^\\prime])^{-1}\\mathbb{E}[X_iY_i]\\]\nRecall from intro that in the bivariate case, that the expression for the slope coefficient \\(\\beta_1\\) can be written as:\n\\[\\beta_1 = \\frac{Cov(X_i, Y_i)}{Var(X_i)}\\]\nWhat have we assumed so far?\n\nFinite mean/variance/covariances for \\(Y\\) and \\(X\\)\n\\(\\mathbb{E}[X_iX_i^\\prime]\\) is invertible (no perfect collinearity in columns of \\(X\\))"
   },
   {
     "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#projection-error",
     "href": "slides/week4/week4_experiments_covariate_adjustment.html#projection-error",
     "title": "Week 4: Experiments - Covariate Adjustment",
     "section": "Projection error",
-    "text": "Projection error\n\nWhat can we say about the difference between the BLP and \\(Y\\)?\n\\[e_i = Y_i - m(X_i)\\]\nRewriting, we have\n\\[Y_i = X_i^\\prime\\beta + e_i\\]"
+    "text": "Projection error\n\nWhat can we say about the difference between the BLP and \\(Y\\)?\n\\[e_i = Y_i - m(X_i)\\]\nRewriting, we have\n\\[Y_i = X_i^\\prime\\beta + e_i\\]\n\\(e_i\\) is the projection error since the BLP is the “best” projection of \\(Y\\) into the space of linear combinations of the columns of \\(\\mathbf{X}\\)"
   },
   {
     "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#projection-error-1",
@@ -1467,7 +1460,210 @@
     "href": "slides/week4/week4_experiments_covariate_adjustment.html#estimating-the-blp",
     "title": "Week 4: Experiments - Covariate Adjustment",
     "section": "Estimating the BLP",
-    "text": "Estimating the BLP\n\nRemember, \\(m(X)\\) is a population quantity - can we come up with an estimator in our sample that is consistent for it?\n\nplug-in principle - Where we have population expectations, plug in their sample equivalents\n\nOur estimand\n\\[\\beta = (\\mathbb{E}[X_iX_i^\\prime])^{-1}\\mathbb{E}[X_iY_i]\\]\nOur estimator\n\\[\\hat{\\beta} = \\bigg(\\frac{1}{n} \\sum_{i=1}^n X_iX_i^\\prime\\bigg)^{-1}\\bigg(\\frac{1}{n} \\sum_{i=1}^n X_iY_i\\bigg)\\]\nOften written as:\n\\[\\hat{\\beta} = (\\mathbf{X}^\\prime\\mathbf{X})^{-1}(\\mathbf{X}^\\prime Y)\\]"
+    "text": "Estimating the BLP\n\nRemember, \\(m(X)\\) is a population quantity - can we come up with an estimator in our sample that is consistent for it?\n\nplug-in principle - Where we have population expectations, plug in their sample equivalents\n\nOur estimand\n\\[\\beta = (\\mathbb{E}[X_iX_i^\\prime])^{-1}\\mathbb{E}[X_iY_i]\\]\nOur estimator\n\\[\\hat{\\beta} = \\bigg(\\frac{1}{N} \\sum_{i=1}^N X_iX_i^\\prime\\bigg)^{-1}\\bigg(\\frac{1}{N} \\sum_{i=1}^N X_iY_i\\bigg)\\]\nOften written as:\n\\[\\hat{\\beta} = (\\mathbf{X}^\\prime\\mathbf{X})^{-1}(\\mathbf{X}^\\prime Y)\\]"
+  },
+  {
+    "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#estimating-the-blp-1",
+    "href": "slides/week4/week4_experiments_covariate_adjustment.html#estimating-the-blp-1",
+    "title": "Week 4: Experiments - Covariate Adjustment",
+    "section": "Estimating the BLP",
+    "text": "Estimating the BLP\n\nTo visualize how \\(\\mathbf{X}^\\prime\\mathbf{X}\\) is a sum over the outer products \\(X_{i}X_{i}^\\prime\\)\n\n\\[\\mathbf{X}^\\prime \\mathbf{X} = \\begin{pmatrix} x_{11} & x_{21} & x_{31} & \\cdots & x_{N1} \\\\ x_{12} & x_{22} & x_{32} & \\cdots & x_{N2} \\\\ \\vdots & \\vdots & \\vdots & \\ddots & \\vdots \\\\ x_{1K} & x_{2K} & x_{3K} & \\cdots & x_{NK} \\end{pmatrix}_{K \\times N} \\begin{pmatrix} x_{11} & x_{12} & \\cdots & x_{1K} \\\\ x_{21} & x_{22} & \\cdots & x_{2K} \\\\ x_{31} & x_{32} & \\cdots & x_{3K} \\\\ \\vdots & \\vdots & \\ddots & \\vdots \\\\ x_{N1} & x_{N2} & \\cdots & x_{NK} \\end{pmatrix}_{N \\times K}\\]\n\\[= \\underbrace{\\begin{pmatrix} x_{11}^2 & x_{11}x_{12} & \\cdots & x_{11}x_{1K} \\\\ x_{12}x_{11} & x_{12}^2 & \\cdots & x_{12}x_{1K} \\\\ \\vdots & \\vdots & \\ddots & \\vdots \\\\ x_{1K}x_{11} & x_{1K}x_{12} & \\cdots & x_{1K}^2 \\end{pmatrix}}_{X_1 X_1^\\prime}  + \\cdots + \\underbrace{\\begin{pmatrix} x_{N1}^2 & x_{N1}x_{N2} & \\cdots & x_{N1}x_{NK} \\\\ x_{N2}x_{N1} & x_{N2}^2 & \\cdots & x_{N2}x_{NK} \\\\ \\vdots & \\vdots & \\ddots & \\vdots \\\\ x_{NK}x_{N1} & x_{NK}x_{N2} & \\cdots & x_{NK}^2 \\end{pmatrix}}_{X_N X_N^\\prime}\\]"
+  },
+  {
+    "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#estimating-the-blp-2",
+    "href": "slides/week4/week4_experiments_covariate_adjustment.html#estimating-the-blp-2",
+    "title": "Week 4: Experiments - Covariate Adjustment",
+    "section": "Estimating the BLP",
+    "text": "Estimating the BLP\n\nAnd likewise for \\(\\mathbf{X}^\\prime Y\\)\n\n\\[\\mathbf{X}^\\prime Y = \\begin{pmatrix} x_{11} & x_{21} & x_{31} & \\cdots & x_{N1} \\\\ x_{12} & x_{22} & x_{32} & \\cdots & x_{N2} \\\\ \\vdots & \\vdots & \\vdots & \\ddots & \\vdots \\\\ x_{1K} & x_{2K} & x_{3K} & \\cdots & x_{NK} \\end{pmatrix}_{K \\times N} \\begin{pmatrix} Y_1 \\\\ Y_2 \\\\ Y_3 \\\\ \\vdots \\\\ Y_N \\end{pmatrix}_{N \\times 1} = \\begin{pmatrix} x_{11}Y_1 + x_{21}Y_2 + x_{31}Y_3 + \\cdots + x_{N1}Y_N \\\\ x_{12}Y_1 + x_{22}Y_2 + x_{32}Y_3 + \\cdots + x_{N2}Y_N \\\\ \\vdots \\\\ x_{1K}Y_1 + x_{2K}Y_2 + x_{3K}Y_3 + \\cdots + x_{NK}Y_N \\end{pmatrix}_{K \\times 1}\\]"
+  },
+  {
+    "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#estimating-the-blp-3",
+    "href": "slides/week4/week4_experiments_covariate_adjustment.html#estimating-the-blp-3",
+    "title": "Week 4: Experiments - Covariate Adjustment",
+    "section": "Estimating the BLP",
+    "text": "Estimating the BLP\n\nIs \\(\\hat{\\beta}\\) consistent for \\(\\beta\\)?\nLet’s write \\(\\hat{\\beta}\\) as a function of \\(\\beta\\) and the projection error\n\\[\\hat{\\beta} = \\beta + \\bigg(\\frac{1}{n} \\sum_{i=1}^n X_iX_i^\\prime\\bigg)^{-1}\\bigg(\\frac{1}{n} \\sum_{i=1}^n X_ie_i\\bigg) \\]\nWe can use the weak law of large numbers\n\\[\\frac{1}{N} \\sum_{i=1}^N X_iX_i^\\prime \\overset{p}{\\to} \\mathbb{E}[X_iX_i^\\prime]\\]\n\\[\\frac{1}{N} \\sum_{i=1}^N X_ie_i \\overset{p}{\\to} \\mathbb{E}[X_ie_i] = 0\\]"
+  },
+  {
+    "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#estimating-the-blp-4",
+    "href": "slides/week4/week4_experiments_covariate_adjustment.html#estimating-the-blp-4",
+    "title": "Week 4: Experiments - Covariate Adjustment",
+    "section": "Estimating the BLP",
+    "text": "Estimating the BLP\n\nPlugging it all in, we have\n\\[\\hat{\\beta} \\overset{p}{\\to} \\beta\\]\nOrdinary least squares is consistent for the best linear predictor under relatively mild assumptions\n\ni.i.d. sample (can weaken this with LLNs for dependent random variables)\nfinite expectation/variance of \\(Y\\), \\(X\\)\nno perfect collinearity (you can check if this is a problem!)\n\nWhat have we not assumed\n\nLinear CEF\nHomoskedastic errors\nNormal outcome"
+  },
+  {
+    "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#asymptotic-normality",
+    "href": "slides/week4/week4_experiments_covariate_adjustment.html#asymptotic-normality",
+    "title": "Week 4: Experiments - Covariate Adjustment",
+    "section": "Asymptotic normality",
+    "text": "Asymptotic normality\n\nIn large samples, what is the distribution of \\(\\hat{\\beta}\\)?\n\\[\\sqrt{n}(\\hat{\\beta} - \\beta) = \\bigg(\\frac{1}{n} \\sum_{i=1}^n X_iX_i^\\prime\\bigg)^{-1}\\bigg(\\frac{1}{\\sqrt{n}} \\sum_{i=1}^n X_ie_i\\bigg)\\]\nWe know that \\(\\bigg(\\frac{1}{n} \\sum_{i=1}^n X_iX_i^\\prime\\bigg)^{-1} \\overset{p}{\\to} \\mathbb{E}[X_iX_i^\\prime]^{-1}\\)"
+  },
+  {
+    "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#asymptotic-normality-1",
+    "href": "slides/week4/week4_experiments_covariate_adjustment.html#asymptotic-normality-1",
+    "title": "Week 4: Experiments - Covariate Adjustment",
+    "section": "Asymptotic normality",
+    "text": "Asymptotic normality\n\nWe can apply the CLT to the other term. We know the expectation is zero, what about the variance?\n\\[Var(X_ie_i) = \\mathbb{E}[X_i e_i (X_i e_i)^\\prime] = \\mathbb{E}[e_i^2X_i X_i^\\prime]\\]\nBy the CLT, we have\n\\[\\frac{1}{\\sqrt{n}} \\sum_{i=1}^n X_ie_i \\overset{d}{\\to} \\mathcal{N}(0, \\mathbb{E}[e_i^2X_i X_i^\\prime])\\]\nCombining with our other convergence result using Slutsky’s theorem gives\n\\[\\sqrt{n}(\\hat{\\beta} - \\beta) \\overset{d}{\\to} \\mathcal{N}\\bigg(0, (\\mathbb{E}[X_iX_i^\\prime])^{-1} (\\mathbb{E}[e_i^2X_i X_i^\\prime]) (\\mathbb{E}[X_iX_i^\\prime])^{-1}\\bigg)\\]"
+  },
+  {
+    "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#variance-estimation",
+    "href": "slides/week4/week4_experiments_covariate_adjustment.html#variance-estimation",
+    "title": "Week 4: Experiments - Covariate Adjustment",
+    "section": "Variance estimation",
+    "text": "Variance estimation\n\nAgain, we have a bunch of population expectations, let’s plug in their sample equivalents!\nOur estimand\n\\[Var(\\hat{\\beta}) = \\frac{1}{n} (E[X_iX_i^\\prime])^{-1} (\\mathbb{E}[e_i^2X_i X_i^\\prime]) (E[X_iX_i^\\prime])^{-1}\\]\nOur estimator\n\\[\\widehat{Var(\\hat{\\beta})} = \\frac{1}{n} \\bigg(\\frac{1}{n} \\sum_{i=1}^n X_i X_i^\\prime \\bigg)^{-1}\\bigg(\\frac{1}{n} \\sum_{i=1}^n \\hat{e_i}^2 X_i X_i^\\prime \\bigg)\\bigg(\\frac{1}{n} \\sum_{i=1}^n X_i X_i^\\prime \\bigg)^{-1}\\]\nEquivalently\n\\[\\widehat{Var(\\hat{\\beta})} = \\bigg(\\sum_{i=1}^n X_i X_i^\\prime \\bigg)^{-1}\\bigg(\\sum_{i=1}^n \\hat{e_i}^2 X_i X_i^\\prime \\bigg)\\bigg(\\sum_{i=1}^n X_i X_i^\\prime \\bigg)^{-1}\\]"
+  },
+  {
+    "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#variance-estimation-1",
+    "href": "slides/week4/week4_experiments_covariate_adjustment.html#variance-estimation-1",
+    "title": "Week 4: Experiments - Covariate Adjustment",
+    "section": "Variance estimation",
+    "text": "Variance estimation\n\nThis is often known as the “sandwich” estimator\n\\[\\widehat{Var(\\hat{\\beta})} =  (\\mathbf{X}^\\prime\\mathbf{X})^{-1} (\\mathbf{X}^\\prime \\hat{\\Sigma} \\mathbf{X}) (\\mathbf{X}^\\prime\\mathbf{X})^{-1}\\]\nwhere \\(\\hat{\\Sigma} = \\text{diag}(\\hat{e_1}^2, \\hat{e_2}^2, \\dotsc \\hat{e_n}^2)\\)\nYou’ll see this referred to as the Eicker-Huber-White heteroskedasticity-consistent variance estimator (or just the robust standard errors)\n\nNotably, we have made no assumptions on the variance of \\(e_i\\), we’re just plugging in the regression residuals!"
+  },
+  {
+    "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#ols-and-projections",
+    "href": "slides/week4/week4_experiments_covariate_adjustment.html#ols-and-projections",
+    "title": "Week 4: Experiments - Covariate Adjustment",
+    "section": "OLS and Projections",
+    "text": "OLS and Projections\n\nOne way to think about the fitted values from OLS is that they are a projection of the n-dimensional vector \\(Y\\) into the column space of \\(\\mathbf{X}\\)\n\nA column space is the set of all linear combinations of the columns of \\(\\mathbf{X}\\)\n\nWe define the projection matrix or hat matrix\n\\[\\mathbf{P}_{\\mathbf{X}} = \\mathbf{X}(\\mathbf{X}^\\prime\\mathbf{X})^{-1}\\mathbf{X^\\prime}\\]\nOur fitted values \\(\\hat{Y}\\) are a projection of \\(Y\\) to the “closest” vector that can be represented as a linear combination of the columns of \\(\\mathbf{X}\\)\n\\[\\hat{Y} = \\mathbf{P}_{\\mathbf{X}}Y = \\mathbf{X}(\\mathbf{X}^\\prime\\mathbf{X})^{-1}\\mathbf{X^\\prime}Y = \\mathbf{X}\\hat{\\beta}\\]"
+  },
+  {
+    "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#regression-adjustment-in-randomized-experiments",
+    "href": "slides/week4/week4_experiments_covariate_adjustment.html#regression-adjustment-in-randomized-experiments",
+    "title": "Week 4: Experiments - Covariate Adjustment",
+    "section": "Regression adjustment in randomized experiments",
+    "text": "Regression adjustment in randomized experiments\n\nWe’ve focused on a minimal assumption approach to justifying linear regression.\nBut usually you see regression taught using the Gauss-Markov assumptions (plus normal errors)\n\nLinearity of the CEF\nStrict exogeneity of the errors\nNo perfect collinearity\nSpherical errors (homoskedasticity)\nNormal errors\n\nWe’ll review these later in this lecture, but do we need these assumptions to use regression in a randomized experiment?\n\nFreedman (2008) “…randomization does not justify the assumptions behind the OLS model”"
+  },
+  {
+    "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#regression-adjustment-in-randomized-experiments-1",
+    "href": "slides/week4/week4_experiments_covariate_adjustment.html#regression-adjustment-in-randomized-experiments-1",
+    "title": "Week 4: Experiments - Covariate Adjustment",
+    "section": "Regression adjustment in randomized experiments",
+    "text": "Regression adjustment in randomized experiments\n\nLin (2013) shows that even a misspecified ordinary least squares regression will yield a consistent estimator of the sample ATE if the regression estimator:\n\nDe-means the covariates\nInteracts the covariates with the treatment indicator\n\nMathematically, this is equivalent to…\n\nFitting two regressions - one in the treated group, one in the control group\nPredicting the potential outcome under treatment for every unit in the sample using the treatment model\nPredicting the potential outcome under control for every unit in the sample using the control model\nTaking the average difference between the two predictions!"
+  },
+  {
+    "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#imputation-estimators",
+    "href": "slides/week4/week4_experiments_covariate_adjustment.html#imputation-estimators",
+    "title": "Week 4: Experiments - Covariate Adjustment",
+    "section": "Imputation estimators",
+    "text": "Imputation estimators\n\nMany of the treatment effect estimators we’ll see can be written in terms of imputed potential outcomes\n\\[\\hat{\\tau} = \\frac{1}{N} \\sum_{i=1}^N \\widehat{Y_i(1)} - \\widehat{Y_i(0)}\\]\nOur simple difference-in-means estimator is a simple case of this - we just impute the mean for every \\(i\\)\n\n\\(\\widehat{Y_i(1)} = \\bar{Y}_1 = \\frac{1}{N_t}\\sum_{i = 1}^N Y_i D_i\\)\n\\(\\widehat{Y_i(0)} = \\bar{Y}_0 = \\frac{1}{N_c}\\sum_{i = 1}^N Y_i (1 - D_i)\\)\n\nBut we could also generate predictions of \\(Y_i(1)\\) and \\(Y_i(0)\\) from a regression model!\n\nLet \\(\\beta^{(1)}\\) be the coefficients from regressing \\(Y_i\\) on \\(X_i\\) among the treated group\nLet \\(\\beta^{(0)}\\) are the coefficients from regressing \\(Y_i\\) on \\(X_i\\) among the control group\nOur regression imputation estimator is: \\(\\widehat{Y_i(1)} = X_i^\\prime \\beta^{(1)}\\) and \\(\\widehat{Y_i(0)} = X_i^\\prime \\beta^{(0)}\\)"
+  },
+  {
+    "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#lin-2013-estimator",
+    "href": "slides/week4/week4_experiments_covariate_adjustment.html#lin-2013-estimator",
+    "title": "Week 4: Experiments - Covariate Adjustment",
+    "section": "Lin (2013) estimator",
+    "text": "Lin (2013) estimator\n\nWe can recover this difference between the two regression functions from a single model regressing \\(Y_i\\) on the de-meaned \\(X_i\\) fully interacted with the treatment \\(D_i\\)\n\nThis is what is known as the Lin (2013) regression\nImplemented in estimatr::lm_lin() which handles the de-meaning for you!\n\nLet’s show the equivalence using the Nyhan and Reifler (2015) experiment\n\nSuppose that in addition to the strata, we want to adjust for stuff we didn’t explicitly block on\n\n\n\nadjusted_est &lt;- tidy(estimatr::lm_lin(combined ~ treatment, \n                                      covariates = ~ groupedblocks + partyleader + commleader + fundraising + voteshare, data=factcheck, weights=aw))\nadjusted_est %&gt;% filter(term == \"treatment\") %&gt;% select(estimate, std.error, statistic, p.value)\n\n    estimate   std.error statistic    p.value\n1 -0.0152531 0.008249513  -1.84897 0.06473204"
+  },
+  {
+    "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#lin-2013-estimator-1",
+    "href": "slides/week4/week4_experiments_covariate_adjustment.html#lin-2013-estimator-1",
+    "title": "Week 4: Experiments - Covariate Adjustment",
+    "section": "Lin (2013) estimator",
+    "text": "Lin (2013) estimator\n\nFitting the regression in the treated group and control group\n\n\ntreated_reg &lt;- lm(combined ~ groupedblocks + partyleader + commleader + fundraising + voteshare, \n                  data=factcheck %&gt;% filter(treatment == 1), weights=aw)\ncontrol_reg &lt;- lm(combined ~ groupedblocks + partyleader + commleader + fundraising + voteshare, \n                  data=factcheck %&gt;% filter(treatment == 0), weights=aw)\n\n\nPredicting for all units\n\n\nfactcheck$Y_1 &lt;- predict(treated_reg, newdata=factcheck)\nfactcheck$Y_0 &lt;- predict(control_reg, newdata=factcheck)\n\n\nVerify that we get the same result as the Lin (2013) regression!\n\n\nweighted.mean(factcheck$Y_1, factcheck$aw) - weighted.mean(factcheck$Y_0, factcheck$aw)\n\n[1] -0.0152531"
+  },
+  {
+    "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#classical-regression",
+    "href": "slides/week4/week4_experiments_covariate_adjustment.html#classical-regression",
+    "title": "Week 4: Experiments - Covariate Adjustment",
+    "section": "Classical regression",
+    "text": "Classical regression\n\nSo far, we’ve shown that the OLS estimator is consistent and asymptotically normal for the Best Linear Predictor\n\nBut what about for estimating the conditional expectation function? \\(\\mathbb{E}[Y_i|X_i]\\)\nIn non-experimental settings, we often do need to get this correct (next week - regression adjustment for confounders!)\n\nTo do inference on the CEF with OLS, we assume that it’s equal to the BLP!\nAssumption 1: Linearity\n\\[Y_i = X_i^\\prime\\beta + \\epsilon_i\\]\nAssumption 2: Strict exogeneity of the errors\n\\[\\mathbb{E}[\\epsilon | \\mathbf{X}] = 0\\]\nWhen is linearity always true?\n\nWhen we have a fully-saturated model - as many parameters as unique covariate values (e.g. (post)-stratification)"
+  },
+  {
+    "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#classical-regression-1",
+    "href": "slides/week4/week4_experiments_covariate_adjustment.html#classical-regression-1",
+    "title": "Week 4: Experiments - Covariate Adjustment",
+    "section": "Classical regression",
+    "text": "Classical regression\n\nAssumption 3: No perfect collinearity\n\n\\(\\mathbf{X}^{\\prime}\\mathbf{X}\\) is invertible\n\\(\\mathbf{X}\\) has full column rank\n\nWhen does this fail? How can we check?"
+  },
+  {
+    "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#classical-regression-2",
+    "href": "slides/week4/week4_experiments_covariate_adjustment.html#classical-regression-2",
+    "title": "Week 4: Experiments - Covariate Adjustment",
+    "section": "Classical regression",
+    "text": "Classical regression\n\nUnder assumptions 1-3, our OLS estimator \\(\\hat{\\beta}\\) is also unbiased for \\(\\beta\\)\nLet’s do a quick proof for unbiasedness\n\n\\[\\begin{align*}\\hat{\\beta} &= (\\mathbf{X}^{\\prime}\\mathbf{X})^{-1}(\\mathbf{X}^{\\prime}Y)\\\\\n&= (\\mathbf{X}^{\\prime}\\mathbf{X})^{-1}(\\mathbf{X}^{\\prime}(\\mathbf{X}\\beta + \\epsilon))\\\\\n&= (\\mathbf{X}^{\\prime}\\mathbf{X})^{-1}(\\mathbf{X}^{\\prime}\\mathbf{X})\\beta + (\\mathbf{X}^{\\prime}\\mathbf{X})^{-1}(\\mathbf{X}^{\\prime}\\epsilon)\\\\\n&= \\beta + (\\mathbf{X}^{\\prime}\\mathbf{X})^{-1}(\\mathbf{X}^{\\prime}\\epsilon)\n\\end{align*}\\]\n\nThen we can obtain the conditional expectation of \\(\\mathbb{E}[\\hat{\\beta} | \\mathbf{X}]\\)\n\n\\[\\begin{align*} \\mathbb{E}[\\hat{\\beta} | \\mathbf{X}] &= \\mathbb{E}\\bigg[\\beta + (\\mathbf{X}^{\\prime}\\mathbf{X})^{-1}(\\mathbf{X}^{\\prime}\\epsilon) \\bigg| \\mathbf{X} \\bigg]\\\\\n&= \\mathbb{E}[\\beta | \\mathbf{X}] + \\mathbb{E}[(\\mathbf{X}^{\\prime}\\mathbf{X})^{-1}(\\mathbf{X}^{\\prime}\\epsilon) | \\mathbf{X}]\\\\\n&= \\beta + (\\mathbf{X}^{\\prime}\\mathbf{X})^{-1}\\mathbf{X}^{\\prime} \\mathbb{E}[\\epsilon | \\mathbf{X}]\\\\\n&= \\beta + (\\mathbf{X}^{\\prime}\\mathbf{X})^{-1}\\mathbf{X}^{\\prime}0\\\\\n&= \\beta\n\\end{align*}\\]"
+  },
+  {
+    "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#classical-regression-3",
+    "href": "slides/week4/week4_experiments_covariate_adjustment.html#classical-regression-3",
+    "title": "Week 4: Experiments - Covariate Adjustment",
+    "section": "Classical regression",
+    "text": "Classical regression\n\nLastly, by law of total expectation\n\\[\\mathbb{E}[\\hat{\\beta}] = \\mathbb{E}[\\mathbb{E}[\\hat{\\beta}|\\mathbf{X}]]\\]\nTherefore\n\\[\\mathbb{E}[\\hat{\\beta}] = \\mathbb{E}[\\beta] = \\beta\\]\nWhat have we still not assumed?\n\nAnything about the distribution of the errors (aside from finite 1st/2nd moments)"
+  },
+  {
+    "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#classical-regression-4",
+    "href": "slides/week4/week4_experiments_covariate_adjustment.html#classical-regression-4",
+    "title": "Week 4: Experiments - Covariate Adjustment",
+    "section": "Classical regression",
+    "text": "Classical regression\n\nAssumption 4 - Spherical errors\n\\[Var(\\epsilon | \\mathbf{X}) = \\begin{bmatrix}\n\\sigma^2 & 0 & \\cdots & 0\\\\\n0 & \\sigma^2 & \\cdots & 0\\\\\n\\vdots & \\vdots & \\ddots & \\vdots \\\\\n0 & 0 & \\cdots & \\sigma^2\n\\end{bmatrix} =  \\sigma^2 \\mathbf{I}\\]\nBenefits\n\nSimple, unbiased estimator for \\(Var(\\hat{\\beta})\\) - classical OLS standard errors (what you get in lm())\nCompletes Gauss-Markov assumptions \\(\\leadsto\\) OLS is BLUE (Best Linear Unbiased Estimator)\n\nDrawbacks\n\nBasically never is true"
+  },
+  {
+    "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#classical-regression-5",
+    "href": "slides/week4/week4_experiments_covariate_adjustment.html#classical-regression-5",
+    "title": "Week 4: Experiments - Covariate Adjustment",
+    "section": "Classical regression",
+    "text": "Classical regression\n\nUnder spherical errors, the variance formula simplifies\n\\[Var(\\beta) =  (\\mathbf{X}^\\prime\\mathbf{X})^{-1} (\\mathbf{X}^\\prime \\sigma^2\\mathbf{X}) (\\mathbf{X}^\\prime\\mathbf{X})^{-1}\\] \\[Var(\\beta) =  \\sigma^2 (\\mathbf{X}^\\prime\\mathbf{X})^{-1}\\]\nAll we need is an estimator for \\(\\sigma^2\\)\n\nA consistent one is just the sample variance of the residuals\nCan do better by including a “degrees of freedom” correction"
+  },
+  {
+    "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#classical-regression-6",
+    "href": "slides/week4/week4_experiments_covariate_adjustment.html#classical-regression-6",
+    "title": "Week 4: Experiments - Covariate Adjustment",
+    "section": "Classical regression",
+    "text": "Classical regression\n\nAn unbiased estimator for \\(\\sigma^2\\) is the sample variance of the residuals (mean squared error) adjusted by a degrees of freedom correction\n\\[\\hat{\\sigma^2} = \\frac{1}{N-K} \\sum_{i=1}^N (Y_i - \\hat{Y_i})^2\\]\n\\(K\\) is the number of parameters. We refer to \\(N-K\\) as the “degrees of freedom”"
+  },
+  {
+    "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#ols-is-blue",
+    "href": "slides/week4/week4_experiments_covariate_adjustment.html#ols-is-blue",
+    "title": "Week 4: Experiments - Covariate Adjustment",
+    "section": "OLS is BLUE",
+    "text": "OLS is BLUE\n\nThe Gauss-Markov Theorem\n\nUnder Assumptions 1-4, we can show that there is no other estimator that for \\(\\beta\\) that is both linear and unbiased which has lower variance than \\(\\hat{\\beta}_{\\text{OLS}}\\)"
+  },
+  {
+    "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#ols-is-blue-1",
+    "href": "slides/week4/week4_experiments_covariate_adjustment.html#ols-is-blue-1",
+    "title": "Week 4: Experiments - Covariate Adjustment",
+    "section": "OLS is BLUE",
+    "text": "OLS is BLUE\n\nProof: Suppose there’s another linear estimator that diverges from the OLS projection of \\(Y\\) by a non-zero \\(K \\times N\\) matrix \\(D\\)\n\\[\\tilde{\\beta} = ((\\mathbf{X}^\\prime\\mathbf{X})^{-1} \\mathbf{X}^\\prime + D)Y\\]\nLet’s take the expectation\n\\[\\mathbb{E}[\\tilde{\\beta}] = \\mathbb{E}[\\hat{\\beta}_{\\text{OLS}}] + \\mathbb{E}[DY]\\]\nWe know OLS is unbiased. Next, we plug in the expression for \\(Y\\) (linearity)\n\\[\\mathbb{E}[\\tilde{\\beta}] = \\beta + \\mathbb{E}[D\\mathbf{X}\\beta] + \\mathbb{E}[D\\epsilon]\\]"
+  },
+  {
+    "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#ols-is-blue-2",
+    "href": "slides/week4/week4_experiments_covariate_adjustment.html#ols-is-blue-2",
+    "title": "Week 4: Experiments - Covariate Adjustment",
+    "section": "OLS is BLUE",
+    "text": "OLS is BLUE\n\nPull out the constants and use \\(\\mathbb{E}[\\epsilon] = 0\\)\n\\[\\mathbb{E}[\\tilde{\\beta}] = \\beta(\\mathbf{I} + D\\mathbf{X})\\]\nIf \\(\\tilde{\\beta}\\) is unbiased, then\n\\[\\beta(\\mathbf{I} + D\\mathbf{X}) = 0\\]\nThis holds for all values of \\(\\beta\\) only if \\(D\\mathbf{X} = 0\\)"
+  },
+  {
+    "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#ols-is-blue-3",
+    "href": "slides/week4/week4_experiments_covariate_adjustment.html#ols-is-blue-3",
+    "title": "Week 4: Experiments - Covariate Adjustment",
+    "section": "OLS is BLUE",
+    "text": "OLS is BLUE\n\nUnder homoskedasticity, the variance is\n\\[Var(\\tilde{\\beta}) = \\sigma^2\\bigg((\\mathbf{X}^\\prime\\mathbf{X})^{-1} \\mathbf{X}^\\prime + D\\bigg)\\bigg((\\mathbf{X}^\\prime\\mathbf{X})^{-1} \\mathbf{X}^\\prime + D\\bigg)^{\\prime}\\]\nUsing properties of matrix transposes\n\\[Var(\\tilde{\\beta}) = \\sigma^2\\bigg((\\mathbf{X}^\\prime\\mathbf{X})^{-1} \\mathbf{X}^\\prime + D\\bigg)\\bigg(\\mathbf{X}(\\mathbf{X}^\\prime\\mathbf{X})^{-1} + D^\\prime\\bigg)\\]\nExpanding\n\\[Var(\\tilde{\\beta}) = \\sigma^2\\bigg((\\mathbf{X}^\\prime\\mathbf{X})^{-1} \\mathbf{X}^\\prime\\mathbf{X}(\\mathbf{X}^\\prime\\mathbf{X})^{-1} + (\\mathbf{X}^\\prime\\mathbf{X})^{-1}(D\\mathbf{X})^\\prime + D\\mathbf{X}(\\mathbf{X}^\\prime\\mathbf{X})^{-1} + DD^\\prime\\bigg)\\]"
+  },
+  {
+    "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#ols-is-blue-4",
+    "href": "slides/week4/week4_experiments_covariate_adjustment.html#ols-is-blue-4",
+    "title": "Week 4: Experiments - Covariate Adjustment",
+    "section": "OLS is BLUE",
+    "text": "OLS is BLUE\n\nUsing \\(D\\mathbf{X} = 0\\) from above along with the definition of the variance of \\(\\hat{\\beta}_{\\text{OLS}}\\)\n\\[Var(\\tilde{\\beta}) = Var(\\hat{\\beta}_{\\text{OLS}}) + \\sigma^2DD^\\prime\\]\nThe variance of our alternative linear, unbiased estimator exceeds the variance of OLS by the positive semi-definite matrix \\(\\sigma^2DD^\\prime\\) (since \\(DD^\\prime\\) is an outer product)\nTherefore OLS is the lowest-variance linear unbiased estimator"
+  },
+  {
+    "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#classical-regression-7",
+    "href": "slides/week4/week4_experiments_covariate_adjustment.html#classical-regression-7",
+    "title": "Week 4: Experiments - Covariate Adjustment",
+    "section": "Classical regression",
+    "text": "Classical regression\n\nAssumption 5 - Normality of the errors\n\\[\\epsilon | \\mathbf{X} \\sim \\mathcal{N}(0, \\sigma^2)\\]\nNot necessary even for Gauss-Markov assumptions\nNot needed to do asymptotic inference on \\(\\hat{\\beta}\\)\n\nWhy? Central Limit Theorem!\n\nBenefits?\n\nFinite-sample inference (no reliance on asymptotics for hypothesis tests)\nInference for predictions from the model.\n\nDrawbacks\n\nAgain, almost never true unless our outcome is a sum or mean of a large number of i.i.d. random variables"
+  },
+  {
+    "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#regression-review",
+    "href": "slides/week4/week4_experiments_covariate_adjustment.html#regression-review",
+    "title": "Week 4: Experiments - Covariate Adjustment",
+    "section": "Regression review",
+    "text": "Regression review\n\nWhat do we need for OLS to be consistent for the “best linear approximation” to the CEF?\n\nVery little!\n\nWhat do we need for OLS to be consistent and unbiased for the conditional expectation function?\n\nTruly linear CEF\nBut still no assumptions about the outcome distribution!\n\nWhat do we need to do inference on \\(\\hat{\\beta}\\)?\n\nWe almost never assume homoskedasticity because “robust” SE estimators are ubiquitous\nEven some forms of error correlation are permitted (“cluster” robust SEs)\nSample sizes are usually large enough where CLT approximations are good.\nOtherwise, we’ll generally use something like a Fisher randomization test."
+  },
+  {
+    "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#next-week",
+    "href": "slides/week4/week4_experiments_covariate_adjustment.html#next-week",
+    "title": "Week 4: Experiments - Covariate Adjustment",
+    "section": "Next week",
+    "text": "Next week\n\nIntroduction to observational designs\n\nTreatment is not directly randomized by researchers!\n\nSelection-on-observables\n\nCan we assume that we have adjusted for all factors predicting treatment and outcome?\nSimple adjustment using a stratification estimator.\n\nEncoding our selection-on-observables assumptions using directed acyclic graphs\n\nAdjustment criterion - what is a sufficient set of “controls” that would allow us to identify a treatment effect?"
   },
   {
     "objectID": "syllabus.html",

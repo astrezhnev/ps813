@@ -3808,7 +3808,7 @@ Anton Strezhnev
 <li>Let’s check balance
 <ul>
 <li>We know balance is exact on state/party/chamber and whether there is a past fact check.</li>
-<li>Coarse balance on fundraising and voteshare</li>
+<li>Coarse balance on fundraising and vote share</li>
 <li>Other covariates observed but not explicitly “blocked” on (e.g. leadership position)</li>
 </ul></li>
 </ul>
@@ -3901,7 +3901,7 @@ Anton Strezhnev
 <ul>
 <li>We use the <strong>Lin (2013)</strong> estimator in the <code>estimatr</code> package
 <ul>
-<li>Mathematically equivalent to our stratified difference-in-means estimator from above with a single covariate representing our stratum dummies (we’ll show you why later)</li>
+<li>Mathematically equivalent to our stratified difference-in-means estimator when using dummy indicators for strata (we’ll show you why later)</li>
 </ul></li>
 </ul>
 <div class="cell">
@@ -3934,7 +3934,7 @@ Anton Strezhnev
 <li class="fragment">Take care to use an <strong>estimator</strong> that actually leverages the variance-reduction
 <ul>
 <li class="fragment">A <strong>stratified</strong> difference-in-means</li>
-<li class="fragment">Equivalent to a correctly specified regression! (the <strong>“Lin”</strong> estimator - we’ll show you this shortly)</li>
+<li class="fragment">Equivalent to OLS with de-meaned dummies for the strata interacted with the treatment indicator (the <strong>“Lin”</strong> estimator)</li>
 </ul></li>
 <li class="fragment">What to block on?
 <ul>
@@ -3952,36 +3952,42 @@ Anton Strezhnev
 <li class="fragment"><p>We often want to adjust for <strong>additional</strong> covariates when trying to estimate a treatment effect</p>
 <ul>
 <li class="fragment">In an RCT - <strong>prognostic</strong> covariates that reduce variance in Y</li>
-<li class="fragment">In an observational design - both <strong>prognostic</strong> covariates and <strong>confounders</strong> of Y and X</li>
+<li class="fragment">(<strong>Next week</strong>) - In an observational design - both <strong>prognostic</strong> covariates and <strong>confounders</strong> of Y and X</li>
 </ul></li>
 <li class="fragment"><p>By the law of total expectation, we can write the ATE as an <strong>expectation</strong> over the distribution of CATEs</p>
 <p><span class="math display">\[\tau = \mathbb{E}_X\bigg[\mathbb{E}[Y_i(1) | X_i] - \mathbb{E}[Y_i(0) | X_i]\bigg]\]</span></p></li>
-<li class="fragment"><p>Under consistency and <strong>conditional</strong> ignorability (conditional on <span class="math inline">\(X_i\)</span>)</p>
+<li class="fragment"><p>Under our consistency + ignorability assumptions:</p>
 <p><span class="math display">\[E[Y_i(1) | X_i] = E[Y_i | D_i = 1, X_i]\]</span></p></li>
-<li class="fragment"><p>Now we have a <strong>statistical</strong> problem, estimating the CEF of <span class="math inline">\(Y_i\)</span> given <span class="math inline">\(X_i\)</span></p></li>
+<li class="fragment"><p>Now we have a <strong>statistical</strong> problem, estimating the CEF of <span class="math inline">\(Y_i\)</span> given <span class="math inline">\(X_i\)</span> and <span class="math inline">\(D_i\)</span></p>
+<ul>
+<li class="fragment">This is the task of <strong>regression</strong></li>
+<li class="fragment">A ubiquitous regression <strong>estimator</strong> is <strong>ordinary least squares</strong></li>
+</ul></li>
 </ul>
 </section>
 <section id="set-up" class="slide level2">
 <h2>Set-up</h2>
 <ul>
-<li class="fragment">We’ll denote our vector of observed observations with <span class="math inline">\(Y = \{Y_1, Y_2, Y_3, Y_4, \dotsc\}\)</span></li>
-<li class="fragment">We observe <span class="math inline">\(K\)</span> predictors for each unit <span class="math inline">\(i\)</span> collected in a matrix <span class="math inline">\(\mathbf{X}\)</span></li>
-</ul>
-<p><span class="math display">\[\mathbf{X} = \begin{bmatrix} — &amp; X_1 &amp; — \\ — &amp; X_2 &amp; — \\ &amp; \vdots &amp; \\ — &amp; X_N &amp; — \end{bmatrix}_{N \times K}\]</span></p>
+<li class="fragment"><p>We’ll denote our vector of <span class="math inline">\(N\)</span> observed outcomes with <span class="math inline">\(Y\)</span></p></li>
+<li class="fragment"><p>We observe <span class="math inline">\(K\)</span> predictors for each unit <span class="math inline">\(i\)</span> collected in a matrix <span class="math inline">\(\mathbf{X}\)</span></p>
 <ul>
-<li class="fragment">We assume an <span class="math inline">\(i.i.d.\)</span> random sample from the target population of interest (though can relax this!)</li>
+<li class="fragment">Each <strong>row</strong> is a <span class="math inline">\(K\)</span>-length vector <span class="math inline">\(X_i\)</span> denoting the covariates observed for unit <span class="math inline">\(i\)</span></li>
+</ul>
+<p><span class="math display">\[\mathbf{X} = \begin{pmatrix} X_1^\prime \\ X_2^\prime \\ \vdots \\ X_N^\prime \end{pmatrix}_{N \times K} \qquad Y = \begin{pmatrix} Y_1 \\ Y_2 \\ \vdots \\ Y_N \end{pmatrix}_{N \times 1}\]</span></p></li>
+<li class="fragment"><p>We’ll use the <span class="math inline">\(\prime\)</span> notation to denote the transpose of a matrix and treat vectors by default as <strong>column</strong> vectors (so <span class="math inline">\(X_i^\prime\)</span> is a <span class="math inline">\(1 \times K\)</span> row-vector)</p></li>
+<li class="fragment"><p>We assume an <span class="math inline">\(i.i.d.\)</span> random sample from the target population of interest (though can relax this!)</p></li>
 </ul>
 </section>
 <section id="best-linear-predictor-blp" class="slide level2">
 <h2>Best Linear Predictor (BLP)</h2>
 <ul>
-<li class="fragment"><p>The <strong>Best Linear Predictor</strong> or <strong>population regression</strong> is a function of some input vector <span class="math inline">\(x\)</span></p>
-<p><span class="math display">\[m(x) = x^\prime\beta = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \dotsc\]</span></p></li>
+<li class="fragment"><p>The <strong>Best Linear Predictor</strong> or <strong>population regression</strong> is a function of some input vector <span class="math inline">\(x\)</span> of length <span class="math inline">\(K\)</span></p>
+<p><span class="math display">\[m(x_i) = x^\prime\beta = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \dotsc + \beta_K x_K\]</span></p></li>
 <li class="fragment"><p>The <span class="math inline">\(\beta\)</span> parameters minimize the <strong>expected prediction error</strong></p>
 <p><span class="math display">\[\beta = \argmin_b \ \mathbb{E}[(Y_i - X_i^\prime b)^2]\]</span></p></li>
 <li class="fragment"><p>Note that this is a <strong>population</strong> quantity</p>
 <ul>
-<li class="fragment"><span class="math inline">\(m(x)\)</span> is an <em>estimand</em> like any other estimand we’ve talked about</li>
+<li class="fragment"><span class="math inline">\(m(x)\)</span> is an <strong>estimand</strong> like any other estimand we’ve talked about</li>
 <li class="fragment"><span class="math inline">\(m(x)\)</span> and <span class="math inline">\(E[Y|X]\)</span> might differ substantially!</li>
 </ul></li>
 </ul>
@@ -3989,32 +3995,28 @@ Anton Strezhnev
 <section id="best-linear-predictor-blp-1" class="slide level2">
 <h2>Best Linear Predictor (BLP)</h2>
 <ul>
-<li><p>Is there a closed form expression for the population regression coefficients <span class="math inline">\(\beta\)</span>?</p>
+<li class="fragment"><p>Is there a closed form expression for the population regression coefficients <span class="math inline">\(\beta\)</span>?</p>
 <ul>
-<li>Yes - with some algebra (solving for the first order conditions), we get</li>
+<li class="fragment">Yes - with some algebra (solving the optimization problem), we get</li>
 </ul>
 <p><span class="math display">\[\beta = (\mathbb{E}[X_iX_i^\prime])^{-1}\mathbb{E}[X_iY_i]\]</span></p></li>
-<li><p>Recall from intro that in the <strong>bivariate</strong> case, that the expression for the slope coefficient <span class="math inline">\(\beta_1\)</span> can be written as:</p>
+<li class="fragment"><p>Recall from intro that in the <strong>bivariate</strong> case, that the expression for the slope coefficient <span class="math inline">\(\beta_1\)</span> can be written as:</p>
 <p><span class="math display">\[\beta_1 = \frac{Cov(X_i, Y_i)}{Var(X_i)}\]</span></p></li>
-</ul>
-</section>
-<section id="properties" class="slide level2">
-<h2>Properties</h2>
+<li class="fragment"><p>What have we assumed so far?</p>
 <ul>
-<li>What have we assumed so far?
-<ul>
-<li>Finite mean/variance/covariances for <span class="math inline">\(Y\)</span> and <span class="math inline">\(X\)</span></li>
-<li>Columns of <span class="math inline">\(X\)</span> are linearly independent (no perfect collinearity)</li>
+<li class="fragment">Finite mean/variance/covariances for <span class="math inline">\(Y\)</span> and <span class="math inline">\(X\)</span></li>
+<li class="fragment"><span class="math inline">\(\mathbb{E}[X_iX_i^\prime]\)</span> is invertible (no perfect collinearity in columns of <span class="math inline">\(X\)</span>)</li>
 </ul></li>
 </ul>
 </section>
 <section id="projection-error" class="slide level2">
 <h2>Projection error</h2>
 <ul>
-<li><p>What can we say about the difference between the BLP and <span class="math inline">\(Y\)</span>?</p>
+<li class="fragment"><p>What can we say about the difference between the BLP and <span class="math inline">\(Y\)</span>?</p>
 <p><span class="math display">\[e_i = Y_i - m(X_i)\]</span></p></li>
-<li><p>Rewriting, we have</p>
+<li class="fragment"><p>Rewriting, we have</p>
 <p><span class="math display">\[Y_i = X_i^\prime\beta + e_i\]</span></p></li>
+<li class="fragment"><p><span class="math inline">\(e_i\)</span> is the <strong>projection error</strong> since the BLP is the “best” <strong>projection</strong> of <span class="math inline">\(Y\)</span> into the space of linear combinations of the columns of <span class="math inline">\(\mathbf{X}\)</span></p></li>
 </ul>
 </section>
 <section id="projection-error-1" class="slide level2">
@@ -4057,36 +4059,46 @@ Cov(X_i, \epsilon) = \mathbb{E}[X_ie_i] - E[X_i]E[e_i] = 0 - 0 = 0
 <li class="fragment"><p>Our estimand</p>
 <p><span class="math display">\[\beta = (\mathbb{E}[X_iX_i^\prime])^{-1}\mathbb{E}[X_iY_i]\]</span></p></li>
 <li class="fragment"><p>Our estimator</p>
-<p><span class="math display">\[\hat{\beta} = \bigg(\frac{1}{n} \sum_{i=1}^n X_iX_i^\prime\bigg)^{-1}\bigg(\frac{1}{n} \sum_{i=1}^n X_iY_i\bigg)\]</span></p></li>
+<p><span class="math display">\[\hat{\beta} = \bigg(\frac{1}{N} \sum_{i=1}^N X_iX_i^\prime\bigg)^{-1}\bigg(\frac{1}{N} \sum_{i=1}^N X_iY_i\bigg)\]</span></p></li>
 <li class="fragment"><p>Often written as:</p>
 <p><span class="math display">\[\hat{\beta} = (\mathbf{X}^\prime\mathbf{X})^{-1}(\mathbf{X}^\prime Y)\]</span></p></li>
 </ul>
 </section>
-<section id="estimating-the-blp-1" class="title-slide slide level1 center">
-<h1>Estimating the BLP</h1>
+<section id="estimating-the-blp-1" class="slide level2">
+<h2>Estimating the BLP</h2>
 <ul>
-<li><p>Is <span class="math inline">\(\hat{\beta}\)</span> consistent for <span class="math inline">\(\beta\)</span>?</p></li>
-<li><p>Let’s write <span class="math inline">\(\hat{\beta}\)</span> as a function of <span class="math inline">\(\beta\)</span> and the <strong>projection error</strong></p>
-<p><span class="math display">\[\hat{\beta} = \beta + \bigg(\frac{1}{n} \sum_{i=1}^n X_iX_i^\prime\bigg)^{-1}\bigg(\frac{1}{n} \sum_{i=1}^n X_ie_i\bigg) \]</span></p></li>
+<li>To visualize how <span class="math inline">\(\mathbf{X}^\prime\mathbf{X}\)</span> is a sum over the <strong>outer products</strong> <span class="math inline">\(X_{i}X_{i}^\prime\)</span></li>
 </ul>
-<div class="{incremental}">
-<ul>
-<li><p>We can use the <strong>weak law of large numbers</strong></p>
-<p><span class="math display">\[\frac{1}{n} \sum_{i=1}^n X_iX_i^\prime \overset{p}{\to} \mathbb{E}[X_iX_i^\prime]\]</span></p>
-<p><span class="math display">\[\frac{1}{n} \sum_{i=1}^n X_ie_i \overset{p}{\to} \mathbb{E}[X_ie_i] = 0\]</span></p></li>
-</ul>
-</div>
+<p><span class="math display">\[\mathbf{X}^\prime \mathbf{X} = \begin{pmatrix} x_{11} &amp; x_{21} &amp; x_{31} &amp; \cdots &amp; x_{N1} \\ x_{12} &amp; x_{22} &amp; x_{32} &amp; \cdots &amp; x_{N2} \\ \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ x_{1K} &amp; x_{2K} &amp; x_{3K} &amp; \cdots &amp; x_{NK} \end{pmatrix}_{K \times N} \begin{pmatrix} x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1K} \\ x_{21} &amp; x_{22} &amp; \cdots &amp; x_{2K} \\ x_{31} &amp; x_{32} &amp; \cdots &amp; x_{3K} \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ x_{N1} &amp; x_{N2} &amp; \cdots &amp; x_{NK} \end{pmatrix}_{N \times K}\]</span></p>
+<p><span class="math display">\[= \underbrace{\begin{pmatrix} x_{11}^2 &amp; x_{11}x_{12} &amp; \cdots &amp; x_{11}x_{1K} \\ x_{12}x_{11} &amp; x_{12}^2 &amp; \cdots &amp; x_{12}x_{1K} \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ x_{1K}x_{11} &amp; x_{1K}x_{12} &amp; \cdots &amp; x_{1K}^2 \end{pmatrix}}_{X_1 X_1^\prime}  + \cdots + \underbrace{\begin{pmatrix} x_{N1}^2 &amp; x_{N1}x_{N2} &amp; \cdots &amp; x_{N1}x_{NK} \\ x_{N2}x_{N1} &amp; x_{N2}^2 &amp; \cdots &amp; x_{N2}x_{NK} \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ x_{NK}x_{N1} &amp; x_{NK}x_{N2} &amp; \cdots &amp; x_{NK}^2 \end{pmatrix}}_{X_N X_N^\prime}\]</span></p>
 </section>
-
-<section id="estimating-the-blp-2" class="title-slide slide level1 center">
-<h1>Estimating the BLP</h1>
+<section id="estimating-the-blp-2" class="slide level2">
+<h2>Estimating the BLP</h2>
+<ul>
+<li>And likewise for <span class="math inline">\(\mathbf{X}^\prime Y\)</span></li>
+</ul>
+<p><span class="math display">\[\mathbf{X}^\prime Y = \begin{pmatrix} x_{11} &amp; x_{21} &amp; x_{31} &amp; \cdots &amp; x_{N1} \\ x_{12} &amp; x_{22} &amp; x_{32} &amp; \cdots &amp; x_{N2} \\ \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ x_{1K} &amp; x_{2K} &amp; x_{3K} &amp; \cdots &amp; x_{NK} \end{pmatrix}_{K \times N} \begin{pmatrix} Y_1 \\ Y_2 \\ Y_3 \\ \vdots \\ Y_N \end{pmatrix}_{N \times 1} = \begin{pmatrix} x_{11}Y_1 + x_{21}Y_2 + x_{31}Y_3 + \cdots + x_{N1}Y_N \\ x_{12}Y_1 + x_{22}Y_2 + x_{32}Y_3 + \cdots + x_{N2}Y_N \\ \vdots \\ x_{1K}Y_1 + x_{2K}Y_2 + x_{3K}Y_3 + \cdots + x_{NK}Y_N \end{pmatrix}_{K \times 1}\]</span></p>
+</section>
+<section id="estimating-the-blp-3" class="slide level2">
+<h2>Estimating the BLP</h2>
+<ul>
+<li class="fragment"><p>Is <span class="math inline">\(\hat{\beta}\)</span> consistent for <span class="math inline">\(\beta\)</span>?</p></li>
+<li class="fragment"><p>Let’s write <span class="math inline">\(\hat{\beta}\)</span> as a function of <span class="math inline">\(\beta\)</span> and the <strong>projection error</strong></p>
+<p><span class="math display">\[\hat{\beta} = \beta + \bigg(\frac{1}{n} \sum_{i=1}^n X_iX_i^\prime\bigg)^{-1}\bigg(\frac{1}{n} \sum_{i=1}^n X_ie_i\bigg) \]</span></p></li>
+<li class="fragment"><p>We can use the <strong>weak law of large numbers</strong></p>
+<p><span class="math display">\[\frac{1}{N} \sum_{i=1}^N X_iX_i^\prime \overset{p}{\to} \mathbb{E}[X_iX_i^\prime]\]</span></p>
+<p><span class="math display">\[\frac{1}{N} \sum_{i=1}^N X_ie_i \overset{p}{\to} \mathbb{E}[X_ie_i] = 0\]</span></p></li>
+</ul>
+</section>
+<section id="estimating-the-blp-4" class="slide level2">
+<h2>Estimating the BLP</h2>
 <ul>
 <li class="fragment"><p>Plugging it all in, we have</p>
 <p><span class="math display">\[\hat{\beta} \overset{p}{\to} \beta\]</span></p></li>
-<li class="fragment"><p>Ordinary least squares is consistent for the best linear predictor under relatively mild assumptions</p>
+<li class="fragment"><p><strong>Ordinary least squares</strong> is consistent for the <strong>best linear predictor</strong> under relatively mild assumptions</p>
 <ul>
 <li class="fragment">i.i.d. sample (can weaken this with LLNs for dependent random variables)</li>
-<li class="fragment">finite moments (true for most outcomes and regressors you’ll work with)</li>
+<li class="fragment">finite expectation/variance of <span class="math inline">\(Y\)</span>, <span class="math inline">\(X\)</span></li>
 <li class="fragment">no perfect collinearity (you can check if this is a problem!)</li>
 </ul></li>
 <li class="fragment"><p>What have we <em>not</em> assumed</p>
@@ -4097,49 +4109,378 @@ Cov(X_i, \epsilon) = \mathbb{E}[X_ie_i] - E[X_i]E[e_i] = 0 - 0 = 0
 </ul></li>
 </ul>
 </section>
-
-<section id="asymptotic-normality" class="title-slide slide level1 center">
-<h1>Asymptotic normality</h1>
+<section id="asymptotic-normality" class="slide level2">
+<h2>Asymptotic normality</h2>
 <ul>
-<li><p>In large samples, what is the distribution of <span class="math inline">\(\hat{\beta}\)</span>?</p>
+<li class="fragment"><p>In large samples, what is the distribution of <span class="math inline">\(\hat{\beta}\)</span>?</p>
 <p><span class="math display">\[\sqrt{n}(\hat{\beta} - \beta) = \bigg(\frac{1}{n} \sum_{i=1}^n X_iX_i^\prime\bigg)^{-1}\bigg(\frac{1}{\sqrt{n}} \sum_{i=1}^n X_ie_i\bigg)\]</span></p></li>
-<li><p>We know that <span class="math inline">\(\bigg(\frac{1}{n} \sum_{i=1}^n X_iX_i^\prime\bigg)^{-1} \overset{p}{\to} E[X_iX_i^\prime]^{-1}\)</span></p></li>
+<li class="fragment"><p>We know that <span class="math inline">\(\bigg(\frac{1}{n} \sum_{i=1}^n X_iX_i^\prime\bigg)^{-1} \overset{p}{\to} \mathbb{E}[X_iX_i^\prime]^{-1}\)</span></p></li>
 </ul>
 </section>
-
-<section id="asymptotic-normality-1" class="title-slide slide level1 center">
-<h1>Asymptotic normality</h1>
+<section id="asymptotic-normality-1" class="slide level2">
+<h2>Asymptotic normality</h2>
 <ul>
 <li class="fragment"><p>We can apply the CLT to the other term. We know the expectation is zero, what about the variance?</p>
 <p><span class="math display">\[Var(X_ie_i) = \mathbb{E}[X_i e_i (X_i e_i)^\prime] = \mathbb{E}[e_i^2X_i X_i^\prime]\]</span></p></li>
 <li class="fragment"><p>By the CLT, we have</p>
 <p><span class="math display">\[\frac{1}{\sqrt{n}} \sum_{i=1}^n X_ie_i \overset{d}{\to} \mathcal{N}(0, \mathbb{E}[e_i^2X_i X_i^\prime])\]</span></p></li>
 <li class="fragment"><p>Combining with our other convergence result using Slutsky’s theorem gives</p>
-<p><span class="math display">\[\sqrt{n}(\hat{\beta} - \beta) \overset{d}{\to} \mathcal{N}\bigg(0, (E[X_iX_i^\prime])^{-1} (\mathbb{E}[e_i^2X_i X_i^\prime]) (E[X_iX_i^\prime])^{-1}\bigg)\]</span></p></li>
+<p><span class="math display">\[\sqrt{n}(\hat{\beta} - \beta) \overset{d}{\to} \mathcal{N}\bigg(0, (\mathbb{E}[X_iX_i^\prime])^{-1} (\mathbb{E}[e_i^2X_i X_i^\prime]) (\mathbb{E}[X_iX_i^\prime])^{-1}\bigg)\]</span></p></li>
 </ul>
 </section>
-
-<section id="variance-estimation" class="title-slide slide level1 center">
-<h1>Variance estimation</h1>
+<section id="variance-estimation" class="slide level2">
+<h2>Variance estimation</h2>
 <ul>
 <li class="fragment"><p>Again, we have a bunch of population expectations, let’s plug in their sample equivalents!</p></li>
 <li class="fragment"><p>Our estimand</p>
 <p><span class="math display">\[Var(\hat{\beta}) = \frac{1}{n} (E[X_iX_i^\prime])^{-1} (\mathbb{E}[e_i^2X_i X_i^\prime]) (E[X_iX_i^\prime])^{-1}\]</span></p></li>
 <li class="fragment"><p>Our estimator</p>
 <p><span class="math display">\[\widehat{Var(\hat{\beta})} = \frac{1}{n} \bigg(\frac{1}{n} \sum_{i=1}^n X_i X_i^\prime \bigg)^{-1}\bigg(\frac{1}{n} \sum_{i=1}^n \hat{e_i}^2 X_i X_i^\prime \bigg)\bigg(\frac{1}{n} \sum_{i=1}^n X_i X_i^\prime \bigg)^{-1}\]</span></p></li>
+<li class="fragment"><p>Equivalently</p>
+<p><span class="math display">\[\widehat{Var(\hat{\beta})} = \bigg(\sum_{i=1}^n X_i X_i^\prime \bigg)^{-1}\bigg(\sum_{i=1}^n \hat{e_i}^2 X_i X_i^\prime \bigg)\bigg(\sum_{i=1}^n X_i X_i^\prime \bigg)^{-1}\]</span></p></li>
 </ul>
 </section>
-
-<section id="variance-estimation-1" class="title-slide slide level1 center">
-<h1>Variance estimation</h1>
+<section id="variance-estimation-1" class="slide level2">
+<h2>Variance estimation</h2>
 <ul>
-<li>This is often known as the “sandwich” estimator</li>
+<li class="fragment"><p>This is often known as the “sandwich” estimator</p>
+<p><span class="math display">\[\widehat{Var(\hat{\beta})} =  (\mathbf{X}^\prime\mathbf{X})^{-1} (\mathbf{X}^\prime \hat{\Sigma} \mathbf{X}) (\mathbf{X}^\prime\mathbf{X})^{-1}\]</span></p></li>
+<li class="fragment"><p>where <span class="math inline">\(\hat{\Sigma} = \text{diag}(\hat{e_1}^2, \hat{e_2}^2, \dotsc \hat{e_n}^2)\)</span></p></li>
+<li class="fragment"><p>You’ll see this referred to as the <strong>Eicker-Huber-White</strong> <strong>heteroskedasticity-consistent</strong> variance estimator (or just the <strong>robust</strong> standard errors)</p>
+<ul>
+<li class="fragment">Notably, we have made no assumptions on the variance of <span class="math inline">\(e_i\)</span>, we’re just plugging in the regression residuals!</li>
+</ul></li>
 </ul>
-<p><span class="math display">\[\widehat{Var(\hat{\beta})} =  (\mathbf{X}^\prime\mathbf{X})^{-1} (X^\prime \hat{\Sigma} \mathbf{X}) (\mathbf{X}^\prime\mathbf{X})^{-1}\]</span> where <span class="math inline">\(\hat{\Sigma} = \text{diag}(\hat{e_1}^2, \hat{e_2}^2, \dotsc \hat{e_n}^2)\)</span></p>
+</section>
+<section id="ols-and-projections" class="slide level2">
+<h2>OLS and Projections</h2>
 <ul>
-<li>It’s also referred to as the <strong>heteroskedasticity-consistent</strong> robust variance estimator
+<li class="fragment"><p>One way to think about the fitted values from OLS is that they are a <strong>projection</strong> of the n-dimensional vector <span class="math inline">\(Y\)</span> into the <strong>column space</strong> of <span class="math inline">\(\mathbf{X}\)</span></p>
 <ul>
-<li>We have made no assumptions on the variance of <span class="math inline">\(e_i\)</span> – we’re just plugging in the regression residuals.</li>
+<li class="fragment">A <strong>column space</strong> is the set of all linear combinations of the columns of <span class="math inline">\(\mathbf{X}\)</span></li>
+</ul></li>
+<li class="fragment"><p>We define the <strong>projection matrix</strong> or <strong>hat matrix</strong></p>
+<p><span class="math display">\[\mathbf{P}_{\mathbf{X}} = \mathbf{X}(\mathbf{X}^\prime\mathbf{X})^{-1}\mathbf{X^\prime}\]</span></p></li>
+<li class="fragment"><p>Our fitted values <span class="math inline">\(\hat{Y}\)</span> are a projection of <span class="math inline">\(Y\)</span> to the “closest” vector that can be represented as a linear combination of the columns of <span class="math inline">\(\mathbf{X}\)</span></p>
+<p><span class="math display">\[\hat{Y} = \mathbf{P}_{\mathbf{X}}Y = \mathbf{X}(\mathbf{X}^\prime\mathbf{X})^{-1}\mathbf{X^\prime}Y = \mathbf{X}\hat{\beta}\]</span></p></li>
+</ul>
+</section>
+<section id="regression-adjustment-in-randomized-experiments" class="slide level2">
+<h2>Regression adjustment in randomized experiments</h2>
+<ul>
+<li class="fragment"><p>We’ve focused on a <strong>minimal assumption</strong> approach to justifying linear regression.</p></li>
+<li class="fragment"><p>But usually you see regression taught using the <strong>Gauss-Markov</strong> assumptions (plus normal errors)</p>
+<ol type="1">
+<li class="fragment">Linearity of the CEF</li>
+<li class="fragment">Strict exogeneity of the errors</li>
+<li class="fragment">No perfect collinearity</li>
+<li class="fragment">Spherical errors (homoskedasticity)</li>
+<li class="fragment">Normal errors</li>
+</ol></li>
+<li class="fragment"><p>We’ll review these later in this lecture, but do we need these assumptions to use regression in a randomized experiment?</p>
+<ul>
+<li class="fragment"><strong>Freedman (2008)</strong> “…randomization does not justify the assumptions behind the OLS model”</li>
+</ul></li>
+</ul>
+</section>
+<section id="regression-adjustment-in-randomized-experiments-1" class="slide level2">
+<h2>Regression adjustment in randomized experiments</h2>
+<ul>
+<li class="fragment"><strong>Lin (2013)</strong> shows that even a <strong>misspecified</strong> ordinary least squares regression will yield a consistent estimator of the sample ATE if the regression estimator:
+<ol type="1">
+<li class="fragment">De-means the covariates</li>
+<li class="fragment">Interacts the covariates with the treatment indicator</li>
+</ol></li>
+<li class="fragment">Mathematically, this is equivalent to…
+<ol type="1">
+<li class="fragment">Fitting <strong>two</strong> regressions - one in the treated group, one in the control group</li>
+<li class="fragment"><strong>Predicting</strong> the potential outcome under treatment for <strong>every</strong> unit in the sample using the <strong>treatment</strong> model</li>
+<li class="fragment"><strong>Predicting</strong> the potential outcome under control for <strong>every</strong> unit in the sample using the <strong>control</strong> model</li>
+<li class="fragment">Taking the average difference between the two predictions!</li>
+</ol></li>
+</ul>
+</section>
+<section id="imputation-estimators" class="slide level2">
+<h2>Imputation estimators</h2>
+<ul>
+<li class="fragment"><p>Many of the treatment effect estimators we’ll see can be written in terms of <strong>imputed</strong> potential outcomes</p>
+<p><span class="math display">\[\hat{\tau} = \frac{1}{N} \sum_{i=1}^N \widehat{Y_i(1)} - \widehat{Y_i(0)}\]</span></p></li>
+<li class="fragment"><p>Our simple <strong>difference-in-means</strong> estimator is a simple case of this - we just impute the mean for every <span class="math inline">\(i\)</span></p>
+<ul>
+<li class="fragment"><span class="math inline">\(\widehat{Y_i(1)} = \bar{Y}_1 = \frac{1}{N_t}\sum_{i = 1}^N Y_i D_i\)</span></li>
+<li class="fragment"><span class="math inline">\(\widehat{Y_i(0)} = \bar{Y}_0 = \frac{1}{N_c}\sum_{i = 1}^N Y_i (1 - D_i)\)</span></li>
+</ul></li>
+<li class="fragment"><p>But we could also generate predictions of <span class="math inline">\(Y_i(1)\)</span> and <span class="math inline">\(Y_i(0)\)</span> from a regression model!</p>
+<ul>
+<li class="fragment">Let <span class="math inline">\(\beta^{(1)}\)</span> be the coefficients from regressing <span class="math inline">\(Y_i\)</span> on <span class="math inline">\(X_i\)</span> among the <strong>treated</strong> group</li>
+<li class="fragment">Let <span class="math inline">\(\beta^{(0)}\)</span> are the coefficients from regressing <span class="math inline">\(Y_i\)</span> on <span class="math inline">\(X_i\)</span> among the <strong>control</strong> group</li>
+<li class="fragment">Our regression imputation estimator is: <span class="math inline">\(\widehat{Y_i(1)} = X_i^\prime \beta^{(1)}\)</span> and <span class="math inline">\(\widehat{Y_i(0)} = X_i^\prime \beta^{(0)}\)</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="lin-2013-estimator" class="slide level2">
+<h2>Lin (2013) estimator</h2>
+<ul>
+<li>We can recover this difference between the two regression functions from a <strong>single model</strong> regressing <span class="math inline">\(Y_i\)</span> on the <strong>de-meaned</strong> <span class="math inline">\(X_i\)</span> fully interacted with the treatment <span class="math inline">\(D_i\)</span>
+<ul>
+<li>This is what is known as the <strong>Lin (2013)</strong> regression</li>
+<li>Implemented in <code>estimatr::lm_lin()</code> which handles the de-meaning for you!</li>
+</ul></li>
+<li>Let’s show the equivalence using the <strong>Nyhan and Reifler (2015)</strong> experiment
+<ul>
+<li>Suppose that in addition to the strata, we want to adjust for stuff we didn’t explicitly block on</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>adjusted_est <span class="ot">&lt;-</span> <span class="fu">tidy</span>(estimatr<span class="sc">::</span><span class="fu">lm_lin</span>(combined <span class="sc">~</span> treatment, </span>
+<span id="cb11-2"><a></a>                                      <span class="at">covariates =</span> <span class="sc">~</span> groupedblocks <span class="sc">+</span> partyleader <span class="sc">+</span> commleader <span class="sc">+</span> fundraising <span class="sc">+</span> voteshare, <span class="at">data=</span>factcheck, <span class="at">weights=</span>aw))</span>
+<span id="cb11-3"><a></a>adjusted_est <span class="sc">%&gt;%</span> <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">&quot;treatment&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(estimate, std.error, statistic, p.value)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    estimate   std.error statistic    p.value
+1 -0.0152531 0.008249513  -1.84897 0.06473204</code></pre>
+</div>
+</div>
+</section>
+<section id="lin-2013-estimator-1" class="slide level2">
+<h2>Lin (2013) estimator</h2>
+<ul>
+<li>Fitting the regression in the <strong>treated</strong> group and <strong>control</strong> group</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>treated_reg <span class="ot">&lt;-</span> <span class="fu">lm</span>(combined <span class="sc">~</span> groupedblocks <span class="sc">+</span> partyleader <span class="sc">+</span> commleader <span class="sc">+</span> fundraising <span class="sc">+</span> voteshare, </span>
+<span id="cb13-2"><a></a>                  <span class="at">data=</span>factcheck <span class="sc">%&gt;%</span> <span class="fu">filter</span>(treatment <span class="sc">==</span> <span class="dv">1</span>), <span class="at">weights=</span>aw)</span>
+<span id="cb13-3"><a></a>control_reg <span class="ot">&lt;-</span> <span class="fu">lm</span>(combined <span class="sc">~</span> groupedblocks <span class="sc">+</span> partyleader <span class="sc">+</span> commleader <span class="sc">+</span> fundraising <span class="sc">+</span> voteshare, </span>
+<span id="cb13-4"><a></a>                  <span class="at">data=</span>factcheck <span class="sc">%&gt;%</span> <span class="fu">filter</span>(treatment <span class="sc">==</span> <span class="dv">0</span>), <span class="at">weights=</span>aw)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li>Predicting for all units</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>factcheck<span class="sc">$</span>Y_1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(treated_reg, <span class="at">newdata=</span>factcheck)</span>
+<span id="cb14-2"><a></a>factcheck<span class="sc">$</span>Y_0 <span class="ot">&lt;-</span> <span class="fu">predict</span>(control_reg, <span class="at">newdata=</span>factcheck)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li>Verify that we get the same result as the <strong>Lin (2013)</strong> regression!</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">weighted.mean</span>(factcheck<span class="sc">$</span>Y_1, factcheck<span class="sc">$</span>aw) <span class="sc">-</span> <span class="fu">weighted.mean</span>(factcheck<span class="sc">$</span>Y_0, factcheck<span class="sc">$</span>aw)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.0152531</code></pre>
+</div>
+</div>
+</section>
+<section id="classical-regression" class="slide level2">
+<h2>Classical regression</h2>
+<ul>
+<li class="fragment"><p>So far, we’ve shown that the OLS estimator is consistent and asymptotically normal for the <strong>Best Linear Predictor</strong></p>
+<ul>
+<li class="fragment">But what about for estimating the <strong>conditional expectation function</strong>? <span class="math inline">\(\mathbb{E}[Y_i|X_i]\)</span></li>
+<li class="fragment">In non-experimental settings, we often <strong>do</strong> need to get this correct (next week - regression adjustment for confounders!)</li>
+</ul></li>
+<li class="fragment"><p>To do inference on the <strong>CEF</strong> with OLS, we assume that it’s equal to the <strong>BLP</strong>!</p></li>
+<li class="fragment"><p><strong>Assumption 1</strong>: Linearity</p>
+<p><span class="math display">\[Y_i = X_i^\prime\beta + \epsilon_i\]</span></p></li>
+<li class="fragment"><p><strong>Assumption 2</strong>: Strict exogeneity of the errors</p>
+<p><span class="math display">\[\mathbb{E}[\epsilon | \mathbf{X}] = 0\]</span></p></li>
+<li class="fragment"><p>When is linearity always <strong>true</strong>?</p>
+<ul>
+<li class="fragment">When we have a fully-saturated model - as many <strong>parameters</strong> as <strong>unique covariate values</strong> (e.g. (post)-stratification)</li>
+</ul></li>
+</ul>
+</section>
+<section id="classical-regression-1" class="slide level2">
+<h2>Classical regression</h2>
+<ul>
+<li class="fragment"><strong>Assumption 3</strong>: No perfect collinearity
+<ul>
+<li class="fragment"><span class="math inline">\(\mathbf{X}^{\prime}\mathbf{X}\)</span> is invertible</li>
+<li class="fragment"><span class="math inline">\(\mathbf{X}\)</span> has full column rank</li>
+</ul></li>
+<li class="fragment">When does this fail? How can we check?</li>
+</ul>
+</section>
+<section id="classical-regression-2" class="slide level2">
+<h2>Classical regression</h2>
+<ul>
+<li>Under assumptions 1-3, our OLS estimator <span class="math inline">\(\hat{\beta}\)</span> is also <strong>unbiased</strong> for <span class="math inline">\(\beta\)</span></li>
+<li>Let’s do a quick proof for unbiasedness</li>
+</ul>
+<p><span class="math display">\[\begin{align*}\hat{\beta} &amp;= (\mathbf{X}^{\prime}\mathbf{X})^{-1}(\mathbf{X}^{\prime}Y)\\
+&amp;= (\mathbf{X}^{\prime}\mathbf{X})^{-1}(\mathbf{X}^{\prime}(\mathbf{X}\beta + \epsilon))\\
+&amp;= (\mathbf{X}^{\prime}\mathbf{X})^{-1}(\mathbf{X}^{\prime}\mathbf{X})\beta + (\mathbf{X}^{\prime}\mathbf{X})^{-1}(\mathbf{X}^{\prime}\epsilon)\\
+&amp;= \beta + (\mathbf{X}^{\prime}\mathbf{X})^{-1}(\mathbf{X}^{\prime}\epsilon)
+\end{align*}\]</span></p>
+<ul>
+<li>Then we can obtain the conditional expectation of <span class="math inline">\(\mathbb{E}[\hat{\beta} | \mathbf{X}]\)</span></li>
+</ul>
+<p><span class="math display">\[\begin{align*} \mathbb{E}[\hat{\beta} | \mathbf{X}] &amp;= \mathbb{E}\bigg[\beta + (\mathbf{X}^{\prime}\mathbf{X})^{-1}(\mathbf{X}^{\prime}\epsilon) \bigg| \mathbf{X} \bigg]\\
+&amp;= \mathbb{E}[\beta | \mathbf{X}] + \mathbb{E}[(\mathbf{X}^{\prime}\mathbf{X})^{-1}(\mathbf{X}^{\prime}\epsilon) | \mathbf{X}]\\
+&amp;= \beta + (\mathbf{X}^{\prime}\mathbf{X})^{-1}\mathbf{X}^{\prime} \mathbb{E}[\epsilon | \mathbf{X}]\\
+&amp;= \beta + (\mathbf{X}^{\prime}\mathbf{X})^{-1}\mathbf{X}^{\prime}0\\
+&amp;= \beta
+\end{align*}\]</span></p>
+</section>
+<section id="classical-regression-3" class="slide level2">
+<h2>Classical regression</h2>
+<ul>
+<li class="fragment"><p>Lastly, by law of total expectation</p>
+<p><span class="math display">\[\mathbb{E}[\hat{\beta}] = \mathbb{E}[\mathbb{E}[\hat{\beta}|\mathbf{X}]]\]</span></p></li>
+<li class="fragment"><p>Therefore</p>
+<p><span class="math display">\[\mathbb{E}[\hat{\beta}] = \mathbb{E}[\beta] = \beta\]</span></p></li>
+<li class="fragment"><p>What have we still not assumed?</p>
+<ul>
+<li class="fragment">Anything about the distribution of the errors (aside from finite 1st/2nd moments)</li>
+</ul></li>
+</ul>
+</section>
+<section id="classical-regression-4" class="slide level2">
+<h2>Classical regression</h2>
+<ul>
+<li class="fragment"><p><strong>Assumption 4</strong> - Spherical errors</p>
+<p><span class="math display">\[Var(\epsilon | \mathbf{X}) = \begin{bmatrix}
+\sigma^2 &amp; 0 &amp; \cdots &amp; 0\\
+0 &amp; \sigma^2 &amp; \cdots &amp; 0\\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+0 &amp; 0 &amp; \cdots &amp; \sigma^2
+\end{bmatrix} =  \sigma^2 \mathbf{I}\]</span></p></li>
+<li class="fragment"><p>Benefits</p>
+<ul>
+<li class="fragment">Simple, unbiased estimator for <span class="math inline">\(Var(\hat{\beta})\)</span> - classical OLS standard errors (what you get in <code>lm()</code>)</li>
+<li class="fragment">Completes Gauss-Markov assumptions <span class="math inline">\(\leadsto\)</span> OLS is BLUE (Best Linear Unbiased Estimator)</li>
+</ul></li>
+<li class="fragment"><p>Drawbacks</p>
+<ul>
+<li class="fragment">Basically never is true</li>
+</ul></li>
+</ul>
+</section>
+<section id="classical-regression-5" class="slide level2">
+<h2>Classical regression</h2>
+<ul>
+<li class="fragment"><p>Under spherical errors, the variance formula simplifies</p>
+<p><span class="math display">\[Var(\beta) =  (\mathbf{X}^\prime\mathbf{X})^{-1} (\mathbf{X}^\prime \sigma^2\mathbf{X}) (\mathbf{X}^\prime\mathbf{X})^{-1}\]</span> <span class="math display">\[Var(\beta) =  \sigma^2 (\mathbf{X}^\prime\mathbf{X})^{-1}\]</span></p></li>
+<li class="fragment"><p>All we need is an estimator for <span class="math inline">\(\sigma^2\)</span></p>
+<ul>
+<li class="fragment">A consistent one is just the sample variance of the residuals</li>
+<li class="fragment">Can do better by including a “degrees of freedom” correction</li>
+</ul></li>
+</ul>
+</section>
+<section id="classical-regression-6" class="slide level2">
+<h2>Classical regression</h2>
+<ul>
+<li class="fragment"><p>An unbiased estimator for <span class="math inline">\(\sigma^2\)</span> is the sample variance of the residuals (mean squared error) adjusted by a degrees of freedom correction</p>
+<p><span class="math display">\[\hat{\sigma^2} = \frac{1}{N-K} \sum_{i=1}^N (Y_i - \hat{Y_i})^2\]</span></p></li>
+<li class="fragment"><p><span class="math inline">\(K\)</span> is the number of parameters. We refer to <span class="math inline">\(N-K\)</span> as the “degrees of freedom”</p></li>
+</ul>
+</section>
+<section id="ols-is-blue" class="slide level2">
+<h2>OLS is BLUE</h2>
+<ul>
+<li>The <strong>Gauss-Markov Theorem</strong>
+<ul>
+<li>Under Assumptions 1-4, we can show that there is no other estimator that for <span class="math inline">\(\beta\)</span> that is both <strong>linear</strong> and <strong>unbiased</strong> which has lower variance than <span class="math inline">\(\hat{\beta}_{\text{OLS}}\)</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="ols-is-blue-1" class="slide level2">
+<h2>OLS is BLUE</h2>
+<ul>
+<li class="fragment"><p><strong>Proof</strong>: Suppose there’s another linear estimator that diverges from the OLS projection of <span class="math inline">\(Y\)</span> by a non-zero <span class="math inline">\(K \times N\)</span> matrix <span class="math inline">\(D\)</span></p>
+<p><span class="math display">\[\tilde{\beta} = ((\mathbf{X}^\prime\mathbf{X})^{-1} \mathbf{X}^\prime + D)Y\]</span></p></li>
+<li class="fragment"><p>Let’s take the expectation</p>
+<p><span class="math display">\[\mathbb{E}[\tilde{\beta}] = \mathbb{E}[\hat{\beta}_{\text{OLS}}] + \mathbb{E}[DY]\]</span></p></li>
+<li class="fragment"><p>We know OLS is unbiased. Next, we plug in the expression for <span class="math inline">\(Y\)</span> (linearity)</p>
+<p><span class="math display">\[\mathbb{E}[\tilde{\beta}] = \beta + \mathbb{E}[D\mathbf{X}\beta] + \mathbb{E}[D\epsilon]\]</span></p></li>
+</ul>
+</section>
+<section id="ols-is-blue-2" class="slide level2">
+<h2>OLS is BLUE</h2>
+<ul>
+<li class="fragment"><p>Pull out the constants and use <span class="math inline">\(\mathbb{E}[\epsilon] = 0\)</span></p>
+<p><span class="math display">\[\mathbb{E}[\tilde{\beta}] = \beta(\mathbf{I} + D\mathbf{X})\]</span></p></li>
+<li class="fragment"><p>If <span class="math inline">\(\tilde{\beta}\)</span> is unbiased, then</p>
+<p><span class="math display">\[\beta(\mathbf{I} + D\mathbf{X}) = 0\]</span></p></li>
+<li class="fragment"><p>This holds for all values of <span class="math inline">\(\beta\)</span> only if <span class="math inline">\(D\mathbf{X} = 0\)</span></p></li>
+</ul>
+</section>
+<section id="ols-is-blue-3" class="slide level2">
+<h2>OLS is BLUE</h2>
+<ul>
+<li class="fragment"><p>Under homoskedasticity, the variance is</p>
+<p><span class="math display">\[Var(\tilde{\beta}) = \sigma^2\bigg((\mathbf{X}^\prime\mathbf{X})^{-1} \mathbf{X}^\prime + D\bigg)\bigg((\mathbf{X}^\prime\mathbf{X})^{-1} \mathbf{X}^\prime + D\bigg)^{\prime}\]</span></p></li>
+<li class="fragment"><p>Using properties of matrix transposes</p>
+<p><span class="math display">\[Var(\tilde{\beta}) = \sigma^2\bigg((\mathbf{X}^\prime\mathbf{X})^{-1} \mathbf{X}^\prime + D\bigg)\bigg(\mathbf{X}(\mathbf{X}^\prime\mathbf{X})^{-1} + D^\prime\bigg)\]</span></p></li>
+<li class="fragment"><p>Expanding</p>
+<p><span class="math display">\[Var(\tilde{\beta}) = \sigma^2\bigg((\mathbf{X}^\prime\mathbf{X})^{-1} \mathbf{X}^\prime\mathbf{X}(\mathbf{X}^\prime\mathbf{X})^{-1} + (\mathbf{X}^\prime\mathbf{X})^{-1}(D\mathbf{X})^\prime + D\mathbf{X}(\mathbf{X}^\prime\mathbf{X})^{-1} + DD^\prime\bigg)\]</span></p></li>
+</ul>
+</section>
+<section id="ols-is-blue-4" class="slide level2">
+<h2>OLS is BLUE</h2>
+<ul>
+<li class="fragment"><p>Using <span class="math inline">\(D\mathbf{X} = 0\)</span> from above along with the definition of the variance of <span class="math inline">\(\hat{\beta}_{\text{OLS}}\)</span></p>
+<p><span class="math display">\[Var(\tilde{\beta}) = Var(\hat{\beta}_{\text{OLS}}) + \sigma^2DD^\prime\]</span></p></li>
+<li class="fragment"><p>The variance of our alternative linear, unbiased estimator exceeds the variance of OLS by the positive semi-definite matrix <span class="math inline">\(\sigma^2DD^\prime\)</span> (since <span class="math inline">\(DD^\prime\)</span> is an outer product)</p></li>
+<li class="fragment"><p>Therefore OLS is the <strong>lowest-variance</strong> linear unbiased estimator</p></li>
+</ul>
+</section>
+<section id="classical-regression-7" class="slide level2">
+<h2>Classical regression</h2>
+<ul>
+<li class="fragment"><p><strong>Assumption 5</strong> - Normality of the errors</p>
+<p><span class="math display">\[\epsilon | \mathbf{X} \sim \mathcal{N}(0, \sigma^2)\]</span></p></li>
+<li class="fragment"><p>Not necessary even for Gauss-Markov assumptions</p></li>
+<li class="fragment"><p>Not needed to do asymptotic inference on <span class="math inline">\(\hat{\beta}\)</span></p>
+<ul>
+<li class="fragment">Why? Central Limit Theorem!</li>
+</ul></li>
+<li class="fragment"><p>Benefits?</p>
+<ul>
+<li class="fragment">Finite-sample <strong>inference</strong> (no reliance on asymptotics for hypothesis tests)</li>
+<li class="fragment">Inference for <strong>predictions</strong> from the model.</li>
+</ul></li>
+<li class="fragment"><p>Drawbacks</p>
+<ul>
+<li class="fragment">Again, almost never true unless our outcome is a sum or mean of a large number of i.i.d. random variables</li>
+</ul></li>
+</ul>
+</section>
+<section id="regression-review" class="slide level2">
+<h2>Regression review</h2>
+<ul>
+<li class="fragment">What do we need for OLS to be consistent for the “best linear approximation” to the CEF?
+<ul>
+<li class="fragment">Very little!</li>
+</ul></li>
+<li class="fragment">What do we need for OLS to be consistent and unbiased for the conditional expectation function?
+<ul>
+<li class="fragment">Truly linear CEF</li>
+<li class="fragment">But still no assumptions about the outcome distribution!</li>
+</ul></li>
+<li class="fragment">What do we need to do inference on <span class="math inline">\(\hat{\beta}\)</span>?
+<ul>
+<li class="fragment">We almost never assume homoskedasticity because “robust” SE estimators are ubiquitous</li>
+<li class="fragment">Even some forms of error correlation are permitted (“cluster” robust SEs)</li>
+<li class="fragment">Sample sizes are usually large enough where CLT approximations are good.</li>
+<li class="fragment">Otherwise, we’ll generally use something like a Fisher randomization test.</li>
+</ul></li>
+</ul>
+</section>
+<section id="next-week" class="slide level2">
+<h2>Next week</h2>
+<ul>
+<li class="fragment">Introduction to <strong>observational</strong> designs
+<ul>
+<li class="fragment">Treatment is not directly randomized by researchers!</li>
+</ul></li>
+<li class="fragment"><strong>Selection-on-observables</strong>
+<ul>
+<li class="fragment">Can we assume that we have adjusted for all factors predicting treatment and outcome?</li>
+<li class="fragment">Simple adjustment using a <strong>stratification</strong> estimator.</li>
+</ul></li>
+<li class="fragment">Encoding our selection-on-observables assumptions using <strong>directed acyclic graphs</strong>
+<ul>
+<li class="fragment"><strong>Adjustment criterion</strong> - what is a sufficient set of “controls” that would allow us to identify a treatment effect?</li>
 </ul></li>
 </ul>
 
