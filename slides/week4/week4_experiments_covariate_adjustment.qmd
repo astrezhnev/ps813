@@ -275,7 +275,7 @@ table(factcheck$treatment)
 
 - Let's check balance
   - We know balance is exact on state/party/chamber and whether there is a past fact check.
-  - Coarse balance on fundraising and voteshare
+  - Coarse balance on fundraising and vote share
   - Other covariates observed but not explicitly "blocked" on (e.g. leadership position)
 
 ## Example: Nyhan and Reifler (2015)
@@ -358,7 +358,7 @@ factcheck$groupedblocks[factcheck$groupedblocks == "Virginia-1-1"] <- "Virginia-
 ## Example: Nyhan and Reifler (2015)
   
 - We use the **Lin (2013)** estimator in the `estimatr` package
-  - Mathematically equivalent to our stratified difference-in-means estimator from above with a single covariate representing our stratum dummies (we'll show you why later)
+  - Mathematically equivalent to our stratified difference-in-means estimator when using dummy indicators for strata (we'll show you why later)
 
 ```{r, echo=T}
 stratified_est <- tidy(estimatr::lm_lin(combined ~ treatment, covariates = ~ groupedblocks, data=factcheck, weights=aw))
@@ -381,7 +381,7 @@ dm_est %>% filter(term == "treatment") %>% select(estimate, std.error, statistic
   
 - Take care to use an **estimator** that actually leverages the variance-reduction
   - A **stratified** difference-in-means
-  - Equivalent to a correctly specified regression! (the **"Lin"** estimator - we'll show you this shortly)
+  - Equivalent to OLS with de-meaned dummies for the strata interacted with the treatment indicator (the **"Lin"** estimator)
   
 - What to block on?
   - Things that **predict** the outcome
@@ -397,17 +397,19 @@ dm_est %>% filter(term == "treatment") %>% select(estimate, std.error, statistic
 
 - We often want to adjust for **additional** covariates when trying to estimate a treatment effect
   - In an RCT - **prognostic** covariates that reduce variance in Y
-  - In an observational design - both **prognostic** covariates and **confounders** of Y and X
+  - (**Next week**) - In an observational design - both **prognostic** covariates and **confounders** of Y and X
   
 - By the law of total expectation, we can write the ATE as an **expectation** over the distribution of CATEs
 
   $$\tau = \mathbb{E}_X\bigg[\mathbb{E}[Y_i(1) | X_i] - \mathbb{E}[Y_i(0) | X_i]\bigg]$$
   
-- Under consistency and **conditional** ignorability (conditional on $X_i$)
+- Under our consistency + ignorability assumptions:
 
   $$E[Y_i(1) | X_i] = E[Y_i | D_i = 1, X_i]$$
   
-- Now we have a **statistical** problem, estimating the CEF of $Y_i$ given $X_i$
+- Now we have a **statistical** problem, estimating the CEF of $Y_i$ given $X_i$ and $D_i$
+  - This is the task of **regression**
+  - A ubiquitous regression **estimator** is **ordinary least squares**
 
 :::
 
@@ -415,10 +417,13 @@ dm_est %>% filter(term == "treatment") %>% select(estimate, std.error, statistic
 
 ::: {.incremental}
 
-- We'll denote our vector of observed observations with $Y = \{Y_1, Y_2, Y_3, Y_4, \dotsc\}$
+- We'll denote our vector of $N$ observed outcomes with $Y$
 - We observe $K$ predictors for each unit $i$ collected in a matrix $\mathbf{X}$
+  - Each **row** is a $K$-length vector $X_i$ denoting the covariates observed for unit $i$
 
-$$\mathbf{X} = \begin{bmatrix} — & X_1 & — \\ — & X_2 & — \\ & \vdots & \\ — & X_N & — \end{bmatrix}_{N \times K}$$
+  $$\mathbf{X} = \begin{pmatrix} X_1^\prime \\ X_2^\prime \\ \vdots \\ X_N^\prime \end{pmatrix}_{N \times K} \qquad Y = \begin{pmatrix} Y_1 \\ Y_2 \\ \vdots \\ Y_N \end{pmatrix}_{N \times 1}$$
+
+- We'll use the $\prime$ notation to denote the transpose of a matrix and treat vectors by default as **column** vectors (so $X_i^\prime$ is a $1 \times K$ row-vector)
 
 - We assume an $i.i.d.$ random sample from the target population of interest (though can relax this!)
 
@@ -428,24 +433,26 @@ $$\mathbf{X} = \begin{bmatrix} — & X_1 & — \\ — & X_2 & — \\ & \vdots & 
 
 ::: {.incremental}
 
-- The **Best Linear Predictor** or **population regression** is a function of some input vector $x$
+- The **Best Linear Predictor** or **population regression** is a function of some input vector $x$ of length $K$
 
-  $$m(x) = x^\prime\beta = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \dotsc$$
+  $$m(x_i) = x^\prime\beta = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \dotsc + \beta_K x_K$$
 
 - The $\beta$ parameters minimize the **expected prediction error**
 
   $$\beta = \argmin_b \ \mathbb{E}[(Y_i - X_i^\prime b)^2]$$
 
 - Note that this is a **population** quantity
-  - $m(x)$ is an *estimand* like any other estimand we've talked about
+  - $m(x)$ is an **estimand** like any other estimand we've talked about
   - $m(x)$ and $E[Y|X]$ might differ substantially!
 
 :::
 
 ## Best Linear Predictor (BLP)
 
+::: {.incremental}
+
 - Is there a closed form expression for the population regression coefficients $\beta$?
-  - Yes - with some algebra (solving for the first order conditions), we get
+  - Yes - with some algebra (solving the optimization problem), we get
   
   $$\beta = (\mathbb{E}[X_iX_i^\prime])^{-1}\mathbb{E}[X_iY_i]$$
   
@@ -453,14 +460,15 @@ $$\mathbf{X} = \begin{bmatrix} — & X_1 & — \\ — & X_2 & — \\ & \vdots & 
 
   $$\beta_1 = \frac{Cov(X_i, Y_i)}{Var(X_i)}$$
 
-
-## Properties
-
 - What have we assumed so far?
   - Finite mean/variance/covariances for $Y$ and $X$
-  - Columns of $X$ are linearly independent (no perfect collinearity)
+  - $\mathbb{E}[X_iX_i^\prime]$ is invertible (no perfect collinearity in columns of $X$)
+
+:::
   
 ## Projection error
+
+::: {.incremental}
 
 - What can we say about the difference between the BLP and $Y$?
 
@@ -469,6 +477,10 @@ $$\mathbf{X} = \begin{bmatrix} — & X_1 & — \\ — & X_2 & — \\ & \vdots & 
 - Rewriting, we have
 
   $$Y_i = X_i^\prime\beta + e_i$$
+  
+- $e_i$ is the **projection error** since the BLP is the "best" **projection** of $Y$ into the space of linear combinations of the columns of $\mathbf{X}$
+  
+:::
 
 ## Projection error
 
@@ -507,7 +519,7 @@ Cov(X_i, \epsilon) = \mathbb{E}[X_ie_i] - E[X_i]E[e_i] = 0 - 0 = 0
 
 - Our estimator
 
-  $$\hat{\beta} = \bigg(\frac{1}{n} \sum_{i=1}^n X_iX_i^\prime\bigg)^{-1}\bigg(\frac{1}{n} \sum_{i=1}^n X_iY_i\bigg)$$
+  $$\hat{\beta} = \bigg(\frac{1}{N} \sum_{i=1}^N X_iX_i^\prime\bigg)^{-1}\bigg(\frac{1}{N} \sum_{i=1}^N X_iY_i\bigg)$$
 
 - Often written as:
 
@@ -515,24 +527,39 @@ Cov(X_i, \epsilon) = \mathbb{E}[X_ie_i] - E[X_i]E[e_i] = 0 - 0 = 0
   
 :::
 
-# Estimating the BLP
+## Estimating the BLP
+
+- To visualize how $\mathbf{X}^\prime\mathbf{X}$ is a sum over the **outer products** $X_{i}X_{i}^\prime$
+
+$$\mathbf{X}^\prime \mathbf{X} = \begin{pmatrix} x_{11} & x_{21} & x_{31} & \cdots & x_{N1} \\ x_{12} & x_{22} & x_{32} & \cdots & x_{N2} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ x_{1K} & x_{2K} & x_{3K} & \cdots & x_{NK} \end{pmatrix}_{K \times N} \begin{pmatrix} x_{11} & x_{12} & \cdots & x_{1K} \\ x_{21} & x_{22} & \cdots & x_{2K} \\ x_{31} & x_{32} & \cdots & x_{3K} \\ \vdots & \vdots & \ddots & \vdots \\ x_{N1} & x_{N2} & \cdots & x_{NK} \end{pmatrix}_{N \times K}$$
+
+$$= \underbrace{\begin{pmatrix} x_{11}^2 & x_{11}x_{12} & \cdots & x_{11}x_{1K} \\ x_{12}x_{11} & x_{12}^2 & \cdots & x_{12}x_{1K} \\ \vdots & \vdots & \ddots & \vdots \\ x_{1K}x_{11} & x_{1K}x_{12} & \cdots & x_{1K}^2 \end{pmatrix}}_{X_1 X_1^\prime}  + \cdots + \underbrace{\begin{pmatrix} x_{N1}^2 & x_{N1}x_{N2} & \cdots & x_{N1}x_{NK} \\ x_{N2}x_{N1} & x_{N2}^2 & \cdots & x_{N2}x_{NK} \\ \vdots & \vdots & \ddots & \vdots \\ x_{NK}x_{N1} & x_{NK}x_{N2} & \cdots & x_{NK}^2 \end{pmatrix}}_{X_N X_N^\prime}$$
+
+## Estimating the BLP
+
+- And likewise for $\mathbf{X}^\prime Y$
+
+$$\mathbf{X}^\prime Y = \begin{pmatrix} x_{11} & x_{21} & x_{31} & \cdots & x_{N1} \\ x_{12} & x_{22} & x_{32} & \cdots & x_{N2} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ x_{1K} & x_{2K} & x_{3K} & \cdots & x_{NK} \end{pmatrix}_{K \times N} \begin{pmatrix} Y_1 \\ Y_2 \\ Y_3 \\ \vdots \\ Y_N \end{pmatrix}_{N \times 1} = \begin{pmatrix} x_{11}Y_1 + x_{21}Y_2 + x_{31}Y_3 + \cdots + x_{N1}Y_N \\ x_{12}Y_1 + x_{22}Y_2 + x_{32}Y_3 + \cdots + x_{N2}Y_N \\ \vdots \\ x_{1K}Y_1 + x_{2K}Y_2 + x_{3K}Y_3 + \cdots + x_{NK}Y_N \end{pmatrix}_{K \times 1}$$
+
+
+## Estimating the BLP
+
+::: {.incremental}
 
 - Is $\hat{\beta}$ consistent for $\beta$?
 - Let's write $\hat{\beta}$ as a function of $\beta$ and the **projection error**
 
   $$\hat{\beta} = \beta + \bigg(\frac{1}{n} \sum_{i=1}^n X_iX_i^\prime\bigg)^{-1}\bigg(\frac{1}{n} \sum_{i=1}^n X_ie_i\bigg) $$
 
-::: {incremental}
-
 - We can use the **weak law of large numbers**
   
-  $$\frac{1}{n} \sum_{i=1}^n X_iX_i^\prime \overset{p}{\to} \mathbb{E}[X_iX_i^\prime]$$
+  $$\frac{1}{N} \sum_{i=1}^N X_iX_i^\prime \overset{p}{\to} \mathbb{E}[X_iX_i^\prime]$$
   
-  $$\frac{1}{n} \sum_{i=1}^n X_ie_i \overset{p}{\to} \mathbb{E}[X_ie_i] = 0$$
+  $$\frac{1}{N} \sum_{i=1}^N X_ie_i \overset{p}{\to} \mathbb{E}[X_ie_i] = 0$$
 
 :::
 
-# Estimating the BLP 
+## Estimating the BLP 
 
 ::: {.incremental}
 
@@ -540,9 +567,9 @@ Cov(X_i, \epsilon) = \mathbb{E}[X_ie_i] - E[X_i]E[e_i] = 0 - 0 = 0
 
   $$\hat{\beta} \overset{p}{\to} \beta$$
 
-- Ordinary least squares is consistent for the best linear predictor under relatively mild assumptions
+- **Ordinary least squares** is consistent for the **best linear predictor** under relatively mild assumptions
   - i.i.d. sample (can weaken this with LLNs for dependent random variables)
-  - finite moments (true for most outcomes and regressors you'll work with)
+  - finite expectation/variance of $Y$, $X$
   - no perfect collinearity (you can check if this is a problem!)
   
 - What have we *not* assumed
@@ -552,15 +579,19 @@ Cov(X_i, \epsilon) = \mathbb{E}[X_ie_i] - E[X_i]E[e_i] = 0 - 0 = 0
   
 :::
 
-# Asymptotic normality
+## Asymptotic normality
+
+::: {.incremental}
 
 - In large samples, what is the distribution of $\hat{\beta}$?
   
   $$\sqrt{n}(\hat{\beta} - \beta) = \bigg(\frac{1}{n} \sum_{i=1}^n X_iX_i^\prime\bigg)^{-1}\bigg(\frac{1}{\sqrt{n}} \sum_{i=1}^n X_ie_i\bigg)$$
 
-- We know that $\bigg(\frac{1}{n} \sum_{i=1}^n X_iX_i^\prime\bigg)^{-1} \overset{p}{\to} E[X_iX_i^\prime]^{-1}$
+- We know that $\bigg(\frac{1}{n} \sum_{i=1}^n X_iX_i^\prime\bigg)^{-1} \overset{p}{\to} \mathbb{E}[X_iX_i^\prime]^{-1}$
 
-# Asymptotic normality
+:::
+
+## Asymptotic normality
 
 ::: {.incremental}
 
@@ -574,11 +605,11 @@ Cov(X_i, \epsilon) = \mathbb{E}[X_ie_i] - E[X_i]E[e_i] = 0 - 0 = 0
 
 - Combining with our other convergence result using Slutsky's theorem gives
 
-  $$\sqrt{n}(\hat{\beta} - \beta) \overset{d}{\to} \mathcal{N}\bigg(0, (E[X_iX_i^\prime])^{-1} (\mathbb{E}[e_i^2X_i X_i^\prime]) (E[X_iX_i^\prime])^{-1}\bigg)$$
+  $$\sqrt{n}(\hat{\beta} - \beta) \overset{d}{\to} \mathcal{N}\bigg(0, (\mathbb{E}[X_iX_i^\prime])^{-1} (\mathbb{E}[e_i^2X_i X_i^\prime]) (\mathbb{E}[X_iX_i^\prime])^{-1}\bigg)$$
 
 :::
 
-# Variance estimation
+## Variance estimation
 
 ::: {.incremental}
 
@@ -591,16 +622,383 @@ Cov(X_i, \epsilon) = \mathbb{E}[X_ie_i] - E[X_i]E[e_i] = 0 - 0 = 0
 - Our estimator
 
   $$\widehat{Var(\hat{\beta})} = \frac{1}{n} \bigg(\frac{1}{n} \sum_{i=1}^n X_i X_i^\prime \bigg)^{-1}\bigg(\frac{1}{n} \sum_{i=1}^n \hat{e_i}^2 X_i X_i^\prime \bigg)\bigg(\frac{1}{n} \sum_{i=1}^n X_i X_i^\prime \bigg)^{-1}$$
+  
+- Equivalently
+
+  $$\widehat{Var(\hat{\beta})} = \bigg(\sum_{i=1}^n X_i X_i^\prime \bigg)^{-1}\bigg(\sum_{i=1}^n \hat{e_i}^2 X_i X_i^\prime \bigg)\bigg(\sum_{i=1}^n X_i X_i^\prime \bigg)^{-1}$$
 
 :::
 
-# Variance estimation
+## Variance estimation
+
+::: {.incremental}
 
 - This is often known as the "sandwich" estimator
 
-$$\widehat{Var(\hat{\beta})} =  (\mathbf{X}^\prime\mathbf{X})^{-1} (X^\prime \hat{\Sigma} \mathbf{X}) (\mathbf{X}^\prime\mathbf{X})^{-1}$$
-where $\hat{\Sigma} = \text{diag}(\hat{e_1}^2, \hat{e_2}^2, \dotsc \hat{e_n}^2)$
+  $$\widehat{Var(\hat{\beta})} =  (\mathbf{X}^\prime\mathbf{X})^{-1} (\mathbf{X}^\prime \hat{\Sigma} \mathbf{X}) (\mathbf{X}^\prime\mathbf{X})^{-1}$$
+- where $\hat{\Sigma} = \text{diag}(\hat{e_1}^2, \hat{e_2}^2, \dotsc \hat{e_n}^2)$
 
-- It's also referred to as the **heteroskedasticity-consistent** robust variance estimator
-  - We have made no assumptions on the variance of $e_i$ -- we're just plugging in the regression residuals.
+- You'll see this referred to as the **Eicker-Huber-White** **heteroskedasticity-consistent** variance estimator (or just the **robust** standard errors)
+  - Notably, we have made no assumptions on the variance of $e_i$, we're just plugging in the regression residuals!
+  
+:::
 
+
+## OLS and Projections
+
+:::{.incremental}
+
+- One way to think about the fitted values from OLS is that they are a **projection** of the n-dimensional vector $Y$ into the **column space** of $\mathbf{X}$
+  - A **column space** is the set of all linear combinations of the columns of $\mathbf{X}$
+- We define the **projection matrix** or **hat matrix**
+  
+  $$\mathbf{P}_{\mathbf{X}} = \mathbf{X}(\mathbf{X}^\prime\mathbf{X})^{-1}\mathbf{X^\prime}$$
+  
+- Our fitted values $\hat{Y}$ are a projection of $Y$ to the "closest" vector that can be represented as a linear combination of the columns of $\mathbf{X}$
+
+  $$\hat{Y} = \mathbf{P}_{\mathbf{X}}Y = \mathbf{X}(\mathbf{X}^\prime\mathbf{X})^{-1}\mathbf{X^\prime}Y = \mathbf{X}\hat{\beta}$$
+
+:::
+
+## Regression adjustment in randomized experiments
+
+::: {.incremental}
+
+- We've focused on a **minimal assumption** approach to justifying linear regression.
+- But usually you see regression taught using the **Gauss-Markov** assumptions (plus normal errors)
+
+  1. Linearity of the CEF
+  2. Strict exogeneity of the errors
+  3. No perfect collinearity
+  4. Spherical errors (homoskedasticity)
+  5. Normal errors
+  
+- We'll review these later in this lecture, but do we need these assumptions to use regression in a randomized experiment?
+  - **Freedman (2008)** "...randomization does not justify the assumptions behind the OLS model"
+
+:::
+
+## Regression adjustment in randomized experiments
+
+::: {.incremental}
+
+- **Lin (2013)** shows that even a **misspecified** ordinary least squares regression will yield a consistent estimator of the sample ATE if the regression estimator:
+  1. De-means the covariates
+  2. Interacts the covariates with the treatment indicator
+  
+- Mathematically, this is equivalent to...
+  1. Fitting **two** regressions - one in the treated group, one in the control group
+  2. **Predicting** the potential outcome under treatment for **every** unit in the sample using the **treatment** model
+  3. **Predicting** the potential outcome under control for **every** unit in the sample using the **control** model
+  4. Taking the average difference between the two predictions!
+
+:::
+
+## Imputation estimators
+
+::: {.incremental}
+
+- Many of the treatment effect estimators we'll see can be written in terms of **imputed** potential outcomes
+
+  $$\hat{\tau} = \frac{1}{N} \sum_{i=1}^N \widehat{Y_i(1)} - \widehat{Y_i(0)}$$
+  
+- Our simple **difference-in-means** estimator is a simple case of this - we just impute the mean for every $i$
+  - $\widehat{Y_i(1)} = \bar{Y}_1 = \frac{1}{N_t}\sum_{i = 1}^N Y_i D_i$
+  - $\widehat{Y_i(0)} = \bar{Y}_0 = \frac{1}{N_c}\sum_{i = 1}^N Y_i (1 - D_i)$
+
+- But we could also generate predictions of $Y_i(1)$ and $Y_i(0)$ from a regression model!
+  - Let $\beta^{(1)}$ be the coefficients from regressing $Y_i$ on $X_i$ among the **treated** group
+  - Let $\beta^{(0)}$ are the coefficients from regressing $Y_i$ on $X_i$ among the **control** group
+  - Our regression imputation estimator is: $\widehat{Y_i(1)} = X_i^\prime \beta^{(1)}$ and $\widehat{Y_i(0)} = X_i^\prime \beta^{(0)}$
+
+:::
+
+## Lin (2013) estimator
+
+- We can recover this difference between the two regression functions from a **single model** regressing $Y_i$ on the **de-meaned** $X_i$ fully interacted with the treatment $D_i$
+  - This is what is known as the **Lin (2013)** regression
+  - Implemented in `estimatr::lm_lin()` which handles the de-meaning for you!
+  
+- Let's show the equivalence using the **Nyhan and Reifler (2015)** experiment
+  - Suppose that in addition to the strata, we want to adjust for stuff we didn't explicitly block on 
+  
+```{r, echo=T}
+adjusted_est <- tidy(estimatr::lm_lin(combined ~ treatment, 
+                                      covariates = ~ groupedblocks + partyleader + commleader + fundraising + voteshare, data=factcheck, weights=aw))
+adjusted_est %>% filter(term == "treatment") %>% select(estimate, std.error, statistic, p.value)
+```
+
+
+## Lin (2013) estimator
+
+- Fitting the regression in the **treated** group and **control** group
+
+```{r, echo=T}
+treated_reg <- lm(combined ~ groupedblocks + partyleader + commleader + fundraising + voteshare, 
+                  data=factcheck %>% filter(treatment == 1), weights=aw)
+control_reg <- lm(combined ~ groupedblocks + partyleader + commleader + fundraising + voteshare, 
+                  data=factcheck %>% filter(treatment == 0), weights=aw)
+```
+
+
+- Predicting for all units
+
+```{r, echo = T}
+factcheck$Y_1 <- predict(treated_reg, newdata=factcheck)
+factcheck$Y_0 <- predict(control_reg, newdata=factcheck)
+```
+
+
+- Verify that we get the same result as the **Lin (2013)** regression!
+
+```{r, echo=T}
+weighted.mean(factcheck$Y_1, factcheck$aw) - weighted.mean(factcheck$Y_0, factcheck$aw)
+```
+
+## Classical regression
+
+::: {.incremental}
+
+- So far, we've shown that the OLS estimator is consistent and asymptotically normal for the **Best Linear Predictor**
+  - But what about for estimating the **conditional expectation function**? $\mathbb{E}[Y_i|X_i]$
+  - In non-experimental settings, we often **do** need to get this correct (next week - regression adjustment for confounders!)
+  
+- To do inference on the **CEF** with OLS, we assume that it's equal to the **BLP**!
+ 
+- **Assumption 1**: Linearity
+
+  $$Y_i = X_i^\prime\beta + \epsilon_i$$
+
+- **Assumption 2**: Strict exogeneity of the errors
+
+  $$\mathbb{E}[\epsilon | \mathbf{X}] = 0$$
+  
+- When is linearity always **true**?
+  - When we have a fully-saturated model - as many **parameters** as **unique covariate values** (e.g. (post)-stratification)
+
+:::
+
+## Classical regression
+
+::: {.incremental}
+
+- **Assumption 3**: No perfect collinearity
+  - $\mathbf{X}^{\prime}\mathbf{X}$ is invertible
+  - $\mathbf{X}$ has full column rank
+
+- When does this fail? How can we check?
+
+:::
+
+## Classical regression
+
+- Under assumptions 1-3, our OLS estimator $\hat{\beta}$ is also **unbiased** for $\beta$
+- Let's do a quick proof for unbiasedness
+
+$$\begin{align*}\hat{\beta} &= (\mathbf{X}^{\prime}\mathbf{X})^{-1}(\mathbf{X}^{\prime}Y)\\
+ &= (\mathbf{X}^{\prime}\mathbf{X})^{-1}(\mathbf{X}^{\prime}(\mathbf{X}\beta + \epsilon))\\
+ &= (\mathbf{X}^{\prime}\mathbf{X})^{-1}(\mathbf{X}^{\prime}\mathbf{X})\beta + (\mathbf{X}^{\prime}\mathbf{X})^{-1}(\mathbf{X}^{\prime}\epsilon)\\
+ &= \beta + (\mathbf{X}^{\prime}\mathbf{X})^{-1}(\mathbf{X}^{\prime}\epsilon)
+ \end{align*}$$
+
+- Then we can obtain the conditional expectation of $\mathbb{E}[\hat{\beta} | \mathbf{X}]$
+
+$$\begin{align*} \mathbb{E}[\hat{\beta} | \mathbf{X}] &= \mathbb{E}\bigg[\beta + (\mathbf{X}^{\prime}\mathbf{X})^{-1}(\mathbf{X}^{\prime}\epsilon) \bigg| \mathbf{X} \bigg]\\
+&= \mathbb{E}[\beta | \mathbf{X}] + \mathbb{E}[(\mathbf{X}^{\prime}\mathbf{X})^{-1}(\mathbf{X}^{\prime}\epsilon) | \mathbf{X}]\\
+&= \beta + (\mathbf{X}^{\prime}\mathbf{X})^{-1}\mathbf{X}^{\prime} \mathbb{E}[\epsilon | \mathbf{X}]\\
+&= \beta + (\mathbf{X}^{\prime}\mathbf{X})^{-1}\mathbf{X}^{\prime}0\\
+&= \beta
+ \end{align*}$$
+
+
+## Classical regression
+
+::: {.incremental}
+
+- Lastly, by law of total expectation 
+
+  $$\mathbb{E}[\hat{\beta}] = \mathbb{E}[\mathbb{E}[\hat{\beta}|\mathbf{X}]]$$
+
+- Therefore 
+
+  $$\mathbb{E}[\hat{\beta}] = \mathbb{E}[\beta] = \beta$$
+
+- What have we still not assumed?
+  - Anything about the distribution of the errors (aside from finite 1st/2nd moments)
+  
+:::
+
+## Classical regression
+
+::: {.incremental}
+
+- **Assumption 4** - Spherical errors
+
+  $$Var(\epsilon | \mathbf{X}) = \begin{bmatrix}
+\sigma^2 & 0 & \cdots & 0\\
+0 & \sigma^2 & \cdots & 0\\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & \sigma^2
+\end{bmatrix} =  \sigma^2 \mathbf{I}$$
+
+- Benefits
+  - Simple, unbiased estimator for $Var(\hat{\beta})$ - classical OLS standard errors (what you get in `lm()`)
+  - Completes Gauss-Markov assumptions $\leadsto$ OLS is BLUE (Best Linear Unbiased Estimator)
+  
+- Drawbacks
+  - Basically never is true
+  
+:::
+  
+## Classical regression
+
+:::{.incremental}
+
+- Under spherical errors, the variance formula simplifies 
+
+  $$Var(\beta) =  (\mathbf{X}^\prime\mathbf{X})^{-1} (\mathbf{X}^\prime \sigma^2\mathbf{X}) (\mathbf{X}^\prime\mathbf{X})^{-1}$$
+  $$Var(\beta) =  \sigma^2 (\mathbf{X}^\prime\mathbf{X})^{-1}$$
+
+- All we need is an estimator for $\sigma^2$ 
+  - A consistent one is just the sample variance of the residuals
+  - Can do better by including a "degrees of freedom" correction
+  
+:::
+
+## Classical regression
+
+::: {.incremental}
+
+- An unbiased estimator for $\sigma^2$ is the sample variance of the residuals (mean squared error) adjusted by a degrees of freedom correction
+
+  $$\hat{\sigma^2} = \frac{1}{N-K} \sum_{i=1}^N (Y_i - \hat{Y_i})^2$$
+
+- $K$ is the number of parameters. We refer to $N-K$ as the "degrees of freedom"
+
+:::
+
+## OLS is BLUE
+
+- The **Gauss-Markov Theorem**
+  - Under Assumptions 1-4, we can show that there is no other estimator that for $\beta$ that is both **linear** and **unbiased** which has lower variance than $\hat{\beta}_{\text{OLS}}$
+
+## OLS is BLUE
+
+::: {.incremental}
+
+- **Proof**: Suppose there's another linear estimator that diverges from the OLS projection of $Y$ by a non-zero $K \times N$ matrix $D$ 
+
+  $$\tilde{\beta} = ((\mathbf{X}^\prime\mathbf{X})^{-1} \mathbf{X}^\prime + D)Y$$
+    
+- Let's take the expectation
+
+  $$\mathbb{E}[\tilde{\beta}] = \mathbb{E}[\hat{\beta}_{\text{OLS}}] + \mathbb{E}[DY]$$
+  
+- We know OLS is unbiased. Next, we plug in the expression for $Y$ (linearity)
+  
+  $$\mathbb{E}[\tilde{\beta}] = \beta + \mathbb{E}[D\mathbf{X}\beta] + \mathbb{E}[D\epsilon]$$
+  
+:::
+
+## OLS is BLUE
+
+::: {.incremental}
+
+- Pull out the constants and use $\mathbb{E}[\epsilon] = 0$
+    
+  $$\mathbb{E}[\tilde{\beta}] = \beta(\mathbf{I} + D\mathbf{X})$$
+    
+- If $\tilde{\beta}$ is unbiased, then
+
+  $$\beta(\mathbf{I} + D\mathbf{X}) = 0$$
+- This holds for all values of $\beta$ only if $D\mathbf{X} = 0$
+
+:::
+
+## OLS is BLUE
+
+::: {.incremental}
+
+- Under homoskedasticity, the variance is 
+
+  $$Var(\tilde{\beta}) = \sigma^2\bigg((\mathbf{X}^\prime\mathbf{X})^{-1} \mathbf{X}^\prime + D\bigg)\bigg((\mathbf{X}^\prime\mathbf{X})^{-1} \mathbf{X}^\prime + D\bigg)^{\prime}$$
+
+- Using properties of matrix transposes
+
+  $$Var(\tilde{\beta}) = \sigma^2\bigg((\mathbf{X}^\prime\mathbf{X})^{-1} \mathbf{X}^\prime + D\bigg)\bigg(\mathbf{X}(\mathbf{X}^\prime\mathbf{X})^{-1} + D^\prime\bigg)$$
+
+- Expanding
+
+  $$Var(\tilde{\beta}) = \sigma^2\bigg((\mathbf{X}^\prime\mathbf{X})^{-1} \mathbf{X}^\prime\mathbf{X}(\mathbf{X}^\prime\mathbf{X})^{-1} + (\mathbf{X}^\prime\mathbf{X})^{-1}(D\mathbf{X})^\prime + D\mathbf{X}(\mathbf{X}^\prime\mathbf{X})^{-1} + DD^\prime\bigg)$$
+:::
+
+## OLS is BLUE
+
+:::{.incremental}
+
+- Using $D\mathbf{X} = 0$ from above along with the definition of the variance of $\hat{\beta}_{\text{OLS}}$
+
+  $$Var(\tilde{\beta}) = Var(\hat{\beta}_{\text{OLS}}) + \sigma^2DD^\prime$$
+  
+- The variance of our alternative linear, unbiased estimator exceeds the variance of OLS by the positive semi-definite matrix $\sigma^2DD^\prime$ (since $DD^\prime$ is an outer product)
+- Therefore OLS is the **lowest-variance** linear unbiased estimator
+
+:::
+
+
+## Classical regression
+
+::: {.incremental}
+
+- **Assumption 5** - Normality of the errors
+
+  $$\epsilon | \mathbf{X} \sim \mathcal{N}(0, \sigma^2)$$
+
+- Not necessary even for Gauss-Markov assumptions
+- Not needed to do asymptotic inference on $\hat{\beta}$
+  - Why? Central Limit Theorem!
+
+- Benefits?
+  - Finite-sample **inference** (no reliance on asymptotics for hypothesis tests)
+  - Inference for **predictions** from the model.
+
+- Drawbacks
+  - Again, almost never true unless our outcome is a sum or mean of a large number of i.i.d. random variables
+  
+:::
+
+## Regression review
+
+::: {.incremental}
+
+- What do we need for OLS to be consistent for the "best linear approximation" to the CEF?
+  - Very little!
+
+- What do we need for OLS to be consistent and unbiased for the conditional expectation function?
+  - Truly linear CEF
+  - But still no assumptions about the outcome distribution!
+  
+- What do we need to do inference on $\hat{\beta}$?
+  - We almost never assume homoskedasticity because "robust" SE estimators are ubiquitous
+  - Even some forms of error correlation are permitted ("cluster" robust SEs)
+  - Sample sizes are usually large enough where CLT approximations are good.
+  - Otherwise, we'll generally use something like a Fisher randomization test.
+
+:::
+
+
+## Next week
+
+::: {.incremental}
+
+- Introduction to **observational** designs
+  - Treatment is not directly randomized by researchers!
+  
+- **Selection-on-observables**
+  - Can we assume that we have adjusted for all factors predicting treatment and outcome?
+  - Simple adjustment using a **stratification** estimator.
+  
+- Encoding our selection-on-observables assumptions using **directed acyclic graphs**
+  - **Adjustment criterion** - what is a sufficient set of "controls" that would allow us to identify a treatment effect?
+
+:::

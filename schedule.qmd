@@ -123,6 +123,7 @@ All hyperlinks to papers are either to the published version of the paper (if pu
 
 - Washington, Ebonya L. 2008. ["Female Socialization: How Daughters Affect Their Legislator Fathers."](https://www.aeaweb.org/articles?id=10.1257/aer.98.1.311) *American Economic Review* 98 (1): 311–332.
 - Ba, Bocar A., Dean Knox, Jonathan Mummolo, and Roman Rivera. 2021. ["The Role of Officer Race and Gender in Police-Civilian Interactions in Chicago."](https://www.science.org/doi/full/10.1126/science.abd8694) *Science* 371 (6530): 696–702.
+- Knox, Dean, Will Lowe, and Jonathan Mummolo. 2020. ["Administrative records mask racially biased policing."](https://www.cambridge.org/core/journals/american-political-science-review/article/administrative-records-mask-racially-biased-policing/66BC0F9998543868BB20F241796B79B8) *American Political Science Review* 114 (3): 619-637.
 
 ---
 
