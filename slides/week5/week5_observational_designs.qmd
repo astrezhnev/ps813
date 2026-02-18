@@ -86,7 +86,7 @@ options(digits=3)
 - A good causal observational study should try to mimic the features of an experiment
 - So what were the nice properties of a **randomized experiment**?
   - **Positivity**: Assignment not deterministic $0 < P(D_i = 1) < 1$
-  - **Ignorability/Unconfoundedness**: $P(D_i = 1 | Y_i(1), Y_i(0) = P(D_i = 1)$
+  - **Ignorability/Unconfoundedness**: $P(D_i = 1 | Y_i(1), Y_i(0)) = P(D_i = 1)$
 - We liked experiments because we could ensure treatment was independent of the potential outcomes.
   - $\{Y_i(1), Y_i(0)\} {\perp \! \! \! \perp} D_i$
 - Even in a **conditionally** randomized experiment, we knew $P(D_i = 1 | \mathbf{X}_i)$
@@ -851,3 +851,34 @@ Shpitser, Richardson and Robins (2021)
 \draw[->, >=stealth, thick] (B) to [bend right] (Y);
 \end{tikzpicture}
 ```
+
+## Summary
+
+::: {.incremental}
+
+- **Selection-on-observables**
+  - We have **conditioned** on all confounders $X_i$
+  - **Confounders**: Factors that affect **both** treatment **and** outcome
+  - Imagine a stratified experiment w/ varying treatment assignment probabilities!
+- **Directed Acyclic Graphs** as tools for finding *necessary* and *sufficient* sets of controls.
+  - Block non-causal paths
+  - Don't **open up** non-causal paths by conditioning on **colliders**
+  
+:::
+
+# Next week
+
+::: {.incremental}
+
+- Techniques for **adjusting** for confounders when we can't just stratify!
+  - Curse of dimensionality
+- **Inverse propensity of treatment** weighting
+  - Even if we have a lot of confounders $X_i$, can we adjust for a **single** quantity?
+  - Yes! The **propensity score**
+- **Regression adjustment**
+  - Controlling for confounders by specifying an **outcome** model
+- **Augmented** inverse propensity weighting
+  - Combining both **weighting** and an **outcome** model
+  - "Double-robustness"
+
+:::
