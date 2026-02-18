@@ -1691,7 +1691,7 @@
     "href": "slides/week5/week5_observational_designs.html#why-experiments-worked",
     "title": "Week 5: Selection-on-observables",
     "section": "Why experiments worked",
-    "text": "Why experiments worked\n\nA good causal observational study should try to mimic the features of an experiment\nSo what were the nice properties of a randomized experiment?\n\nPositivity: Assignment not deterministic \\(0 &lt; P(D_i = 1) &lt; 1\\)\nIgnorability/Unconfoundedness: \\(P(D_i = 1 | Y_i(1), Y_i(0) = P(D_i = 1)\\)\n\nWe liked experiments because we could ensure treatment was independent of the potential outcomes.\n\n\\(\\{Y_i(1), Y_i(0)\\} {\\perp \\! \\! \\! \\perp} D_i\\)\n\nEven in a conditionally randomized experiment, we knew \\(P(D_i = 1 | \\mathbf{X}_i)\\)"
+    "text": "Why experiments worked\n\nA good causal observational study should try to mimic the features of an experiment\nSo what were the nice properties of a randomized experiment?\n\nPositivity: Assignment not deterministic \\(0 &lt; P(D_i = 1) &lt; 1\\)\nIgnorability/Unconfoundedness: \\(P(D_i = 1 | Y_i(1), Y_i(0)) = P(D_i = 1)\\)\n\nWe liked experiments because we could ensure treatment was independent of the potential outcomes.\n\n\\(\\{Y_i(1), Y_i(0)\\} {\\perp \\! \\! \\! \\perp} D_i\\)\n\nEven in a conditionally randomized experiment, we knew \\(P(D_i = 1 | \\mathbf{X}_i)\\)"
   },
   {
     "objectID": "slides/week5/week5_observational_designs.html#observational-designs",
@@ -1986,6 +1986,13 @@
     "title": "Week 5: Selection-on-observables",
     "section": "DAG Practice",
     "text": "DAG Practice"
+  },
+  {
+    "objectID": "slides/week5/week5_observational_designs.html#summary",
+    "href": "slides/week5/week5_observational_designs.html#summary",
+    "title": "Week 5: Selection-on-observables",
+    "section": "Summary",
+    "text": "Summary\n\nSelection-on-observables\n\nWe have conditioned on all confounders \\(X_i\\)\nConfounders: Factors that affect both treatment and outcome\nImagine a stratified experiment w/ varying treatment assignment probabilities!\n\nDirected Acyclic Graphs as tools for finding necessary and sufficient sets of controls.\n\nBlock non-causal paths\nDon’t open up non-causal paths by conditioning on colliders"
   },
   {
     "objectID": "syllabus.html",
