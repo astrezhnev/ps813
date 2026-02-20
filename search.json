@@ -1040,7 +1040,7 @@
     "href": "assignments.html#problem-sets",
     "title": "Assignments",
     "section": "Problem Sets",
-    "text": "Problem Sets\nProblem sets are distributed as .qmd files along with their rendered .html form. You should edit the provided .qmd file and render to .html when submitting the assignment. Additional files (e.g. datasets) are located in sub-folders. For convenience, all the combined files are also distributed as a .zip compressed archive.\n\nProblem Set 1\n\nGithub Repository\n.zip archive\n\n\n\nProblem Set 2\n\nGithub Repository\n.zip archive"
+    "text": "Problem Sets\nProblem sets are distributed as .qmd files along with their rendered .html form. You should edit the provided .qmd file and render to .html when submitting the assignment. Additional files (e.g. datasets) are located in sub-folders. For convenience, all the combined files are also distributed as a .zip compressed archive.\n\nProblem Set 1\n\nGithub Repository\n.zip archive\n\n\n\nProblem Set 2\n\nGithub Repository\n.zip archive\n\n\n\nProblem Set 3\n\nGithub Repository\n.zip archive"
   },
   {
     "objectID": "index.html",
