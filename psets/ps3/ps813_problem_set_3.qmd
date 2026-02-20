@@ -1,0 +1,131 @@
+---
+title: 'PS 813: Problem Set 3'
+author: "YOUR NAME"
+date: "February 18, 2026"
+output:
+  html_document:
+    df_print: paged
+code:
+  execute: 
+    - r
+    - python
+embed-resources: true
+---
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+# Useful packages
+library(estimatr)
+library(tidyverse)
+library(haven)
+```
+
+
+> Please upload your solutions as a .html file saved as "Yourlastname_Yourfirstinitial_pset3.html"). In addition, an electronic copy of your .qmd file (saved as "Yourlastname_Yourfirstinitial_pset3.qmd") must be submitted to the course website at the same time. We should be able to run your code without error messages. In order to receive credit, homework submissions must be substantially started and all work must be shown.
+
+# Problem 1
+
+Randomized experiments are a popular tool for estimating causal effects. However, in field-experimental settings, experiments often run into the problem of non-compliance. Units randomized into treatment do not "take" the treatment and select into "control." In this problem, we will investigate a classic field experiment run by Gerber and Green (2000) on the effects of canvassing, direct mail and telephone calls on voter turnout. The experiment was conducted in New Haven, CT prior to the 1998 election. It involved multiple treatment arms, but for the purposes of this problem we will investigate the effect of one particular arm: the "phone call" get-out-the-vote treatment.
+
+The original paper for this study is
+
+> Gerber, Alan S., and Donald P. Green. "The effects of canvassing, telephone calls, and direct mail on voter turnout: A field experiment." American political science review 94, no. 3 (2000): 653-663.
+
+The code below will read in the data and subset down to units that received the phone call treatment exclusively and those that received no mobilization message at all (no mail or canvassing). Assignment to receive the phone call was done at random.
+
+```{r, message = F, warning = F}
+gotv <- read_csv("data/Gerber_Green_APSR_2005_apsr_corrected_latest.csv", 
+                 na = c("", "NA", "99")) %>%
+  filter(MAILGRP == 0&PERSNGRP==0)
+```
+
+The variables below may be useful in answering the problem.
+
+- `PHONEGRP` - Whether the voter was assigned to receive a phone call
+- `PHN.C` - Whether the voter was able to be contacted by phone.
+- `VOTED98` - Whether the voter voted in 1998.
+- `VOTE96.1` - Whether the voter voted in 1996.
+- `AGE` - Age of voter
+- `MAJORPTY` - Whether the voter is a registered Democrat or Republican (1 = Dem or Rep, 0 = Neither)
+
+## Part A 
+
+Using the difference-in-means estimator, estimate the average treatment effect of being assigned to receive a phone call on the probability of voting in 1998. Report a point estimate and 95% confidence interval. Do you conclude that there is evidence that assignment to receive a phone call increased turnout in 1998?
+
+## Part B
+
+Next, compute the difference in 1998 turnout rates between voters who were able to be contacted by phone and those who were not. Provide the point estimate and 95% confidence interval (using the Neyman variance estimator). Compare these results to your findings from Part A. What do we need to assume in order for your estimator in Part B to be unbiased for the average treatment effect of phone contact on turnout? Is this assumption plausible?
+
+## Part C
+
+Now compute the stratified difference in 1998 turnout rates between those contacted by phone and those not contacted by phone, stratifying on the combination of age and whether the voter is registered with a major party. Coarsen the age variable into four bins: 18-34, 35-46, 47-64 and 65+. You should have a total of 8 distinct strata (4 x 2). Provide the point estimate and a 95% confidence interval. Compare your results to your results from Part B and discuss any differences.
+
+## Part D
+
+Finally, compute the stratified difference in 1996 turnout rates between those contacted by phone and those not contacted by phone using your strata from Part C. Provide a point estimate and 95% confidence interval. 
+
+Given the evidence that you have found, do you believe that your stratified estimator in Part C is unbiased for the average treatment effect of contact by phone on 1998 turnout? Discuss why or why not.
+
+# Problem 2
+
+In new democracies and post-conflict settings, Truth and Reconciliation Commissions (TRCs) are often tasked with investigating and reporting about wrongdoing in previous governments. Depending on the context, institutions such as TRCs are expected to reduce conflict (e.g. racial hostilities) and promote peace. 
+
+In 1995, South Africa's new government formed a national TRC in the aftermath of apartheid. [Gibson 2004](https://pages.wustl.edu/files/pages/imce/jlgibson/ajps2004.pdf) uses survey data collected from 2000-2001 to examine whether this TRC promoted inter-racial reconciliation. The outcome of interest is respondent racial attitudes (as measured by the level of agreement with the prompt: "I find it difficult to understand the customs and ways of [the opposite racial group]".) The treatment is "exposure to the TRC" as measured by the individual's level of self-reported knowledge about the TRC. 
+
+You will need to use the `trc_data.dta` file for this question. The code below reads the data into R
+
+```{r trc, echo=T, warining=F, message=F}
+trc <- read_dta("data/trc_data.dta")
+```
+
+The relevant variables are:
+
+- `RUSTAND` - Outcome: respondent's racial attitudes (higher values indicate greater agreement)
+
+- `TRCKNOW` - Treatment dummy (1 = if knows about the TRC, 0 = otherwise)
+
+- `age` - Respondent age (in 2001)
+
+- `female` - Respondent gender
+
+- `wealth` - Measure of wealth constructed based on asset ownership (assets are fridge, floor polisher, vacuum cleaner, microwave oven, hi-fi, washing machine, telephone, TV, car)
+
+- `religiosity` - Self-reported religiosity (7 point scale)
+
+- `ethsalience` - Self-reported ethnic identification (4 point scale)
+
+- `rcblack` - Respondent is black
+
+- `rcwhite` - Respondent is white
+
+- `rccol` - Respondent is coloured (distinct multiracial ethnic group)
+
+- `EDUC` - Level of education (9 point scale)
+
+## Part A
+
+Estimate the average treatment effect of TRC exposure on respondents' racial attitudes under the assumption that TRC exposure is completely ignorable. Report a 95\% confidence interval for your estimate and interpret your results.
+
+## Part B
+
+Examine whether exposed and nonexposed respondents differ on the full set of observed covariates using a series of balance tests.
+In which ways do exposed and nonexposed respondents differ? What does this tell you about whether the assumption that TRC exposure is completely ignorable is reasonable?
+
+## Part C
+
+Now assume that TRC exposure is conditionally ignorable given the set of observed covariates. Use an additive logistic regression model to estimate the propensity score for each observation. With this model, construct inverse propensity of treatment weights (IPTW) for each observation and compute a point estimate for the ATE.
+
+## Part D
+
+Using a pairs bootstrap (resampling individual rows of the data with replacement), obtain estimate for the standard error of your IPTW estimator for the ATE. Compute a 95\% confidence interval and interpret your findings. Compare your results in Parts C/D to your estimate from Part A and discuss.
+
+## Part E
+
+Now, instead of weighting, we will consider stratification on the propensity score directly.
+
+Based on its estimated propensity score, assign each observation to one of six equally-sized strata (bins). Examine the stratum with the highest propensity scores and, within that stratum, carry out a series of balance tests between exposed and nonexposed respondents for the full set of observed covariates. How does the balance within this particular stratum compare to the overall balance you found in part B? 
+
+## Part F
+
+Estimate the average treatment effect using a stratified difference-in-means estimator based on your strata from Part E. Use the typical stratified variance estimator (don't bootstrap here) and report a 95\% confidence interval. Compare your results to your findings in Part A and your results from D.
+
