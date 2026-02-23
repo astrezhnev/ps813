@@ -59,3 +59,5 @@ To complete assignments, you will edit the provided `.qmd` file, adding your cod
 Below are some additional tutorials to help supplement the main course material. They will generally focus on specific topics in statistical computing and things that we did not have time to cover as part of the main set of lectures. 
 
 - [Basics of Monte Carlo simulations](tutorials/montecarlo/tutorial_montecarlo.html)
+
+- [Power calculations for completely randomized experiments](tutorials/montecarlo/tutorial_power.html)

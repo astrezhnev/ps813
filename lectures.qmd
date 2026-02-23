@@ -33,8 +33,8 @@ Lecture slides are available as self-contained `.html` files made with RevealJS 
 
 ### Week 6: Selection-on-Observables - Regression and Weighting
 
-- Week 6 Github Repository
-- Week 6 `.html` slides
+- [Week 6 Github Repository](https://github.com/astrezhnev/ps813/tree/main/slides/week6/)
+- [Week 6 `.html` slides](https://www.antonstrezhnev.com/ps813/slides/week6/week6_regression_and_weighting.html)
 
 ### Week 7: Selection-on-Observables - Matching
 
