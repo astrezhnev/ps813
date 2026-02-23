@@ -60,4 +60,4 @@ Below are some additional tutorials to help supplement the main course material.
 
 - [Basics of Monte Carlo simulations](tutorials/montecarlo/tutorial_montecarlo.html)
 
-- [Power calculations for completely randomized experiments](tutorials/montecarlo/tutorial_power.html)
+- [Power calculations](tutorials/power/tutorial_power.html)
