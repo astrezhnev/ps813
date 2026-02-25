@@ -571,7 +571,7 @@ tidy(reg_ate_cube) %>% filter(term == "black") %>% dplyr::select(term, estimate,
 
   $$\tau_\text{R} = \frac{Cov(Y_i, D_i^{\perp X_i}}{Var(D_i^{\perp X_i})}$$
 
-- $ D_i^{\perp X_i}$ is the residual from a regression of $D_i$ on all of the other covariates $X_i$
+- $D_i^{\perp X_i}$ is the residual from a regression of $D_i$ on all of the other covariates $X_i$
 
 - In this case, that's just:
 
