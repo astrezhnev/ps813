@@ -284,7 +284,7 @@
     "href": "slides/week6/week6_regression_and_weighting.html#regression-weighting-1",
     "title": "Week 6: Regression and Weighting",
     "section": "Regression weighting",
-    "text": "Regression weighting\n\nUsing the Frisch-Waugh-Lovell theorem. we can write an expression for the treatment coefficient as\n\\[\\tau_\\text{R} = \\frac{Cov(Y_i, D_i^{\\perp X_i}}{Var(D_i^{\\perp X_i})}\\]\n$ D_i^{X_i}$ is the residual from a regression of \\(D_i\\) on all of the other covariates \\(X_i\\)\nIn this case, that’s just:\n\\[\\tau_\\text{R} = \\frac{Cov(Y_i, D_i - \\mathbb{E}[D_i|X_i])}{Var(D_i - \\mathbb{E}[D_i|X_i])} \\]"
+    "text": "Regression weighting\n\nUsing the Frisch-Waugh-Lovell theorem. we can write an expression for the treatment coefficient as\n\\[\\tau_\\text{R} = \\frac{Cov(Y_i, D_i^{\\perp X_i}}{Var(D_i^{\\perp X_i})}\\]\n\\(D_i^{\\perp X_i}\\) is the residual from a regression of \\(D_i\\) on all of the other covariates \\(X_i\\)\nIn this case, that’s just:\n\\[\\tau_\\text{R} = \\frac{Cov(Y_i, D_i - \\mathbb{E}[D_i|X_i])}{Var(D_i - \\mathbb{E}[D_i|X_i])} \\]"
   },
   {
     "objectID": "slides/week6/week6_regression_and_weighting.html#regression-weighting-2",
