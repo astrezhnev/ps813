@@ -4,7 +4,7 @@
     "href": "tutorials/power/tutorial_power.html",
     "title": "Tutorial - Monte Carlo Simulation",
     "section": "",
-    "text": "knitr::opts_chunk$set(echo = TRUE)\n# Useful packages\nlibrary(tidyverse)\nlibrary(knitr)\nlibrary(haven) # to read different statistical formats\nlibrary(broom) # to generate tidy tibbles of statistical analysis\nlibrary(estimatr) # provides commonly-used linear estimators\noptions(digits=3)\noptions(scipen = 10) # No scientific notation\n\n\nPower calculations in R\nWe often want to figure out how large of a sample size we’ll need in order to estimate an effect of a particular size reliably. This is called the power of a design - the probability that we reject the null given that the null is false. It’s the probability of not making a Type II error (a false negative).\nPower depends on both the variance of our estimator (\\(Var(\\hat \\tau)\\)) and the underlying true effect (\\(\\tau\\)). Obviously we don’t know the latter, so we’ll have to make assumptions on the effect size to calculate power (and calculate a set of power estimates across an array of potential treatment effect sizes).\nOften our outcome is binary, so we’ll be able to “worst-case” the outcome variance at \\(.25\\) (the variance of a binary outcome is \\(p(1-p)\\), so its largest possible value is \\(.5^2 = .25\\)). Then the parameters we want to vary are \\(N_t, N_c\\) and \\(\\tau\\) (the true effect).\nAlternatively, we’ll often normalize the treatment effect in terms of standard deviations of the outcome (and so normalize the outcome variances to 1). This is sometimes referred to as “Cohen’s \\(d\\)”.\nRemember that for an \\(\\alpha = .05\\), we would reject (for an asymptotic null hypothesis test) if our observed test statistic \\(T\\) lands above \\(1.96\\) or below \\(-1.96\\). Given a known treatment effect \\(\\tau\\), we know that the distribution of our test statistic (\\(\\frac{\\hat{\\tau}}{\\widehat{SE(\\hat{\\tau})}}\\)) is centered on \\(\\frac{\\tau}{\\widehat{SE(\\hat{\\tau})}}\\) with variance \\(1\\) (and is normal). Therefore, we can calculate the probability of landing in the rejection region for our null hypothesis test given the true assumed effect.\n\ntaus = seq(0, .5, by=.01) # Range of (standardized) treatment effects to evaluate\n\nN_list = c(250, 500, 1000) # Sample sizes (we'll assume an equal treatment-control split)\n\nalpha = .05 # Our rejection threshold\n\n# Placeholder matrix for power results\npower = matrix(NA, ncol=length(taus), nrow=length(N_list))\n\n# For each sample size\nfor (j in 1:length(N_list)){\n  \n  # Sample size\n  N &lt;- N_list[j]\n  \n  # For each possible effect, calculate the power\n  for (i in 1:length(taus)){\n    tau = taus[i] # The treatment effect\n    var = 1/(N/2) + 1/(N/2) # We're considering standardized treatment effects and are assuming a constant outcome variance across groups\n    z_thresh &lt;- abs(qnorm(alpha/2))# Our z-thresholds for the null hypothesis test (~1.96 for alpha = .05)\n    \n    # Probability of getting in the upper rejection threshold + probability of getting in the lower\n    # pnorm gives the Cumulative Distribution Function (CDF) of the Normal distribution\n    power[j,i] &lt;- pnorm(z_thresh, mean=tau/sqrt(var), sd = 1, lower.tail=FALSE) +\n      pnorm(-z_thresh, mean=tau/sqrt(var), sd = 1, lower.tail=TRUE) \n    \n  }\n}\n\npower_results &lt;- bind_rows(data.frame(sampSize = N_list[1], tau = taus, power = power[1,]),\n                           data.frame(sampSize = N_list[2], tau = taus, power = power[2,]),\n                           data.frame(sampSize = N_list[3], tau = taus, power = power[3,]))\n\n## Generate a plot\npower_results %&gt;% \n  ggplot(aes(y=power, x=tau, colour=as.factor(sampSize))) + \n  geom_line() + \n  geom_hline(yintercept = alpha, lty=3) + \n  xlab(\"Average treatment effect (standard deviations)\") + \n  ylab(\"Power\") + \n  theme_bw() + labs(colour = \"Sample Size\")\n\n\n\n\n\n\n\n\nLet’s illustrate what happens as we also vary the sample size - as we increase the sample size, we’re more powered for smaller treatment effects.\nWe can also use simulation to calculate the power of a design under assumptions about the data-generating process. This is often a good strategy when we have more complex randomization schemes and so doing the simple closed-form calculations above is infeasible.\n\ntaus = seq(0, .5, by=.01) # Range of treatment effects to evaluate\nN = 500 # Sample size (we'll assume an equal treatment-control split)\nalpha = .05 # Our rejection threshold\nNSim = 10000 # How many draws from the sampling distribution to calculate pr(rejection)\n\n# Placeholder vector for power results\npower = rep(NA, length(taus))\n\n# For each possible effect, calculate the power\nfor (i in 1:length(taus)){\n  tau = taus[i] # The treatment effect\n  var = .25/(N/2) + .25/(N/2) # This is a \"worst-case\" variance (in actuality, it's impossible to have a variance of .25 if there is a non-zero treatment effect)\n  z_thresh &lt;- abs(qnorm(alpha/2))# Our z-thresholds for the null hypothesis test (~1.96 for alpha = .05)\n  \n  # Generate a bunch of treatment effects (draws from the true sampling distribution)\n  sim_t_stats &lt;- rnorm(NSim, mean=tau/sqrt(var), sd = 1)\n  \n  # Probability of rejection using monte-carlo simulation.\n  power[i] &lt;- mean(abs(sim_t_stats) &gt; z_thresh)\n  \n}\n\n\npower_results &lt;- data.frame(tau = taus, power = power)\n\npower_results %&gt;% ggplot(aes(y=power, x=taus)) + geom_line() + geom_hline(yintercept = .05, lty=3) + xlab(\"Average treatment effect (percentage points)\") + ylab(\"Power\") + theme_bw()\n\n\n\n\n\n\n\n\nW"
+    "text": "knitr::opts_chunk$set(echo = TRUE)\n# Useful packages\nlibrary(tidyverse)\nlibrary(knitr)\nlibrary(haven) # to read different statistical formats\nlibrary(broom) # to generate tidy tibbles of statistical analysis\nlibrary(estimatr) # provides commonly-used linear estimators\noptions(digits=3)\noptions(scipen = 10) # No scientific notation\n\n\nPower calculations in R\nWe often want to figure out how large of a sample size we’ll need in order to estimate an effect of a particular size reliably. This is called the power of a design - the probability that we reject the null given that the null is false. It’s the probability of not making a Type II error (a false negative).\nPower depends on both the variance of our estimator (\\(Var(\\hat \\tau)\\)) and the underlying true effect (\\(\\tau\\)). Obviously we don’t know the latter, so we’ll have to make assumptions on the effect size to calculate power (and calculate a set of power estimates across an array of potential treatment effect sizes).\nOften our outcome is binary, so we’ll be able to “worst-case” the outcome variance at \\(.25\\) (the variance of a binary outcome is \\(p(1-p)\\), so its largest possible value is \\(.5^2 = .25\\)). Then the parameters we want to vary are \\(N_t, N_c\\) and \\(\\tau\\) (the true effect).\nAlternatively, we’ll often normalize the treatment effect in terms of standard deviations of the outcome (and so normalize the outcome variances to 1). This is sometimes referred to as “Cohen’s \\(d\\)”.\nRemember that for an \\(\\alpha = .05\\), we would reject (for an asymptotic null hypothesis test) if our observed test statistic \\(T\\) lands above \\(1.96\\) or below \\(-1.96\\). Given a known treatment effect \\(\\tau\\), we know that the distribution of our test statistic (\\(\\frac{\\hat{\\tau}}{\\widehat{SE(\\hat{\\tau})}}\\)) is centered on \\(\\frac{\\tau}{\\widehat{SE(\\hat{\\tau})}}\\) with variance \\(1\\) (and is normal). Therefore, we can calculate the probability of landing in the rejection region for our null hypothesis test given the true assumed effect.\n\ntaus = seq(0, .5, by=.01) # Range of (standardized) treatment effects to evaluate\n\nN_list = c(250, 500, 1000) # Sample sizes (we'll assume an equal treatment-control split)\n\nalpha = .05 # Our rejection threshold\n\n# Placeholder matrix for power results\npower = matrix(NA, ncol=length(taus), nrow=length(N_list))\n\n# For each sample size\nfor (j in 1:length(N_list)){\n  \n  # Sample size\n  N &lt;- N_list[j]\n  \n  # For each possible effect, calculate the power\n  for (i in 1:length(taus)){\n    tau = taus[i] # The treatment effect\n    var = 1/(N/2) + 1/(N/2) # We're considering standardized treatment effects and are assuming a constant outcome variance across groups\n    z_thresh &lt;- abs(qnorm(alpha/2))# Our z-thresholds for the null hypothesis test (~1.96 for alpha = .05)\n    \n    # Probability of getting in the upper rejection threshold + probability of getting in the lower\n    # pnorm gives the Cumulative Distribution Function (CDF) of the Normal distribution\n    power[j,i] &lt;- pnorm(z_thresh, mean=tau/sqrt(var), sd = 1, lower.tail=FALSE) +\n      pnorm(-z_thresh, mean=tau/sqrt(var), sd = 1, lower.tail=TRUE) \n    \n  }\n}\n\npower_results &lt;- bind_rows(data.frame(sampSize = N_list[1], tau = taus, power = power[1,]),\n                           data.frame(sampSize = N_list[2], tau = taus, power = power[2,]),\n                           data.frame(sampSize = N_list[3], tau = taus, power = power[3,]))\n\n## Generate a plot\npower_results %&gt;% \n  ggplot(aes(y=power, x=tau, colour=as.factor(sampSize))) + \n  geom_line() + \n  geom_hline(yintercept = alpha, lty=3) + \n  xlab(\"Average treatment effect (standard deviations)\") + \n  ylab(\"Power\") + \n  theme_bw() + labs(colour = \"Sample Size\")\n\n\n\n\n\n\n\n\nLet’s illustrate what happens as we also vary the sample size - as we increase the sample size, we’re more powered for smaller treatment effects.\nWe can also use simulation to calculate the power of a design under assumptions about the data-generating process. This is often a good strategy when we have more complex randomization schemes and so doing the simple closed-form calculations above is infeasible.\n\ntaus = seq(0, .5, by=.01) # Range of treatment effects to evaluate\nN = 500 # Sample size (we'll assume an equal treatment-control split)\nalpha = .05 # Our rejection threshold\nNSim = 10000 # How many draws from the sampling distribution to calculate pr(rejection)\n\n# Placeholder vector for power results\npower = rep(NA, length(taus))\n\n# For each possible effect, calculate the power\nfor (i in 1:length(taus)){\n  tau = taus[i] # The treatment effect\n  var = .25/(N/2) + .25/(N/2) # This is a \"worst-case\" variance (in actuality, it's impossible to have a variance of .25 if there is a non-zero treatment effect)\n  z_thresh &lt;- abs(qnorm(alpha/2))# Our z-thresholds for the null hypothesis test (~1.96 for alpha = .05)\n  \n  # Generate a bunch of treatment effects (draws from the true sampling distribution)\n  sim_t_stats &lt;- rnorm(NSim, mean=tau/sqrt(var), sd = 1)\n  \n  # Probability of rejection using monte-carlo simulation.\n  power[i] &lt;- mean(abs(sim_t_stats) &gt; z_thresh)\n  \n}\n\n\npower_results &lt;- data.frame(tau = taus, power = power)\n\npower_results %&gt;% ggplot(aes(y=power, x=taus)) + geom_line() + geom_hline(yintercept = .05, lty=3) + xlab(\"Average treatment effect (percentage points)\") + ylab(\"Power\") + theme_bw()"
   },
   {
     "objectID": "syllabus.html",
@@ -130,7 +130,7 @@
     "href": "slides/week6/week6_regression_and_weighting.html#fully-saturated-model",
     "title": "Week 6: Regression and Weighting",
     "section": "Fully saturated model",
-    "text": "Fully saturated model\n\nConsider a model with two binary covariates \\(X_{i1}\\) and \\(X_{i2}\\).\nFour possible unique values:\n\n\\(E[Y_i | X_{1i} = 0, X_{2i} = 0] = \\alpha\\)\n\\(E[Y_i | X_{1i} = 1, X_{2i} = 0] = \\alpha + \\beta\\)\n\\(E[Y_i | X_{1i} = 0, X_{2i} = 1] = \\alpha + \\gamma\\)\n\\(E[Y_i | X_{1i} = 1, X_{2i} = 1] = \\alpha + \\beta + \\gamma + \\delta\\)\n\nWith the way we’ve defined these parameters, the CEF can be written as:\n\\[E[Y_i | X_{i1}, X_{i2}] = \\alpha + \\beta X_{i1} + \\gamma X_{2i} + \\delta X_{1i} X_{2i}\\]\nIt’s linear by construction! Each level of \\(E[Y_i | X_{1i}, X_{2i}]\\) is estimated separately by taking the mean."
+    "text": "Fully saturated model\n\nConsider a model with two binary covariates \\(X_{i1}\\) and \\(X_{i2}\\).\nFour possible unique values:\n\n\\(\\mathbb{E}[Y_i | X_{1i} = 0, X_{2i} = 0] = \\alpha\\)\n\\(\\mathbb{E}[Y_i | X_{1i} = 1, X_{2i} = 0] = \\alpha + \\beta\\)\n\\(\\mathbb{E}[Y_i | X_{1i} = 0, X_{2i} = 1] = \\alpha + \\gamma\\)\n\\(\\mathbb{E}[Y_i | X_{1i} = 1, X_{2i} = 1] = \\alpha + \\beta + \\gamma + \\delta\\)\n\nWith the way we’ve defined these parameters, the CEF can be written as:\n\\[\\mathbb{E}[Y_i | X_{i1}, X_{i2}] = \\alpha + \\beta X_{i1} + \\gamma X_{2i} + \\delta X_{1i} X_{2i}\\]\nIt’s linear by construction! Each level of \\(\\mathbb{E}[Y_i | X_{1i}, X_{2i}]\\) is estimated separately by taking the mean."
   },
   {
     "objectID": "slides/week6/week6_regression_and_weighting.html#classical-regression-1",
@@ -158,14 +158,14 @@
     "href": "slides/week6/week6_regression_and_weighting.html#classical-regression-4",
     "title": "Week 6: Regression and Weighting",
     "section": "Classical regression",
-    "text": "Classical regression\n\nAssumption 4 - Spherical errors\n\\[Var(\\epsilon | \\mathbf{X}) = \\begin{bmatrix}\n\\sigma^2 & 0 & \\cdots & 0\\\\\n0 & \\sigma^2 & \\cdots & 0\\\\\n\\vdots & \\vdots & \\ddots & \\vdots \\\\\n0 & 0 & \\cdots & \\sigma^2\n\\end{bmatrix} =  \\sigma^2 \\mathbf{I}\\]\nBenefits\n\nSimple, unbiased estimator for \\(Var(\\hat{\\beta})\\) - classical OLS standard errors (what you get in lm())\nCompletes Gauss-Markov assumptions \\(\\leadsto\\) OLS is BLUE (Best Linear Unbiased Estimator)\n\nDrawbacks\n\nBasically never is true"
+    "text": "Classical regression\n\nAssumption 4 - Spherical errors\n\\[Var(\\epsilon | \\mathbf{X}) = \\begin{bmatrix}\n\\sigma^2 & 0 & \\cdots & 0\\\\\n0 & \\sigma^2 & \\cdots & 0\\\\\n\\vdots & \\vdots & \\ddots & \\vdots \\\\\n0 & 0 & \\cdots & \\sigma^2\n\\end{bmatrix} =  \\sigma^2 \\mathbf{I}\\]\nBenefits\n\nSimple, unbiased estimator for \\(Var(\\hat{\\beta})\\) - classical OLS standard errors (what you get in lm())\nCompletes Gauss-Markov assumptions \\(\\leadsto\\) OLS is BLUE (Best Linear Unbiased Estimator)\n\nDrawbacks\n\nBasically never is true (at least in social science settings!)"
   },
   {
     "objectID": "slides/week6/week6_regression_and_weighting.html#classical-regression-5",
     "href": "slides/week6/week6_regression_and_weighting.html#classical-regression-5",
     "title": "Week 6: Regression and Weighting",
     "section": "Classical regression",
-    "text": "Classical regression\n\nUnder spherical errors, the variance formula simplifies\n\\[Var(\\beta) =  (\\mathbf{X}^\\prime\\mathbf{X})^{-1} (\\mathbf{X}^\\prime \\sigma^2\\mathbf{X}) (\\mathbf{X}^\\prime\\mathbf{X})^{-1}\\] \\[Var(\\beta) =  \\sigma^2 (\\mathbf{X}^\\prime\\mathbf{X})^{-1}\\]\nAn unbiased estimator for \\(\\sigma^2\\) is the sample variance of the residuals (mean squared error) adjusted by a degrees of freedom correction\n\\[\\hat{\\sigma^2} = \\frac{1}{N-K} \\sum_{i=1}^N (Y_i - \\hat{Y_i})^2\\]\n\\(K\\) is the number of parameters. We refer to \\(N-K\\) as the “degrees of freedom”"
+    "text": "Classical regression\n\nUnder spherical errors, the variance formula simplifies\n\\[Var(\\hat{\\beta}) =  (\\mathbf{X}^\\prime\\mathbf{X})^{-1} (\\mathbf{X}^\\prime \\sigma^2\\mathbf{X}) (\\mathbf{X}^\\prime\\mathbf{X})^{-1}\\] \\[Var(\\hat{\\beta}) =  \\sigma^2 (\\mathbf{X}^\\prime\\mathbf{X})^{-1}\\]\nAn unbiased estimator for \\(\\sigma^2\\) is the sample variance of the residuals (mean squared error) adjusted by a degrees of freedom correction\n\\[\\hat{\\sigma^2} = \\frac{1}{N-K} \\sum_{i=1}^N (Y_i - \\hat{Y_i})^2\\]\n\\(K\\) is the number of parameters. We refer to \\(N-K\\) as the “degrees of freedom”"
   },
   {
     "objectID": "slides/week6/week6_regression_and_weighting.html#ols-is-blue",
@@ -214,7 +214,7 @@
     "href": "slides/week6/week6_regression_and_weighting.html#regression-review",
     "title": "Week 6: Regression and Weighting",
     "section": "Regression review",
-    "text": "Regression review\n\nWhat do we need for OLS to be consistent for the “best linear approximation” to the CEF?\n\nVery little!\n\nWhat do we need for OLS to be consistent and unbiased for the conditional expectation function?\n\nTruly linear CEF\nGuaranteed if we have a saturated regression\nBut still no assumptions about the outcome distribution!\n\nWhat do we need to do inference on \\(\\hat{\\beta}\\)?\n\nWe almost never assume homoskedasticity because “robust” SE estimators are ubiquitous\nEven some forms of error correlation are permitted (“cluster” robust SEs)\nSample sizes are usually large enough where CLT approximations are good.\nOtherwise, we’ll generally use something like a Fisher randomization test."
+    "text": "Regression review\n\nWhat do we need for OLS to be consistent for the “best linear approximation” to the CEF?\n\nVery little!\n\nWhat do we need for OLS to be consistent and unbiased for the conditional expectation function?\n\nTruly linear CEF\nGuaranteed if we have a saturated regression\nBut still no assumptions about the outcome distribution!\n\nWhat do we need to do inference:\n\nWe almost never assume homoskedasticity because “robust” SE estimators are ubiquitous\nEven some forms of error correlation are permitted (“cluster” robust SEs)\nSample sizes are usually large enough where CLT approximations are good.\nOtherwise, we’ll generally use something like a Fisher randomization test."
   },
   {
     "objectID": "slides/week6/week6_regression_and_weighting.html#regression-imputation-in-practice",
@@ -263,7 +263,7 @@
     "href": "slides/week6/week6_regression_and_weighting.html#regression-weighting",
     "title": "Week 6: Regression and Weighting",
     "section": "Regression weighting",
-    "text": "Regression weighting\n\nSuppose the potential outcomes can be written as\n\\[Y_i(d) = Y_i(0) + \\tau_i \\times d\\]\nThe ATE is \\(E[\\tau_i] = \\tau\\)\nSuppose we then fit the typical linear regression model that you see in many research papers\n\\[Y_i = \\alpha + \\tau_{\\text{R}} D_i + X_i^{\\prime}\\beta + \\epsilon_i\\]\nWill our OLS estimate of \\(\\hat{\\tau_{\\text{R}}}\\) identify \\(E[\\tau_i]\\)?\n\nNo!"
+    "text": "Regression weighting\n\nSuppose the potential outcomes can be written as\n\\[Y_i(d) = Y_i(0) + \\tau_i \\times d\\]\nThe ATE is \\(\\mathbb{E}[\\tau_i] = \\tau\\)\nSuppose we then fit the typical linear regression model that you see in many research papers\n\\[Y_i = \\alpha + \\tau_{\\text{R}} D_i + X_i^{\\prime}\\beta + \\epsilon_i\\]\nWill our OLS estimate of \\(\\hat{\\tau_{\\text{R}}}\\) be consistent for \\(\\mathbb{E}[\\tau_i]\\)?\n\nNo!"
   },
   {
     "objectID": "slides/week6/week6_regression_and_weighting.html#frisch-waugh-lovell",
@@ -277,14 +277,14 @@
     "href": "slides/week6/week6_regression_and_weighting.html#frisch-waugh-lovell-1",
     "title": "Week 6: Regression and Weighting",
     "section": "Frisch-Waugh-Lovell",
-    "text": "Frisch-Waugh-Lovell\n\nNow what happens with a multiple linear regression - how do we write \\(\\beta_1\\) when the model is\n\\[Y_i = \\beta_0 + \\beta_1 X_{i1} + \\beta_2 X_{i2} + \\epsilon_{i}\\]\nIt turns out that \\(\\beta_1\\) can be written in terms of a bivariate regression\n\\[\\hat{\\beta_1} = \\frac{\\widehat{Cov}(Y_i^{{\\perp X_{i2}}}, X_{i1}^{{\\perp X_{i2}}})}{\\widehat{Var}(X_{i1}^{{\\perp X_{i2}}})} \\to \\frac{Cov(Y_i^{{\\perp X_{i2}}}, X_{i1}^{{\\perp X_{i2}}})}{Var(X_{i1}^{{\\perp X_{i2}}})}\\]\n\\(Y_i^{{\\perp X_{i2}}}\\) is the residual from a regression of \\(Y_i\\) on all of the other covariates (here, just \\(X_{i2}\\))\n\\(X_{i1}^{{\\perp X_{i2}}}\\) is the residual from a regression of \\(X_{i1}\\) on all of the other covariates (\\(X_{i2}\\) here)"
+    "text": "Frisch-Waugh-Lovell\n\nNow what happens with a multiple linear regression - how do we write \\(\\beta_1\\) when the model is\n\\[Y_i = \\beta_0 + \\beta_1 X_{i1} + \\beta_2 X_{i2} + \\epsilon_{i}\\]\nIt turns out that \\(\\beta_1\\) can also be written in terms of a bivariate regression involving residuals from auxiliary regressions\n\\[\\hat{\\beta_1} = \\frac{\\widehat{Cov}(Y_i^{{\\perp X_{i2}}}, X_{i1}^{{\\perp X_{i2}}})}{\\widehat{Var}(X_{i1}^{{\\perp X_{i2}}})} \\to \\frac{Cov(Y_i^{{\\perp X_{i2}}}, X_{i1}^{{\\perp X_{i2}}})}{Var(X_{i1}^{{\\perp X_{i2}}})}\\]\n\\(Y_i^{{\\perp X_{i2}}}\\) is the residual from a regression of \\(Y_i\\) on all of the other covariates (here, just \\(X_{i2}\\))\n\\(X_{i1}^{{\\perp X_{i2}}}\\) is the residual from a regression of \\(X_{i1}\\) on all of the other covariates (\\(X_{i2}\\) here)"
   },
   {
     "objectID": "slides/week6/week6_regression_and_weighting.html#regression-weighting-1",
     "href": "slides/week6/week6_regression_and_weighting.html#regression-weighting-1",
     "title": "Week 6: Regression and Weighting",
     "section": "Regression weighting",
-    "text": "Regression weighting\n\nUnder the Frisch-Waugh-Lovell theorem. we can write an expression for the treatment coefficient as\n\\[\\tau_\\text{R} = \\frac{Cov(Y_i, \\tilde{D_i})}{Var(\\tilde{D_i})}\\]\n\\(\\tilde{D_i}\\) is the residual from a regression of \\(D_i\\) on all of the other covariates.\nIn this case, that’s just:\n\\[\\tau_\\text{R} = \\frac{Cov(Y_i, D_i - \\mathbb{E}[D_i|X_i])}{Var(D_i - \\mathbb{E}[D_i|X_i])} \\]"
+    "text": "Regression weighting\n\nUsing the Frisch-Waugh-Lovell theorem. we can write an expression for the treatment coefficient as\n\\[\\tau_\\text{R} = \\frac{Cov(Y_i, D_i^{\\perp X_i}}{Var(D_i^{\\perp X_i})}\\]\n$ D_i^{X_i}$ is the residual from a regression of \\(D_i\\) on all of the other covariates \\(X_i\\)\nIn this case, that’s just:\n\\[\\tau_\\text{R} = \\frac{Cov(Y_i, D_i - \\mathbb{E}[D_i|X_i])}{Var(D_i - \\mathbb{E}[D_i|X_i])} \\]"
   },
   {
     "objectID": "slides/week6/week6_regression_and_weighting.html#regression-weighting-2",
@@ -320,6 +320,195 @@
     "title": "Week 6: Regression and Weighting",
     "section": "Propensity scores",
     "text": "Propensity scores"
+  },
+  {
+    "objectID": "slides/week6/week6_regression_and_weighting.html#propensity-scores-1",
+    "href": "slides/week6/week6_regression_and_weighting.html#propensity-scores-1",
+    "title": "Week 6: Regression and Weighting",
+    "section": "Propensity scores",
+    "text": "Propensity scores\n\nAs an alternative to modelling the outcome, can we instead adjust for treatment?\n\nIs there a single quantity scalar that we can adjust for regardless of how high-dimensional \\(\\mathbf{X}\\) is?\n\nYes: The propensity score\n\\[e(X_i) = P(D_i = 1 | X_i)\\]\nRosenbaum and Rubin (1983) show that conditional on the propensity score, the treatment is independent of the covariates.\n\\[D_i {\\perp \\! \\! \\! \\perp} X_i | e(X_i)\\]\nTherefore, conditioning on the propensity score suffices to adjust for confounding due to \\(X\\)\n\\[\\{Y_i(1), Y_i(0)\\} {\\perp \\! \\! \\! \\perp} D_i | e(X_i)\\]\nThe propensity score is a type of balancing score in that conditioning on it breaks the relationship between the covariates and treatment."
+  },
+  {
+    "objectID": "slides/week6/week6_regression_and_weighting.html#weighting-estimators",
+    "href": "slides/week6/week6_regression_and_weighting.html#weighting-estimators",
+    "title": "Week 6: Regression and Weighting",
+    "section": "Weighting estimators",
+    "text": "Weighting estimators\n\nOne way of adjusting for the propensity score is to use it as a weight on each observation.\nWe weight each unit by the inverse propensity of it receiving its particular treatment\n\nTreated units receive a weight \\(\\frac{1}{e(X_i)}\\)\nControl units receive a weight \\(\\frac{1}{1 - e(X_i)}\\)\n\nThis yields the Horvitz-Thompson estimator for the ATE (with known weights)\n\\[\\hat{\\tau} = \\frac{1}{n}\\sum_{i=1}^n\\ \\frac{D_i Y_i}{e(X_i)}  - \\frac{(1-D_i)Y_i}{1 - e(X_i)}\\]\nIntuition: Weighting constructs a “pseudo-population” where the link between treatment and the observed covariates is broken\n\nWhich treated units get more weight? Those whose treatment status is counter to what we would predict from the propensity score.\nDownweight the “overrepresented” and upweight the “underrepresented”"
+  },
+  {
+    "objectID": "slides/week6/week6_regression_and_weighting.html#why-weighting-works",
+    "href": "slides/week6/week6_regression_and_weighting.html#why-weighting-works",
+    "title": "Week 6: Regression and Weighting",
+    "section": "Why weighting works",
+    "text": "Why weighting works\n\nBy iterated expectations\n\\[E\\left[\\frac{D_i Y_i}{e(X_i)}\\right] = E\\bigg[E\\left[\\frac{D_i Y_i}{e(X_i)} \\bigg| X_i \\right]\\bigg]\\]\nConsistency\n\\[E\\left[\\frac{D_i Y_i}{e(X_i)}\\right] = E\\bigg[\\frac{E[D_i Y_i(1) | X_i]}{e(X_i)} \\bigg]\\]\nConditional ignorability\n\\[E\\left[\\frac{D_i Y_i}{e(X_i)}\\right] = E\\bigg[\\frac{E[D_i |X_i] E[Y_i(1) | X_i]}{e(X_i)} \\bigg]\\]"
+  },
+  {
+    "objectID": "slides/week6/week6_regression_and_weighting.html#why-weighting-works-1",
+    "href": "slides/week6/week6_regression_and_weighting.html#why-weighting-works-1",
+    "title": "Week 6: Regression and Weighting",
+    "section": "Why weighting works",
+    "text": "Why weighting works\n\nDefinition of the propensity score\n\\[E\\left[\\frac{D_i Y_i}{e(X_i)}\\right] = E\\bigg[\\frac{e(X_i) E[Y_i(1) | X_i]}{e(X_i)} \\bigg]\\]\nIterated expectations\n\\[E\\left[\\frac{D_i Y_i}{e(X_i)}\\right] = E[Y_i(1)]\\]"
+  },
+  {
+    "objectID": "slides/week6/week6_regression_and_weighting.html#normalizing-the-propensity-score",
+    "href": "slides/week6/week6_regression_and_weighting.html#normalizing-the-propensity-score",
+    "title": "Week 6: Regression and Weighting",
+    "section": "Normalizing the propensity score",
+    "text": "Normalizing the propensity score\n\nHorvitz-Thompson behaves especially poorly when propensity scores are close to \\(0\\) and \\(1\\)\n\\[\\hat{\\tau}_{ht} = \\frac{1}{n}\\sum_{i=1}^n\\ \\frac{D_i Y_i}{\\widehat{e(X_i)}}  - \\frac{(1-D_i)Y_i}{1 - \\widehat{e(X_i)}}\\]\nCommon practice is to normalize the weights within the treated and control groups to sum to \\(1\\), which gives us the Hajek estimator\n\\[\\hat{\\tau}_{\\text{hajek}} = \\frac{1}{\\sum_{i=1}^n \\frac{D_i}{\\widehat{e(X_i)}}} \\sum_{i=1}^n\\ \\frac{D_i Y_i}{\\widehat{e(X_i)}} - \\frac{1}{\\sum_{i=1}^n \\frac{1-D_i}{\\widehat{1-e(X_i)}}} \\sum_{i=1}^n\\ \\frac{(1-D_i) Y_i}{1-\\widehat{e(X_i)}}\\]\nWeighted least squares will do this if we regress outcome on a binary indicator for treatment and supply the inverse propensity weights."
+  },
+  {
+    "objectID": "slides/week6/week6_regression_and_weighting.html#inference",
+    "href": "slides/week6/week6_regression_and_weighting.html#inference",
+    "title": "Week 6: Regression and Weighting",
+    "section": "Inference",
+    "text": "Inference\n\nWe want to estimate the sampling variance \\(\\text{Var}(\\hat{\\tau})\\) in order to do inference\n\nOne option is to assume the weights are known and use a conventional “robust” SE estimator.\nBut this fails to account for the uncertainty in the estimation of the propensity scores themselves (Reifeis and Hudgens, 2022).\n\nClosed form estimators do exist…but it’s often easier to just use the bootstrap"
+  },
+  {
+    "objectID": "slides/week6/week6_regression_and_weighting.html#bootstrapping",
+    "href": "slides/week6/week6_regression_and_weighting.html#bootstrapping",
+    "title": "Week 6: Regression and Weighting",
+    "section": "Bootstrapping",
+    "text": "Bootstrapping\n\nBootstrapping is a useful tool for learning about the sampling distribution of a parameter when we don’t want to use theory to figure out \\(\\widehat{\\text{Var}(\\hat{\\tau})}\\)\n\nWorks well for estimators that are smooth functionals of the data (don’t change drastically to minor perturbations of the input)\n\nIntuition: What drives uncertainty in \\(\\hat{\\tau}\\) when we’re doing population inference?\n\nIf we took another sample, we would calculate a different value.\nWe can’t go and re-draw a sample from the population again (that’s just a hypothetical).\nBut our sample is a pretty good approximation for the population distribution…and we can resample from that.\n\nBootstrap procedures approximate the distribution of \\(\\hat{\\tau}\\) under repeated draws from the population by taking repeated draws from the empirical distribution of the data in the sample.\n\nUnder i.i.d. observations, we’ll often use the “nonparametric” bootstrap in which we resample complete observations with replacement"
+  },
+  {
+    "objectID": "slides/week6/week6_regression_and_weighting.html#the-bootstrap",
+    "href": "slides/week6/week6_regression_and_weighting.html#the-bootstrap",
+    "title": "Week 6: Regression and Weighting",
+    "section": "The bootstrap",
+    "text": "The bootstrap\n\nThe bootstrap procedure for IPTW:\n\nDraw a sample of the data by resampling observations (the rows of the data \\(\\{Y_i, D_i, X_i\\}\\)) with replacement\nUsing the bootstrapped sample, estimate the propensity scores \\(\\hat{e}(X_i)\\).\nUsing those propensity scores and the bootstrapped sample, compute an estimate of the average treatment effect \\(\\hat{\\tau}\\). Store that estimate\nRepeat for many iterations.\n\nAt the end, we have a bunch of draws that allow us to approximate the sampling distribution of \\(\\hat{\\tau}\\)."
+  },
+  {
+    "objectID": "slides/week6/week6_regression_and_weighting.html#estimating-the-propensity-scores",
+    "href": "slides/week6/week6_regression_and_weighting.html#estimating-the-propensity-scores",
+    "title": "Week 6: Regression and Weighting",
+    "section": "Estimating the propensity scores",
+    "text": "Estimating the propensity scores\n\nWith high-dimensional \\(X\\), we’ll often need a parametric model for the propensity score\n\nWe actually need to predict an outcome - but OLS might give us fitted values above 1 or below zero!\n\nWe don’t want to assume that the CEF is linear.\n\\[\\mathbb{E}[Y_i| X_i] = X_i^\\prime\\beta\\]\nInstead, we might assume that a function of the CEF is linear\n\\[g(\\mathbb{E}[Y_i | X_i])  = X_i^\\prime\\beta\\]\nThis is where generalized linear models come in."
+  },
+  {
+    "objectID": "slides/week6/week6_regression_and_weighting.html#generalized-linear-models",
+    "href": "slides/week6/week6_regression_and_weighting.html#generalized-linear-models",
+    "title": "Week 6: Regression and Weighting",
+    "section": "Generalized Linear Models",
+    "text": "Generalized Linear Models\n\nGeneralized linear models (GLMs) have three components:\n\nA parametric distribution on \\(Y_i|X_i\\) (“stochastic component”)\nA linear predictor: \\(\\eta_i = X_i^{\\prime}\\beta = \\beta_0 + \\beta_1X_{i1} + \\beta_2X_{i2} + \\dotsc \\beta_kX_{ik}\\) (“systematic component”)\nA link function \\(g()\\) applied to the CEF \\(E[Y_i|X_i]\\) that yields the linear predictor\n\\[g(E[Y_i | X_i]) = \\eta_i\\]\n\n\nAlternatively, we can write the CEF in terms of the “inverse-link” \\(g^{-1}()\\) applied to the linear predictor\n\\[E[Y_i | X_i] = g^{-1}(\\eta_i)\\]\n\nConsistent estimation of the parameters via maximum likelihood methods (we’ll cover this in PS 818)."
+  },
+  {
+    "objectID": "slides/week6/week6_regression_and_weighting.html#logistic-regression",
+    "href": "slides/week6/week6_regression_and_weighting.html#logistic-regression",
+    "title": "Week 6: Regression and Weighting",
+    "section": "Logistic regression",
+    "text": "Logistic regression\n\nThe “logit” or “logistic” GLM models the log-odds of a binary outcome as a function of the linear predictor \\(X_i^{\\prime}\\beta\\)\n\\[E[Y_i | X_i] = Pr(Y_i = 1 | X_i) = \\pi_i\\]\n\\[\\log\\bigg(\\frac{\\pi_i}{1-\\pi_i}\\bigg) = X_i^{\\prime}\\beta\\]\nAlternatively, this is written in terms of the “inverse-link” function (the logistic function) that relates \\(\\pi_i\\) to \\(g^{-1}(X_i^{\\prime}\\beta)\\)\n\\[\\pi_i = \\frac{\\exp(X_i^{\\prime}\\beta)}{1 + \\exp(X_i^{\\prime}\\beta)} = \\frac{1}{1 + \\exp(-X_i^{\\prime}\\beta)}\\]"
+  },
+  {
+    "objectID": "slides/week6/week6_regression_and_weighting.html#the-logistic-function",
+    "href": "slides/week6/week6_regression_and_weighting.html#the-logistic-function",
+    "title": "Week 6: Regression and Weighting",
+    "section": "The logistic function",
+    "text": "The logistic function\n\nThe logistic function maps inputs on \\(\\mathbb{R}\\) to \\((0, 1)\\)"
+  },
+  {
+    "objectID": "slides/week6/week6_regression_and_weighting.html#illustration-keele-et.-al.-2017",
+    "href": "slides/week6/week6_regression_and_weighting.html#illustration-keele-et.-al.-2017",
+    "title": "Week 6: Regression and Weighting",
+    "section": "Illustration: Keele et. al. (2017)",
+    "text": "Illustration: Keele et. al. (2017)\n\nLet’s go back to our earlier example on the effect of Black mayoral candidates on Black turnout\n\nLet’s work here with the subset of elections with Black population shares between \\(.1\\) and \\(.4\\) (otherwise we saw we had terrible overlap!)\nIncidentally, we run into some modelling issues with year FEs (essentially only 1 obs in some off-cycles, so let’s just fit a linear time trend).\n\nFirst, what’s the regression-adjusted estimate\n\n\n# Subset\nturn_sub &lt;- turn %&gt;% filter(blackpop_pct1990 &gt; .1&blackpop_pct1990&lt;.4)\n\n# Regression adjustment\nregression &lt;- lm_lin(black_turnout ~ black,\n       covariates = ~  pop90 + blackpop_pct1990 +\n                    college_pct + hs_pct + unemp + income + poverty + home + \n                    year, data = turn_sub)\n\ntidy(regression) %&gt;% filter(term == \"black\")\n\n   term estimate std.error statistic     p.value conf.low conf.high  df\n1 black 4.219744  1.297229  3.252891 0.001208061  1.67196  6.767528 586\n        outcome\n1 black_turnout"
+  },
+  {
+    "objectID": "slides/week6/week6_regression_and_weighting.html#illustration-keele-et.-al.-2017-1",
+    "href": "slides/week6/week6_regression_and_weighting.html#illustration-keele-et.-al.-2017-1",
+    "title": "Week 6: Regression and Weighting",
+    "section": "Illustration: Keele et. al. (2017)",
+    "text": "Illustration: Keele et. al. (2017)\n\nNow let’s fit the propensity score model\n\n\n# Fit a propensity score model - we'll use a logit\npscore_model &lt;- glm(black ~ pop90 + blackpop_pct1990 +\n                    college_pct + hs_pct + unemp + income + poverty + home + \n                    year, data=turn_sub, family= binomial(link='logit'))\n\n# Predict the propensity score\nturn_sub$e &lt;- predict(pscore_model, type=\"response\")\n\n# Generate the weights\nturn_sub$iptw_weight &lt;- 1/turn_sub$e\nturn_sub$iptw_weight[turn_sub$black == 0] &lt;- 1/(1-turn_sub$e[turn_sub$black == 0])"
+  },
+  {
+    "objectID": "slides/week6/week6_regression_and_weighting.html#illustration-keele-et.-al.-2017-2",
+    "href": "slides/week6/week6_regression_and_weighting.html#illustration-keele-et.-al.-2017-2",
+    "title": "Week 6: Regression and Weighting",
+    "section": "Illustration: Keele et. al. (2017)",
+    "text": "Illustration: Keele et. al. (2017)\n\nHistogram of the weights."
+  },
+  {
+    "objectID": "slides/week6/week6_regression_and_weighting.html#illustration-keele-et.-al.-2017-3",
+    "href": "slides/week6/week6_regression_and_weighting.html#illustration-keele-et.-al.-2017-3",
+    "title": "Week 6: Regression and Weighting",
+    "section": "Illustration: Keele et. al. (2017)",
+    "text": "Illustration: Keele et. al. (2017)\n\nDid we improve balance?"
+  },
+  {
+    "objectID": "slides/week6/week6_regression_and_weighting.html#illustration-keele-et.-al.-2017-4",
+    "href": "slides/week6/week6_regression_and_weighting.html#illustration-keele-et.-al.-2017-4",
+    "title": "Week 6: Regression and Weighting",
+    "section": "Illustration: Keele et. al. (2017)",
+    "text": "Illustration: Keele et. al. (2017)\n\nCalculate IPTW estimate of the ATE\n\n\n# Weighted regression is equivalent to the Hajek estimator\niptw_model &lt;- lm_robust(black_turnout ~ black, data=turn_sub, weights=iptw_weight)\ncoef(iptw_model)[2] # Ignore the SE\n\n   black \n4.270128 \n\n# Weighted regression gives the Hajek (normalized weights) estimator\niptw_est &lt;- weighted.mean(turn_sub$black_turnout[turn_sub$black == 1], turn_sub$iptw_weight[turn_sub$black == 1]) -\n  weighted.mean(turn_sub$black_turnout[turn_sub$black == 0], turn_sub$iptw_weight[turn_sub$black == 0])\niptw_est\n\n[1] 4.270128"
+  },
+  {
+    "objectID": "slides/week6/week6_regression_and_weighting.html#illustration-keele-et.-al.-2017-5",
+    "href": "slides/week6/week6_regression_and_weighting.html#illustration-keele-et.-al.-2017-5",
+    "title": "Week 6: Regression and Weighting",
+    "section": "Illustration: Keele et. al. (2017)",
+    "text": "Illustration: Keele et. al. (2017)\n\nBootstrap\n\n\nset.seed(53706)\nnIter &lt;- 1000\nboot_iptw &lt;- rep(NA,nIter)\nfor (i in 1:nIter){\n  turn_boot &lt;- turn_sub[sample(1:nrow(turn_sub), size = nrow(turn_sub), replace=T),]\n   # Fit a propensity score model\n  pscore_model_boot &lt;- glm(black ~ pop90 + blackpop_pct1990 + \n                      unemp + college_pct + hs_pct + unemp + income + poverty + home + \n                      year, data=turn_boot, family= binomial(link='logit'))\n  \n  # Predict the propensity score\n  turn_boot$e &lt;- predict(pscore_model_boot, type=\"response\")\n  \n  # Generate the weights\n  turn_boot$iptw_weight &lt;- 1/turn_boot$e\n  turn_boot$iptw_weight[turn_boot$black == 0] &lt;- 1/(1-turn_boot$e[turn_boot$black == 0])\n  \n  # Fit a model\n  iptw_model_boot &lt;- lm(black_turnout ~ black, data=turn_boot, weights=iptw_weight)\n  boot_iptw[i] &lt;- coef(iptw_model_boot)[2]\n}"
+  },
+  {
+    "objectID": "slides/week6/week6_regression_and_weighting.html#illustration",
+    "href": "slides/week6/week6_regression_and_weighting.html#illustration",
+    "title": "Week 6: Regression and Weighting",
+    "section": "Illustration:",
+    "text": "Illustration:\n\nBootstrap SE and percentile intervals\n\n\n# Estimated standard error\nboot_se &lt;- sd(boot_iptw)\nboot_se\n\n[1] 1.460552\n\n# Asymptotic CI\nc(iptw_est - qnorm(.975)*boot_se, iptw_est + qnorm(.975)*boot_se)\n\n[1] 1.407497 7.132758\n\n# Percentile interval\nquantile(boot_iptw, c(.025, .975))\n\n    2.5%    97.5% \n1.294929 6.957699"
+  },
+  {
+    "objectID": "slides/week6/week6_regression_and_weighting.html#augmented-iptw",
+    "href": "slides/week6/week6_regression_and_weighting.html#augmented-iptw",
+    "title": "Week 6: Regression and Weighting",
+    "section": "Augmented IPTW",
+    "text": "Augmented IPTW\n\nIn both of these approaches, we need to get a model correct in order for our estimator to be consistent for the ATE\nIn outcome regression, we need to get \\(m_d(X_i) = \\mathbb{E}[Y_i | D_i = d, X_i]\\) correct\n\\[\\hat{\\tau}_{\\text{reg}} = \\frac{1}{n}\\sum_{i=1}^n \\bigg\\{\\hat{m}_1(X_i) - \\hat{m}_0(X_i) \\bigg\\}\\]\nIn inverse-propensity of treatment weighting, we need to get \\(e(X_i) = P(D_i = 1 | X_i)\\) correct\n\\[\\hat{\\tau}_{\\text{ht}} = \\frac{1}{n}\\sum_{i=1}^n\\ \\frac{D_i Y_i}{\\hat{e}(X_i)}  - \\frac{(1-D_i)Y_i}{1 - \\hat{e}(X_i)}\\]\nCould we construct an estimator that’s still consistent even if we get one of these wrong?"
+  },
+  {
+    "objectID": "slides/week6/week6_regression_and_weighting.html#augmented-iptw-1",
+    "href": "slides/week6/week6_regression_and_weighting.html#augmented-iptw-1",
+    "title": "Week 6: Regression and Weighting",
+    "section": "Augmented IPTW",
+    "text": "Augmented IPTW\n\nThe Augmented IPTW estimator combines the regression estimator with an IPW estimator that replaces \\(Y_i\\) with the residuals \\(Y_i - \\hat{m}_d(X_i)\\)\n\\[\\hat{\\tau}_{\\text{aipw-ht}} =  \\frac{1}{n}\\sum_{i=1}^n\\bigg\\{\\bigg(\\hat{m}_1(X_i) - \\hat{m}_0(X_i)\\bigg) + \\bigg(\\frac{D_i (Y_i - \\hat{m}_1(X_i))}{\\hat{e}(X_i)}  - \\frac{(1-D_i)(Y_i - \\hat{m}_0(X_i))}{1 - \\hat{e}(X_i)}\\bigg)\\bigg\\}\\]\nThis is doubly-robust in the sense that it’s consistent for the ATE if either\n\nThe outcome models \\(\\hat{m}_1(X_i)\\) and \\(\\hat{m}_0(X_i)\\) are consistent for the true outcome models\nThe propensity score model \\(\\hat{e}(X_i)\\) is consistent for the true propensity score\n\nAs with IPW, we’ll usually use the Hajek estimator for the IPW part with the weights normalized to 1 within each treatment condition to avoid instability with propensity scores near 0 or 1."
+  },
+  {
+    "objectID": "slides/week6/week6_regression_and_weighting.html#augmented-iptw-2",
+    "href": "slides/week6/week6_regression_and_weighting.html#augmented-iptw-2",
+    "title": "Week 6: Regression and Weighting",
+    "section": "Augmented IPTW",
+    "text": "Augmented IPTW\n\nConsider this form of the AIPW estimator. What happens if the outcome model is correct?\n\nThe IPW part is mean zero!\n\n\\[\\hat{\\tau}_{\\text{aipw-ht}} =  \\frac{1}{n}\\sum_{i=1}^n\\bigg\\{\\bigg(\\hat{m}_1(X_i) - \\hat{m}_0(X_i)\\bigg) + \\bigg(\\frac{D_i (Y_i - \\hat{m}_1(X_i))}{\\hat{e}(X_i)}  - \\frac{(1-D_i)(Y_i - \\hat{m}_0(X_i))}{1 - \\hat{e}(X_i)}\\bigg)\\bigg\\}\\]\nAlternatively, we can rearrange the terms to write the estimator in a different form.\n\nWhat happens if the treatment model is correct? The regression part is mean zero!\n\n\\[\\hat{\\tau}_{\\text{aipw-ht}} =  \\frac{1}{n}\\sum_{i=1}^n\\bigg\\{\\bigg(\\frac{D_i Y_i}{\\hat{e}(X_i)}  - \\frac{(1-D_i)Y_i}{1 - \\hat{e}(X_i)}\\bigg)+ \\bigg(\\hat{m}_1(X_i)\\bigg(1 - \\frac{D_i}{\\hat{e}(X_i)}\\bigg)  - \\hat{m}_0(X_i)\\bigg(1 - \\frac{1 -D_i}{1 -\\hat{e}(X_i)}\\bigg)\\bigg\\}\\]"
+  },
+  {
+    "objectID": "slides/week6/week6_regression_and_weighting.html#augmented-iptw-3",
+    "href": "slides/week6/week6_regression_and_weighting.html#augmented-iptw-3",
+    "title": "Week 6: Regression and Weighting",
+    "section": "Augmented IPTW",
+    "text": "Augmented IPTW\n\nLet’s implement this!\n\n\n# Outcome models\nturn_sub$mu_1 &lt;- predict(regression, newdata = turn_sub %&gt;% mutate(black = 1))\nturn_sub$mu_0 &lt;- predict(regression, newdata = turn_sub %&gt;% mutate(black = 0))\n\n# AIPW estimator\naipw &lt;- mean(turn_sub$mu_1 - turn_sub$mu_0) + # Regression (we could just pull this from the Lin estimate)\n  (weighted.mean(turn_sub$black_turnout[turn_sub$black == 1] - turn_sub$mu_1[turn_sub$black == 1], turn_sub$iptw_weight[turn_sub$black == 1]) - # Hajek IPW\n  weighted.mean(turn_sub$black_turnout[turn_sub$black == 0] - turn_sub$mu_0[turn_sub$black == 0], turn_sub$iptw_weight[turn_sub$black == 0]))\n\naipw\n\n[1] 3.81323"
+  },
+  {
+    "objectID": "slides/week6/week6_regression_and_weighting.html#augmented-iptw-4",
+    "href": "slides/week6/week6_regression_and_weighting.html#augmented-iptw-4",
+    "title": "Week 6: Regression and Weighting",
+    "section": "Augmented IPTW",
+    "text": "Augmented IPTW\n\nBootstrap\n\n\nset.seed(53706)\nnIter &lt;- 1000\nboot_aipw &lt;- rep(NA,nIter)\nfor (i in 1:nIter){\n  turn_boot &lt;- turn_sub[sample(1:nrow(turn_sub), size = nrow(turn_sub), replace=T),]\n   # Fit a propensity score model\n  pscore_model_boot &lt;- glm(black ~ pop90 + blackpop_pct1990 + \n                      unemp + college_pct + hs_pct + income + poverty + home + \n                      year, data=turn_boot, family= binomial(link='logit'))\n  \n  # Predict the propensity score\n  turn_boot$e &lt;- predict(pscore_model_boot, type=\"response\")\n  \n  # Generate the weights\n  turn_boot$iptw_weight &lt;- 1/turn_boot$e\n  turn_boot$iptw_weight[turn_boot$black == 0] &lt;- 1/(1-turn_boot$e[turn_boot$black == 0])\n  \n  # Fit a regression model\n  regression_boot &lt;- lm_lin(black_turnout ~ black,\n       covariates = ~  pop90 + blackpop_pct1990 +\n                    college_pct + hs_pct + unemp + income + poverty + home + \n                    year, data = turn_boot)\n  \n  turn_boot$mu_1 &lt;- predict(regression_boot, newdata = turn_boot %&gt;% mutate(black = 1))\n  turn_boot$mu_0 &lt;- predict(regression_boot, newdata = turn_boot %&gt;% mutate(black = 0))\n\n  # AIPW\n  boot_aipw[i] &lt;-  mean(turn_boot$mu_1 - turn_boot$mu_0) + # Regression (we could just pull this from the Lin estimate)\n  (weighted.mean(turn_boot$black_turnout[turn_boot$black == 1] - turn_boot$mu_1[turn_boot$black == 1], turn_boot$iptw_weight[turn_boot$black == 1]) - # Hajek IPW\n  weighted.mean(turn_boot$black_turnout[turn_boot$black == 0] - turn_boot$mu_0[turn_boot$black == 0], turn_boot$iptw_weight[turn_boot$black == 0]))\n}"
+  },
+  {
+    "objectID": "slides/week6/week6_regression_and_weighting.html#illustration-1",
+    "href": "slides/week6/week6_regression_and_weighting.html#illustration-1",
+    "title": "Week 6: Regression and Weighting",
+    "section": "Illustration:",
+    "text": "Illustration:\n\nBootstrap SE and percentile intervals\n\n\n# Estimated standard error\nboot_se_aipw &lt;- sd(boot_aipw)\nboot_se_aipw\n\n[1] 1.431131\n\n# Asymptotic CI\nc(aipw - qnorm(.975)*boot_se_aipw, aipw + qnorm(.975)*boot_se_aipw)\n\n[1] 1.008264 6.618196\n\n# Percentile interval\nquantile(boot_aipw, c(.025, .975))\n\n    2.5%    97.5% \n1.046829 6.508168"
+  },
+  {
+    "objectID": "slides/week6/week6_regression_and_weighting.html#summary",
+    "href": "slides/week6/week6_regression_and_weighting.html#summary",
+    "title": "Week 6: Regression and Weighting",
+    "section": "Summary",
+    "text": "Summary\n\nOutcome regression and inverse propensity weighting are two different strategies for adjusting for confounders \\(X_i\\)\n\nOne approach models the mean of \\(Y\\) given \\(X_i\\)\nThe other models the probability of treatment given \\(X_i\\)\n\nUnder correct model specification, both approaches are consistent for the ATE\n\nCareful with the high variance/instability of IPW - especially with propensity scores close to \\(1\\) or \\(0\\).\n\nWe can get an added double-robustness property by combining the two - Augmented Inverse Propensity Weighting (AIPW) estimator\n\nConnected to the residuals-on-residuals regression\nYou’ll see it in the context of “double machine learning”"
+  },
+  {
+    "objectID": "slides/week6/week6_regression_and_weighting.html#next-week",
+    "href": "slides/week6/week6_regression_and_weighting.html#next-week",
+    "title": "Week 6: Regression and Weighting",
+    "section": "Next week",
+    "text": "Next week\n\nOne more method for adjusting for covariates - matching\n\nFor every treated unit, find the closest control\n“Pre-processing” or “Pruning” the data\n\nCan think of this as a very basic machine learning method!\n\nNo strong modelling assumptions\n\nBut beware of finite sample biases!\n\nMatching on more than one covariate w/o additional regression adjustment creates problems!"
   },
   {
     "objectID": "slides/week4/week4_experiments_covariate_adjustment.html#where-weve-been",
