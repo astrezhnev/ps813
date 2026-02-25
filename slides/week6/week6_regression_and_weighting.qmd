@@ -182,7 +182,6 @@ turn %>% ggplot(aes(x=blackpop_pct1990, y=black_turnout, colour=as.factor(black)
   $$\mathbb{E}[Y_i(1)] = \mathbb{E}_{X}\bigg[E[Y_i(1)| X_i]\bigg] = \mathbb{E}_{X}\bigg[\mathbb{E}[Y_i| X_i, D_i = 1]\bigg]$$
   $$\mathbb{E}[Y_i(0)] = \mathbb{E}_{X}\bigg[\mathbb{E}[Y_i(0)| X_i]\bigg] = \mathbb{E}_{X}\bigg[\mathbb{E}[Y_i| X_i, D_i = 0]\bigg]$$
 
-
 - So what we need to do to estimate the ATE is:
   - Fit a regression model in the treated group to estimate $\mathbb{E}[Y_i | X_i, D_i = 1]$
   - Fit a regression model in the control group to estimate $\mathbb{E}[Y_i(0) | X_i]$
@@ -219,16 +218,16 @@ turn %>% ggplot(aes(x=blackpop_pct1990, y=black_turnout, colour=as.factor(black)
 
 - Consider a model with two binary covariates $X_{i1}$ and $X_{i2}$.
 - Four possible unique values:
-  - $E[Y_i | X_{1i} = 0, X_{2i} = 0] = \alpha$
-  - $E[Y_i | X_{1i} = 1, X_{2i} = 0] = \alpha + \beta$
-  - $E[Y_i | X_{1i} = 0, X_{2i} = 1] = \alpha + \gamma$
-  - $E[Y_i | X_{1i} = 1, X_{2i} = 1] = \alpha + \beta + \gamma + \delta$
+  - $\mathbb{E}[Y_i | X_{1i} = 0, X_{2i} = 0] = \alpha$
+  - $\mathbb{E}[Y_i | X_{1i} = 1, X_{2i} = 0] = \alpha + \beta$
+  - $\mathbb{E}[Y_i | X_{1i} = 0, X_{2i} = 1] = \alpha + \gamma$
+  - $\mathbb{E}[Y_i | X_{1i} = 1, X_{2i} = 1] = \alpha + \beta + \gamma + \delta$
 
 - With the way we've defined these parameters, the CEF can be written as:
 
-  $$E[Y_i | X_{i1}, X_{i2}] = \alpha + \beta X_{i1} + \gamma X_{2i} + \delta X_{1i} X_{2i}$$
+  $$\mathbb{E}[Y_i | X_{i1}, X_{i2}] = \alpha + \beta X_{i1} + \gamma X_{2i} + \delta X_{1i} X_{2i}$$
 
-- It's linear by construction! Each level of $E[Y_i | X_{1i}, X_{2i}]$ is estimated separately by taking the mean.
+- It's linear by construction! Each level of $\mathbb{E}[Y_i | X_{1i}, X_{2i}]$ is estimated separately by taking the mean.
 
 :::
 
@@ -300,7 +299,7 @@ $$\begin{align*} \mathbb{E}[\hat{\beta} | \mathbf{X}] &= \mathbb{E}\bigg[\beta +
   - Completes Gauss-Markov assumptions $\leadsto$ OLS is BLUE (Best Linear Unbiased Estimator)
   
 - Drawbacks
-  - Basically never is true
+  - Basically never is true (at least in social science settings!)
   
 :::
   
@@ -310,8 +309,8 @@ $$\begin{align*} \mathbb{E}[\hat{\beta} | \mathbf{X}] &= \mathbb{E}\bigg[\beta +
 
 - Under spherical errors, the variance formula simplifies 
 
-  $$Var(\beta) =  (\mathbf{X}^\prime\mathbf{X})^{-1} (\mathbf{X}^\prime \sigma^2\mathbf{X}) (\mathbf{X}^\prime\mathbf{X})^{-1}$$
-  $$Var(\beta) =  \sigma^2 (\mathbf{X}^\prime\mathbf{X})^{-1}$$
+  $$Var(\hat{\beta}) =  (\mathbf{X}^\prime\mathbf{X})^{-1} (\mathbf{X}^\prime \sigma^2\mathbf{X}) (\mathbf{X}^\prime\mathbf{X})^{-1}$$
+  $$Var(\hat{\beta}) =  \sigma^2 (\mathbf{X}^\prime\mathbf{X})^{-1}$$
 
 - An unbiased estimator for $\sigma^2$ is the sample variance of the residuals (mean squared error) adjusted by a degrees of freedom correction
 
@@ -422,7 +421,7 @@ $$\begin{align*} \mathbb{E}[\hat{\beta} | \mathbf{X}] &= \mathbb{E}\bigg[\beta +
   - Guaranteed if we have a **saturated** regression
   - But still no assumptions about the outcome distribution!
   
-- What do we need to do inference on $\hat{\beta}$?
+- What do we need to do inference:
   - We almost never assume homoskedasticity because "robust" SE estimators are ubiquitous
   - Even some forms of error correlation are permitted ("cluster" robust SEs)
   - Sample sizes are usually large enough where CLT approximations are good.
@@ -520,13 +519,13 @@ tidy(reg_ate_cube) %>% filter(term == "black") %>% dplyr::select(term, estimate,
 
   $$Y_i(d) = Y_i(0) + \tau_i \times d$$
 
-- The ATE is $E[\tau_i] = \tau$
+- The ATE is $\mathbb{E}[\tau_i] = \tau$
 
 - Suppose we then fit the typical linear regression model that you see in **many** research papers
 
   $$Y_i = \alpha + \tau_{\text{R}} D_i + X_i^{\prime}\beta + \epsilon_i$$
 
-- Will our OLS estimate of $\hat{\tau_{\text{R}}}$ identify $E[\tau_i]$?
+- Will our OLS estimate of $\hat{\tau_{\text{R}}}$ be consistent for $\mathbb{E}[\tau_i]$?
   - No!
   
 :::
@@ -555,7 +554,7 @@ tidy(reg_ate_cube) %>% filter(term == "black") %>% dplyr::select(term, estimate,
 
   $$Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \epsilon_{i}$$
 
-- It turns out that $\beta_1$ can be written in terms of a bivariate regression 
+- It turns out that $\beta_1$ can also be written in terms of a bivariate regression involving residuals from **auxiliary** regressions
 
   $$\hat{\beta_1} = \frac{\widehat{Cov}(Y_i^{{\perp X_{i2}}}, X_{i1}^{{\perp X_{i2}}})}{\widehat{Var}(X_{i1}^{{\perp X_{i2}}})} \to \frac{Cov(Y_i^{{\perp X_{i2}}}, X_{i1}^{{\perp X_{i2}}})}{Var(X_{i1}^{{\perp X_{i2}}})}$$
 
@@ -568,11 +567,11 @@ tidy(reg_ate_cube) %>% filter(term == "black") %>% dplyr::select(term, estimate,
 
 ::: {.incremental}
 
-- Under the Frisch-Waugh-Lovell theorem. we can write an expression for the treatment coefficient as
+- Using the Frisch-Waugh-Lovell theorem. we can write an expression for the treatment coefficient as
 
-  $$\tau_\text{R} = \frac{Cov(Y_i, \tilde{D_i})}{Var(\tilde{D_i})}$$
+  $$\tau_\text{R} = \frac{Cov(Y_i, D_i^{\perp X_i}}{Var(D_i^{\perp X_i})}$$
 
-- $\tilde{D_i}$ is the residual from a regression of $D_i$ on all of the other covariates.
+- $ D_i^{\perp X_i}$ is the residual from a regression of $D_i$ on all of the other covariates $X_i$
 
 - In this case, that's just:
 
@@ -643,3 +642,475 @@ tidy(reg_ate_cube) %>% filter(term == "black") %>% dplyr::select(term, estimate,
 
 ## Propensity scores {.title-slide}
 
+## Propensity scores
+
+::: {.incremental}
+
+- As an alternative to modelling the **outcome**, can we instead adjust for **treatment**?
+  - Is there a **single** quantity scalar that we can adjust for regardless of how high-dimensional $\mathbf{X}$ is?
+- Yes: The **propensity score**
+  
+  $$e(X_i) = P(D_i = 1 | X_i)$$
+
+- **Rosenbaum and Rubin (1983)** show that conditional on the propensity score, the treatment is independent of the covariates.
+
+  $$D_i {\perp \! \! \! \perp} X_i | e(X_i)$$
+  
+- Therefore, conditioning on the propensity score suffices to adjust for confounding due to $X$
+
+  $$\{Y_i(1), Y_i(0)\} {\perp \! \! \! \perp} D_i | e(X_i)$$
+
+- The propensity score is a type of **balancing score** in that conditioning on it breaks the relationship between the covariates and treatment.
+
+:::
+
+## Weighting estimators
+
+::: {.incremental}
+
+- One way of adjusting for the propensity score is to use it as a **weight** on each observation.
+- We weight each unit by the **inverse** propensity of it receiving its particular treatment
+  - Treated units receive a weight $\frac{1}{e(X_i)}$
+  - Control units receive a weight $\frac{1}{1 - e(X_i)}$
+
+- This yields the Horvitz-Thompson estimator for the ATE (with known weights)
+
+  $$\hat{\tau} = \frac{1}{n}\sum_{i=1}^n\ \frac{D_i Y_i}{e(X_i)}  - \frac{(1-D_i)Y_i}{1 - e(X_i)}$$
+
+- **Intuition**: Weighting constructs a "pseudo-population" where the link between treatment and the observed covariates is broken
+  - Which treated units get more weight? Those whose treatment status is counter to what we would predict from the propensity score.
+  - Downweight the "overrepresented" and upweight the "underrepresented" 
+
+:::
+
+## Why weighting works
+
+::: {.incremental}
+
+- By iterated expectations
+
+  $$E\left[\frac{D_i Y_i}{e(X_i)}\right] = E\bigg[E\left[\frac{D_i Y_i}{e(X_i)} \bigg| X_i \right]\bigg]$$
+
+- Consistency
+
+  $$E\left[\frac{D_i Y_i}{e(X_i)}\right] = E\bigg[\frac{E[D_i Y_i(1) | X_i]}{e(X_i)} \bigg]$$
+
+- Conditional ignorability
+
+  $$E\left[\frac{D_i Y_i}{e(X_i)}\right] = E\bigg[\frac{E[D_i |X_i] E[Y_i(1) | X_i]}{e(X_i)} \bigg]$$
+
+:::
+
+## Why weighting works
+
+::: {.incremental}
+
+- Definition of the propensity score
+
+  $$E\left[\frac{D_i Y_i}{e(X_i)}\right] = E\bigg[\frac{e(X_i) E[Y_i(1) | X_i]}{e(X_i)} \bigg]$$
+
+- Iterated expectations
+
+  $$E\left[\frac{D_i Y_i}{e(X_i)}\right] = E[Y_i(1)]$$
+
+:::
+
+## Normalizing the propensity score
+
+::: {.incremental}
+
+- Horvitz-Thompson behaves especially poorly when propensity scores are close to $0$ and $1$ 
+
+  $$\hat{\tau}_{ht} = \frac{1}{n}\sum_{i=1}^n\ \frac{D_i Y_i}{\widehat{e(X_i)}}  - \frac{(1-D_i)Y_i}{1 - \widehat{e(X_i)}}$$
+
+- Common practice is to normalize the weights within the treated and control groups to sum to $1$, which gives us the **Hajek estimator**
+
+  $$\hat{\tau}_{\text{hajek}} = \frac{1}{\sum_{i=1}^n \frac{D_i}{\widehat{e(X_i)}}} \sum_{i=1}^n\ \frac{D_i Y_i}{\widehat{e(X_i)}} - \frac{1}{\sum_{i=1}^n \frac{1-D_i}{\widehat{1-e(X_i)}}} \sum_{i=1}^n\ \frac{(1-D_i) Y_i}{1-\widehat{e(X_i)}}$$
+
+- Weighted least squares will do this if we regress outcome on a binary indicator for treatment and supply the inverse propensity weights.
+
+:::
+
+## Inference
+
+::: {.incremental}
+
+- We want to estimate the sampling variance $\text{Var}(\hat{\tau})$ in order to do inference
+  - One option is to assume the weights are **known** and use a conventional "robust" SE estimator.
+  - But this fails to account for the uncertainty in the estimation of the propensity scores themselves **(Reifeis and Hudgens, 2022)**.
+- Closed form estimators *do* exist...but it's often easier to just use the **bootstrap**
+
+:::
+
+
+## Bootstrapping
+
+::: {.incremental}
+
+- Bootstrapping is a useful tool for learning about the sampling distribution of a parameter when we don't want to use theory to figure out $\widehat{\text{Var}(\hat{\tau})}$
+  - Works well for estimators that are **smooth** functionals of the data (don't change drastically to minor perturbations of the input)
+
+- **Intuition**: What drives uncertainty in $\hat{\tau}$ when we're doing population inference? 
+  - If we took another sample, we would calculate a different value.
+  - We can't go and re-draw a sample from the population again (that's just a hypothetical).
+  - But our sample is a pretty good approximation for the population distribution...and we can resample from that. 
+  
+- **Bootstrap** procedures approximate the distribution of $\hat{\tau}$ under repeated draws from the population by taking repeated draws from the empirical distribution of the data **in the sample**.
+  - Under i.i.d. observations, we'll often use the "nonparametric" bootstrap in which we resample complete observations **with** replacement
+
+:::
+
+## The bootstrap
+
+- The bootstrap procedure for IPTW:
+  1. Draw a sample of the data  by resampling observations (the rows of the data $\{Y_i, D_i, X_i\}$) **with replacement**
+  2. Using the bootstrapped sample, estimate the propensity scores $\hat{e}(X_i)$.
+  3. Using those propensity scores and the bootstrapped sample, compute an estimate of the average treatment effect $\hat{\tau}$. Store that estimate
+  4. Repeat for many iterations.
+  
+- At the end, we have a bunch of draws that allow us to approximate the sampling distribution of $\hat{\tau}$.
+
+## Estimating the propensity scores
+
+::: {.incremental}
+
+- With high-dimensional $X$, we'll often need a **parametric** model for the propensity score
+  - We **actually** need to predict an outcome - but OLS might give us fitted values above 1 or below zero!
+  
+- We don't want to assume that the **CEF** is linear.
+
+  $$\mathbb{E}[Y_i| X_i] = X_i^\prime\beta$$
+  
+- Instead, we might assume that a **function** of the CEF is linear
+
+  $$g(\mathbb{E}[Y_i | X_i])  = X_i^\prime\beta$$
+  
+- This is where **generalized linear models** come in.
+
+:::
+
+## Generalized Linear Models
+
+::: {.incremental}
+
+- Generalized linear models (GLMs) have three components:
+  1) A **parametric distribution** on $Y_i|X_i$ ("stochastic component")
+  2) A **linear predictor**: $\eta_i = X_i^{\prime}\beta = \beta_0 + \beta_1X_{i1} + \beta_2X_{i2} + \dotsc \beta_kX_{ik}$ ("systematic component")
+  3) A **link function** $g()$ applied to the CEF $E[Y_i|X_i]$ that yields the linear predictor
+
+      $$g(E[Y_i | X_i]) = \eta_i$$
+
+  - Alternatively, we can write the CEF in terms of the "inverse-link" $g^{-1}()$ applied to the linear predictor
+
+      $$E[Y_i | X_i] = g^{-1}(\eta_i)$$
+      
+- Consistent estimation of the parameters via **maximum likelihood** methods (we'll cover this in PS 818).
+
+:::
+
+## Logistic regression
+
+::: {.incremental}
+
+- The "logit" or "logistic" GLM models the **log-odds** of a binary outcome as a function of the linear predictor $X_i^{\prime}\beta$
+
+  $$E[Y_i | X_i] = Pr(Y_i = 1 | X_i) = \pi_i$$
+
+  $$\log\bigg(\frac{\pi_i}{1-\pi_i}\bigg) = X_i^{\prime}\beta$$
+
+- Alternatively, this is written in terms of the "inverse-link" function (the logistic function) that relates $\pi_i$ to $g^{-1}(X_i^{\prime}\beta)$
+
+  $$\pi_i = \frac{\exp(X_i^{\prime}\beta)}{1 + \exp(X_i^{\prime}\beta)} = \frac{1}{1 + \exp(-X_i^{\prime}\beta)}$$
+
+:::
+
+## The logistic function
+
+- The logistic function maps inputs on $\mathbb{R}$ to $(0, 1)$
+
+```{r, echo=F, fig.width=5, fig.height = 3, fig.align="center"}
+logistic <- function(x) 1/(1 + exp(-x))
+logistic_curve <- ggplot() + xlim(-5, 5) + ylim(0,1) + geom_function(fun=logistic) + theme_bw() + ylab(expression(pi)) + xlab(expression(paste("X",beta))) + geom_vline(xintercept=0, lty=2) + ggtitle("Logistic function")
+logistic_curve
+```
+
+## Illustration: Keele et. al. (2017)
+
+- Let's go back to our earlier example on the effect of Black mayoral candidates on Black turnout
+  - Let's work here with the subset of elections with Black population shares between $.1$ and $.4$ (otherwise we saw we had terrible overlap!)
+  - Incidentally, we run into some modelling issues with year FEs (essentially only 1 obs in some off-cycles, so let's just fit a linear time trend).
+  
+- First, what's the regression-adjusted estimate
+
+```{r, echo=T}
+# Subset
+turn_sub <- turn %>% filter(blackpop_pct1990 > .1&blackpop_pct1990<.4)
+
+# Regression adjustment
+regression <- lm_lin(black_turnout ~ black,
+       covariates = ~  pop90 + blackpop_pct1990 +
+                    college_pct + hs_pct + unemp + income + poverty + home + 
+                    year, data = turn_sub)
+
+tidy(regression) %>% filter(term == "black")
+```
+
+## Illustration: Keele et. al. (2017)
+
+- Now let's fit the propensity score model
+
+```{r, echo=T}
+# Fit a propensity score model - we'll use a logit
+pscore_model <- glm(black ~ pop90 + blackpop_pct1990 +
+                    college_pct + hs_pct + unemp + income + poverty + home + 
+                    year, data=turn_sub, family= binomial(link='logit'))
+
+# Predict the propensity score
+turn_sub$e <- predict(pscore_model, type="response")
+
+# Generate the weights
+turn_sub$iptw_weight <- 1/turn_sub$e
+turn_sub$iptw_weight[turn_sub$black == 0] <- 1/(1-turn_sub$e[turn_sub$black == 0])
+```
+
+
+## Illustration: Keele et. al. (2017)
+
+- Histogram of the weights.
+
+```{r,  fig.align="center"}
+turn_sub %>% ggplot(aes(x=iptw_weight)) + geom_histogram(bins=30) + facet_wrap(~black)
+```
+
+## Illustration: Keele et. al. (2017)
+
+- Did we improve balance?
+
+```{r, message=F}
+cobalt::love.plot(
+  x = turn_sub %>% select(pop90, blackpop_pct1990, college_pct, hs_pct, unemp, income, poverty, home, year),  # Covariate data
+  treat = turn_sub$black,           # Treatment indicator
+  weights = turn_sub$iptw_weight,
+  abs=T,
+  binary = "std",                # Standardize binary variables
+  continuous = "std",            # Standardize continuous variables
+  s.d.denom = "pooled"           # Use pooled SD for standardization
+) + scale_color_discrete(labels = c("Unweighted", "IP-Weighted"))
+```
+
+
+## Illustration: Keele et. al. (2017)
+
+- Calculate IPTW estimate of the ATE
+
+```{r, echo=T}
+# Weighted regression is equivalent to the Hajek estimator
+iptw_model <- lm_robust(black_turnout ~ black, data=turn_sub, weights=iptw_weight)
+coef(iptw_model)[2] # Ignore the SE
+
+# Weighted regression gives the Hajek (normalized weights) estimator
+iptw_est <- weighted.mean(turn_sub$black_turnout[turn_sub$black == 1], turn_sub$iptw_weight[turn_sub$black == 1]) -
+  weighted.mean(turn_sub$black_turnout[turn_sub$black == 0], turn_sub$iptw_weight[turn_sub$black == 0])
+iptw_est
+```
+
+## Illustration: Keele et. al. (2017)
+
+- Bootstrap
+
+```{r, echo=T}
+set.seed(53706)
+nIter <- 1000
+boot_iptw <- rep(NA,nIter)
+for (i in 1:nIter){
+  turn_boot <- turn_sub[sample(1:nrow(turn_sub), size = nrow(turn_sub), replace=T),]
+   # Fit a propensity score model
+  pscore_model_boot <- glm(black ~ pop90 + blackpop_pct1990 + 
+                      unemp + college_pct + hs_pct + unemp + income + poverty + home + 
+                      year, data=turn_boot, family= binomial(link='logit'))
+  
+  # Predict the propensity score
+  turn_boot$e <- predict(pscore_model_boot, type="response")
+  
+  # Generate the weights
+  turn_boot$iptw_weight <- 1/turn_boot$e
+  turn_boot$iptw_weight[turn_boot$black == 0] <- 1/(1-turn_boot$e[turn_boot$black == 0])
+  
+  # Fit a model
+  iptw_model_boot <- lm(black_turnout ~ black, data=turn_boot, weights=iptw_weight)
+  boot_iptw[i] <- coef(iptw_model_boot)[2]
+}
+```
+
+
+## Illustration: 
+
+- Bootstrap SE and percentile intervals
+
+```{r, echo=T}
+# Estimated standard error
+boot_se <- sd(boot_iptw)
+boot_se
+
+# Asymptotic CI
+c(iptw_est - qnorm(.975)*boot_se, iptw_est + qnorm(.975)*boot_se)
+
+# Percentile interval
+quantile(boot_iptw, c(.025, .975))
+
+```
+
+## Augmented IPTW
+
+::: {.incremental}
+
+- In both of these approaches, we need to get a **model** correct in order for our estimator to be **consistent** for the ATE
+- In **outcome regression**, we need to get $m_d(X_i) = \mathbb{E}[Y_i | D_i = d, X_i]$ correct
+
+  $$\hat{\tau}_{\text{reg}} = \frac{1}{n}\sum_{i=1}^n \bigg\{\hat{m}_1(X_i) - \hat{m}_0(X_i) \bigg\}$$
+  
+- In **inverse-propensity of treatment weighting**, we need to get $e(X_i) = P(D_i = 1 | X_i)$ correct
+
+  $$\hat{\tau}_{\text{ht}} = \frac{1}{n}\sum_{i=1}^n\ \frac{D_i Y_i}{\hat{e}(X_i)}  - \frac{(1-D_i)Y_i}{1 - \hat{e}(X_i)}$$
+  
+- Could we construct an estimator that's still consistent even if we get one of these wrong?
+
+:::
+
+## Augmented IPTW
+
+
+::: {.incremental}
+
+- The **Augmented IPTW** estimator combines the regression estimator with an IPW estimator that replaces $Y_i$ with the **residuals** $Y_i - \hat{m}_d(X_i)$
+
+  $$\hat{\tau}_{\text{aipw-ht}} =  \frac{1}{n}\sum_{i=1}^n\bigg\{\bigg(\hat{m}_1(X_i) - \hat{m}_0(X_i)\bigg) + \bigg(\frac{D_i (Y_i - \hat{m}_1(X_i))}{\hat{e}(X_i)}  - \frac{(1-D_i)(Y_i - \hat{m}_0(X_i))}{1 - \hat{e}(X_i)}\bigg)\bigg\}$$
+  
+- This is **doubly-robust** in the sense that it's consistent for the ATE if **either**
+  - The outcome models $\hat{m}_1(X_i)$ and $\hat{m}_0(X_i)$ are consistent for the true outcome models
+  - The propensity score model $\hat{e}(X_i)$ is consistent for the true propensity score
+
+- As with IPW, we'll usually use the Hajek estimator for the IPW part with the weights normalized to 1 within each treatment condition to avoid instability with propensity scores near 0 or 1.
+
+:::
+
+## Augmented IPTW
+
+::: {.incremental}
+
+- Consider this form of the AIPW estimator. What happens if the outcome model is correct? 
+  - **The IPW part is mean zero!**
+
+  $$\hat{\tau}_{\text{aipw-ht}} =  \frac{1}{n}\sum_{i=1}^n\bigg\{\bigg(\hat{m}_1(X_i) - \hat{m}_0(X_i)\bigg) + \bigg(\frac{D_i (Y_i - \hat{m}_1(X_i))}{\hat{e}(X_i)}  - \frac{(1-D_i)(Y_i - \hat{m}_0(X_i))}{1 - \hat{e}(X_i)}\bigg)\bigg\}$$
+    
+- Alternatively, we can **rearrange** the terms to write the estimator in a different form.
+  - What happens if the treatment model is correct? **The regression part is mean zero!**
+
+  $$\hat{\tau}_{\text{aipw-ht}} =  \frac{1}{n}\sum_{i=1}^n\bigg\{\bigg(\frac{D_i Y_i}{\hat{e}(X_i)}  - \frac{(1-D_i)Y_i}{1 - \hat{e}(X_i)}\bigg)+ \bigg(\hat{m}_1(X_i)\bigg(1 - \frac{D_i}{\hat{e}(X_i)}\bigg)  - \hat{m}_0(X_i)\bigg(1 - \frac{1 -D_i}{1 -\hat{e}(X_i)}\bigg)\bigg\}$$
+
+:::
+
+## Augmented IPTW
+
+- Let's implement this!
+
+```{r, echo=T}
+# Outcome models
+turn_sub$mu_1 <- predict(regression, newdata = turn_sub %>% mutate(black = 1))
+turn_sub$mu_0 <- predict(regression, newdata = turn_sub %>% mutate(black = 0))
+
+# AIPW estimator
+aipw <- mean(turn_sub$mu_1 - turn_sub$mu_0) + # Regression (we could just pull this from the Lin estimate)
+  (weighted.mean(turn_sub$black_turnout[turn_sub$black == 1] - turn_sub$mu_1[turn_sub$black == 1], turn_sub$iptw_weight[turn_sub$black == 1]) - # Hajek IPW
+  weighted.mean(turn_sub$black_turnout[turn_sub$black == 0] - turn_sub$mu_0[turn_sub$black == 0], turn_sub$iptw_weight[turn_sub$black == 0]))
+
+aipw
+```
+
+## Augmented IPTW
+
+- Bootstrap
+
+```{r, echo=T}
+set.seed(53706)
+nIter <- 1000
+boot_aipw <- rep(NA,nIter)
+for (i in 1:nIter){
+  turn_boot <- turn_sub[sample(1:nrow(turn_sub), size = nrow(turn_sub), replace=T),]
+   # Fit a propensity score model
+  pscore_model_boot <- glm(black ~ pop90 + blackpop_pct1990 + 
+                      unemp + college_pct + hs_pct + income + poverty + home + 
+                      year, data=turn_boot, family= binomial(link='logit'))
+  
+  # Predict the propensity score
+  turn_boot$e <- predict(pscore_model_boot, type="response")
+  
+  # Generate the weights
+  turn_boot$iptw_weight <- 1/turn_boot$e
+  turn_boot$iptw_weight[turn_boot$black == 0] <- 1/(1-turn_boot$e[turn_boot$black == 0])
+  
+  # Fit a regression model
+  regression_boot <- lm_lin(black_turnout ~ black,
+       covariates = ~  pop90 + blackpop_pct1990 +
+                    college_pct + hs_pct + unemp + income + poverty + home + 
+                    year, data = turn_boot)
+  
+  turn_boot$mu_1 <- predict(regression_boot, newdata = turn_boot %>% mutate(black = 1))
+  turn_boot$mu_0 <- predict(regression_boot, newdata = turn_boot %>% mutate(black = 0))
+
+  # AIPW
+  boot_aipw[i] <-  mean(turn_boot$mu_1 - turn_boot$mu_0) + # Regression (we could just pull this from the Lin estimate)
+  (weighted.mean(turn_boot$black_turnout[turn_boot$black == 1] - turn_boot$mu_1[turn_boot$black == 1], turn_boot$iptw_weight[turn_boot$black == 1]) - # Hajek IPW
+  weighted.mean(turn_boot$black_turnout[turn_boot$black == 0] - turn_boot$mu_0[turn_boot$black == 0], turn_boot$iptw_weight[turn_boot$black == 0]))
+}
+```
+
+
+## Illustration: 
+
+- Bootstrap SE and percentile intervals
+
+```{r, echo=T}
+# Estimated standard error
+boot_se_aipw <- sd(boot_aipw)
+boot_se_aipw
+
+# Asymptotic CI
+c(aipw - qnorm(.975)*boot_se_aipw, aipw + qnorm(.975)*boot_se_aipw)
+
+# Percentile interval
+quantile(boot_aipw, c(.025, .975))
+```
+
+## Summary
+
+::: {.incremental}
+
+- **Outcome regression** and **inverse propensity weighting** are two different strategies for adjusting for confounders $X_i$
+  - One approach models the mean of $Y$ given $X_i$
+  - The other models the **probability** of treatment given $X_i$
+  
+- Under correct model specification, both approaches are consistent for the ATE
+  - Careful with the high variance/instability of IPW - especially with propensity scores close to $1$ or $0$.
+
+- We can get an added **double-robustness** property by combining the two - Augmented Inverse Propensity Weighting (AIPW) estimator
+  - Connected to the **residuals-on-residuals** regression
+  - You'll see it in the context of **"double machine learning"**
+  
+:::
+
+## Next week
+
+::: {.incremental}
+
+- One more method for adjusting for covariates - **matching**
+  - For every treated unit, find the **closest** control 
+  - "Pre-processing" or "Pruning" the data
+  
+- Can think of this as a **very basic** machine learning method!
+  - No strong modelling assumptions
+  
+- But beware of finite sample biases! 
+  - Matching on more than one covariate w/o additional regression adjustment creates problems!
+
+:::

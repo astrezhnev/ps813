@@ -111,4 +111,3 @@ power_results <- data.frame(tau = taus, power = power)
 
 power_results %>% ggplot(aes(y=power, x=taus)) + geom_line() + geom_hline(yintercept = .05, lty=3) + xlab("Average treatment effect (percentage points)") + ylab("Power") + theme_bw()
 ```
-W
