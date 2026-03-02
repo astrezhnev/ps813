@@ -305,7 +305,7 @@
     "href": "slides/week7/week7_matching.html#example-keele-et.-al.-2017-11",
     "title": "Week 7: Matching",
     "section": "Example: Keele et. al. (2017)",
-    "text": "Example: Keele et. al. (2017)\n\nsummary(match_results_bc)\n\n\nEstimate...  -1.1 \nAI SE......  1.3559 \nT-stat.....  -0.81122 \np.val......  0.41724 \n\nOriginal number of observations..............  1006 \nOriginal number of treated obs...............  356 \nMatched number of observations...............  356 \nMatched number of observations  (unweighted).  371"
+    "text": "Example: Keele et. al. (2017)\n\nsummary(match_results_bc)\n\n\nEstimate...  -1.028 \nAI SE......  1.5732 \nT-stat.....  -0.65343 \np.val......  0.51348 \n\nOriginal number of observations..............  1006 \nOriginal number of treated obs...............  356 \nMatched number of observations...............  356 \nMatched number of observations  (unweighted).  358 \n\nNumber of obs dropped by 'exact' or 'caliper'  0"
   },
   {
     "objectID": "slides/week7/week7_matching.html#summary",
