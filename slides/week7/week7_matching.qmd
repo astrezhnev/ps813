@@ -428,8 +428,7 @@ abline(v=mean(ate_est), col="blue", lty=2)
 ::: {.incremental}
 
 - **Abadie and Imbens (2008)** show that the standard pairs **bootstrap** doesn't work well for variance estimation.
-  - **Intuition**: The matching weights are not a **smooth** function of the inputs (weights are discrete)
-  - The regular bootstrap does not preserve the distribution of the match counts $K_M(i)$
+  - **Intuition**: The matching weights are not a **smooth** function of the inputs - it does not preserve the distribution of the match counts $K_M(i)$
   
 - **Otsu and Rai (2017)** develop a **weighted** bootstrap using the residuals from the **linearized** version of the matching estimator
   - **Intuition**: Instead of resampling pairs $Y_i$ and $X_i$, we resample $\tilde{\tau}_i$ where...
@@ -588,6 +587,7 @@ match_results_bc <- Matching::Match(Y = turn$black_turnout, Tr = turn$black,
                          X = turn %>% dplyr::select(year, pop90, blackpop_pct1990,
                                                     college_pct, hs_pct,
                                                     unemp, income, poverty, home),
+                         exact = c(T, F, F, F, F, F, F, F, F),
                          M=1 , Weight = 2, estimand = "ATT", BiasAdjust = T)
                         # Weight = 2 = Mahalanobis distance
 ```
