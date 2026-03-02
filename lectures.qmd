@@ -38,8 +38,9 @@ Lecture slides are available as self-contained `.html` files made with RevealJS 
 
 ### Week 7: Selection-on-Observables - Matching
 
-- Week 7 Github Repository
-- Week 7 `.html` slides
+- [Week 7 Github Repository](https://github.com/astrezhnev/ps813/tree/main/slides/week7/)
+- [Week 7 `.html` slides](https://www.antonstrezhnev.com/ps813/slides/week7/week7_matching.html)
+
 
 ### Week 8: Instrumental Variables
 
