@@ -1308,8 +1308,7 @@ Anton Strezhnev
 <ul>
 <li class="fragment"><p><strong>Abadie and Imbens (2008)</strong> show that the standard pairs <strong>bootstrap</strong> doesn’t work well for variance estimation.</p>
 <ul>
-<li class="fragment"><strong>Intuition</strong>: The matching weights are not a <strong>smooth</strong> function of the inputs (weights are discrete)</li>
-<li class="fragment">The regular bootstrap does not preserve the distribution of the match counts <span class="math inline">\(K_M(i)\)</span></li>
+<li class="fragment"><strong>Intuition</strong>: The matching weights are not a <strong>smooth</strong> function of the inputs - it does not preserve the distribution of the match counts <span class="math inline">\(K_M(i)\)</span></li>
 </ul></li>
 <li class="fragment"><p><strong>Otsu and Rai (2017)</strong> develop a <strong>weighted</strong> bootstrap using the residuals from the <strong>linearized</strong> version of the matching estimator</p>
 <ul>
@@ -1496,8 +1495,9 @@ Number of obs dropped by &#39;exact&#39; or &#39;caliper&#39;  0 </code></pre>
 <span id="cb10-2"><a></a>                         <span class="at">X =</span> turn <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(year, pop90, blackpop_pct1990,</span>
 <span id="cb10-3"><a></a>                                                    college_pct, hs_pct,</span>
 <span id="cb10-4"><a></a>                                                    unemp, income, poverty, home),</span>
-<span id="cb10-5"><a></a>                         <span class="at">M=</span><span class="dv">1</span> , <span class="at">Weight =</span> <span class="dv">2</span>, <span class="at">estimand =</span> <span class="st">&quot;ATT&quot;</span>, <span class="at">BiasAdjust =</span> T)</span>
-<span id="cb10-6"><a></a>                        <span class="co"># Weight = 2 = Mahalanobis distance</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-5"><a></a>                         <span class="at">exact =</span> <span class="fu">c</span>(T, F, F, F, F, F, F, F, F),</span>
+<span id="cb10-6"><a></a>                         <span class="at">M=</span><span class="dv">1</span> , <span class="at">Weight =</span> <span class="dv">2</span>, <span class="at">estimand =</span> <span class="st">&quot;ATT&quot;</span>, <span class="at">BiasAdjust =</span> T)</span>
+<span id="cb10-7"><a></a>                        <span class="co"># Weight = 2 = Mahalanobis distance</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="example-keele-et.-al.-2017-11" class="slide level2">
