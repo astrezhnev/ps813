@@ -411,9 +411,9 @@ Stratum              | $D_i(1)$          |  $D_i(0)$ |
 
 - With binary treatment/binary instrument, we can use law of total expectation to decompose by principal stratum
 
-  $$\mathbb{E}[D_i(1) - D_i(0)] = \underbrace{\mathbb{E}[D_i(1) - D_i(0) | D_i(1) = D_i(0)] \times P(D_i(1) = D_i(0))}_{\text{(always/never-takers)}} + \\
+  $$\begin{align*}\mathbb{E}[D_i(1) - D_i(0)] = \underbrace{\mathbb{E}[D_i(1) - D_i(0) | D_i(1) = D_i(0)] \times P(D_i(1) = D_i(0))}_{\text{(always/never-takers)}} + \\
   \underbrace{\mathbb{E}[D_i(1) - D_i(0) | D_i(1) > D_i(0)] \times P(D_i(1) > D_i(0))}_{\text{(compliers)}} + \\
-  \underbrace{\mathbb{E}[D_i(1) - D_i(0) | D_i(1) < D_i(0)] \times P(D_i(1) < D_i(0))}_{\text{()}}$$
+  \underbrace{\mathbb{E}[D_i(1) - D_i(0) | D_i(1) < D_i(0)] \times P(D_i(1) < D_i(0))}_{\text{(defiers)}}\end{align*}$$
 
 - The first term is $0$
 - And by no defiers, the last term is $0$ since $P(D_i(1) < D_i(0)) = 0$
@@ -443,9 +443,9 @@ Stratum              | $D_i(1)$          |  $D_i(0)$ |
 
 - Conditioning on the principal strata again:
 
-  $$= \underbrace{\mathbb{E}\bigg[(Y_i(1) - Y_i(0)) \times (0) | (D_i(1) = D_i(0))\bigg] \times P(D_i(1) = D_i(0))}_{\text{always/never-takers}} + \\
+  $$=\begin{align*}\underbrace{\mathbb{E}\bigg[(Y_i(1) - Y_i(0)) \times (0) | (D_i(1) = D_i(0))\bigg] \times P(D_i(1) = D_i(0))}_{\text{always/never-takers}} + \\
   \underbrace{\mathbb{E}\bigg[(Y_i(1) - Y_i(0)) \times (1) | (D_i(1) > D_i(0))\bigg] \times  P(D_i(1) > D_i(0))}_{\text{compliers}} + \\
-  \underbrace{\mathbb{E}\bigg[(Y_i(1) - Y_i(0)) \times (-1) | (D_i(1) < D_i(0))\bigg] \times P(D_i(1) < D_i(0))}_{\text{defiers}}$$
+  \underbrace{\mathbb{E}\bigg[(Y_i(1) - Y_i(0)) \times (-1) | (D_i(1) < D_i(0))\bigg] \times P(D_i(1) < D_i(0))}_{\text{defiers}}\end{align*}$$
 
 - Again, first term is zero because $D_i(1) - D_i(0) = 0$, third is zero by "no defiers" and we have
 
@@ -461,7 +461,7 @@ Stratum              | $D_i(1)$          |  $D_i(0)$ |
 
 - The IV estimand, under our identification assumptions, is a Local Average Treatment Effect (LATE):
 
-$$\frac{\mathbb{E}[Y_i | Z_i = 1] - \mathbb{E}[Y_i | Z_i = 0]}{\mathbb{E}[D_i | Z_i = 1] - \mathbb{E}[D_i | Z_i = 0]} = \mathbb{E}[Y_i(1) - Y_i(0) | D_i(1) > D_i(0)]$$
+  $$\frac{\mathbb{E}[Y_i | Z_i = 1] - \mathbb{E}[Y_i | Z_i = 0]}{\mathbb{E}[D_i | Z_i = 1] - \mathbb{E}[D_i | Z_i = 0]} = \mathbb{E}[Y_i(1) - Y_i(0) | D_i(1) > D_i(0)]$$
 
 - The LATE is a conditional average treatment effect within the *subpopulation* of **compliers**
 - If treatment effects are constant, we can generalize this to the whole sample.
