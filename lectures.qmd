@@ -44,8 +44,8 @@ Lecture slides are available as self-contained `.html` files made with RevealJS 
 
 ### Week 8: Instrumental Variables
 
-- Week 8 Github Repository
-- Week 8 `.html` slides
+- [Week 8 Github Repository](https://github.com/astrezhnev/ps813/tree/main/slides/week8/)
+- [Week 8 `.html` slides](https://www.antonstrezhnev.com/ps813/slides/week8/week8_instrumental_variables.html)
 
 ### Week 9: Differences-in-Differences
 
