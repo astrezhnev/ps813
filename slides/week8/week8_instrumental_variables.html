@@ -1339,9 +1339,9 @@ Anton Strezhnev
 <h2>Interpreting the IV estimand</h2>
 <ul>
 <li class="fragment"><p>With binary treatment/binary instrument, we can use law of total expectation to decompose by principal stratum</p>
-<p><span class="math display">\[\mathbb{E}[D_i(1) - D_i(0)] = \underbrace{\mathbb{E}[D_i(1) - D_i(0) | D_i(1) = D_i(0)] \times P(D_i(1) = D_i(0))}_{\text{(always/never-takers)}} + \\
+<p><span class="math display">\[\begin{align*}\mathbb{E}[D_i(1) - D_i(0)] = \underbrace{\mathbb{E}[D_i(1) - D_i(0) | D_i(1) = D_i(0)] \times P(D_i(1) = D_i(0))}_{\text{(always/never-takers)}} + \\
 \underbrace{\mathbb{E}[D_i(1) - D_i(0) | D_i(1) &gt; D_i(0)] \times P(D_i(1) &gt; D_i(0))}_{\text{(compliers)}} + \\
-\underbrace{\mathbb{E}[D_i(1) - D_i(0) | D_i(1) &lt; D_i(0)] \times P(D_i(1) &lt; D_i(0))}_{\text{()}}\]</span></p></li>
+\underbrace{\mathbb{E}[D_i(1) - D_i(0) | D_i(1) &lt; D_i(0)] \times P(D_i(1) &lt; D_i(0))}_{\text{(defiers)}}\end{align*}\]</span></p></li>
 <li class="fragment"><p>The first term is <span class="math inline">\(0\)</span></p></li>
 <li class="fragment"><p>And by no defiers, the last term is <span class="math inline">\(0\)</span> since <span class="math inline">\(P(D_i(1) &lt; D_i(0)) = 0\)</span></p>
 <p><span class="math display">\[\mathbb{E}[D_i(1) - D_i(0)] = Pr(D_i(1) &gt; D_i(0))\]</span></p></li>
@@ -1360,9 +1360,9 @@ Anton Strezhnev
 <h2>Interpreting the IV estimand</h2>
 <ul>
 <li class="fragment"><p>Conditioning on the principal strata again:</p>
-<p><span class="math display">\[= \underbrace{\mathbb{E}\bigg[(Y_i(1) - Y_i(0)) \times (0) | (D_i(1) = D_i(0))\bigg] \times P(D_i(1) = D_i(0))}_{\text{always/never-takers}} + \\
+<p><span class="math display">\[=\begin{align*}\underbrace{\mathbb{E}\bigg[(Y_i(1) - Y_i(0)) \times (0) | (D_i(1) = D_i(0))\bigg] \times P(D_i(1) = D_i(0))}_{\text{always/never-takers}} + \\
 \underbrace{\mathbb{E}\bigg[(Y_i(1) - Y_i(0)) \times (1) | (D_i(1) &gt; D_i(0))\bigg] \times  P(D_i(1) &gt; D_i(0))}_{\text{compliers}} + \\
-\underbrace{\mathbb{E}\bigg[(Y_i(1) - Y_i(0)) \times (-1) | (D_i(1) &lt; D_i(0))\bigg] \times P(D_i(1) &lt; D_i(0))}_{\text{defiers}}\]</span></p></li>
+\underbrace{\mathbb{E}\bigg[(Y_i(1) - Y_i(0)) \times (-1) | (D_i(1) &lt; D_i(0))\bigg] \times P(D_i(1) &lt; D_i(0))}_{\text{defiers}}\end{align*}\]</span></p></li>
 <li class="fragment"><p>Again, first term is zero because <span class="math inline">\(D_i(1) - D_i(0) = 0\)</span>, third is zero by “no defiers” and we have</p>
 <p><span class="math display">\[\mathbb{E}[Y_i | Z_i = 1] - \mathbb{E}[Y_i | Z_i = 0] =  \mathbb{E}\bigg[Y_i(1) - Y_i(0) | D_i(1) &gt; D_i(0)\bigg] \times  P(D_i(1) &gt; D_i(0))\]</span></p></li>
 <li class="fragment"><p>The ITT is the product of a conditional average treatment effect and the proportion of compliers.</p></li>
@@ -1371,12 +1371,10 @@ Anton Strezhnev
 <section id="the-late-theorem" class="slide level2">
 <h2>The LATE Theorem</h2>
 <ul>
-<li class="fragment">The IV estimand, under our identification assumptions, is a Local Average Treatment Effect (LATE):</li>
-</ul>
-<p><span class="math display">\[\frac{\mathbb{E}[Y_i | Z_i = 1] - \mathbb{E}[Y_i | Z_i = 0]}{\mathbb{E}[D_i | Z_i = 1] - \mathbb{E}[D_i | Z_i = 0]} = \mathbb{E}[Y_i(1) - Y_i(0) | D_i(1) &gt; D_i(0)]\]</span></p>
-<ul>
-<li class="fragment">The LATE is a conditional average treatment effect within the <em>subpopulation</em> of <strong>compliers</strong></li>
-<li class="fragment">If treatment effects are constant, we can generalize this to the whole sample.
+<li class="fragment"><p>The IV estimand, under our identification assumptions, is a Local Average Treatment Effect (LATE):</p>
+<p><span class="math display">\[\frac{\mathbb{E}[Y_i | Z_i = 1] - \mathbb{E}[Y_i | Z_i = 0]}{\mathbb{E}[D_i | Z_i = 1] - \mathbb{E}[D_i | Z_i = 0]} = \mathbb{E}[Y_i(1) - Y_i(0) | D_i(1) &gt; D_i(0)]\]</span></p></li>
+<li class="fragment"><p>The LATE is a conditional average treatment effect within the <em>subpopulation</em> of <strong>compliers</strong></p></li>
+<li class="fragment"><p>If treatment effects are constant, we can generalize this to the whole sample.</p>
 <ul>
 <li class="fragment">But if effects are heterogeneous, we are not necessarily getting a “representative” treatment effect.</li>
 </ul></li>
