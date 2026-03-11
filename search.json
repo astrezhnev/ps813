@@ -532,6 +532,13 @@
     "text": "Conclusion\n\nInstrumental variables lets us leverage alternative sources of randomness to learn about an otherwise confounded causal relationship.\nAn instrument:\n\nAffects treatment\nDoesn’t affect the outcome except through treatment\nIs ignorable w.r.t the outcome.\n\nLATE theorem: The IV estimand is the ATE among those who would take treatment due to the instrument.\n\nWith continuous treatment/instrument - a weighted average of LATEs (Angrist and Imbens, 1995)\nWith covariates - a weighted average of covariate-specific LATEs\nBut be careful with this interpretation when the model is not fully saturated (Słoczyński, 2022)\n\nStatistical inference is tricky\n\nBeware weak instruments - typical large-sample asymptotics do poorly when instruments are irrelevant.\nConsider weak-instrument robust tests (Anderson-Rubin)\nIf it’s not in the reduced form, it’s not real"
   },
   {
+    "objectID": "slides/week8/week8_instrumental_variables.html#next-week",
+    "href": "slides/week8/week8_instrumental_variables.html#next-week",
+    "title": "Week 8: Instrumental Variables",
+    "section": "Next week",
+    "text": "Next week\n\nAnother method of dealing with unobserved confounding - differences-in-differences\nWhat if we can observe a period when both treated and control are unexposed\n\nThen any differences are attributable to bias\n\nAssume the bias is time-invariant\n\nThen we can just subtract it out!\n\n“Parallel trends” - Observed trends in the control group are equal to counterfactual trends in the treated group!"
+  },
+  {
     "objectID": "slides/week6/week6_regression_and_weighting.html#last-week",
     "href": "slides/week6/week6_regression_and_weighting.html#last-week",
     "title": "Week 6: Regression and Weighting",
