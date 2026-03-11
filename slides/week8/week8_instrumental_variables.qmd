@@ -570,18 +570,20 @@ iv_robust(voted ~ getpost | post, data=wapost)
 
 ::: {.incremental}
 
-- Most applications of IV are not treatment non-compliance.
-- But all follow the same underlying logic.
-  - Treatment of interest is not randomized...but there exists a real or "natural" experiment that is.
-  - And this natural experiment affects the outcome only through its effect on the treatment of interest.
+- Most applications of IV are **not** treatment non-compliance.
+- But all follow the **same** underlying logic.
+  - Treatment of interest is **not randomized**...but there exists a real or "natural" experiment that is.
+  - And this **natural experiment** affects the outcome only through its effect on the treatment of interest.
 - Examples:
-  - Angrist (1990) - Vietnam draft lottery number as an instrument for the effect of military service on income.
-  - Angrist and Krueger (1991) - Birth quarter as an instrument for education's effect on income.
-  - Acemoglu et. al. (2001) - European settler mortality as an instrument for the effect of institutional quality on GDP per capita.
-  - Kern & Hainmueller (2009) - West German TV signal strength as an instrument for the effect of watching West German TV on support for the East German regime
+  - **Angrist (1990)** - Vietnam draft lottery number as an instrument for the effect of military service on income.
+  - **Angrist and Krueger (1991)** - Birth quarter as an instrument for education's effect on income.
+  - **Acemoglu et. al. (2001)** - European settler mortality as an instrument for the effect of institutional quality on GDP per capita.
 - Challenges
-  - Exogeneity/ignorability isn't guaranteed
-  - If an instrument has a large effect on your treatment of interest, it probably has an effect on other stuff that could affect the outcome as well (violating the exclusion restriction)
+  - **Exogeneity/ignorability** of the instrument isn't guaranteed - need to make the usual "selection-on-observables" arguments from **theory**
+  - **IV double-bind**
+    - If the instrument has a **huge** effect on your treatment...
+    - ...it might also affect a lot of **other stuff**...
+    - ...all of those are potential exclusion restriction violations!
 
 :::
 
@@ -589,14 +591,16 @@ iv_robust(voted ~ getpost | post, data=wapost)
 
 ::: {.incremental}
 
-- **Miguel, Satyanth, and Sergenti (2004, JPE)** look at the effect of [economic growth]{style="color: maroon;"} on [civil conflict]{style="color: darkgreen;"} in 41 African countries.
+- **Miguel, Satyanth, and Sergenti (2004, JPE)** look at the effect of **economic growth** on **civil conflict** in 41 African countries.
   - Growth and conflict are confounded (e.g. by political institutions).
-  - Instrument for GDP growth using the annual change in rainfall -- for heavily agrarian countries, rainfall fluctuations determine crop yields which are a large component of GDP.
-  - Observe that changes in rainfall are associated with changes in GDP and negative GDP shocks (instrumented by rainfall) increase civil conflict.
-- Does this satisfy the IV identification assumptions?
-  - Exogeneity? Is rainfall as-good-as randomly assigned?
-  - Monotonicity? Do positive rainfall shocks *strictly* boost GDP per capita?
-  - Exclusion restriction? Is rainfall's effect transmitted only through the mechanism the authors define?
+  - **Instrument** for GDP growth using the annual change in rainfall
+    - For heavily agrarian countries, rainfall fluctuations determine **crop yields** which are a large component of GDP.
+  - **Reduced form** - Negative rainfall shocks increase civil conflict.
+    - **First stage** - Negative rainfall shocks reduce GDP growth
+- Should we conclude that growth shocks increase conflict?
+  - **Exogeneity?** Is rainfall as-good-as randomly assigned?
+  - **Monotonicity?** Do positive rainfall shocks **strictly** boost GDP per capita?
+  - **Exclusion restriction?** Is rainfall's effect transmitted only through the mechanism the authors define?
 
 :::
 
@@ -604,127 +608,148 @@ iv_robust(voted ~ getpost | post, data=wapost)
 
 ![](assets/mellon.png){fig-align="center" height="450px"}
 
-> Mellon (2023) "Rain, Rain, Go Away: 195 Potential Exclusion-Restriction Violations for Studies Using Weather as an Instrumental Variable"
+> Mellon (2025) "Rain, Rain, Go Away: 194 Potential Exclusion-Restriction Violations for Studies Using Weather as an Instrumental Variable"
 
 ## Estimation and inference for IV {.title-slide}
 
-## IV with constant effects
+## The IV ratio estimator
 
-- Let's consider a linear model for the potential outcomes
+::: {.incremental}
 
-$$Y_i(d) = \alpha + \tau d + \gamma U_i + \eta_i$$
+- We've talked about what the **IV estimand** means...
+  - ...now let's talk about **estimation**
+  
+- Remember, the IV ratio estimand (with a **single instrument** and a **single treatment**)
 
-. . .
+  $$\tau_{\text{IV}} = \frac{Cov(Y_i, Z_i)}{Cov(Y_i, X_i)}$$
+  
+- What is a **consistent** estimator of this? Let's use the **plug-in principle**
 
-- If we could control for $U_i$, we could estimate the regression to get an estimate of $\tau$
+  $$\hat{\tau}_{\text{IV}} = \frac{\widehat{Cov}(Y_i, Z_i)}{\widehat{Cov}(Y_i, X_i)}$$
+  
+- **Numerator**: "Reduced form"/ITT
+- **Denominator**: "First stage"
 
-$$Y_i = \alpha + \tau D_i + \gamma U_i + \eta_i$$
+:::
 
-- But we can't - and regressing $Y_i$ on $D_i$ alone will not give a consistent estimator of $\tau$ since $Cov(\gamma U_i + \eta_i, D_i) \neq 0$
+## The IV ratio estimator
 
-## IV with constant effects
+::: {.incremental}
 
-- Suppose $Z_i$ is an instrument that is exogeneous and satisfies the exclusion restriction
+- If the **sample** covariances are consistent for the **population** covariances (e.g. under i.i.d. sampling), then by continuous mapping theorem
 
-$$Cov(\gamma U_i + \eta_i, Z_i) = 0$$
+  $$\hat{\tau}_{\text{IV}} \overset{p}{\to} \tau_{\text{IV}}$$
+  
+- And, by our usual assumptions from regression, we also have asymptotic normality
 
-. . .
+  $$\sqrt{n}(\hat{\tau}_{\text{IV}}  - \tau_{\text{IV}}) \overset{d}{\to} \mathcal{N}(0, V)$$
+  
+- What's the variance $V$?
+  - This is easiest to explain by writing the IV estimator in **matrix** form.
+  - We can use the same tools from our analysis of **linear regression**!
 
-- Then, we can identify $\tau$
+:::
 
-$$\begin{align*}
-Cov(Y_i, Z_i) &= Cov(\alpha + \tau D_i + \gamma U_i + \eta_i, Z_i)\\
-&= Cov(\alpha, Z_i) + Cov(\tau D_i, Z_i) + Cov(\gamma U_i + \eta_i, Z_i)\\
-&= \tau Cov( D_i, Z_i)
-\end{align*}$$
+## IV ratio in matrix form
 
-. . .
+::: {.incremental}
 
-- Which gives us our IV estimand
+- Let $\mathbf{Z}$ be our matrix of **instruments** and **covariates**
+- Let $\mathbf{X}$ be our matrix of **treatments** and **covariates**
+  - **Covariates** here refers to stuff that's not a treatment or a - possibly things that are needed to satisfy ignorability for the instrument.
 
-$$\tau = \frac{Cov(Y_i, Z_i)}{Cov(D_i, Z_i)}$$
+- For identification, we need **as many** instruments as we have treatments
+  - Most typical case in political science: single-instrument, single-treatment case
+  - More "structural equation"-oriented discplines also consider **multiple**-instrument/**multiple**-treatment cases
+  - Sometimes we might have **more** instruments than treatments ("overidentification")
+  
+- We can write the just-identified (no. instruments = no. treatments) IV estimator as:
 
-## IV estimator
+  $$\hat{\tau}_{\text{IV}} = (\mathbf{Z}^{\prime}\mathbf{X})^{-1}(\mathbf{Z}^{\prime} Y)$$
+  
+:::
 
-- We can estimate $\tau$ by plugging in the sample quantities.
+## IV ratio in matrix form
 
-$$\hat{\tau_{\text{IV}}} = \frac{\widehat{Cov(Y_i, Z_i)}}{\widehat{Cov(D_i, Z_i)}}$$
+- We can recover the **asymptotic** variance using the delta method!
 
-. . .
+  $$Var(\hat{\tau}_{\text{IV}}) = (\mathbf{Z}^{\prime}\mathbf{X})^{-1}(\mathbf{Z}^{\prime} \Sigma \mathbf{Z})(\mathbf{Z}^{\prime}\mathbf{X})^{-1}$$
+  
+- $\Sigma$ is the variance-covariance matrix of the errors
+  - Under i.i.d. sampling, a **heteroskedasticity-robust** plug-in estimator for $\hat{\Sigma}$ is a diagonal matrix with the squared residuals.
+  - Other "robust" SEs w/ different specifications for $\Sigma$ (e.g. clustering, spatial correlation, etc...) - we'll talk about these later!
+  
+## IV ratio inference
 
-- This also can be written as a ratio of two regression coefficients
+- To illustrate with our Washington Post example
 
-$$\hat{\tau_{\text{IV}}} = \frac{\widehat{Cov(Y_i, Z_i)}/\widehat{Var(Z_i)}}{\widehat{Cov(D_i, Z_i)}/\widehat{Var(Z_i)}}$$
+```{r, echo=T}
+iv_est <- iv_robust(voted ~ getpost | post, data=wapost, se_type = "HC0")
+iv_est
+```
 
-- Denominator: "First stage": Regression of $D_i$ on $Z_i$
-- Numerator: "Reduced form": Regression of $Y_i$ on $Z_i$
+- Let's calculate the point estimate by hand!
 
-## 2SLS - Including covariates
+```{r, echo=T}
+Z <- model.matrix(~post, data=wapost) # Add the intercept
+D <- model.matrix(~getpost, data=wapost) # Add the intercept
+Y <- wapost$voted
+point <- solve(t(Z)%*%D)%*%(t(Z)%*%Y)
+point
+```
 
-- What if ignorability of $Z_i$ only holds conditional on $X_i$ -- or we want to include $X_i$ as predictors to improve precision.
-- We'll assume a particular structure for the outcome and treatment models
+## IV ratio inference
 
-$$Y_i = X_i^{\prime}\beta + \tau D_i + \epsilon_i$$
-$$D_i = X_i^{\prime}\alpha + \gamma Z_i + \nu_i$$
+- To illustrate with our Washington Post example
 
-- Assume the $X_i$ are exogenous but not excluded (appear in both equations). $D_i$ is still endogenous so we can't get the treatment effect by just regressing outcome on treatment and covariates.
+```{r, echo=T}
+iv_robust(voted ~ getpost | post, data=wapost, se_type = "HC0")
+```
 
-- Can we get an expression for $Y_i$ in the form of $Z_i$ alone?
+- Let's do the variance!
 
-## 2SLS - Including covariates
+```{r, echo=T}
+u <- Y - iv_est$fitted.values
+vcov <- solve(t(Z)%*%D)%*%(t(Z)%*%diag(u^2)%*%Z)%*%solve(t(Z)%*%D)
+sqrt(diag(vcov))
+```
 
-- Substitute in for $D_i$
+## IV as "two-stage" least squares
 
-$$\begin{align*}
-Y_i &= X_i^{\prime}\beta + \tau\left[X_i^{\prime}\alpha + \gamma Z_i + \nu_i\right] + \epsilon_i\\
- &= X_i^{\prime}\beta + \tau\left[X_i^{\prime}\alpha + \gamma Z_i\right] + [\tau\nu_i + \epsilon_i]\\
-  &= X_i^{\prime}\beta + \tau \mathbb{E}[D_i | X_i, Z_i] + \epsilon_i^{*}\\
-\end{align*}$$
+::: {.incremental}
 
-. . .
+- Another way of interpreting $\hat{\tau}_{\text{IV}}$ is in terms **two** ordinary least squares regressions
+  - Accommodates the "overidentified" case (more instruments than treatments)
+  
+- **Intuition** - We want to regress $Y$ on the part of the treatment that is explained **entirely** by the instrument (the "exogenous" variation)
 
-- We can identify $\tau$ by regressing $Y_i$ on $X_i$ and the **fitted values** from a regression of $D_i$ on $X_i$ and the instrument $Z_i$.
-- **Intuition** -- we want to only use the variation in $D_i$ that is driven by the **exogenous** factor $Z_i$.
+- **First stage** - Project $\mathbf{X}$ into the space of the instrument $\mathbf{Z}$
 
-## 2SLS - Including covariates
+  $$\widehat{\mathbf{X}} = \underbrace{\mathbf{Z}(\mathbf{Z}^\prime\mathbf{Z})^{-1}\mathbf{Z}^\prime}_{P_{\mathbf{Z}}}\mathbf{X}$$
 
-- You can also still get the ratio form of the IV estimator
+- **Second stage** - Regress $Y$ on the "fitted values" $\widehat{\mathbf{X}}$
 
-$$\begin{align*}
-Y_i &= X_i^{\prime}\beta + \tau\left[X_i^{\prime}\alpha + \gamma Z_i + \nu_i\right] + \epsilon_i\\
- &= X_i^{\prime}(\beta + \tau\alpha) + \tau \gamma Z_i + [\tau\nu_i + \epsilon_i]\\
-\end{align*}$$
-
-- The coefficient on $Z_i$ in the reduced form regression is $\tau \gamma$
-- The coefficient on $Z_i$ in the first-stage is $\gamma$.
-- So the ratio of the reduced form to the first-stage regression is $\tau$.
+  $$\hat{\beta}_{\text{2SLS}} = (\widehat{\mathbf{X}}^{\prime}\mathbf{X})^{-1}(\widehat{\mathbf{X}}^{\prime}Y)$$
+  
+:::
 
 ## Two-stage least squares
 
-- **First stage** - Regress $D_i$ on $X_i$ and $Z_i$. Get the fitted values $\hat{D_i}$
+- Putting it all together, the 2SLS estimator is:
 
-$$\hat{D_i} =  X_i^{\prime}\hat{\alpha} + \hat{\gamma} Z_i  $$
-
-- **Second stage** - Regress $Y_i$ on $X_i$ and fitted values $\hat{D_i}$
-
-$$\hat{Y_i} = X_i^{\prime}\hat{\beta} + \hat{\tau} \hat{D_i}$$
-
-. . .
-
-- The coefficient on the fitted values is the IV estimate
-  - But, the standard errors will be wrong - Why?
+  $$\hat{\tau}_{\text{2SLS}} =  (\mathbf{X}^{\prime}\mathbf{Z}(\mathbf{Z}^{\prime}\mathbf{Z})^{-1}\mathbf{Z}^\prime\mathbf{X})^{-1}(\mathbf{X}^{\prime}\mathbf{Z}(\mathbf{Z}^{\prime}\mathbf{Z})^{-1}\mathbf{Z}^\prime Y)$$
 
 ## Illustrating 2SLS
 
-- Recall our Gerber, Karlan and Bergan (2009, AEJ:AE) experiment
+- Let's include covariates in our **Gerber, Karlan and Bergan (2009)** example
   - $Z_i$: Random assignment to receive a free subscription to the Washington Post
   - $D_i$: Actually subscribing to the Washington Post (as measured by a post-encouragement survey)
   - $Y_i$: 2005 Turnout (measured in the survey)
   - $X_i$: Gender, Age
 
-- Let's load and subset
+- Load and subset out missing covariates
 
-```{r}
+```{r, echo=T}
 green <- read_dta("assets/data/publicdata.dta")
 wapost <- green %>% filter(treatment != "TIMES"&!is.na(getpost)&!is.na(voted)&!is.na(Bfemale)&!is.na(reportedage))
 ```
@@ -733,7 +758,7 @@ wapost <- green %>% filter(treatment != "TIMES"&!is.na(getpost)&!is.na(voted)&!i
 
 - Our first stage regresses subscription on assignment + covariates
 
-```{r}
+```{r, echo=T}
 first_stage <- lm_robust(getpost ~ post + Bfemale + reportedage , data= wapost)
 summary(first_stage)
 ```
@@ -742,31 +767,33 @@ summary(first_stage)
 
 - Let's actually run 2SLS - I like two routines: `iv_robust` in `estimatr` (does 2SLS with robust SEs) and `ivmodel` in `ivmodel` (does robust 2SLS *and* weak-instrument robust tests + other diagnostics)
 
-```{r}
+```{r, echo=T}
 wapo_2sls <- iv_robust(voted ~ getpost  + Bfemale + reportedage | post + Bfemale + reportedage, data= wapost)
 summary(wapo_2sls)
 ```
 
 ## Illustrating 2SLS
 
-```{r}
+```{r, echo=T}
 wapo_2sls2 <- ivmodelFormula(voted ~ getpost  + Bfemale + reportedage | post + Bfemale + reportedage, data= wapost, heteroSE=T)
 summary(wapo_2sls2)
 ```
 
 ## The weak instrument problem
 
+:::{.incremental}
+
 - Our ratio estimator is consistent
 
-$$\hat{\tau}_{\text{IV}} = \frac{\widehat{Cov(Y_i, Z_i)}}{\widehat{Cov(D_i, Z_i)}} \overset{p}{\to} \tau + \frac{Cov(U_i, Z_i)}{Cov(D_i, Z_i)}$$
+  $$\hat{\tau}_{\text{IV}} = \frac{\widehat{Cov(Y_i, Z_i)}}{\widehat{Cov(D_i, Z_i)}} \overset{p}{\to} \tau + \frac{Cov(U_i, Z_i)}{Cov(D_i, Z_i)}$$
 
 - Under exogeneity $Cov(Z_i, U_i)$ is zero.
-
-. . .
 
 - However, when there are small violations of exogeneity, a weak instrument will amplify them.
 - More generally, with a weak instrument, our t-ratio hypothesis tests assuming asymptotic normality will have **incorrect** type-1 error rates.
   - Why? Distributions of ratios are poorly behaved.
+  
+:::
 
 ## The weak instrument problem
 
@@ -790,7 +817,7 @@ $$Y_i = U_i + \epsilon_i$$
 - Let's see how the Wald estimator performs when we have a pretty large effect of $Z_i$ on $D_i$: $\gamma = 2$ and $N = 1000$
 
 ```{r, echo=F}
-set.seed(60639)
+set.seed(53703)
 
 nIter <- 1000
 naive <- rep(NA,nIter)
@@ -813,7 +840,7 @@ for (i in 1:nIter){
 }
 ```
 
-```{r}
+```{r, echo=T}
 ## First stage effect
 mean(firststage)
 
@@ -852,7 +879,7 @@ abline(v=0, col="red", lty=2)
 - Now, what happens when our instrument is weak: $\gamma = .2$ and $N = 1000$
 
 ```{r, echo=F}
-set.seed(60639)
+set.seed(53703)
 
 nIter <- 1000
 naive <- rep(NA,nIter)
@@ -875,7 +902,7 @@ for (i in 1:nIter){
 }
 ```
 
-```{r}
+```{r, echo=T}
 ## First stage effect
 mean(firststage)
 
@@ -914,15 +941,19 @@ abline(v=0, col="red", lty=2)
 ::: {.incremental}
 
 - When is an instrument too weak?
-- **Classic result:** Staiger and Stock (1997), Stock and Yogo (2005) use first stage F-statistic thresholds
-  - $\leadsto$ heuristic of first-stage F-statistic below 10.
-- **Recently:** Lee, Moreira, McCrary, Porter (2020) -- If we want to use the F-statistic as a screen then we actually need $F > 104.7$
-- Suggestions:
-  - Permutation tests using a test statistic that does not depend on the first stage.
-  - **Anderson-Rubin (1949)** approach
-  - Angrist and Pischke (2009) - with "just-identified" IV (number of instruments = number of endogenous variables) bias is usually overwhelmed by the large standard errors.
+- **Classic result:** **Stock and Yogo (2005)** use first stage F-statistic thresholds
+  - $\leadsto$ heuristic of first-stage $F > 10$
+  - Problem! These are benchmarks under **homoskedasticity**
+- **Montiel Olea and Pflueger (2013)**
+  - **Robust** F-statistics
+  - Comparable threshold to Stock and Yogo bias is $F > 23.1$
+-  **Lee, Moreira, McCrary, Porter (2020)** 
+  - These are thresholds that the bias is "small" (approximately 10%)
+  - If we want to use the F-statistic as a screen for $p < .05$ to be valid, then we actually need $F > 104.7$
+- **Angrist and Pischke (2009)** - with "just-identified" IV bias is usually overwhelmed by the large standard errors.
 
 :::
+
 
 ## Permutation test
 
@@ -935,7 +966,7 @@ $$T(\tau) = \frac{1}{N} \sum_{i=1}^N \tilde{Z_i} \times (Y_i - \tau D_i)$$
 
 - If the instrument is valid, under the null hypothesis that $\tau = \tau_0$, we can get the **randomization distribution** of the test statistic by simply re-randomizing treatment according to the known assignment process.
   - Construct confidence intervals by "inverting the test" - what values of $\tau_0$ does the test fail to reject?
-- Alternative test statistics based on ranks of $Y_i - \tau D_i)$ (possibly within strata) can also be used.
+- Alternative test statistics based on ranks of $Y_i - \tau D_i$ (possibly within strata) can also be used.
 
 :::
 
@@ -946,13 +977,13 @@ $$T(\tau) = \frac{1}{N} \sum_{i=1}^N \tilde{Z_i} \times (Y_i - \tau D_i)$$
 - Even when the assignment process is not known, the IV assumptions allow us to construct a test statistic that does not depend on the first stage.
   - This is the **Anderson-Rubin (1949)** approach - **Andrews, Stock and Sun (2019)** provide a good explanation especially for the "just-identified" case
 - Let $\hat{\delta}_{\text{ITT}}$ be the **reduced form** or intent-to-treat estimate.
-- The instrumental variables assumptions that the reduced form is related to the first stage $\pi$ and the treatment effect $\tau$
+- Under the IV assumptions, the reduced form is the product of first stage $\pi$ and the treatment effect $\tau$
 
-$$\delta_{\text{ITT}} = \gamma \times \tau$$
+  $$\delta_{\text{ITT}} = \gamma \times \tau$$
 
 - Assuming a particular null $H_0: \tau = \tau_0$ implies that
 
-$$\delta_{\text{ITT}} - \gamma \times \tau_0 = 0$$
+  $$\delta_{\text{ITT}} - \gamma \times \tau_0 = 0$$
 
 :::
 
@@ -960,13 +991,13 @@ $$\delta_{\text{ITT}} - \gamma \times \tau_0 = 0$$
 
 ::: {.incremental}
 
-- And so we can construct a test statistic based on the difference between the estimated ITT and the estimated first stage adjusted by the null which we know is normal in large samples.
+- We can construct a test statistic based on the difference between the estimated ITT and the estimated first stage adjusted by the null which we know is normal in large samples.
 
-$$g(\tau_0) = \hat{\delta}_{\text{ITT}} - \hat{\gamma} \tau_0 \sim \mathcal{N}(0, \Omega(\tau_0))$$
+  $$g(\tau_0) = \hat{\delta}_{\text{ITT}} - \hat{\gamma} \tau_0 \sim \mathcal{N}(0, \Omega(\tau_0))$$
 
 - The Anderson-Rubin (1949) test statistic is:
 
-$$AR(\tau) = g(\tau)^\prime \Omega(\tau_0)^{-1}g(\tau)$$
+  $$AR(\tau) = g(\tau)^\prime \Omega(\tau_0)^{-1}g(\tau)$$
 
 Under the null $H_0: \tau = \tau_0$, this has a chi-squared distribution which does not depend on the value of the first stage.
 
@@ -978,14 +1009,14 @@ Under the null $H_0: \tau = \tau_0$, this has a chi-squared distribution which d
 
 ## Example: Strong instrument
 
-```{r}
+```{r, echo=T}
 wapo_iv <- ivmodelFormula(voted ~ getpost  | post , data= wapost, heteroSE=T)
 print(AR.test(wapo_iv))
 ```
 
 ## Example: Weak instrument
 
-```{r}
+```{r, echo=T}
 weak_iv_data <- data.frame(Y = Y, D= D, Z=Z)
 weak_iv <- ivmodelFormula(Y ~ D | Z , data= weak_iv_data, heteroSE=T)
 print(AR.test(weak_iv))
@@ -1007,6 +1038,22 @@ print(AR.test(weak_iv))
 - Statistical inference is tricky
   - Beware weak instruments - typical large-sample asymptotics do poorly when instruments are irrelevant.
   - Consider weak-instrument robust tests (Anderson-Rubin)
-  - If it's not in the reduced form, it's not real.
+  - If it's not in the reduced form, **it's not real**
 
 :::
+
+## Next week
+
+::: {.incremental}
+
+- Another method of dealing with **unobserved** confounding - **differences-in-differences**
+- What if we can observe a period when **both** treated and control are unexposed
+  - Then any **differences** are attributable to **bias**
+- Assume the bias is **time-invariant**
+  - Then we can just subtract it out!
+  
+- **"Parallel trends"** - Observed trends in the control group are equal to **counterfactual** trends in the treated group!
+
+
+:::
+
