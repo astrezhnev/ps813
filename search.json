@@ -319,7 +319,14 @@
     "href": "slides/week8/week8_instrumental_variables.html#iv-in-observational-studies",
     "title": "Week 8: Instrumental Variables",
     "section": "IV in observational studies",
-    "text": "IV in observational studies\n\nMost applications of IV are not treatment non-compliance.\nBut all follow the same underlying logic.\n\nTreatment of interest is not randomized…but there exists a real or “natural” experiment that is.\nAnd this natural experiment affects the outcome only through its effect on the treatment of interest.\n\nExamples:\n\nAngrist (1990) - Vietnam draft lottery number as an instrument for the effect of military service on income.\nAngrist and Krueger (1991) - Birth quarter as an instrument for education’s effect on income.\nAcemoglu et. al. (2001) - European settler mortality as an instrument for the effect of institutional quality on GDP per capita.\n\nChallenges\n\nExogeneity/ignorability of the instrument isn’t guaranteed - need to make the usual “selection-on-observables” arguments from theory\nIV double-bind\n\nIf the instrument has a huge effect on your treatment…\n…it might also affect a lot of other stuff…\n…all of those are potential exclusion restriction violations!"
+    "text": "IV in observational studies\n\nMost applications of IV are not treatment non-compliance.\nBut all follow the same underlying logic.\n\nTreatment of interest is not randomized…but there exists a real or “natural” experiment that is.\nAnd this natural experiment affects the outcome only through its effect on the treatment of interest.\n\nExamples:\n\nAngrist (1990) - Vietnam draft lottery number as an instrument for the effect of military service on income.\nAngrist and Krueger (1991) - Birth quarter as an instrument for education’s effect on income.\nAcemoglu et. al. (2001) - European settler mortality as an instrument for the effect of institutional quality on GDP per capita."
+  },
+  {
+    "objectID": "slides/week8/week8_instrumental_variables.html#iv-in-observational-studies-1",
+    "href": "slides/week8/week8_instrumental_variables.html#iv-in-observational-studies-1",
+    "title": "Week 8: Instrumental Variables",
+    "section": "IV in observational studies",
+    "text": "IV in observational studies\n\nChallenges\n\nExogeneity/ignorability of the instrument isn’t guaranteed - need to make the usual “selection-on-observables” arguments from theory\nIV double-bind\n\nIf the instrument has a huge effect on your treatment…\n…it might also affect a lot of other stuff…\n…all of those are potential exclusion restriction violations!"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#discussion-the-rainfall-instrument",
@@ -438,14 +445,14 @@
     "href": "slides/week8/week8_instrumental_variables.html#the-weak-instrument-problem-1",
     "title": "Week 8: Instrumental Variables",
     "section": "The weak instrument problem",
-    "text": "The weak instrument problem\n\nLet’s use a simulation to see how bad the bias can be in IV versus just a simple OLS regression of outcome on treatment under unobserved confounding.\nLet \\(U_i \\sim \\mathcal{N}(0, 1)\\) be an unobserved confounder. \\(Z_i \\sim \\text{Bern}(.5)\\) is an exogenous instrument.\nThe probability of treatment is modeled via a logit\n\n\\[\\text{log}\\bigg(\\frac{P(D_i = 1 | Z_i, U_i)}{1-P(D_i = 1 | Z_i, U_i)}\\bigg) =  \\gamma Z_i + U_i\\]\n\\(\\gamma\\) here captures the relationship between the exogenous instrument \\(Z_i\\) and the treatment - The outcome is a function of \\(U\\) and a mean zero error term \\(\\epsilon_i\\) only, so the true treatment effect is \\(0\\)\n\\[Y_i = U_i + \\epsilon_i\\]"
+    "text": "The weak instrument problem\n\nLet’s use a simulation to see how bad the bias can be in IV versus just a simple OLS regression of outcome on treatment under unobserved confounding.\nLet \\(U_i \\sim \\mathcal{N}(0, 1)\\) be an unobserved confounder. \\(Z_i \\sim \\text{Bern}(.5)\\) is an exogenous instrument.\nThe probability of treatment is modeled via a logit\n\\[\\text{log}\\bigg(\\frac{P(D_i = 1 | Z_i, U_i)}{1-P(D_i = 1 | Z_i, U_i)}\\bigg) =  \\gamma Z_i + U_i\\]\n\\(\\gamma\\) here captures the relationship between the exogenous instrument \\(Z_i\\) and the treatment\nThe outcome is a function of \\(U\\) and a mean zero error term \\(\\epsilon_i\\) only, so the true treatment effect is \\(0\\)\n\n\\[Y_i = U_i + \\epsilon_i\\]"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#the-weak-instrument-problem-2",
     "href": "slides/week8/week8_instrumental_variables.html#the-weak-instrument-problem-2",
     "title": "Week 8: Instrumental Variables",
     "section": "The weak instrument problem",
-    "text": "The weak instrument problem\n\nLet’s see how the Wald estimator performs when we have a pretty large effect of \\(Z_i\\) on \\(D_i\\): \\(\\gamma = 2\\) and \\(N = 1000\\)\n\n\n## First stage effect\nmean(firststage)\n\n[1] 0.3441304\n\n## F-statistic from the first stage\nmean(firststageF)\n\n[1] 156.7175\n\n## Bias of the naive OLS Y ~ X\nmean(naive)\n\n[1] 0.7274939\n\n## Bias of IV\nmean(IV)\n\n[1] -0.01632865"
+    "text": "The weak instrument problem\n\nLet’s see how the Wald estimator performs when we have a pretty large effect of \\(Z_i\\) on \\(D_i\\): \\(\\gamma = 3\\) and \\(N = 1000\\)\n\n\n## First stage effect\nmean(firststage)\n\n[1] 0.3441304\n\n## F-statistic from the first stage\nmean(firststageF)\n\n[1] 156.7175\n\n## Bias of the naive OLS Y ~ X\nmean(naive)\n\n[1] 0.7274939\n\n## Bias of IV\nmean(IV)\n\n[1] -0.01632865"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#the-weak-instrument-problem-3",
@@ -508,7 +515,7 @@
     "href": "slides/week8/week8_instrumental_variables.html#anderson-rubin-test-1",
     "title": "Week 8: Instrumental Variables",
     "section": "Anderson-Rubin Test",
-    "text": "Anderson-Rubin Test\n\nWe can construct a test statistic based on the difference between the estimated ITT and the estimated first stage adjusted by the null which we know is normal in large samples.\n\\[g(\\tau_0) = \\hat{\\delta}_{\\text{ITT}} - \\hat{\\gamma} \\tau_0 \\sim \\mathcal{N}(0, \\Omega(\\tau_0))\\]\nThe Anderson-Rubin (1949) test statistic is:\n\\[AR(\\tau) = g(\\tau)^\\prime \\Omega(\\tau_0)^{-1}g(\\tau)\\]\n\nUnder the null \\(H_0: \\tau = \\tau_0\\), this has a chi-squared distribution which does not depend on the value of the first stage.\n\nIntuitively: Statistical properties of differences in two normal random variables are well-known and easy. Statistical properties of ratios are much more complicated!\n\nAgain, invert the test to get a confidence interval\nCan get infinite confidence bounds with a weak instrument - the test never rejects for any value of \\(\\tau_0\\)"
+    "text": "Anderson-Rubin Test\n\nWe can construct a test statistic based on the difference between the estimated ITT and the estimated first stage adjusted by the null which we know is normal in large samples.\n\\[g(\\tau_0) = \\hat{\\delta}_{\\text{ITT}} - \\hat{\\gamma} \\tau_0 \\sim \\mathcal{N}(0, \\Omega(\\tau_0))\\]\nThe Anderson-Rubin (1949) test statistic is:\n\\[AR(\\tau) = g(\\tau)^\\prime \\Omega(\\tau_0)^{-1}g(\\tau)\\]\nUnder the null \\(H_0: \\tau = \\tau_0\\), this has a chi-squared distribution which does not depend on the value of the first stage.\nIntuitively: Statistical properties of differences in two normal random variables are well-known and easy. Statistical properties of ratios are much more complicated!\n\nAgain, invert the test to get a confidence interval\nCan get infinite confidence bounds with a weak instrument - the test never rejects for any value of \\(\\tau_0\\)"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#example-strong-instrument",
@@ -529,7 +536,7 @@
     "href": "slides/week8/week8_instrumental_variables.html#conclusion",
     "title": "Week 8: Instrumental Variables",
     "section": "Conclusion",
-    "text": "Conclusion\n\nInstrumental variables lets us leverage alternative sources of randomness to learn about an otherwise confounded causal relationship.\nAn instrument:\n\nAffects treatment\nDoesn’t affect the outcome except through treatment\nIs ignorable w.r.t the outcome.\n\nLATE theorem: The IV estimand is the ATE among those who would take treatment due to the instrument.\n\nWith continuous treatment/instrument - a weighted average of LATEs (Angrist and Imbens, 1995)\nWith covariates - a weighted average of covariate-specific LATEs\nBut be careful with this interpretation when the model is not fully saturated (Słoczyński, 2022)\n\nStatistical inference is tricky\n\nBeware weak instruments - typical large-sample asymptotics do poorly when instruments are irrelevant.\nConsider weak-instrument robust tests (Anderson-Rubin)\nIf it’s not in the reduced form, it’s not real"
+    "text": "Conclusion\n\nInstrumental variables lets us leverage alternative sources of randomness to learn about an otherwise confounded causal relationship.\nAn instrument:\n\nAffects treatment\nDoesn’t affect the outcome except through treatment\nIs ignorable w.r.t the outcome.\n\nLATE theorem: The IV estimand is the ATE among those who would take treatment due to the instrument.\n\nWith continuous treatment/instrument - a weighted average of LATEs (Angrist and Imbens, 1995)\nWith covariates - a weighted average of covariate-specific LATEs\nBut be careful with this interpretation when the model is not fully saturated (Słoczyński, 2022)\n\nStatistical inference is tricky\n\nBeware weak instruments - typical large-sample asymptotics do poorly when instruments are irrelevant.\nConsider weak-instrument robust tests (Anderson-Rubin)"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#next-week",

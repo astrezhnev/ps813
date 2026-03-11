@@ -1545,6 +1545,11 @@ getpost     0.1861490 760</code></pre>
 <li class="fragment"><strong>Angrist and Krueger (1991)</strong> - Birth quarter as an instrument for education’s effect on income.</li>
 <li class="fragment"><strong>Acemoglu et. al. (2001)</strong> - European settler mortality as an instrument for the effect of institutional quality on GDP per capita.</li>
 </ul></li>
+</ul>
+</section>
+<section id="iv-in-observational-studies-1" class="slide level2">
+<h2>IV in observational studies</h2>
+<ul>
 <li class="fragment">Challenges
 <ul>
 <li class="fragment"><strong>Exogeneity/ignorability</strong> of the instrument isn’t guaranteed - need to make the usual “selection-on-observables” arguments from <strong>theory</strong></li>
@@ -1867,18 +1872,19 @@ Test Stat=0.002230662, p-value is 0.96234
 <section id="the-weak-instrument-problem-1" class="slide level2">
 <h2>The weak instrument problem</h2>
 <ul>
-<li class="fragment">Let’s use a simulation to see how bad the bias can be in IV versus just a simple OLS regression of outcome on treatment under unobserved confounding.</li>
-<li class="fragment">Let <span class="math inline">\(U_i \sim \mathcal{N}(0, 1)\)</span> be an unobserved confounder. <span class="math inline">\(Z_i \sim \text{Bern}(.5)\)</span> is an <strong>exogenous</strong> instrument.</li>
-<li class="fragment">The probability of treatment is modeled via a logit</li>
-</ul>
+<li class="fragment"><p>Let’s use a simulation to see how bad the bias can be in IV versus just a simple OLS regression of outcome on treatment under unobserved confounding.</p></li>
+<li class="fragment"><p>Let <span class="math inline">\(U_i \sim \mathcal{N}(0, 1)\)</span> be an unobserved confounder. <span class="math inline">\(Z_i \sim \text{Bern}(.5)\)</span> is an <strong>exogenous</strong> instrument.</p></li>
+<li class="fragment"><p>The probability of treatment is modeled via a logit</p>
 <p><span class="math display">\[\text{log}\bigg(\frac{P(D_i = 1 | Z_i, U_i)}{1-P(D_i = 1 | Z_i, U_i)}\bigg) =  \gamma Z_i + U_i\]</span></p>
-<p><span class="math inline">\(\gamma\)</span> here captures the relationship between the exogenous instrument <span class="math inline">\(Z_i\)</span> and the treatment - The outcome is a function of <span class="math inline">\(U\)</span> and a mean zero error term <span class="math inline">\(\epsilon_i\)</span> only, so the true treatment effect is <span class="math inline">\(0\)</span></p>
+<p><span class="math inline">\(\gamma\)</span> here captures the relationship between the exogenous instrument <span class="math inline">\(Z_i\)</span> and the treatment</p></li>
+<li class="fragment"><p>The outcome is a function of <span class="math inline">\(U\)</span> and a mean zero error term <span class="math inline">\(\epsilon_i\)</span> only, so the true treatment effect is <span class="math inline">\(0\)</span></p></li>
+</ul>
 <p><span class="math display">\[Y_i = U_i + \epsilon_i\]</span></p>
 </section>
 <section id="the-weak-instrument-problem-2" class="slide level2">
 <h2>The weak instrument problem</h2>
 <ul>
-<li>Let’s see how the Wald estimator performs when we have a pretty large effect of <span class="math inline">\(Z_i\)</span> on <span class="math inline">\(D_i\)</span>: <span class="math inline">\(\gamma = 2\)</span> and <span class="math inline">\(N = 1000\)</span></li>
+<li>Let’s see how the Wald estimator performs when we have a pretty large effect of <span class="math inline">\(Z_i\)</span> on <span class="math inline">\(D_i\)</span>: <span class="math inline">\(\gamma = 3\)</span> and <span class="math inline">\(N = 1000\)</span></li>
 </ul>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a><span class="do">## First stage effect</span></span>
@@ -2016,11 +2022,9 @@ Test Stat=0.002230662, p-value is 0.96234
 <li class="fragment"><p>We can construct a test statistic based on the difference between the estimated ITT and the estimated first stage adjusted by the null which we know is normal in large samples.</p>
 <p><span class="math display">\[g(\tau_0) = \hat{\delta}_{\text{ITT}} - \hat{\gamma} \tau_0 \sim \mathcal{N}(0, \Omega(\tau_0))\]</span></p></li>
 <li class="fragment"><p>The Anderson-Rubin (1949) test statistic is:</p>
-<p><span class="math display">\[AR(\tau) = g(\tau)^\prime \Omega(\tau_0)^{-1}g(\tau)\]</span></p></li>
-</ul>
-<p>Under the null <span class="math inline">\(H_0: \tau = \tau_0\)</span>, this has a chi-squared distribution which does not depend on the value of the first stage.</p>
-<ul>
-<li class="fragment"><strong>Intuitively</strong>: Statistical properties of <strong>differences</strong> in two normal random variables are well-known and easy. Statistical properties of <strong>ratios</strong> are much more complicated!
+<p><span class="math display">\[AR(\tau) = g(\tau)^\prime \Omega(\tau_0)^{-1}g(\tau)\]</span></p>
+<p>Under the null <span class="math inline">\(H_0: \tau = \tau_0\)</span>, this has a chi-squared distribution which does not depend on the value of the first stage.</p></li>
+<li class="fragment"><p><strong>Intuitively</strong>: Statistical properties of <strong>differences</strong> in two normal random variables are well-known and easy. Statistical properties of <strong>ratios</strong> are much more complicated!</p>
 <ul>
 <li class="fragment">Again, invert the test to get a confidence interval</li>
 <li class="fragment">Can get <strong>infinite</strong> confidence bounds with a weak instrument - the test <strong>never rejects</strong> for any value of <span class="math inline">\(\tau_0\)</span></li>
@@ -2088,15 +2092,14 @@ $ci
 </ul></li>
 <li class="fragment">LATE theorem: The IV estimand is the ATE among those who would take treatment due to the instrument.
 <ul>
-<li class="fragment">With continuous treatment/instrument - a weighted average of LATEs (Angrist and Imbens, 1995)</li>
+<li class="fragment">With continuous treatment/instrument - a weighted average of LATEs <strong>(Angrist and Imbens, 1995)</strong></li>
 <li class="fragment">With covariates - a weighted average of covariate-specific LATEs</li>
-<li class="fragment">But be careful with this interpretation when the model is not fully saturated (Słoczyński, 2022)</li>
+<li class="fragment">But be careful with this interpretation when the model is not fully saturated <strong>(Słoczyński, 2022)</strong></li>
 </ul></li>
 <li class="fragment">Statistical inference is tricky
 <ul>
 <li class="fragment">Beware weak instruments - typical large-sample asymptotics do poorly when instruments are irrelevant.</li>
 <li class="fragment">Consider weak-instrument robust tests (Anderson-Rubin)</li>
-<li class="fragment">If it’s not in the reduced form, <strong>it’s not real</strong></li>
 </ul></li>
 </ul>
 </section>
