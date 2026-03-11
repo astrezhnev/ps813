@@ -578,6 +578,13 @@ iv_robust(voted ~ getpost | post, data=wapost)
   - **Angrist (1990)** - Vietnam draft lottery number as an instrument for the effect of military service on income.
   - **Angrist and Krueger (1991)** - Birth quarter as an instrument for education's effect on income.
   - **Acemoglu et. al. (2001)** - European settler mortality as an instrument for the effect of institutional quality on GDP per capita.
+
+:::
+
+## IV in observational studies
+
+:::{.incremental}
+
 - Challenges
   - **Exogeneity/ignorability** of the instrument isn't guaranteed - need to make the usual "selection-on-observables" arguments from **theory**
   - **IV double-bind**
@@ -803,7 +810,7 @@ summary(wapo_2sls2)
 - Let $U_i \sim \mathcal{N}(0, 1)$ be an unobserved confounder. $Z_i \sim \text{Bern}(.5)$ is an **exogenous** instrument.
 - The probability of treatment is modeled via a logit
 
-$$\text{log}\bigg(\frac{P(D_i = 1 | Z_i, U_i)}{1-P(D_i = 1 | Z_i, U_i)}\bigg) =  \gamma Z_i + U_i$$
+  $$\text{log}\bigg(\frac{P(D_i = 1 | Z_i, U_i)}{1-P(D_i = 1 | Z_i, U_i)}\bigg) =  \gamma Z_i + U_i$$
 
   $\gamma$ here captures the relationship between the exogenous instrument $Z_i$ and the treatment
 - The outcome is a function of $U$ and a mean zero error term $\epsilon_i$ only, so the true treatment effect is $0$
@@ -814,7 +821,7 @@ $$Y_i = U_i + \epsilon_i$$
 
 ## The weak instrument problem
 
-- Let's see how the Wald estimator performs when we have a pretty large effect of $Z_i$ on $D_i$: $\gamma = 2$ and $N = 1000$
+- Let's see how the Wald estimator performs when we have a pretty large effect of $Z_i$ on $D_i$: $\gamma = 3$ and $N = 1000$
 
 ```{r, echo=F}
 set.seed(53703)
@@ -829,7 +836,7 @@ for (i in 1:nIter){
   N <- 1000
   U <- rnorm(N)
   Z <- rbinom(N, 1, .5)
-  FS <- 2
+  FS <- 3
   prD <- 1/(1 + exp(-(FS*Z + U)))
   D <- rbinom(N, 1, prD)
   Y <- U + rnorm(N)
@@ -999,7 +1006,7 @@ $$T(\tau) = \frac{1}{N} \sum_{i=1}^N \tilde{Z_i} \times (Y_i - \tau D_i)$$
 
   $$AR(\tau) = g(\tau)^\prime \Omega(\tau_0)^{-1}g(\tau)$$
 
-Under the null $H_0: \tau = \tau_0$, this has a chi-squared distribution which does not depend on the value of the first stage.
+  Under the null $H_0: \tau = \tau_0$, this has a chi-squared distribution which does not depend on the value of the first stage.
 
 - **Intuitively**: Statistical properties of **differences** in two normal random variables are well-known and easy. Statistical properties of **ratios** are much more complicated!
   - Again, invert the test to get a confidence interval
@@ -1032,13 +1039,12 @@ print(AR.test(weak_iv))
   - Doesn't affect the outcome except through treatment
   - Is ignorable w.r.t the outcome.
 - LATE theorem: The IV estimand is the ATE among those who would take treatment due to the instrument.
-  - With continuous treatment/instrument - a weighted average of LATEs (Angrist and Imbens, 1995)
+  - With continuous treatment/instrument - a weighted average of LATEs **(Angrist and Imbens, 1995)**
   - With covariates - a weighted average of covariate-specific LATEs
-  - But be careful with this interpretation when the model is not fully saturated (Słoczyński, 2022)
+  - But be careful with this interpretation when the model is not fully saturated **(Słoczyński, 2022)**
 - Statistical inference is tricky
   - Beware weak instruments - typical large-sample asymptotics do poorly when instruments are irrelevant.
   - Consider weak-instrument robust tests (Anderson-Rubin)
-  - If it's not in the reduced form, **it's not real**
 
 :::
 
