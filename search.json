@@ -319,21 +319,21 @@
     "href": "slides/week8/week8_instrumental_variables.html#iv-in-observational-studies",
     "title": "Week 8: Instrumental Variables",
     "section": "IV in observational studies",
-    "text": "IV in observational studies\n\nMost applications of IV are not treatment non-compliance.\nBut all follow the same underlying logic.\n\nTreatment of interest is not randomized…but there exists a real or “natural” experiment that is.\nAnd this natural experiment affects the outcome only through its effect on the treatment of interest.\n\nExamples:\n\nAngrist (1990) - Vietnam draft lottery number as an instrument for the effect of military service on income.\nAngrist and Krueger (1991) - Birth quarter as an instrument for education’s effect on income.\nAcemoglu et. al. (2001) - European settler mortality as an instrument for the effect of institutional quality on GDP per capita.\nKern & Hainmueller (2009) - West German TV signal strength as an instrument for the effect of watching West German TV on support for the East German regime\n\nChallenges\n\nExogeneity/ignorability isn’t guaranteed\nIf an instrument has a large effect on your treatment of interest, it probably has an effect on other stuff that could affect the outcome as well (violating the exclusion restriction)"
+    "text": "IV in observational studies\n\nMost applications of IV are not treatment non-compliance.\nBut all follow the same underlying logic.\n\nTreatment of interest is not randomized…but there exists a real or “natural” experiment that is.\nAnd this natural experiment affects the outcome only through its effect on the treatment of interest.\n\nExamples:\n\nAngrist (1990) - Vietnam draft lottery number as an instrument for the effect of military service on income.\nAngrist and Krueger (1991) - Birth quarter as an instrument for education’s effect on income.\nAcemoglu et. al. (2001) - European settler mortality as an instrument for the effect of institutional quality on GDP per capita.\n\nChallenges\n\nExogeneity/ignorability of the instrument isn’t guaranteed - need to make the usual “selection-on-observables” arguments from theory\nIV double-bind\n\nIf the instrument has a huge effect on your treatment…\n…it might also affect a lot of other stuff…\n…all of those are potential exclusion restriction violations!"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#discussion-the-rainfall-instrument",
     "href": "slides/week8/week8_instrumental_variables.html#discussion-the-rainfall-instrument",
     "title": "Week 8: Instrumental Variables",
     "section": "Discussion: The rainfall instrument",
-    "text": "Discussion: The rainfall instrument\n\nMiguel, Satyanth, and Sergenti (2004, JPE) look at the effect of economic growth on civil conflict in 41 African countries.\n\nGrowth and conflict are confounded (e.g. by political institutions).\nInstrument for GDP growth using the annual change in rainfall – for heavily agrarian countries, rainfall fluctuations determine crop yields which are a large component of GDP.\nObserve that changes in rainfall are associated with changes in GDP and negative GDP shocks (instrumented by rainfall) increase civil conflict.\n\nDoes this satisfy the IV identification assumptions?\n\nExogeneity? Is rainfall as-good-as randomly assigned?\nMonotonicity? Do positive rainfall shocks strictly boost GDP per capita?\nExclusion restriction? Is rainfall’s effect transmitted only through the mechanism the authors define?"
+    "text": "Discussion: The rainfall instrument\n\nMiguel, Satyanth, and Sergenti (2004, JPE) look at the effect of economic growth on civil conflict in 41 African countries.\n\nGrowth and conflict are confounded (e.g. by political institutions).\nInstrument for GDP growth using the annual change in rainfall\n\nFor heavily agrarian countries, rainfall fluctuations determine crop yields which are a large component of GDP.\n\nReduced form - Negative rainfall shocks increase civil conflict.\n\nFirst stage - Negative rainfall shocks reduce GDP growth\n\n\nShould we conclude that growth shocks increase conflict?\n\nExogeneity? Is rainfall as-good-as randomly assigned?\nMonotonicity? Do positive rainfall shocks strictly boost GDP per capita?\nExclusion restriction? Is rainfall’s effect transmitted only through the mechanism the authors define?"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#discussion-the-rainfall-instrument-1",
     "href": "slides/week8/week8_instrumental_variables.html#discussion-the-rainfall-instrument-1",
     "title": "Week 8: Instrumental Variables",
     "section": "Discussion: The rainfall instrument",
-    "text": "Discussion: The rainfall instrument\n\n\n\n\n\n\nMellon (2023) “Rain, Rain, Go Away: 195 Potential Exclusion-Restriction Violations for Studies Using Weather as an Instrumental Variable”"
+    "text": "Discussion: The rainfall instrument\n\n\n\n\n\n\nMellon (2025) “Rain, Rain, Go Away: 194 Potential Exclusion-Restriction Violations for Studies Using Weather as an Instrumental Variable”"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#estimation-and-inference-for-iv",
@@ -343,88 +343,95 @@
     "text": "Estimation and inference for IV"
   },
   {
-    "objectID": "slides/week8/week8_instrumental_variables.html#iv-with-constant-effects",
-    "href": "slides/week8/week8_instrumental_variables.html#iv-with-constant-effects",
+    "objectID": "slides/week8/week8_instrumental_variables.html#the-iv-ratio-estimator",
+    "href": "slides/week8/week8_instrumental_variables.html#the-iv-ratio-estimator",
     "title": "Week 8: Instrumental Variables",
-    "section": "IV with constant effects",
-    "text": "IV with constant effects\n\nLet’s consider a linear model for the potential outcomes\n\n\\[Y_i(d) = \\alpha + \\tau d + \\gamma U_i + \\eta_i\\]\n\n\nIf we could control for \\(U_i\\), we could estimate the regression to get an estimate of \\(\\tau\\)\n\n\\[Y_i = \\alpha + \\tau D_i + \\gamma U_i + \\eta_i\\]\n\nBut we can’t - and regressing \\(Y_i\\) on \\(D_i\\) alone will not give a consistent estimator of \\(\\tau\\) since \\(Cov(\\gamma U_i + \\eta_i, D_i) \\neq 0\\)"
+    "section": "The IV ratio estimator",
+    "text": "The IV ratio estimator\n\nWe’ve talked about what the IV estimand means…\n\n…now let’s talk about estimation\n\nRemember, the IV ratio estimand (with a single instrument and a single treatment)\n\\[\\tau_{\\text{IV}} = \\frac{Cov(Y_i, Z_i)}{Cov(Y_i, X_i)}\\]\nWhat is a consistent estimator of this? Let’s use the plug-in principle\n\\[\\hat{\\tau}_{\\text{IV}} = \\frac{\\widehat{Cov}(Y_i, Z_i)}{\\widehat{Cov}(Y_i, X_i)}\\]\nNumerator: “Reduced form”/ITT\nDenominator: “First stage”"
   },
   {
-    "objectID": "slides/week8/week8_instrumental_variables.html#iv-with-constant-effects-1",
-    "href": "slides/week8/week8_instrumental_variables.html#iv-with-constant-effects-1",
+    "objectID": "slides/week8/week8_instrumental_variables.html#the-iv-ratio-estimator-1",
+    "href": "slides/week8/week8_instrumental_variables.html#the-iv-ratio-estimator-1",
     "title": "Week 8: Instrumental Variables",
-    "section": "IV with constant effects",
-    "text": "IV with constant effects\n\nSuppose \\(Z_i\\) is an instrument that is exogeneous and satisfies the exclusion restriction\n\n\\[Cov(\\gamma U_i + \\eta_i, Z_i) = 0\\]\n\n\nThen, we can identify \\(\\tau\\)\n\n\\[\\begin{align*}\nCov(Y_i, Z_i) &= Cov(\\alpha + \\tau D_i + \\gamma U_i + \\eta_i, Z_i)\\\\\n&= Cov(\\alpha, Z_i) + Cov(\\tau D_i, Z_i) + Cov(\\gamma U_i + \\eta_i, Z_i)\\\\\n&= \\tau Cov( D_i, Z_i)\n\\end{align*}\\]\n\n\n\nWhich gives us our IV estimand\n\n\\[\\tau = \\frac{Cov(Y_i, Z_i)}{Cov(D_i, Z_i)}\\]"
+    "section": "The IV ratio estimator",
+    "text": "The IV ratio estimator\n\nIf the sample covariances are consistent for the population covariances (e.g. under i.i.d. sampling), then by continuous mapping theorem\n\\[\\hat{\\tau}_{\\text{IV}} \\overset{p}{\\to} \\tau_{\\text{IV}}\\]\nAnd, by our usual assumptions from regression, we also have asymptotic normality\n\\[\\sqrt{n}(\\hat{\\tau}_{\\text{IV}}  - \\tau_{\\text{IV}}) \\overset{d}{\\to} \\mathcal{N}(0, V)\\]\nWhat’s the variance \\(V\\)?\n\nThis is easiest to explain by writing the IV estimator in matrix form.\nWe can use the same tools from our analysis of linear regression!"
   },
   {
-    "objectID": "slides/week8/week8_instrumental_variables.html#iv-estimator",
-    "href": "slides/week8/week8_instrumental_variables.html#iv-estimator",
+    "objectID": "slides/week8/week8_instrumental_variables.html#iv-ratio-in-matrix-form",
+    "href": "slides/week8/week8_instrumental_variables.html#iv-ratio-in-matrix-form",
     "title": "Week 8: Instrumental Variables",
-    "section": "IV estimator",
-    "text": "IV estimator\n\nWe can estimate \\(\\tau\\) by plugging in the sample quantities.\n\n\\[\\hat{\\tau_{\\text{IV}}} = \\frac{\\widehat{Cov(Y_i, Z_i)}}{\\widehat{Cov(D_i, Z_i)}}\\]\n\n\nThis also can be written as a ratio of two regression coefficients\n\n\\[\\hat{\\tau_{\\text{IV}}} = \\frac{\\widehat{Cov(Y_i, Z_i)}/\\widehat{Var(Z_i)}}{\\widehat{Cov(D_i, Z_i)}/\\widehat{Var(Z_i)}}\\]\n\nDenominator: “First stage”: Regression of \\(D_i\\) on \\(Z_i\\)\nNumerator: “Reduced form”: Regression of \\(Y_i\\) on \\(Z_i\\)"
+    "section": "IV ratio in matrix form",
+    "text": "IV ratio in matrix form\n\nLet \\(\\mathbf{Z}\\) be our matrix of instruments and covariates\nLet \\(\\mathbf{X}\\) be our matrix of treatments and covariates\n\nCovariates here refers to stuff that’s not a treatment or a - possibly things that are needed to satisfy ignorability for the instrument.\n\nFor identification, we need as many instruments as we have treatments\n\nMost typical case in political science: single-instrument, single-treatment case\nMore “structural equation”-oriented discplines also consider multiple-instrument/multiple-treatment cases\nSometimes we might have more instruments than treatments (“overidentification”)\n\nWe can write the just-identified (no. instruments = no. treatments) IV estimator as:\n\\[\\hat{\\tau}_{\\text{IV}} = (\\mathbf{Z}^{\\prime}\\mathbf{X})^{-1}(\\mathbf{Z}^{\\prime} Y)\\]"
   },
   {
-    "objectID": "slides/week8/week8_instrumental_variables.html#sls---including-covariates",
-    "href": "slides/week8/week8_instrumental_variables.html#sls---including-covariates",
+    "objectID": "slides/week8/week8_instrumental_variables.html#iv-ratio-in-matrix-form-1",
+    "href": "slides/week8/week8_instrumental_variables.html#iv-ratio-in-matrix-form-1",
     "title": "Week 8: Instrumental Variables",
-    "section": "2SLS - Including covariates",
-    "text": "2SLS - Including covariates\n\nWhat if ignorability of \\(Z_i\\) only holds conditional on \\(X_i\\) – or we want to include \\(X_i\\) as predictors to improve precision.\nWe’ll assume a particular structure for the outcome and treatment models\n\n\\[Y_i = X_i^{\\prime}\\beta + \\tau D_i + \\epsilon_i\\] \\[D_i = X_i^{\\prime}\\alpha + \\gamma Z_i + \\nu_i\\]\n\nAssume the \\(X_i\\) are exogenous but not excluded (appear in both equations). \\(D_i\\) is still endogenous so we can’t get the treatment effect by just regressing outcome on treatment and covariates.\nCan we get an expression for \\(Y_i\\) in the form of \\(Z_i\\) alone?"
+    "section": "IV ratio in matrix form",
+    "text": "IV ratio in matrix form\n\nWe can recover the asymptotic variance using the delta method!\n\\[Var(\\hat{\\tau}_{\\text{IV}}) = (\\mathbf{Z}^{\\prime}\\mathbf{X})^{-1}(\\mathbf{Z}^{\\prime} \\Sigma \\mathbf{Z})(\\mathbf{Z}^{\\prime}\\mathbf{X})^{-1}\\]\n\\(\\Sigma\\) is the variance-covariance matrix of the errors\n\nUnder i.i.d. sampling, a heteroskedasticity-robust plug-in estimator for \\(\\hat{\\Sigma}\\) is a diagonal matrix with the squared residuals.\nOther “robust” SEs w/ different specifications for \\(\\Sigma\\) (e.g. clustering, spatial correlation, etc…) - we’ll talk about these later!"
   },
   {
-    "objectID": "slides/week8/week8_instrumental_variables.html#sls---including-covariates-1",
-    "href": "slides/week8/week8_instrumental_variables.html#sls---including-covariates-1",
+    "objectID": "slides/week8/week8_instrumental_variables.html#iv-ratio-inference",
+    "href": "slides/week8/week8_instrumental_variables.html#iv-ratio-inference",
     "title": "Week 8: Instrumental Variables",
-    "section": "2SLS - Including covariates",
-    "text": "2SLS - Including covariates\n\nSubstitute in for \\(D_i\\)\n\n\\[\\begin{align*}\nY_i &= X_i^{\\prime}\\beta + \\tau\\left[X_i^{\\prime}\\alpha + \\gamma Z_i + \\nu_i\\right] + \\epsilon_i\\\\\n&= X_i^{\\prime}\\beta + \\tau\\left[X_i^{\\prime}\\alpha + \\gamma Z_i\\right] + [\\tau\\nu_i + \\epsilon_i]\\\\\n  &= X_i^{\\prime}\\beta + \\tau \\mathbb{E}[D_i | X_i, Z_i] + \\epsilon_i^{*}\\\\\n\\end{align*}\\]\n\n\nWe can identify \\(\\tau\\) by regressing \\(Y_i\\) on \\(X_i\\) and the fitted values from a regression of \\(D_i\\) on \\(X_i\\) and the instrument \\(Z_i\\).\nIntuition – we want to only use the variation in \\(D_i\\) that is driven by the exogenous factor \\(Z_i\\)."
+    "section": "IV ratio inference",
+    "text": "IV ratio inference\n\nTo illustrate with our Washington Post example\n\n\niv_est &lt;- iv_robust(voted ~ getpost | post, data=wapost, se_type = \"HC0\")\niv_est\n\n                Estimate Std. Error     t value     Pr(&gt;|t|)   CI Lower\n(Intercept)  0.727074419 0.03672069 19.80012910 1.109480e-70  0.6549884\ngetpost     -0.003964259 0.09670722 -0.04099238 9.673127e-01 -0.1938093\n             CI Upper  DF\n(Intercept) 0.7991605 760\ngetpost     0.1858807 760\n\n\n\nLet’s calculate the point estimate by hand!\n\n\nZ &lt;- model.matrix(~post, data=wapost) # Add the intercept\nD &lt;- model.matrix(~getpost, data=wapost) # Add the intercept\nY &lt;- wapost$voted\npoint &lt;- solve(t(Z)%*%D)%*%(t(Z)%*%Y)\npoint\n\n                    [,1]\n(Intercept)  0.727074419\ngetpost     -0.003964259"
   },
   {
-    "objectID": "slides/week8/week8_instrumental_variables.html#sls---including-covariates-2",
-    "href": "slides/week8/week8_instrumental_variables.html#sls---including-covariates-2",
+    "objectID": "slides/week8/week8_instrumental_variables.html#iv-ratio-inference-1",
+    "href": "slides/week8/week8_instrumental_variables.html#iv-ratio-inference-1",
     "title": "Week 8: Instrumental Variables",
-    "section": "2SLS - Including covariates",
-    "text": "2SLS - Including covariates\n\nYou can also still get the ratio form of the IV estimator\n\n\\[\\begin{align*}\nY_i &= X_i^{\\prime}\\beta + \\tau\\left[X_i^{\\prime}\\alpha + \\gamma Z_i + \\nu_i\\right] + \\epsilon_i\\\\\n&= X_i^{\\prime}(\\beta + \\tau\\alpha) + \\tau \\gamma Z_i + [\\tau\\nu_i + \\epsilon_i]\\\\\n\\end{align*}\\]\n\nThe coefficient on \\(Z_i\\) in the reduced form regression is \\(\\tau \\gamma\\)\nThe coefficient on \\(Z_i\\) in the first-stage is \\(\\gamma\\).\nSo the ratio of the reduced form to the first-stage regression is \\(\\tau\\)."
+    "section": "IV ratio inference",
+    "text": "IV ratio inference\n\nTo illustrate with our Washington Post example\n\n\niv_robust(voted ~ getpost | post, data=wapost, se_type = \"HC0\")\n\n                Estimate Std. Error     t value     Pr(&gt;|t|)   CI Lower\n(Intercept)  0.727074419 0.03672069 19.80012910 1.109480e-70  0.6549884\ngetpost     -0.003964259 0.09670722 -0.04099238 9.673127e-01 -0.1938093\n             CI Upper  DF\n(Intercept) 0.7991605 760\ngetpost     0.1858807 760\n\n\n\nLet’s do the variance!\n\n\nu &lt;- Y - iv_est$fitted.values\nvcov &lt;- solve(t(Z)%*%D)%*%(t(Z)%*%diag(u^2)%*%Z)%*%solve(t(Z)%*%D)\nsqrt(diag(vcov))\n\n[1] 0.03834991 0.09671781"
+  },
+  {
+    "objectID": "slides/week8/week8_instrumental_variables.html#iv-as-two-stage-least-squares",
+    "href": "slides/week8/week8_instrumental_variables.html#iv-as-two-stage-least-squares",
+    "title": "Week 8: Instrumental Variables",
+    "section": "IV as “two-stage” least squares",
+    "text": "IV as “two-stage” least squares\n\nAnother way of interpreting \\(\\hat{\\tau}_{\\text{IV}}\\) is in terms two ordinary least squares regressions\n\nAccommodates the “overidentified” case (more instruments than treatments)\n\nIntuition - We want to regress \\(Y\\) on the part of the treatment that is explained entirely by the instrument (the “exogenous” variation)\nFirst stage - Project \\(\\mathbf{X}\\) into the space of the instrument \\(\\mathbf{Z}\\)\n\\[\\widehat{\\mathbf{X}} = \\underbrace{\\mathbf{Z}(\\mathbf{Z}^\\prime\\mathbf{Z})^{-1}\\mathbf{Z}^\\prime}_{P_{\\mathbf{Z}}}\\mathbf{X}\\]\nSecond stage - Regress \\(Y\\) on the “fitted values” \\(\\widehat{\\mathbf{X}}\\)\n\\[\\hat{\\beta}_{\\text{2SLS}} = (\\widehat{\\mathbf{X}}^{\\prime}\\mathbf{X})^{-1}(\\widehat{\\mathbf{X}}^{\\prime}Y)\\]"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#two-stage-least-squares",
     "href": "slides/week8/week8_instrumental_variables.html#two-stage-least-squares",
     "title": "Week 8: Instrumental Variables",
     "section": "Two-stage least squares",
-    "text": "Two-stage least squares\n\nFirst stage - Regress \\(D_i\\) on \\(X_i\\) and \\(Z_i\\). Get the fitted values \\(\\hat{D_i}\\)\n\n\\[\\hat{D_i} =  X_i^{\\prime}\\hat{\\alpha} + \\hat{\\gamma} Z_i  \\]\n\nSecond stage - Regress \\(Y_i\\) on \\(X_i\\) and fitted values \\(\\hat{D_i}\\)\n\n\\[\\hat{Y_i} = X_i^{\\prime}\\hat{\\beta} + \\hat{\\tau} \\hat{D_i}\\]\n\n\nThe coefficient on the fitted values is the IV estimate\n\nBut, the standard errors will be wrong - Why?"
+    "text": "Two-stage least squares\n\nPutting it all together, the 2SLS estimator is:\n\\[\\hat{\\tau}_{\\text{2SLS}} =  (\\mathbf{X}^{\\prime}\\mathbf{Z}(\\mathbf{Z}^{\\prime}\\mathbf{Z})^{-1}\\mathbf{Z}^\\prime\\mathbf{X})^{-1}(\\mathbf{X}^{\\prime}\\mathbf{Z}(\\mathbf{Z}^{\\prime}\\mathbf{Z})^{-1}\\mathbf{Z}^\\prime Y)\\]"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#illustrating-2sls",
     "href": "slides/week8/week8_instrumental_variables.html#illustrating-2sls",
     "title": "Week 8: Instrumental Variables",
     "section": "Illustrating 2SLS",
-    "text": "Illustrating 2SLS\n\nRecall our Gerber, Karlan and Bergan (2009, AEJ:AE) experiment\n\n\\(Z_i\\): Random assignment to receive a free subscription to the Washington Post\n\\(D_i\\): Actually subscribing to the Washington Post (as measured by a post-encouragement survey)\n\\(Y_i\\): 2005 Turnout (measured in the survey)\n\\(X_i\\): Gender, Age\n\nLet’s load and subset"
+    "text": "Illustrating 2SLS\n\nLet’s include covariates in our Gerber, Karlan and Bergan (2009) example\n\n\\(Z_i\\): Random assignment to receive a free subscription to the Washington Post\n\\(D_i\\): Actually subscribing to the Washington Post (as measured by a post-encouragement survey)\n\\(Y_i\\): 2005 Turnout (measured in the survey)\n\\(X_i\\): Gender, Age\n\nLoad and subset out missing covariates\n\n\ngreen &lt;- read_dta(\"assets/data/publicdata.dta\")\nwapost &lt;- green %&gt;% filter(treatment != \"TIMES\"&!is.na(getpost)&!is.na(voted)&!is.na(Bfemale)&!is.na(reportedage))"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#illustrating-2sls-1",
     "href": "slides/week8/week8_instrumental_variables.html#illustrating-2sls-1",
     "title": "Week 8: Instrumental Variables",
     "section": "Illustrating 2SLS",
-    "text": "Illustrating 2SLS\n\nOur first stage regresses subscription on assignment + covariates\n\n\n\n\nCall:\nlm_robust(formula = getpost ~ post + Bfemale + reportedage, data = wapost)\n\nStandard error type:  HC2 \n\nCoefficients:\n             Estimate Std. Error t value  Pr(&gt;|t|)   CI Lower CI Upper  DF\n(Intercept)  0.120972   0.064057  1.8885 5.935e-02 -0.0047855 0.246729 729\npost         0.352326   0.034821 10.1182 1.314e-22  0.2839648 0.420687 729\nBfemale     -0.004353   0.035046 -0.1242 9.012e-01 -0.0731561 0.064450 729\nreportedage  0.001703   0.001253  1.3597 1.744e-01 -0.0007562 0.004163 729\n\nMultiple R-squared:  0.1336 ,   Adjusted R-squared:   0.13 \nF-statistic: 35.39 on 3 and 729 DF,  p-value: &lt; 2.2e-16"
+    "text": "Illustrating 2SLS\n\nOur first stage regresses subscription on assignment + covariates\n\n\nfirst_stage &lt;- lm_robust(getpost ~ post + Bfemale + reportedage , data= wapost)\nsummary(first_stage)\n\n\nCall:\nlm_robust(formula = getpost ~ post + Bfemale + reportedage, data = wapost)\n\nStandard error type:  HC2 \n\nCoefficients:\n             Estimate Std. Error t value  Pr(&gt;|t|)   CI Lower CI Upper  DF\n(Intercept)  0.120972   0.064057  1.8885 5.935e-02 -0.0047855 0.246729 729\npost         0.352326   0.034821 10.1182 1.314e-22  0.2839648 0.420687 729\nBfemale     -0.004353   0.035046 -0.1242 9.012e-01 -0.0731561 0.064450 729\nreportedage  0.001703   0.001253  1.3597 1.744e-01 -0.0007562 0.004163 729\n\nMultiple R-squared:  0.1336 ,   Adjusted R-squared:   0.13 \nF-statistic: 35.39 on 3 and 729 DF,  p-value: &lt; 2.2e-16"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#illustrating-2sls-2",
     "href": "slides/week8/week8_instrumental_variables.html#illustrating-2sls-2",
     "title": "Week 8: Instrumental Variables",
     "section": "Illustrating 2SLS",
-    "text": "Illustrating 2SLS\n\nLet’s actually run 2SLS - I like two routines: iv_robust in estimatr (does 2SLS with robust SEs) and ivmodel in ivmodel (does robust 2SLS and weak-instrument robust tests + other diagnostics)\n\n\n\n\nCall:\niv_robust(formula = voted ~ getpost + Bfemale + reportedage | \n    post + Bfemale + reportedage, data = wapost)\n\nStandard error type:  HC2 \n\nCoefficients:\n             Estimate Std. Error  t value  Pr(&gt;|t|)  CI Lower CI Upper  DF\n(Intercept)  0.225621    0.07334  3.07656 2.172e-03  0.081647  0.36959 729\ngetpost      0.004283    0.09086  0.04714 9.624e-01 -0.174097  0.18266 729\nBfemale     -0.034955    0.03354 -1.04228 2.976e-01 -0.100795  0.03089 729\nreportedage  0.010402    0.00127  8.18792 1.187e-15  0.007908  0.01290 729\n\nMultiple R-squared:  0.09299 ,  Adjusted R-squared:  0.08926 \nF-statistic: 23.27 on 3 and 729 DF,  p-value: 2.153e-14"
+    "text": "Illustrating 2SLS\n\nLet’s actually run 2SLS - I like two routines: iv_robust in estimatr (does 2SLS with robust SEs) and ivmodel in ivmodel (does robust 2SLS and weak-instrument robust tests + other diagnostics)\n\n\nwapo_2sls &lt;- iv_robust(voted ~ getpost  + Bfemale + reportedage | post + Bfemale + reportedage, data= wapost)\nsummary(wapo_2sls)\n\n\nCall:\niv_robust(formula = voted ~ getpost + Bfemale + reportedage | \n    post + Bfemale + reportedage, data = wapost)\n\nStandard error type:  HC2 \n\nCoefficients:\n             Estimate Std. Error  t value  Pr(&gt;|t|)  CI Lower CI Upper  DF\n(Intercept)  0.225621    0.07334  3.07656 2.172e-03  0.081647  0.36959 729\ngetpost      0.004283    0.09086  0.04714 9.624e-01 -0.174097  0.18266 729\nBfemale     -0.034955    0.03354 -1.04228 2.976e-01 -0.100795  0.03089 729\nreportedage  0.010402    0.00127  8.18792 1.187e-15  0.007908  0.01290 729\n\nMultiple R-squared:  0.09299 ,  Adjusted R-squared:  0.08926 \nF-statistic: 23.27 on 3 and 729 DF,  p-value: 2.153e-14"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#illustrating-2sls-3",
     "href": "slides/week8/week8_instrumental_variables.html#illustrating-2sls-3",
     "title": "Week 8: Instrumental Variables",
     "section": "Illustrating 2SLS",
-    "text": "Illustrating 2SLS\n\n\n\nCall:\nivmodel(Y = Y, D = D, Z = Z, X = X, intercept = intercept, beta0 = beta0, \n    alpha = alpha, k = k, manyweakSE = manyweakSE, heteroSE = heteroSE, \n    clusterID = clusterID, deltarange = deltarange, na.action = na.action)\nsample size: 733\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nFirst Stage Regression Result:\n\nF=110.8791, df1=1, df2=729, p-value is &lt; 2.22e-16\nR-squared=0.1320179,   Adjusted R-squared=0.1308273\nResidual standard error: 0.4441532 on 730 degrees of freedom\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nCoefficients of k-Class Estimators:\n\n              k Estimate Std. Error t value Pr(&gt;|t|)\nOLS    0.000000 0.047078   0.032466   1.450    0.147\nFuller 0.998628 0.004724   0.089790   0.053    0.958\nTSLS   1.000000 0.004283   0.090599   0.047    0.962\nLIML   1.000000 0.004283   0.090599   0.047    0.962\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nAlternative tests for the treatment effect under H_0: beta=0.\n\nAnderson-Rubin test (under F distribution):\nF=0.002230662, df1=1, df2=729, p-value is 0.96234\n95 percent confidence interval:\n [-0.178674420106811, 0.183689569448123]\n\nConditional Likelihood Ratio test (under Normal approximation):\nTest Stat=0.002230662, p-value is 0.96234\n95 percent confidence interval:\n [-0.17867442296152, 0.183689572193089]"
+    "text": "Illustrating 2SLS\n\nwapo_2sls2 &lt;- ivmodelFormula(voted ~ getpost  + Bfemale + reportedage | post + Bfemale + reportedage, data= wapost, heteroSE=T)\nsummary(wapo_2sls2)\n\n\nCall:\nivmodel(Y = Y, D = D, Z = Z, X = X, intercept = intercept, beta0 = beta0, \n    alpha = alpha, k = k, manyweakSE = manyweakSE, heteroSE = heteroSE, \n    clusterID = clusterID, deltarange = deltarange, na.action = na.action)\nsample size: 733\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nFirst Stage Regression Result:\n\nF=110.8791, df1=1, df2=729, p-value is &lt; 2.22e-16\nR-squared=0.1320179,   Adjusted R-squared=0.1308273\nResidual standard error: 0.4441532 on 730 degrees of freedom\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nCoefficients of k-Class Estimators:\n\n              k Estimate Std. Error t value Pr(&gt;|t|)\nOLS    0.000000 0.047078   0.032466   1.450    0.147\nFuller 0.998628 0.004724   0.089790   0.053    0.958\nTSLS   1.000000 0.004283   0.090599   0.047    0.962\nLIML   1.000000 0.004283   0.090599   0.047    0.962\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nAlternative tests for the treatment effect under H_0: beta=0.\n\nAnderson-Rubin test (under F distribution):\nF=0.002230662, df1=1, df2=729, p-value is 0.96234\n95 percent confidence interval:\n [-0.178674420106811, 0.183689569448123]\n\nConditional Likelihood Ratio test (under Normal approximation):\nTest Stat=0.002230662, p-value is 0.96234\n95 percent confidence interval:\n [-0.17867442296152, 0.183689572193089]"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#the-weak-instrument-problem",
     "href": "slides/week8/week8_instrumental_variables.html#the-weak-instrument-problem",
     "title": "Week 8: Instrumental Variables",
     "section": "The weak instrument problem",
-    "text": "The weak instrument problem\n\nOur ratio estimator is consistent\n\n\\[\\hat{\\tau}_{\\text{IV}} = \\frac{\\widehat{Cov(Y_i, Z_i)}}{\\widehat{Cov(D_i, Z_i)}} \\overset{p}{\\to} \\tau + \\frac{Cov(U_i, Z_i)}{Cov(D_i, Z_i)}\\]\n\nUnder exogeneity \\(Cov(Z_i, U_i)\\) is zero.\n\n\n\nHowever, when there are small violations of exogeneity, a weak instrument will amplify them.\nMore generally, with a weak instrument, our t-ratio hypothesis tests assuming asymptotic normality will have incorrect type-1 error rates.\n\nWhy? Distributions of ratios are poorly behaved."
+    "text": "The weak instrument problem\n\nOur ratio estimator is consistent\n\\[\\hat{\\tau}_{\\text{IV}} = \\frac{\\widehat{Cov(Y_i, Z_i)}}{\\widehat{Cov(D_i, Z_i)}} \\overset{p}{\\to} \\tau + \\frac{Cov(U_i, Z_i)}{Cov(D_i, Z_i)}\\]\nUnder exogeneity \\(Cov(Z_i, U_i)\\) is zero.\nHowever, when there are small violations of exogeneity, a weak instrument will amplify them.\nMore generally, with a weak instrument, our t-ratio hypothesis tests assuming asymptotic normality will have incorrect type-1 error rates.\n\nWhy? Distributions of ratios are poorly behaved."
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#the-weak-instrument-problem-1",
@@ -438,7 +445,7 @@
     "href": "slides/week8/week8_instrumental_variables.html#the-weak-instrument-problem-2",
     "title": "Week 8: Instrumental Variables",
     "section": "The weak instrument problem",
-    "text": "The weak instrument problem\n\nLet’s see how the Wald estimator performs when we have a pretty large effect of \\(Z_i\\) on \\(D_i\\): \\(\\gamma = 2\\) and \\(N = 1000\\)\n\n\n\n[1] 0.3449516\n\n\n[1] 157.4871\n\n\n[1] 0.7263095\n\n\n[1] -0.01956482"
+    "text": "The weak instrument problem\n\nLet’s see how the Wald estimator performs when we have a pretty large effect of \\(Z_i\\) on \\(D_i\\): \\(\\gamma = 2\\) and \\(N = 1000\\)\n\n\n## First stage effect\nmean(firststage)\n\n[1] 0.3441304\n\n## F-statistic from the first stage\nmean(firststageF)\n\n[1] 156.7175\n\n## Bias of the naive OLS Y ~ X\nmean(naive)\n\n[1] 0.7274939\n\n## Bias of IV\nmean(IV)\n\n[1] -0.01632865"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#the-weak-instrument-problem-3",
@@ -459,7 +466,7 @@
     "href": "slides/week8/week8_instrumental_variables.html#the-weak-instrument-problem-5",
     "title": "Week 8: Instrumental Variables",
     "section": "The weak instrument problem",
-    "text": "The weak instrument problem\n\nNow, what happens when our instrument is weak: \\(\\gamma = .2\\) and \\(N = 1000\\)\n\n\n\n[1] 0.04101404\n\n\n[1] 2.597295\n\n\n[1] 0.8263196\n\n\n[1] -1.036364"
+    "text": "The weak instrument problem\n\nNow, what happens when our instrument is weak: \\(\\gamma = .2\\) and \\(N = 1000\\)\n\n\n## First stage effect\nmean(firststage)\n\n[1] 0.03994391\n\n## F-statistic from the first stage\nmean(firststageF)\n\n[1] 2.583906\n\n## Bias of the naive OLS Y ~ X\nmean(naive)\n\n[1] 0.8257246\n\n## Bias of IV\nmean(IV)\n\n[1] 2.681309"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#the-weak-instrument-problem-6",
@@ -480,49 +487,49 @@
     "href": "slides/week8/week8_instrumental_variables.html#the-weak-instrument-problem-8",
     "title": "Week 8: Instrumental Variables",
     "section": "The weak instrument problem",
-    "text": "The weak instrument problem\n\nWhen is an instrument too weak?\nClassic result: Staiger and Stock (1997), Stock and Yogo (2005) use first stage F-statistic thresholds\n\n\\(\\leadsto\\) heuristic of first-stage F-statistic below 10.\n\nRecently: Lee, Moreira, McCrary, Porter (2020) – If we want to use the F-statistic as a screen then we actually need \\(F &gt; 104.7\\)\nSuggestions:\n\nPermutation tests using a test statistic that does not depend on the first stage.\nAnderson-Rubin (1949) approach\nAngrist and Pischke (2009) - with “just-identified” IV (number of instruments = number of endogenous variables) bias is usually overwhelmed by the large standard errors."
+    "text": "The weak instrument problem\n\nWhen is an instrument too weak?\nClassic result: Stock and Yogo (2005) use first stage F-statistic thresholds\n\n\\(\\leadsto\\) heuristic of first-stage \\(F &gt; 10\\)\nProblem! These are benchmarks under homoskedasticity\n\nMontiel Olea and Pflueger (2013)\n\nRobust F-statistics\nComparable threshold to Stock and Yogo bias is \\(F &gt; 23.1\\)\n\nLee, Moreira, McCrary, Porter (2020)\nThese are thresholds that the bias is “small” (approximately 10%)\nIf we want to use the F-statistic as a screen for \\(p &lt; .05\\) to be valid, then we actually need \\(F &gt; 104.7\\)\nAngrist and Pischke (2009) - with “just-identified” IV bias is usually overwhelmed by the large standard errors."
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#permutation-test",
     "href": "slides/week8/week8_instrumental_variables.html#permutation-test",
     "title": "Week 8: Instrumental Variables",
     "section": "Permutation test",
-    "text": "Permutation test\n\nWhen the assignment process of \\(Z_i\\) is known, we can construct hypothesis tests using permutation inference assuming a constant treatment effect \\(\\tau\\) (Imbens and Rosenbaum, 2005).\n\nWith a single, de-meaned instrument \\(\\tilde{Z_i} = Z_i - \\bar{Z}\\), we can construct a test statistic based on the sample covariance between \\(Z_i\\) and \\(Y_i\\) with the effect removed:\n\n\n\\[T(\\tau) = \\frac{1}{N} \\sum_{i=1}^N \\tilde{Z_i} \\times (Y_i - \\tau D_i)\\]\n\nIf the instrument is valid, under the null hypothesis that \\(\\tau = \\tau_0\\), we can get the randomization distribution of the test statistic by simply re-randomizing treatment according to the known assignment process.\n\nConstruct confidence intervals by “inverting the test” - what values of \\(\\tau_0\\) does the test fail to reject?\n\nAlternative test statistics based on ranks of \\(Y_i - \\tau D_i)\\) (possibly within strata) can also be used."
+    "text": "Permutation test\n\nWhen the assignment process of \\(Z_i\\) is known, we can construct hypothesis tests using permutation inference assuming a constant treatment effect \\(\\tau\\) (Imbens and Rosenbaum, 2005).\n\nWith a single, de-meaned instrument \\(\\tilde{Z_i} = Z_i - \\bar{Z}\\), we can construct a test statistic based on the sample covariance between \\(Z_i\\) and \\(Y_i\\) with the effect removed:\n\n\n\\[T(\\tau) = \\frac{1}{N} \\sum_{i=1}^N \\tilde{Z_i} \\times (Y_i - \\tau D_i)\\]\n\nIf the instrument is valid, under the null hypothesis that \\(\\tau = \\tau_0\\), we can get the randomization distribution of the test statistic by simply re-randomizing treatment according to the known assignment process.\n\nConstruct confidence intervals by “inverting the test” - what values of \\(\\tau_0\\) does the test fail to reject?\n\nAlternative test statistics based on ranks of \\(Y_i - \\tau D_i\\) (possibly within strata) can also be used."
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#anderson-rubin-test",
     "href": "slides/week8/week8_instrumental_variables.html#anderson-rubin-test",
     "title": "Week 8: Instrumental Variables",
     "section": "Anderson-Rubin Test",
-    "text": "Anderson-Rubin Test\n\nEven when the assignment process is not known, the IV assumptions allow us to construct a test statistic that does not depend on the first stage.\n\nThis is the Anderson-Rubin (1949) approach - Andrews, Stock and Sun (2019) provide a good explanation especially for the “just-identified” case\n\nLet \\(\\hat{\\delta}_{\\text{ITT}}\\) be the reduced form or intent-to-treat estimate.\nThe instrumental variables assumptions that the reduced form is related to the first stage \\(\\pi\\) and the treatment effect \\(\\tau\\)\n\n\\[\\delta_{\\text{ITT}} = \\gamma \\times \\tau\\]\n\nAssuming a particular null \\(H_0: \\tau = \\tau_0\\) implies that\n\n\\[\\delta_{\\text{ITT}} - \\gamma \\times \\tau_0 = 0\\]"
+    "text": "Anderson-Rubin Test\n\nEven when the assignment process is not known, the IV assumptions allow us to construct a test statistic that does not depend on the first stage.\n\nThis is the Anderson-Rubin (1949) approach - Andrews, Stock and Sun (2019) provide a good explanation especially for the “just-identified” case\n\nLet \\(\\hat{\\delta}_{\\text{ITT}}\\) be the reduced form or intent-to-treat estimate.\nUnder the IV assumptions, the reduced form is the product of first stage \\(\\pi\\) and the treatment effect \\(\\tau\\)\n\\[\\delta_{\\text{ITT}} = \\gamma \\times \\tau\\]\nAssuming a particular null \\(H_0: \\tau = \\tau_0\\) implies that\n\\[\\delta_{\\text{ITT}} - \\gamma \\times \\tau_0 = 0\\]"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#anderson-rubin-test-1",
     "href": "slides/week8/week8_instrumental_variables.html#anderson-rubin-test-1",
     "title": "Week 8: Instrumental Variables",
     "section": "Anderson-Rubin Test",
-    "text": "Anderson-Rubin Test\n\nAnd so we can construct a test statistic based on the difference between the estimated ITT and the estimated first stage adjusted by the null which we know is normal in large samples.\n\n\\[g(\\tau_0) = \\hat{\\delta}_{\\text{ITT}} - \\hat{\\gamma} \\tau_0 \\sim \\mathcal{N}(0, \\Omega(\\tau_0))\\]\n\nThe Anderson-Rubin (1949) test statistic is:\n\n\\[AR(\\tau) = g(\\tau)^\\prime \\Omega(\\tau_0)^{-1}g(\\tau)\\]\nUnder the null \\(H_0: \\tau = \\tau_0\\), this has a chi-squared distribution which does not depend on the value of the first stage.\n\nIntuitively: Statistical properties of differences in two normal random variables are well-known and easy. Statistical properties of ratios are much more complicated!\n\nAgain, invert the test to get a confidence interval\nCan get infinite confidence bounds with a weak instrument - the test never rejects for any value of \\(\\tau_0\\)"
+    "text": "Anderson-Rubin Test\n\nWe can construct a test statistic based on the difference between the estimated ITT and the estimated first stage adjusted by the null which we know is normal in large samples.\n\\[g(\\tau_0) = \\hat{\\delta}_{\\text{ITT}} - \\hat{\\gamma} \\tau_0 \\sim \\mathcal{N}(0, \\Omega(\\tau_0))\\]\nThe Anderson-Rubin (1949) test statistic is:\n\\[AR(\\tau) = g(\\tau)^\\prime \\Omega(\\tau_0)^{-1}g(\\tau)\\]\n\nUnder the null \\(H_0: \\tau = \\tau_0\\), this has a chi-squared distribution which does not depend on the value of the first stage.\n\nIntuitively: Statistical properties of differences in two normal random variables are well-known and easy. Statistical properties of ratios are much more complicated!\n\nAgain, invert the test to get a confidence interval\nCan get infinite confidence bounds with a weak instrument - the test never rejects for any value of \\(\\tau_0\\)"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#example-strong-instrument",
     "href": "slides/week8/week8_instrumental_variables.html#example-strong-instrument",
     "title": "Week 8: Instrumental Variables",
     "section": "Example: Strong instrument",
-    "text": "Example: Strong instrument\n\n\n$Fstat\n[1] 0.01713293\n\n$df\n[1]   1 731\n\n$p.value\n[1] 0.8958961\n\n$ci.info\n[1] \"[-0.2058034696935, 0.175035583124674]\"\n\n$ci\n          lower     upper\n[1,] -0.2058035 0.1750356"
+    "text": "Example: Strong instrument\n\nwapo_iv &lt;- ivmodelFormula(voted ~ getpost  | post , data= wapost, heteroSE=T)\nprint(AR.test(wapo_iv))\n\n$Fstat\n[1] 0.01713293\n\n$df\n[1]   1 731\n\n$p.value\n[1] 0.8958961\n\n$ci.info\n[1] \"[-0.2058034696935, 0.175035583124674]\"\n\n$ci\n          lower     upper\n[1,] -0.2058035 0.1750356"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#example-weak-instrument",
     "href": "slides/week8/week8_instrumental_variables.html#example-weak-instrument",
     "title": "Week 8: Instrumental Variables",
     "section": "Example: Weak instrument",
-    "text": "Example: Weak instrument\n\n\n$Fstat\n[1] 2.263567\n\n$df\n[1]   1 998\n\n$p.value\n[1] 0.1327651\n\n$ci.info\n[1] \"Whole Real Line\"\n\n$ci\n     lower upper\n[1,]  -Inf   Inf"
+    "text": "Example: Weak instrument\n\nweak_iv_data &lt;- data.frame(Y = Y, D= D, Z=Z)\nweak_iv &lt;- ivmodelFormula(Y ~ D | Z , data= weak_iv_data, heteroSE=T)\nprint(AR.test(weak_iv))\n\n$Fstat\n[1] 0.2150564\n\n$df\n[1]   1 998\n\n$p.value\n[1] 0.6429339\n\n$ci.info\n[1] \"Whole Real Line\"\n\n$ci\n     lower upper\n[1,]  -Inf   Inf"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#conclusion",
     "href": "slides/week8/week8_instrumental_variables.html#conclusion",
     "title": "Week 8: Instrumental Variables",
     "section": "Conclusion",
-    "text": "Conclusion\n\nInstrumental variables lets us leverage alternative sources of randomness to learn about an otherwise confounded causal relationship.\nAn instrument:\n\nAffects treatment\nDoesn’t affect the outcome except through treatment\nIs ignorable w.r.t the outcome.\n\nLATE theorem: The IV estimand is the ATE among those who would take treatment due to the instrument.\n\nWith continuous treatment/instrument - a weighted average of LATEs (Angrist and Imbens, 1995)\nWith covariates - a weighted average of covariate-specific LATEs\nBut be careful with this interpretation when the model is not fully saturated (Słoczyński, 2022)\n\nStatistical inference is tricky\n\nBeware weak instruments - typical large-sample asymptotics do poorly when instruments are irrelevant.\nConsider weak-instrument robust tests (Anderson-Rubin)\nIf it’s not in the reduced form, it’s not real."
+    "text": "Conclusion\n\nInstrumental variables lets us leverage alternative sources of randomness to learn about an otherwise confounded causal relationship.\nAn instrument:\n\nAffects treatment\nDoesn’t affect the outcome except through treatment\nIs ignorable w.r.t the outcome.\n\nLATE theorem: The IV estimand is the ATE among those who would take treatment due to the instrument.\n\nWith continuous treatment/instrument - a weighted average of LATEs (Angrist and Imbens, 1995)\nWith covariates - a weighted average of covariate-specific LATEs\nBut be careful with this interpretation when the model is not fully saturated (Słoczyński, 2022)\n\nStatistical inference is tricky\n\nBeware weak instruments - typical large-sample asymptotics do poorly when instruments are irrelevant.\nConsider weak-instrument robust tests (Anderson-Rubin)\nIf it’s not in the reduced form, it’s not real"
   },
   {
     "objectID": "slides/week6/week6_regression_and_weighting.html#last-week",
