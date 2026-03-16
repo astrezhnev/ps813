@@ -1,0 +1,485 @@
+---
+title: "Week 9: Differences-in-Differences"
+subtitle: "PS 813 - Causal Inference"
+author:
+  - name: "Anton Strezhnev"
+    affiliation: "University of Wisconsin-Madison"
+    email: strezhnev@wisc.edu
+date: "March 16, 2026"
+date-format: "MMMM D, YYYY"
+editor:
+  render-on-save: true
+format:
+  revealjs:
+    theme: [default, custom.scss]
+    slide-number: true
+    overview: true
+    navigation-mode: vertical
+    progress: false
+    controls: true
+    link-external-newwindow: true
+    footer: "PS 813 - University of Wisconsin - Madison"
+    html-math-method:
+      method: mathjax
+      url: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+execute:
+  cache: true
+code:
+  execute:
+    - r
+    - python
+embed-resources: true
+
+---
+
+$$
+  \require{cancel}
+$$
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+library(tidyverse)
+library(haven)
+library(estimatr)
+library(ivmodel)
+options(digits=3)
+```
+
+## Last week
+
+::: {.incremental}
+
+- Identification under **unobserved confounding**
+- **Instrumental variables** - we can identify the local average treatment effect (LATE) with an instrument that...
+  - ...is ignorable/conditionally ignorable...
+  - ...and affects the outcome only through the treatment (exclusion restriction)...
+  - ...and has a monotonic effect on treatment.
+- Our simple IV estimator:
+  - **Reduced form** (instrument's effect on outcome) in the numerator
+  - **First stage** (instrument's effect on the treatment) in the denominator
+
+:::
+
+## This week
+
+::: {.incremental}
+
+
+- More strategies for identification under **unobserved confounding**
+- When we have repeated observations over time, can we use pre-treatment outcomes to help with inference?
+  - **Time 1:** Some units treated, some units under control
+  - **Time 0:** All units under control
+
+- What if the confounding in time 1 were unobserved...
+  - ... but the amount of confounding in time 1 is the same as in time 0?
+
+- Then we can use the pre-treatment (time 0) difference in the treated and control arms to **de-bias** the time 1 difference.
+  - **Difference-in-differences**
+
+- Assumptions: **no anticipation** and **parallel trends**
+  - Pre-treatment outcomes are unaffected by treatment exposure.
+  - The *trend* in the average potential outcome in the treated group would have been the same as the *trend* in the control group absent treatment.
+
+- Generalizes to any setting where we believe there is confounding but where the true effect of treatment is known to be 0
+  - "Negative Outcome Control"
+
+:::
+
+
+
+## Difference-in-differences {.centered}
+
+## John Snow and Cholera
+
+![](assets/johnsnow.png){fig-align="center" height="600px"}
+
+
+## John Snow and Cholera
+
+:::{.incremental}
+
+- 1854: Large cholera outbreak near Broad Street in London.
+  - Physician John Snow hypothesized that cholera was transmitted through the water
+  - Contrary to popular belief that it was airborne ("miasma theory")
+- Snow convinced the local authorities to remove the handle of the Broad Street pump
+  - Cholera deaths declined
+  - But was this causal?
+- Even Snow didn't necessarily think so...
+
+  > There is no doubt that the mortality was much diminished, as I said before, by the flight of the population, which commenced soon after the outbreak; but the attacks had so far diminished before the use of the water was stopped, that it is impossible to decide whether the well still contained the cholera poison in an active state, or whether, from some cause, the water had become free from it. (Snow, "On the Mode of Communication of Cholera, 1855)
+
+:::
+
+## John Snow and Cholera
+
+:::{.incremental}
+
+- The more interesting John Snow story was not the Broad Street pump, but another 1856 paper titled "Cholera and the water supply in the south districts of London in 1854"
+- **Key insight**: South London was served by two major water companies: **Lambeth Company** and **Southwark and Vauxhall Company**.
+  - Lambeth switched to a less contaminated source between 1849 and 1853
+
+  > Between the epidemics of 1849 and that of 1853, one of the water companies supplying the south districts of London changed its source of supply from the middle of the town, near the foot of the Hungerford Suspension Bridge, to Thames Ditton, at a part of the river which is beyond the influence of the tide, and, therefore, out of reach of the sewage of the metropolis. (Snow, 1856)
+  
+:::
+
+## John Snow and Cholera
+
+![](assets/john_snow_map.jpg){fig-align="center" height="600px"}
+
+## John Snow and Cholera
+
+:::{.incremental}
+
+- Snow compared Lambeth (treated) districts with Southwark and Vauxhall (control) districts -- **less mortality in Lambeth**.
+
+  > ...Taking into account the population supplied respectively by each company, the mortality was, at this period of the epidemic, nearly eight times as great in that supplied by the Southwark and Vauxhall Company as in that supplied by the Lambeth Company. (Snow, 1856)
+
+- But this isn't enough - what if Lambeth districts differed in **unobserved ways** from Southwark and Vauxhall districts?
+
+- So Snow also compared the observed mortality in 1853 to mortality in 1849, when **both** districts used contaminated water.
+
+  > In the autumn of 1853 it was shown by Dr. Farr* that the districts partly supplied by this, the Lambeth Water Company, with improved water, suffered less than the districts supplied entirely by the Southwark and Vauxhall Company with the water from the river at Battersea Fields, although in 1849 they had suffered rather more than the latter districts (Snow, 1856).
+
+:::
+
+## John Snow and Cholera
+
+:::{.incremental}
+
+- This was one of the earliest "difference-in-differences" designs (see also Semmelweiss' work on antisepsis in 1861).
+  - Not just a before-after comparison
+  - Not just a cross-sectional comparison
+- **Implicit assumption**: If there were something different about Lambeth (aside from the treatment) it would have the same effect on the outcome in the pre-treatment (1849) period as it would in 1853.
+  - An assumption **on the counterfactuals**: Had treatment not changed in Lambeth, the average trend (from 1849 to 1853) in Lambeth would have been the same as the trend in Southwark and Vauxhall
+
+:::
+
+## DiD with two periods
+
+:::{.incremental}
+
+- Two groups (treated/control); two time periods (0, 1).
+  - $D_i = 1$: treated in time $1$, $D_i = 0$ control in time $1$
+  - All units under control in time $0$
+  
+- Two outcomes observed
+  - $Y_{i1}$: outcome in period $1$
+  - $Y_{i0}$ outcome in period $0$
+  
+- Potential outcomes + consistency assumption.
+
+  $$Y_{i1}(d) = Y_{i1} \text{ if } D_i = d$$
+  
+  $$Y_{i0}(d) = Y_{i0} \text{ if } D_i = d$$
+:::
+
+## Causal Estimand
+
+:::{.incremental}
+
+- Causal estimand: **Average Treatment Effect on the Treated** (ATT) in time $1$
+
+  $$\tau_{\text{ATT}} = E[Y_{i1}(1) | D_i = 1] - E[Y_{i1}(0) | D_i = 1]$$
+
+- The first part we can get directly from the data (observed outcome among the treated group)
+
+  $$\tau_{\text{ATT}} = E[Y_{i1} | D_i = 1] - E[Y_{i1}(0) | D_i = 1]$$
+  
+- Second part we don't observe directly and need some additional assumptions.
+  - But now we **won't** assume ignorability of treatment: $Y_{i1}(0) \cancel{{\perp \! \! \! \perp}} D_i$
+
+:::
+
+## Identifying assumptions
+
+:::{.incremental}
+
+- **No anticipation**
+
+  - The **pre-treatment** outcome is unaffected by receipt of treatment.
+    
+    $$Y_{i0}(1) = Y_{i0}(0) = Y_{i0}$$
+- **Parallel trends**
+
+  - In the absence of treatment, the treated group's average outcome **trend** would be the same as the control group's
+  
+    $$\underbrace{\left\{E[Y_{i1}(0) | D_i = 1] - E[Y_{i0}(0) | D_i = 1] \right\}}_{\text{Average counterfactual trend among treated}} = \underbrace{\left\{E[Y_{i1}(0)| D_i = 0] - E[Y_{i0}(0)| D_i = 0]\right\}}_{\text{Average trend among controls}}$$
+    
+  - Equivalently
+
+    $$\underbrace{\left\{E[Y_{i1}(0) | D_i = 1] - E[Y_{i1}(0)| D_i = 0]\right\}}_{\text{Selection bias at time 1}} = \underbrace{\left\{E[Y_{i0}(0) | D_i = 1] - E[Y_{i0}(0)| D_i = 0]\right\}}_{\text{Selection bias at time 0}}$$
+    
+:::
+
+## Identification
+
+:::{.incremental}
+
+- Remember the selection bias formula for the ATT:
+
+  $$\tau_{\text{ATT}} = \underbrace{\left\{E[Y_{i1} | D_i = 1] - E[Y_{i1} | D_i = 0]\right\}}_{\text{Difference-in-means in time 1}} - \underbrace{\left\{E[Y_{i1}(0) | D_i = 1] - E[Y_{i1}(0)| D_i = 0]\right\}}_{\text{Selection bias}}$$
+- We can observe $E[Y_{i1}(0)| D_i = 0]$, but can't observe $E[Y_{i1}(0)| D_i = 1]$
+
+- Under **parallel trends** :
+
+  $$\underbrace{\left\{E[Y_{i1}(0) | D_i = 1] - E[Y_{i1}(0)| D_i = 0]\right\}}_{\text{Selection bias}} = \underbrace{\left\{E[Y_{i0}(0) | D_i = 1] - E[Y_{i0}(0)| D_i = 0]\right\}}_{\text{Selection bias at time 0}}$$
+  
+- And under **no anticipation**:
+
+  $$\underbrace{\left\{E[Y_{i1}(0) | D_i = 1] - E[Y_{i1}(0)| D_i = 0]\right\}}_{\text{Selection bias}} = \underbrace{\left\{E[Y_{i0} | D_i = 1] - E[Y_{i0}| D_i = 0]\right\}}_{\text{Observed difference at time 0}}$$
+    
+:::
+
+## Parallel trends
+
+:::{.incremental}
+
+- Substituting back in yields an expression for the ATT in terms of the **difference** in **observed differences**
+
+  $$\tau_{\text{ATT}} = \underbrace{\left\{E[Y_{i1} | D_i = 1] - E[Y_{i1} | D_i = 0]\right\}}_{\text{Difference-in-means in time 1}} - \underbrace{\left\{E[Y_{i0} | D_i = 1] - E[Y_{i0} | D_i = 0]\right\}}_{\text{Difference-in-means at time 0}}$$
+- Or equivalently
+
+  $$\tau_{\text{ATT}} = \underbrace{\left\{E[Y_{i1} - Y_{i0} | D_i = 1]\right\}}_{\text{Average change in the treated group}} - \underbrace{\left\{E[Y_{i1} - Y_{i0} | D_i = 0]\right\}}_{\text{Average change in the control group}}$$
+  
+- We can estimate each of these four expectations with the sample means.
+
+:::
+
+## Difference-in-differences
+
+![](assets/Did_visual.png){fig-align="center" height="500px"}
+
+## Estimation
+
+
+:::{.incremental}
+
+- With repeated observations at the unit level, we can use a simple regression of the **differenced** outcomes on the treatment indicator
+
+  $$Y_{i1} - Y_{i0} = \alpha + \tau D_i + \epsilon_i$$
+
+- Each row in the data is a single *unit* with outcomes in two time periods.
+  - Straightforward asymptotic inference with Neyman SEs
+  
+- **Prefer this approach when possible**
+  - Equivalent to a (mean) ignorability assumption w.r.t. the **difference** in outcomes from time 0 to time 1
+  - Easier to work with for **conditional parallel trends** (e.g. adjust for time-invariant covariates w/ AIPW) **(Sant'anna and Zhao, 2020)**
+
+:::
+
+## Two-way fixed effects
+
+:::{.incremental}
+
+- Suppose our dataset is organized where each row is a unit/time period - $it$.
+  - Let $D_{it}$ denote whether a unit is **treated** at time $t$
+- We can recover our 2x2 DiD estimator (in the simple two unit, two period setting) using a "two-way" fixed effects regression
+  - Unique parameter for each *treatment timing group* (or equivalently unit)
+  - Unique parameter for each *time period*
+
+    $$Y_{it} = \alpha + \beta D_i + \delta_{t} + \tau D_{it} + \epsilon_{it}$$
+
+:::
+
+## Fixed-effects estimators
+
+:::{.incremental}
+
+- **Expectations**:
+  - $E[Y_{i0} | D_i = 0] = \alpha + \delta_0$
+  - $E[Y_{i1} | D_i = 0] = \alpha + \delta_1$
+  - $E[Y_{i0} | D_i = 1] = \alpha + \beta  + \delta_0$
+  - $E[Y_{i1} | D_i = 1] = \alpha + \beta + \delta_1 + \tau$
+- **Differences**
+  - $E[Y_{i1} | D_i = 1] - E[Y_{i0} | D_i = 1] = \delta_1 - \delta_0 + \tau$
+  - $E[Y_{i1} | D_i = 0] - E[Y_{i0} | D_i = 0] = \delta_1 - \delta_0$
+- **Difference-in-differences**
+  - $\{E[Y_{i1} | D_i = 1] - E[Y_{i0} | D_i = 1]\} - \{E[Y_{i1} | D_i = 0] - E[Y_{i0} | D_i = 0]\} = \tau$
+  
+:::
+
+## Fixed-effects estimators
+
+:::{.incremental}
+
+- Does **not** generalize neatly to many time periods w/ variation in treatment timing.
+  - Need to **also** assume a constant, instantaneous treatment effect $\tau$
+  - We'll spend a lot more time on this next week!
+
+- Need to account for dependence in observations between time periods w/in same unit
+  - "Cluster-robust" SEs or block bootstrap
+  - We'll discuss this more later!
+
+:::
+
+## Example: Card and Krueger (1994, AER)
+
+:::{.incremental}
+
+- Does increasing the minimum wage reduce employment?
+  - Classical theoretical models suggest yes...
+  - But empirical evidence is hard to come by - no one has (yet) randomized the minimum wage.
+- Card and Krueger use a policy change in New Jersey relative to Pennsylvania
+- In 1992, NJ raised its minimum wage from 4.25 dollars per hour to 5.05 per hour
+  - PA stayed at 4.25 dollars per hour
+- Surveyed 410 fast food restaurants before and after the change was put into place
+  - Compared change in employment before/after in NJ with change before/after in PA.
+- **Key assumption** - Had NJ not implemented the minimum wage increase, the average trend in NJ fast food restaurant employment would have been the same as the average trend in PA fast food restaurant employment
+
+:::
+
+## Example: Card and Krueger (1994, AER)
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+# Load the data for Card and Krueger (1994)
+minwage <- read_csv("assets/data/minwage.csv")
+# Index of observations
+minwage$unit <- 1:nrow(minwage)
+
+# Change in full-time employment
+minwage$CHG_EMPFT <- minwage$EMPFT2 - minwage$EMPFT
+
+# Regress change on treatment (STATE = 1 for NJ)
+diff <- lm_robust(CHG_EMPFT ~ STATE, data=minwage, se_type = "HC2")
+tidy(diff)
+```
+
+## Example: Card and Krueger (1994, AER)
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+# Equivalence of TWFE in 2x2 case
+minwage_long <- minwage %>% pivot_longer(cols = starts_with("EMPFT"),
+                names_to = "time_str", names_prefix = "EMPFT", values_to = "EMPFT")
+
+# Recode time variable
+minwage_long$time <- NA
+minwage_long$time[minwage_long$time_str == ""] <- 0
+minwage_long$time[minwage_long$time_str == "2"] <- 1
+
+# Make the treatment variable
+minwage_long$treat <- as.integer(minwage_long$STATE == 1&minwage_long$time==1)
+
+# TWFE
+twfe_reg <- lm_robust(EMPFT ~ treat + as.factor(time) + as.factor(unit),
+                      data=minwage_long, cluster=unit, se_type = "CR2")
+tidy(twfe_reg) %>% filter(term == "treat")
+```
+
+## Conditional parallel trends
+
+:::{.incremental}
+
+- What if parallel trends holds only conditional on a set of pre-treatment covariates
+
+  $$\underbrace{\left\{E[Y_{i1}(0) - Y_{i0} | D_i = 1, X_i = x] \right\}}_{\text{Average counterfactual trend among treated}} = \underbrace{\left\{E[Y_{i1} - Y_{i0}| D_i = 0, X_i = x]\right\}}_{\text{Average trend among controls}}$$
+
+- We can include the covariates in the regression or TWFE
+  - But beware of unit-constant covariates in TWFE - they get soaked up by the unit fixed effects
+
+:::
+
+
+## Conditional parallel trends
+
+:::{.incremental}
+
+- Can we adjust without strong assumptions on the outcome model? 
+  - **Abadie (2005)** shows that an IPTW estimator can identify the ATT under conditional parallel trends
+  - **Intuition**: Treated units get a constant weight. Control units are reweighted to match the covariate distribution among the treateds.
+
+    $$E[Y_{i1}(1) - Y_{i1}(0)| D_i = 1] = E\left[\frac{(Y_{i1} - Y_{i0})}{P(D_i = 1)} \times \frac{D_i - P(D_i = 1 | X_i)}{1 - P(D_i = 1 | X_i)}\right]$$
+  
+  - **Sant'anna and Zhao (2020)** extend this to an AIPW/doubly-robust estimator with an outcome model for $Y_{i1} - Y_{i0}$
+
+:::
+
+## Example: Card and Krueger (1994, AER)
+
+- Suppose we thought that parallel trends in Card and Krueger (1994) only held conditional on the type of fast food restaurant
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+# 1=Burger King; 2=KFC; 3=Roy Rogers; 4=Wendy's
+minwage %>% group_by(STATE) %>% summarize(mean(CHAIN == 1), mean(CHAIN==2), mean(CHAIN == 3), mean(CHAIN ==4))
+
+# Fit a propensity score model
+weight_model <- glm(STATE ~ as.factor(CHAIN), data=minwage, family=binomial(link="logit"))
+
+# Predict weights
+minwage$e <- predict(weight_model, type="response")
+minwage$did_wt <- (1/mean(minwage$STATE)) * ((minwage$STATE -minwage$e)/(1-minwage$e))
+```
+
+## Example: Card and Krueger (1994, AER)
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+# Point estimate
+mean(minwage$CHG_EMPFT*minwage$did_wt)
+
+# Slight fix of the weights to make this work in OLS
+minwage$did_wt_reg <- minwage$did_wt*minwage$STATE - minwage$did_wt*(1-minwage$STATE)
+lm_robust(CHG_EMPFT ~ STATE, data=minwage, weight=did_wt_reg)
+```
+
+## Example: Card and Krueger (1994, AER)
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+# Bootstrap
+set.seed(60637)
+niter <- 1000
+boot_est <- rep(NA, niter)
+for(i in 1:niter){
+  boot_minwage <- minwage[sample(1:nrow(minwage), nrow(minwage), replace=T),]
+  # Fit a propensity score model
+  weight_model_boot <- glm(STATE ~ as.factor(CHAIN), data=boot_minwage, family=binomial(link="logit"))
+
+  # Predict weights
+  boot_minwage$e <- predict(weight_model_boot, type="response")
+  boot_minwage$did_wt <- (1/mean(boot_minwage$STATE)) * ((boot_minwage$STATE - boot_minwage$e)/(1-boot_minwage$e))
+
+  # Point est
+  boot_est[i] <- mean(boot_minwage$CHG_EMPFT*boot_minwage$did_wt)
+}
+#Bootstrap 95% CI
+quantile(boot_est, c(.025, .975))
+```
+
+## Example: Card and Krueger (1994, AER)
+
+- **Sant'anna and Zhao (2020)** doubly-robust estimator
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+# This package requires using the *long* data
+library(DRDID) 
+# Notably this doesn't add much with the fully saturated propensity score model - we're really just stratifying by chain
+dr_minwage <- drdid(yname="EMPFT",
+                    tname="time",
+                    idname="unit",
+                    dname="STATE",
+                    xformla = ~as.factor(CHAIN),
+                    data=minwage_long,
+                    estMethod = "trad")
+summary(dr_minwage)
+
+```
+
+## Difference-in-differences with many time periods {.centered}

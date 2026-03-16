@@ -41,7 +41,6 @@ Lecture slides are available as self-contained `.html` files made with RevealJS 
 - [Week 7 Github Repository](https://github.com/astrezhnev/ps813/tree/main/slides/week7/)
 - [Week 7 `.html` slides](https://www.antonstrezhnev.com/ps813/slides/week7/week7_matching.html)
 
-
 ### Week 8: Instrumental Variables
 
 - [Week 8 Github Repository](https://github.com/astrezhnev/ps813/tree/main/slides/week8/)
@@ -49,8 +48,8 @@ Lecture slides are available as self-contained `.html` files made with RevealJS 
 
 ### Week 9: Differences-in-Differences
 
-- Week 9 Github Repository
-- Week 9 `.html` slides
+- [Week 9 Github Repository](https://github.com/astrezhnev/ps813/tree/main/slides/week9/)
+- [Week 9 `.html` slides](https://www.antonstrezhnev.com/ps813/slides/week9/week9_differences_in_differences.html)
 
 ### Week 10: Modern Differences-in-Differences
 
