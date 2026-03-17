@@ -628,11 +628,11 @@ iv_robust(voted ~ getpost | post, data=wapost)
   
 - Remember, the IV ratio estimand (with a **single instrument** and a **single treatment**)
 
-  $$\tau_{\text{IV}} = \frac{Cov(Y_i, Z_i)}{Cov(Y_i, X_i)}$$
+  $$\tau_{\text{IV}} = \frac{Cov(Y_i, Z_i)}{Cov(D_i, Z_i)}$$
   
 - What is a **consistent** estimator of this? Let's use the **plug-in principle**
 
-  $$\hat{\tau}_{\text{IV}} = \frac{\widehat{Cov}(Y_i, Z_i)}{\widehat{Cov}(Y_i, X_i)}$$
+  $$\hat{\tau}_{\text{IV}} = \frac{\widehat{Cov}(Y_i, Z_i)}{\widehat{Cov}(D_i, Z_i)}$$
   
 - **Numerator**: "Reduced form"/ITT
 - **Denominator**: "First stage"
@@ -815,7 +815,7 @@ summary(wapo_2sls2)
   $\gamma$ here captures the relationship between the exogenous instrument $Z_i$ and the treatment
 - The outcome is a function of $U$ and a mean zero error term $\epsilon_i$ only, so the true treatment effect is $0$
 
-$$Y_i = U_i + \epsilon_i$$
+  $$Y_i = U_i + \epsilon_i$$
 
 :::
 
