@@ -1495,7 +1495,7 @@
     "href": "assignments.html#problem-sets",
     "title": "Assignments",
     "section": "Problem Sets",
-    "text": "Problem Sets\nProblem sets are distributed as .qmd files along with their rendered .html form. You should edit the provided .qmd file and render to .html when submitting the assignment. Additional files (e.g. datasets) are located in sub-folders. For convenience, all the combined files are also distributed as a .zip compressed archive.\n\nProblem Set 1\n\nGithub Repository\n.zip archive\n\n\n\nProblem Set 2\n\nGithub Repository\n.zip archive\n\n\n\nProblem Set 3\n\nGithub Repository\n.zip archive\nProblem Set 4\nGithub Repository\n.zip archive"
+    "text": "Problem Sets\nProblem sets are distributed as .qmd files along with their rendered .html form. You should edit the provided .qmd file and render to .html when submitting the assignment. Additional files (e.g. datasets) are located in sub-folders. For convenience, all the combined files are also distributed as a .zip compressed archive.\n\nProblem Set 1\n\nGithub Repository\n.zip archive\n\n\n\nProblem Set 2\n\nGithub Repository\n.zip archive\n\n\n\nProblem Set 3\n\nGithub Repository\n.zip archive\n\n\n\nProblem Set 4\n\nGithub Repository\n.zip archive"
   },
   {
     "objectID": "lectures.html",
@@ -3000,35 +3000,35 @@
     "href": "slides/week8/week8_instrumental_variables.html#example-the-effect-of-media-on-voting-2",
     "title": "Week 8: Instrumental Variables",
     "section": "Example: The effect of media on voting",
-    "text": "Example: The effect of media on voting\n\nIs there a first-stage effect?\n\n\nlm_robust(getpost ~ post, data=wapost)\n\n             Estimate Std. Error   t value     Pr(&gt;|t|)  CI Lower  CI Upper  DF\n(Intercept) 0.2030905 0.01892257 10.732713 4.056104e-25 0.1659438 0.2402372 760\npost        0.3405988 0.03411092  9.985038 3.820464e-22 0.2736360 0.4075616 760\n\n\n\nAbout 34 percent of the sample is a “complier” - quite substantial!"
+    "text": "Example: The effect of media on voting\n\nIs there a first-stage effect?\n\n\nlm_robust(getpost ~ post, data=wapost)\n\n            Estimate Std. Error t value Pr(&gt;|t|) CI Lower CI Upper  DF\n(Intercept)    0.203     0.0189   10.73 4.06e-25    0.166    0.240 760\npost           0.341     0.0341    9.99 3.82e-22    0.274    0.408 760\n\n\n\nAbout 34 percent of the sample is a “complier” - quite substantial!"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#example-the-effect-of-media-on-voting-3",
     "href": "slides/week8/week8_instrumental_variables.html#example-the-effect-of-media-on-voting-3",
     "title": "Week 8: Instrumental Variables",
     "section": "Example: The effect of media on voting",
-    "text": "Example: The effect of media on voting\n\nIs there an ITT?\n\n\nlm_robust(voted ~ post, data=wapost)\n\n                Estimate Std. Error    t value      Pr(&gt;|t|)    CI Lower\n(Intercept)  0.726269316 0.02097207 34.6303056 1.914080e-158  0.68509924\npost        -0.001350222 0.03297374 -0.0409484  9.673478e-01 -0.06608065\n              CI Upper  DF\n(Intercept) 0.76743939 760\npost        0.06338021 760\n\n\n\nITT is essentially zero."
+    "text": "Example: The effect of media on voting\n\nIs there an ITT?\n\n\nlm_robust(voted ~ post, data=wapost)\n\n            Estimate Std. Error t value  Pr(&gt;|t|) CI Lower CI Upper  DF\n(Intercept)  0.72627      0.021 34.6303 1.91e-158   0.6851   0.7674 760\npost        -0.00135      0.033 -0.0409  9.67e-01  -0.0661   0.0634 760\n\n\n\nITT is essentially zero."
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#example-the-effect-of-media-on-voting-4",
     "href": "slides/week8/week8_instrumental_variables.html#example-the-effect-of-media-on-voting-4",
     "title": "Week 8: Instrumental Variables",
     "section": "Example: The effect of media on voting",
-    "text": "Example: The effect of media on voting\n\nCompare with the naive OLS estimate\n\n\nlm_robust(voted ~ getpost, data=wapost)\n\n              Estimate Std. Error   t value      Pr(&gt;|t|)     CI Lower\n(Intercept) 0.70318725 0.02041070 34.451892 2.109993e-157 0.6631192034\ngetpost     0.06604352 0.03319611  1.989495  4.700455e-02 0.0008765492\n             CI Upper  DF\n(Intercept) 0.7432553 760\ngetpost     0.1312105 760\n\n\n\nPost subscribers are 6pp more likely to vote in the 2005 VA gubernatorial election.\n\nBut is this causal? No!"
+    "text": "Example: The effect of media on voting\n\nCompare with the naive OLS estimate\n\n\nlm_robust(voted ~ getpost, data=wapost)\n\n            Estimate Std. Error t value  Pr(&gt;|t|) CI Lower CI Upper  DF\n(Intercept)    0.703     0.0204   34.45 2.11e-157 0.663119    0.743 760\ngetpost        0.066     0.0332    1.99  4.70e-02 0.000877    0.131 760\n\n\n\nPost subscribers are 6pp more likely to vote in the 2005 VA gubernatorial election.\n\nBut is this causal? No!"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#example-the-effect-of-media-on-voting-5",
     "href": "slides/week8/week8_instrumental_variables.html#example-the-effect-of-media-on-voting-5",
     "title": "Week 8: Instrumental Variables",
     "section": "Example: The effect of media on voting",
-    "text": "Example: The effect of media on voting\n\nLet’s estimate the LATE using the Wald estimator\n\n\n(mean(wapost$voted[wapost$post == 1]) - mean(wapost$voted[wapost$post == 0]))/(mean(wapost$getpost[wapost$post == 1]) - mean(wapost$getpost[wapost$post == 0]))\n\n[1] -0.003964259\n\n\n\nEquivalent to a ratio of regression coefficients\n\n\ncoef(lm_robust(voted ~ post, data=wapost))[2]/coef(lm_robust(getpost ~ post, data=wapost))[2]\n\n        post \n-0.003964259"
+    "text": "Example: The effect of media on voting\n\nLet’s estimate the LATE using the Wald estimator\n\n\n(mean(wapost$voted[wapost$post == 1]) - mean(wapost$voted[wapost$post == 0]))/(mean(wapost$getpost[wapost$post == 1]) - mean(wapost$getpost[wapost$post == 0]))\n\n[1] -0.00396\n\n\n\nEquivalent to a ratio of regression coefficients\n\n\ncoef(lm_robust(voted ~ post, data=wapost))[2]/coef(lm_robust(getpost ~ post, data=wapost))[2]\n\n    post \n-0.00396"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#example-the-effect-of-media-on-voting-6",
     "href": "slides/week8/week8_instrumental_variables.html#example-the-effect-of-media-on-voting-6",
     "title": "Week 8: Instrumental Variables",
     "section": "Example: The effect of media on voting",
-    "text": "Example: The effect of media on voting\n\nWe’ll talk about inference later on, but important to take note: the SE for the LATE can be much larger than the SE for the ITT\n\n\niv_robust(voted ~ getpost | post, data=wapost)\n\n                Estimate Std. Error     t value     Pr(&gt;|t|)   CI Lower\n(Intercept)  0.727074419 0.03676452 19.77652465 1.511250e-70  0.6549023\ngetpost     -0.003964259 0.09684387 -0.04093453 9.673588e-01 -0.1940775\n             CI Upper  DF\n(Intercept) 0.7992465 760\ngetpost     0.1861490 760"
+    "text": "Example: The effect of media on voting\n\nWe’ll talk about inference later on, but important to take note: the SE for the LATE can be much larger than the SE for the ITT\n\n\niv_robust(voted ~ getpost | post, data=wapost)\n\n            Estimate Std. Error t value Pr(&gt;|t|) CI Lower CI Upper  DF\n(Intercept)  0.72707     0.0368 19.7765 1.51e-70    0.655    0.799 760\ngetpost     -0.00396     0.0968 -0.0409 9.67e-01   -0.194    0.186 760"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#review-the-iv-ratio",
@@ -3077,7 +3077,7 @@
     "href": "slides/week8/week8_instrumental_variables.html#the-iv-ratio-estimator",
     "title": "Week 8: Instrumental Variables",
     "section": "The IV ratio estimator",
-    "text": "The IV ratio estimator\n\nWe’ve talked about what the IV estimand means…\n\n…now let’s talk about estimation\n\nRemember, the IV ratio estimand (with a single instrument and a single treatment)\n\\[\\tau_{\\text{IV}} = \\frac{Cov(Y_i, Z_i)}{Cov(Y_i, X_i)}\\]\nWhat is a consistent estimator of this? Let’s use the plug-in principle\n\\[\\hat{\\tau}_{\\text{IV}} = \\frac{\\widehat{Cov}(Y_i, Z_i)}{\\widehat{Cov}(Y_i, X_i)}\\]\nNumerator: “Reduced form”/ITT\nDenominator: “First stage”"
+    "text": "The IV ratio estimator\n\nWe’ve talked about what the IV estimand means…\n\n…now let’s talk about estimation\n\nRemember, the IV ratio estimand (with a single instrument and a single treatment)\n\\[\\tau_{\\text{IV}} = \\frac{Cov(Y_i, Z_i)}{Cov(D_i, Z_i)}\\]\nWhat is a consistent estimator of this? Let’s use the plug-in principle\n\\[\\hat{\\tau}_{\\text{IV}} = \\frac{\\widehat{Cov}(Y_i, Z_i)}{\\widehat{Cov}(D_i, Z_i)}\\]\nNumerator: “Reduced form”/ITT\nDenominator: “First stage”"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#the-iv-ratio-estimator-1",
@@ -3105,14 +3105,14 @@
     "href": "slides/week8/week8_instrumental_variables.html#iv-ratio-inference",
     "title": "Week 8: Instrumental Variables",
     "section": "IV ratio inference",
-    "text": "IV ratio inference\n\nTo illustrate with our Washington Post example\n\n\niv_est &lt;- iv_robust(voted ~ getpost | post, data=wapost, se_type = \"HC0\")\niv_est\n\n                Estimate Std. Error     t value     Pr(&gt;|t|)   CI Lower\n(Intercept)  0.727074419 0.03672069 19.80012910 1.109480e-70  0.6549884\ngetpost     -0.003964259 0.09670722 -0.04099238 9.673127e-01 -0.1938093\n             CI Upper  DF\n(Intercept) 0.7991605 760\ngetpost     0.1858807 760\n\n\n\nLet’s calculate the point estimate by hand!\n\n\nZ &lt;- model.matrix(~post, data=wapost) # Add the intercept\nD &lt;- model.matrix(~getpost, data=wapost) # Add the intercept\nY &lt;- wapost$voted\npoint &lt;- solve(t(Z)%*%D)%*%(t(Z)%*%Y)\npoint\n\n                    [,1]\n(Intercept)  0.727074419\ngetpost     -0.003964259"
+    "text": "IV ratio inference\n\nTo illustrate with our Washington Post example\n\n\niv_est &lt;- iv_robust(voted ~ getpost | post, data=wapost, se_type = \"HC0\")\niv_est\n\n            Estimate Std. Error t value Pr(&gt;|t|) CI Lower CI Upper  DF\n(Intercept)  0.72707     0.0367  19.800 1.11e-70    0.655    0.799 760\ngetpost     -0.00396     0.0967  -0.041 9.67e-01   -0.194    0.186 760\n\n\n\nLet’s calculate the point estimate by hand!\n\n\nZ &lt;- model.matrix(~post, data=wapost) # Add the intercept\nD &lt;- model.matrix(~getpost, data=wapost) # Add the intercept\nY &lt;- wapost$voted\npoint &lt;- solve(t(Z)%*%D)%*%(t(Z)%*%Y)\npoint\n\n                [,1]\n(Intercept)  0.72707\ngetpost     -0.00396"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#iv-ratio-inference-1",
     "href": "slides/week8/week8_instrumental_variables.html#iv-ratio-inference-1",
     "title": "Week 8: Instrumental Variables",
     "section": "IV ratio inference",
-    "text": "IV ratio inference\n\nTo illustrate with our Washington Post example\n\n\niv_robust(voted ~ getpost | post, data=wapost, se_type = \"HC0\")\n\n                Estimate Std. Error     t value     Pr(&gt;|t|)   CI Lower\n(Intercept)  0.727074419 0.03672069 19.80012910 1.109480e-70  0.6549884\ngetpost     -0.003964259 0.09670722 -0.04099238 9.673127e-01 -0.1938093\n             CI Upper  DF\n(Intercept) 0.7991605 760\ngetpost     0.1858807 760\n\n\n\nLet’s do the variance!\n\n\nu &lt;- Y - iv_est$fitted.values\nvcov &lt;- solve(t(Z)%*%D)%*%(t(Z)%*%diag(u^2)%*%Z)%*%solve(t(Z)%*%D)\nsqrt(diag(vcov))\n\n[1] 0.03834991 0.09671781"
+    "text": "IV ratio inference\n\nTo illustrate with our Washington Post example\n\n\niv_robust(voted ~ getpost | post, data=wapost, se_type = \"HC0\")\n\n            Estimate Std. Error t value Pr(&gt;|t|) CI Lower CI Upper  DF\n(Intercept)  0.72707     0.0367  19.800 1.11e-70    0.655    0.799 760\ngetpost     -0.00396     0.0967  -0.041 9.67e-01   -0.194    0.186 760\n\n\n\nLet’s do the variance!\n\n\nu &lt;- Y - iv_est$fitted.values\nvcov &lt;- solve(t(Z)%*%D)%*%(t(Z)%*%diag(u^2)%*%Z)%*%solve(t(Z)%*%D)\nsqrt(diag(vcov))\n\n[1] 0.0383 0.0967"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#iv-as-two-stage-least-squares",
@@ -3140,21 +3140,21 @@
     "href": "slides/week8/week8_instrumental_variables.html#illustrating-2sls-1",
     "title": "Week 8: Instrumental Variables",
     "section": "Illustrating 2SLS",
-    "text": "Illustrating 2SLS\n\nOur first stage regresses subscription on assignment + covariates\n\n\nfirst_stage &lt;- lm_robust(getpost ~ post + Bfemale + reportedage , data= wapost)\nsummary(first_stage)\n\n\nCall:\nlm_robust(formula = getpost ~ post + Bfemale + reportedage, data = wapost)\n\nStandard error type:  HC2 \n\nCoefficients:\n             Estimate Std. Error t value  Pr(&gt;|t|)   CI Lower CI Upper  DF\n(Intercept)  0.120972   0.064057  1.8885 5.935e-02 -0.0047855 0.246729 729\npost         0.352326   0.034821 10.1182 1.314e-22  0.2839648 0.420687 729\nBfemale     -0.004353   0.035046 -0.1242 9.012e-01 -0.0731561 0.064450 729\nreportedage  0.001703   0.001253  1.3597 1.744e-01 -0.0007562 0.004163 729\n\nMultiple R-squared:  0.1336 ,   Adjusted R-squared:   0.13 \nF-statistic: 35.39 on 3 and 729 DF,  p-value: &lt; 2.2e-16"
+    "text": "Illustrating 2SLS\n\nOur first stage regresses subscription on assignment + covariates\n\n\nfirst_stage &lt;- lm_robust(getpost ~ post + Bfemale + reportedage , data= wapost)\nsummary(first_stage)\n\n\nCall:\nlm_robust(formula = getpost ~ post + Bfemale + reportedage, data = wapost)\n\nStandard error type:  HC2 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)  CI Lower CI Upper  DF\n(Intercept)  0.12097    0.06406   1.889 5.94e-02 -0.004786  0.24673 729\npost         0.35233    0.03482  10.118 1.31e-22  0.283965  0.42069 729\nBfemale     -0.00435    0.03505  -0.124 9.01e-01 -0.073156  0.06445 729\nreportedage  0.00170    0.00125   1.360 1.74e-01 -0.000756  0.00416 729\n\nMultiple R-squared:  0.134 ,    Adjusted R-squared:  0.13 \nF-statistic: 35.4 on 3 and 729 DF,  p-value: &lt;2e-16"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#illustrating-2sls-2",
     "href": "slides/week8/week8_instrumental_variables.html#illustrating-2sls-2",
     "title": "Week 8: Instrumental Variables",
     "section": "Illustrating 2SLS",
-    "text": "Illustrating 2SLS\n\nLet’s actually run 2SLS - I like two routines: iv_robust in estimatr (does 2SLS with robust SEs) and ivmodel in ivmodel (does robust 2SLS and weak-instrument robust tests + other diagnostics)\n\n\nwapo_2sls &lt;- iv_robust(voted ~ getpost  + Bfemale + reportedage | post + Bfemale + reportedage, data= wapost)\nsummary(wapo_2sls)\n\n\nCall:\niv_robust(formula = voted ~ getpost + Bfemale + reportedage | \n    post + Bfemale + reportedage, data = wapost)\n\nStandard error type:  HC2 \n\nCoefficients:\n             Estimate Std. Error  t value  Pr(&gt;|t|)  CI Lower CI Upper  DF\n(Intercept)  0.225621    0.07334  3.07656 2.172e-03  0.081647  0.36959 729\ngetpost      0.004283    0.09086  0.04714 9.624e-01 -0.174097  0.18266 729\nBfemale     -0.034955    0.03354 -1.04228 2.976e-01 -0.100795  0.03089 729\nreportedage  0.010402    0.00127  8.18792 1.187e-15  0.007908  0.01290 729\n\nMultiple R-squared:  0.09299 ,  Adjusted R-squared:  0.08926 \nF-statistic: 23.27 on 3 and 729 DF,  p-value: 2.153e-14"
+    "text": "Illustrating 2SLS\n\nLet’s actually run 2SLS - I like two routines: iv_robust in estimatr (does 2SLS with robust SEs) and ivmodel in ivmodel (does robust 2SLS and weak-instrument robust tests + other diagnostics)\n\n\nwapo_2sls &lt;- iv_robust(voted ~ getpost  + Bfemale + reportedage | post + Bfemale + reportedage, data= wapost)\nsummary(wapo_2sls)\n\n\nCall:\niv_robust(formula = voted ~ getpost + Bfemale + reportedage | \n    post + Bfemale + reportedage, data = wapost)\n\nStandard error type:  HC2 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|) CI Lower CI Upper  DF\n(Intercept)  0.22562    0.07334  3.0766 2.17e-03  0.08165   0.3696 729\ngetpost      0.00428    0.09086  0.0471 9.62e-01 -0.17410   0.1827 729\nBfemale     -0.03495    0.03354 -1.0423 2.98e-01 -0.10079   0.0309 729\nreportedage  0.01040    0.00127  8.1879 1.19e-15  0.00791   0.0129 729\n\nMultiple R-squared:  0.093 ,    Adjusted R-squared:  0.0893 \nF-statistic: 23.3 on 3 and 729 DF,  p-value: 2.15e-14"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#illustrating-2sls-3",
     "href": "slides/week8/week8_instrumental_variables.html#illustrating-2sls-3",
     "title": "Week 8: Instrumental Variables",
     "section": "Illustrating 2SLS",
-    "text": "Illustrating 2SLS\n\nwapo_2sls2 &lt;- ivmodelFormula(voted ~ getpost  + Bfemale + reportedage | post + Bfemale + reportedage, data= wapost, heteroSE=T)\nsummary(wapo_2sls2)\n\n\nCall:\nivmodel(Y = Y, D = D, Z = Z, X = X, intercept = intercept, beta0 = beta0, \n    alpha = alpha, k = k, manyweakSE = manyweakSE, heteroSE = heteroSE, \n    clusterID = clusterID, deltarange = deltarange, na.action = na.action)\nsample size: 733\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nFirst Stage Regression Result:\n\nF=110.8791, df1=1, df2=729, p-value is &lt; 2.22e-16\nR-squared=0.1320179,   Adjusted R-squared=0.1308273\nResidual standard error: 0.4441532 on 730 degrees of freedom\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nCoefficients of k-Class Estimators:\n\n              k Estimate Std. Error t value Pr(&gt;|t|)\nOLS    0.000000 0.047078   0.032466   1.450    0.147\nFuller 0.998628 0.004724   0.089790   0.053    0.958\nTSLS   1.000000 0.004283   0.090599   0.047    0.962\nLIML   1.000000 0.004283   0.090599   0.047    0.962\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nAlternative tests for the treatment effect under H_0: beta=0.\n\nAnderson-Rubin test (under F distribution):\nF=0.002230662, df1=1, df2=729, p-value is 0.96234\n95 percent confidence interval:\n [-0.178674420106811, 0.183689569448123]\n\nConditional Likelihood Ratio test (under Normal approximation):\nTest Stat=0.002230662, p-value is 0.96234\n95 percent confidence interval:\n [-0.17867442296152, 0.183689572193089]"
+    "text": "Illustrating 2SLS\n\nwapo_2sls2 &lt;- ivmodelFormula(voted ~ getpost  + Bfemale + reportedage | post + Bfemale + reportedage, data= wapost, heteroSE=T)\nsummary(wapo_2sls2)\n\n\nCall:\nivmodel(Y = Y, D = D, Z = Z, X = X, intercept = intercept, beta0 = beta0, \n    alpha = alpha, k = k, manyweakSE = manyweakSE, heteroSE = heteroSE, \n    clusterID = clusterID, deltarange = deltarange, na.action = na.action)\nsample size: 733\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nFirst Stage Regression Result:\n\nF=111, df1=1, df2=729, p-value is &lt;2e-16\nR-squared=0.132,   Adjusted R-squared=0.131\nResidual standard error: 0.444 on 730 degrees of freedom\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nCoefficients of k-Class Estimators:\n\n             k Estimate Std. Error t value Pr(&gt;|t|)\nOLS    0.00000  0.04708    0.03247    1.45     0.15\nFuller 0.99863  0.00472    0.08979    0.05     0.96\nTSLS   1.00000  0.00428    0.09060    0.05     0.96\nLIML   1.00000  0.00428    0.09060    0.05     0.96\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nAlternative tests for the treatment effect under H_0: beta=0.\n\nAnderson-Rubin test (under F distribution):\nF=0.00223, df1=1, df2=729, p-value is 1\n95 percent confidence interval:\n [-0.178674420106811, 0.183689569448123]\n\nConditional Likelihood Ratio test (under Normal approximation):\nTest Stat=0.00223, p-value is 1\n95 percent confidence interval:\n [-0.17867442296152, 0.183689572193089]"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#the-weak-instrument-problem",
@@ -3168,14 +3168,14 @@
     "href": "slides/week8/week8_instrumental_variables.html#the-weak-instrument-problem-1",
     "title": "Week 8: Instrumental Variables",
     "section": "The weak instrument problem",
-    "text": "The weak instrument problem\n\nLet’s use a simulation to see how bad the bias can be in IV versus just a simple OLS regression of outcome on treatment under unobserved confounding.\nLet \\(U_i \\sim \\mathcal{N}(0, 1)\\) be an unobserved confounder. \\(Z_i \\sim \\text{Bern}(.5)\\) is an exogenous instrument.\nThe probability of treatment is modeled via a logit\n\\[\\text{log}\\bigg(\\frac{P(D_i = 1 | Z_i, U_i)}{1-P(D_i = 1 | Z_i, U_i)}\\bigg) =  \\gamma Z_i + U_i\\]\n\\(\\gamma\\) here captures the relationship between the exogenous instrument \\(Z_i\\) and the treatment\nThe outcome is a function of \\(U\\) and a mean zero error term \\(\\epsilon_i\\) only, so the true treatment effect is \\(0\\)\n\n\\[Y_i = U_i + \\epsilon_i\\]"
+    "text": "The weak instrument problem\n\nLet’s use a simulation to see how bad the bias can be in IV versus just a simple OLS regression of outcome on treatment under unobserved confounding.\nLet \\(U_i \\sim \\mathcal{N}(0, 1)\\) be an unobserved confounder. \\(Z_i \\sim \\text{Bern}(.5)\\) is an exogenous instrument.\nThe probability of treatment is modeled via a logit\n\\[\\text{log}\\bigg(\\frac{P(D_i = 1 | Z_i, U_i)}{1-P(D_i = 1 | Z_i, U_i)}\\bigg) =  \\gamma Z_i + U_i\\]\n\\(\\gamma\\) here captures the relationship between the exogenous instrument \\(Z_i\\) and the treatment\nThe outcome is a function of \\(U\\) and a mean zero error term \\(\\epsilon_i\\) only, so the true treatment effect is \\(0\\)\n\\[Y_i = U_i + \\epsilon_i\\]"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#the-weak-instrument-problem-2",
     "href": "slides/week8/week8_instrumental_variables.html#the-weak-instrument-problem-2",
     "title": "Week 8: Instrumental Variables",
     "section": "The weak instrument problem",
-    "text": "The weak instrument problem\n\nLet’s see how the Wald estimator performs when we have a pretty large effect of \\(Z_i\\) on \\(D_i\\): \\(\\gamma = 3\\) and \\(N = 1000\\)\n\n\n## First stage effect\nmean(firststage)\n\n[1] 0.3441304\n\n## F-statistic from the first stage\nmean(firststageF)\n\n[1] 156.7175\n\n## Bias of the naive OLS Y ~ X\nmean(naive)\n\n[1] 0.7274939\n\n## Bias of IV\nmean(IV)\n\n[1] -0.01632865"
+    "text": "The weak instrument problem\n\nLet’s see how the Wald estimator performs when we have a pretty large effect of \\(Z_i\\) on \\(D_i\\): \\(\\gamma = 3\\) and \\(N = 1000\\)\n\n\n## First stage effect\nmean(firststage)\n\n[1] 0.43\n\n## F-statistic from the first stage\nmean(firststageF)\n\n[1] 295\n\n## Bias of the naive OLS Y ~ X\nmean(naive)\n\n[1] 0.65\n\n## Bias of IV\nmean(IV)\n\n[1] -0.0117"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#the-weak-instrument-problem-3",
@@ -3196,7 +3196,7 @@
     "href": "slides/week8/week8_instrumental_variables.html#the-weak-instrument-problem-5",
     "title": "Week 8: Instrumental Variables",
     "section": "The weak instrument problem",
-    "text": "The weak instrument problem\n\nNow, what happens when our instrument is weak: \\(\\gamma = .2\\) and \\(N = 1000\\)\n\n\n## First stage effect\nmean(firststage)\n\n[1] 0.03994391\n\n## F-statistic from the first stage\nmean(firststageF)\n\n[1] 2.583906\n\n## Bias of the naive OLS Y ~ X\nmean(naive)\n\n[1] 0.8257246\n\n## Bias of IV\nmean(IV)\n\n[1] 2.681309"
+    "text": "The weak instrument problem\n\nNow, what happens when our instrument is weak: \\(\\gamma = .2\\) and \\(N = 1000\\)\n\n\n## First stage effect\nmean(firststage)\n\n[1] 0.0399\n\n## F-statistic from the first stage\nmean(firststageF)\n\n[1] 2.58\n\n## Bias of the naive OLS Y ~ X\nmean(naive)\n\n[1] 0.826\n\n## Bias of IV\nmean(IV)\n\n[1] 2.68"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#the-weak-instrument-problem-6",
@@ -3245,14 +3245,14 @@
     "href": "slides/week8/week8_instrumental_variables.html#example-strong-instrument",
     "title": "Week 8: Instrumental Variables",
     "section": "Example: Strong instrument",
-    "text": "Example: Strong instrument\n\nwapo_iv &lt;- ivmodelFormula(voted ~ getpost  | post , data= wapost, heteroSE=T)\nprint(AR.test(wapo_iv))\n\n$Fstat\n[1] 0.01713293\n\n$df\n[1]   1 731\n\n$p.value\n[1] 0.8958961\n\n$ci.info\n[1] \"[-0.2058034696935, 0.175035583124674]\"\n\n$ci\n          lower     upper\n[1,] -0.2058035 0.1750356"
+    "text": "Example: Strong instrument\n\nwapo_iv &lt;- ivmodelFormula(voted ~ getpost  | post , data= wapost, heteroSE=T)\nprint(AR.test(wapo_iv))\n\n$Fstat\n[1] 0.0171\n\n$df\n[1]   1 731\n\n$p.value\n[1] 0.896\n\n$ci.info\n[1] \"[-0.2058034696935, 0.175035583124674]\"\n\n$ci\n      lower upper\n[1,] -0.206 0.175"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#example-weak-instrument",
     "href": "slides/week8/week8_instrumental_variables.html#example-weak-instrument",
     "title": "Week 8: Instrumental Variables",
     "section": "Example: Weak instrument",
-    "text": "Example: Weak instrument\n\nweak_iv_data &lt;- data.frame(Y = Y, D= D, Z=Z)\nweak_iv &lt;- ivmodelFormula(Y ~ D | Z , data= weak_iv_data, heteroSE=T)\nprint(AR.test(weak_iv))\n\n$Fstat\n[1] 0.2150564\n\n$df\n[1]   1 998\n\n$p.value\n[1] 0.6429339\n\n$ci.info\n[1] \"Whole Real Line\"\n\n$ci\n     lower upper\n[1,]  -Inf   Inf"
+    "text": "Example: Weak instrument\n\nweak_iv_data &lt;- data.frame(Y = Y, D= D, Z=Z)\nweak_iv &lt;- ivmodelFormula(Y ~ D | Z , data= weak_iv_data, heteroSE=T)\nprint(AR.test(weak_iv))\n\n$Fstat\n[1] 0.215\n\n$df\n[1]   1 998\n\n$p.value\n[1] 0.643\n\n$ci.info\n[1] \"Whole Real Line\"\n\n$ci\n     lower upper\n[1,]  -Inf   Inf"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#conclusion",
