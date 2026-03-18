@@ -663,7 +663,8 @@ iv_robust(voted ~ getpost | post, data=wapost)
 
 - Let $\mathbf{Z}$ be our matrix of **instruments** and **covariates**
 - Let $\mathbf{X}$ be our matrix of **treatments** and **covariates**
-  - **Covariates** here refers to stuff that's not a treatment or a - possibly things that are needed to satisfy ignorability for the instrument.
+  - **Covariates** here refers to stuff that's not a treatment or an instrument 
+  - Possibly variables that are needed to satisfy ignorability for the instrument.
 
 - For identification, we need **as many** instruments as we have treatments
   - Most typical case in political science: single-instrument, single-treatment case
@@ -737,14 +738,12 @@ sqrt(diag(vcov))
 - **Second stage** - Regress $Y$ on the "fitted values" $\widehat{\mathbf{X}}$
 
   $$\hat{\beta}_{\text{2SLS}} = (\widehat{\mathbf{X}}^{\prime}\mathbf{X})^{-1}(\widehat{\mathbf{X}}^{\prime}Y)$$
-  
-:::
 
-## Two-stage least squares
-
-- Putting it all together, the 2SLS estimator is:
+- Putting it all together, gives the 2SLS estimator!
 
   $$\hat{\tau}_{\text{2SLS}} =  (\mathbf{X}^{\prime}\mathbf{Z}(\mathbf{Z}^{\prime}\mathbf{Z})^{-1}\mathbf{Z}^\prime\mathbf{X})^{-1}(\mathbf{X}^{\prime}\mathbf{Z}(\mathbf{Z}^{\prime}\mathbf{Z})^{-1}\mathbf{Z}^\prime Y)$$
+  
+:::
 
 ## Illustrating 2SLS
 
@@ -954,7 +953,7 @@ abline(v=0, col="red", lty=2)
 - **Montiel Olea and Pflueger (2013)**
   - **Robust** F-statistics
   - Comparable threshold to Stock and Yogo bias is $F > 23.1$
--  **Lee, Moreira, McCrary, Porter (2020)** 
+- **Lee, Moreira, McCrary, Porter (2020)** 
   - These are thresholds that the bias is "small" (approximately 10%)
   - If we want to use the F-statistic as a screen for $p < .05$ to be valid, then we actually need $F > 104.7$
 - **Angrist and Pischke (2009)** - with "just-identified" IV bias is usually overwhelmed by the large standard errors.
@@ -969,7 +968,7 @@ abline(v=0, col="red", lty=2)
 - When the assignment process of $Z_i$ is known, we can construct hypothesis tests using permutation inference assuming a constant treatment effect $\tau$ **(Imbens and Rosenbaum, 2005)**.
   - With a single, de-meaned instrument $\tilde{Z_i} = Z_i - \bar{Z}$, we can construct a test statistic based on the sample covariance between $Z_i$ and $Y_i$ with the effect removed:
 
-$$T(\tau) = \frac{1}{N} \sum_{i=1}^N \tilde{Z_i} \times (Y_i - \tau D_i)$$
+  $$T(\tau) = \frac{1}{N} \sum_{i=1}^N \tilde{Z_i} \times (Y_i - \tau D_i)$$
 
 - If the instrument is valid, under the null hypothesis that $\tau = \tau_0$, we can get the **randomization distribution** of the test statistic by simply re-randomizing treatment according to the known assignment process.
   - Construct confidence intervals by "inverting the test" - what values of $\tau_0$ does the test fail to reject?
@@ -982,9 +981,10 @@ $$T(\tau) = \frac{1}{N} \sum_{i=1}^N \tilde{Z_i} \times (Y_i - \tau D_i)$$
 ::: {.incremental}
 
 - Even when the assignment process is not known, the IV assumptions allow us to construct a test statistic that does not depend on the first stage.
-  - This is the **Anderson-Rubin (1949)** approach - **Andrews, Stock and Sun (2019)** provide a good explanation especially for the "just-identified" case
+  - This is the **Anderson-Rubin (1949)** approach 
+  - **Andrews, Stock and Sun (2019)** provide a good explanation especially for the "just-identified" case
 - Let $\hat{\delta}_{\text{ITT}}$ be the **reduced form** or intent-to-treat estimate.
-- Under the IV assumptions, the reduced form is the product of first stage $\pi$ and the treatment effect $\tau$
+- Under the IV assumptions, the reduced form is the product of first stage $\gamma$ and the treatment effect $\tau$
 
   $$\delta_{\text{ITT}} = \gamma \times \tau$$
 
@@ -1001,12 +1001,11 @@ $$T(\tau) = \frac{1}{N} \sum_{i=1}^N \tilde{Z_i} \times (Y_i - \tau D_i)$$
 - We can construct a test statistic based on the difference between the estimated ITT and the estimated first stage adjusted by the null which we know is normal in large samples.
 
   $$g(\tau_0) = \hat{\delta}_{\text{ITT}} - \hat{\gamma} \tau_0 \sim \mathcal{N}(0, \Omega(\tau_0))$$
-
 - The Anderson-Rubin (1949) test statistic is:
 
-  $$AR(\tau) = g(\tau)^\prime \Omega(\tau_0)^{-1}g(\tau)$$
+  $$AR(\tau) = g(\tau)^\prime \Omega(\tau)^{-1}g(\tau)$$
 
-  Under the null $H_0: \tau = \tau_0$, this has a chi-squared distribution which does not depend on the value of the first stage.
+  Under the null $H_0: \tau = \tau_0$, this has a chi-squared distribution which does not directly depend on the value of the first stage $\gamma$!
 
 - **Intuitively**: Statistical properties of **differences** in two normal random variables are well-known and easy. Statistical properties of **ratios** are much more complicated!
   - Again, invert the test to get a confidence interval
