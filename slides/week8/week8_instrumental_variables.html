@@ -1625,7 +1625,8 @@ getpost     -0.00396     0.0968 -0.0409 9.67e-01   -0.194    0.186 760</code></p
 <li class="fragment"><p>Let <span class="math inline">\(\mathbf{Z}\)</span> be our matrix of <strong>instruments</strong> and <strong>covariates</strong></p></li>
 <li class="fragment"><p>Let <span class="math inline">\(\mathbf{X}\)</span> be our matrix of <strong>treatments</strong> and <strong>covariates</strong></p>
 <ul>
-<li class="fragment"><strong>Covariates</strong> here refers to stuff that’s not a treatment or a - possibly things that are needed to satisfy ignorability for the instrument.</li>
+<li class="fragment"><strong>Covariates</strong> here refers to stuff that’s not a treatment or an instrument</li>
+<li class="fragment">Possibly variables that are needed to satisfy ignorability for the instrument.</li>
 </ul></li>
 <li class="fragment"><p>For identification, we need <strong>as many</strong> instruments as we have treatments</p>
 <ul>
@@ -1716,12 +1717,7 @@ getpost     -0.00396     0.0967  -0.041 9.67e-01   -0.194    0.186 760</code></p
 <p><span class="math display">\[\widehat{\mathbf{X}} = \underbrace{\mathbf{Z}(\mathbf{Z}^\prime\mathbf{Z})^{-1}\mathbf{Z}^\prime}_{P_{\mathbf{Z}}}\mathbf{X}\]</span></p></li>
 <li class="fragment"><p><strong>Second stage</strong> - Regress <span class="math inline">\(Y\)</span> on the “fitted values” <span class="math inline">\(\widehat{\mathbf{X}}\)</span></p>
 <p><span class="math display">\[\hat{\beta}_{\text{2SLS}} = (\widehat{\mathbf{X}}^{\prime}\mathbf{X})^{-1}(\widehat{\mathbf{X}}^{\prime}Y)\]</span></p></li>
-</ul>
-</section>
-<section id="two-stage-least-squares" class="slide level2">
-<h2>Two-stage least squares</h2>
-<ul>
-<li><p>Putting it all together, the 2SLS estimator is:</p>
+<li class="fragment"><p>Putting it all together, gives the 2SLS estimator!</p>
 <p><span class="math display">\[\hat{\tau}_{\text{2SLS}} =  (\mathbf{X}^{\prime}\mathbf{Z}(\mathbf{Z}^{\prime}\mathbf{Z})^{-1}\mathbf{Z}^\prime\mathbf{X})^{-1}(\mathbf{X}^{\prime}\mathbf{Z}(\mathbf{Z}^{\prime}\mathbf{Z})^{-1}\mathbf{Z}^\prime Y)\]</span></p></li>
 </ul>
 </section>
@@ -1964,27 +1960,27 @@ Test Stat=0.00223, p-value is 1
 <li class="fragment"><strong>Robust</strong> F-statistics</li>
 <li class="fragment">Comparable threshold to Stock and Yogo bias is <span class="math inline">\(F &gt; 23.1\)</span></li>
 </ul></li>
-<li class="fragment"><strong>Lee, Moreira, McCrary, Porter (2020)</strong></li>
+<li class="fragment"><strong>Lee, Moreira, McCrary, Porter (2020)</strong>
+<ul>
 <li class="fragment">These are thresholds that the bias is “small” (approximately 10%)</li>
 <li class="fragment">If we want to use the F-statistic as a screen for <span class="math inline">\(p &lt; .05\)</span> to be valid, then we actually need <span class="math inline">\(F &gt; 104.7\)</span></li>
+</ul></li>
 <li class="fragment"><strong>Angrist and Pischke (2009)</strong> - with “just-identified” IV bias is usually overwhelmed by the large standard errors.</li>
 </ul>
 </section>
 <section id="permutation-test" class="slide level2">
 <h2>Permutation test</h2>
 <ul>
-<li class="fragment">When the assignment process of <span class="math inline">\(Z_i\)</span> is known, we can construct hypothesis tests using permutation inference assuming a constant treatment effect <span class="math inline">\(\tau\)</span> <strong>(Imbens and Rosenbaum, 2005)</strong>.
+<li class="fragment"><p>When the assignment process of <span class="math inline">\(Z_i\)</span> is known, we can construct hypothesis tests using permutation inference assuming a constant treatment effect <span class="math inline">\(\tau\)</span> <strong>(Imbens and Rosenbaum, 2005)</strong>.</p>
 <ul>
 <li class="fragment">With a single, de-meaned instrument <span class="math inline">\(\tilde{Z_i} = Z_i - \bar{Z}\)</span>, we can construct a test statistic based on the sample covariance between <span class="math inline">\(Z_i\)</span> and <span class="math inline">\(Y_i\)</span> with the effect removed:</li>
-</ul></li>
 </ul>
-<p><span class="math display">\[T(\tau) = \frac{1}{N} \sum_{i=1}^N \tilde{Z_i} \times (Y_i - \tau D_i)\]</span></p>
-<ul>
-<li class="fragment">If the instrument is valid, under the null hypothesis that <span class="math inline">\(\tau = \tau_0\)</span>, we can get the <strong>randomization distribution</strong> of the test statistic by simply re-randomizing treatment according to the known assignment process.
+<p><span class="math display">\[T(\tau) = \frac{1}{N} \sum_{i=1}^N \tilde{Z_i} \times (Y_i - \tau D_i)\]</span></p></li>
+<li class="fragment"><p>If the instrument is valid, under the null hypothesis that <span class="math inline">\(\tau = \tau_0\)</span>, we can get the <strong>randomization distribution</strong> of the test statistic by simply re-randomizing treatment according to the known assignment process.</p>
 <ul>
 <li class="fragment">Construct confidence intervals by “inverting the test” - what values of <span class="math inline">\(\tau_0\)</span> does the test fail to reject?</li>
 </ul></li>
-<li class="fragment">Alternative test statistics based on ranks of <span class="math inline">\(Y_i - \tau D_i\)</span> (possibly within strata) can also be used.</li>
+<li class="fragment"><p>Alternative test statistics based on ranks of <span class="math inline">\(Y_i - \tau D_i\)</span> (possibly within strata) can also be used.</p></li>
 </ul>
 </section>
 <section id="anderson-rubin-test" class="slide level2">
@@ -1992,10 +1988,11 @@ Test Stat=0.00223, p-value is 1
 <ul>
 <li class="fragment"><p>Even when the assignment process is not known, the IV assumptions allow us to construct a test statistic that does not depend on the first stage.</p>
 <ul>
-<li class="fragment">This is the <strong>Anderson-Rubin (1949)</strong> approach - <strong>Andrews, Stock and Sun (2019)</strong> provide a good explanation especially for the “just-identified” case</li>
+<li class="fragment">This is the <strong>Anderson-Rubin (1949)</strong> approach</li>
+<li class="fragment"><strong>Andrews, Stock and Sun (2019)</strong> provide a good explanation especially for the “just-identified” case</li>
 </ul></li>
 <li class="fragment"><p>Let <span class="math inline">\(\hat{\delta}_{\text{ITT}}\)</span> be the <strong>reduced form</strong> or intent-to-treat estimate.</p></li>
-<li class="fragment"><p>Under the IV assumptions, the reduced form is the product of first stage <span class="math inline">\(\pi\)</span> and the treatment effect <span class="math inline">\(\tau\)</span></p>
+<li class="fragment"><p>Under the IV assumptions, the reduced form is the product of first stage <span class="math inline">\(\gamma\)</span> and the treatment effect <span class="math inline">\(\tau\)</span></p>
 <p><span class="math display">\[\delta_{\text{ITT}} = \gamma \times \tau\]</span></p></li>
 <li class="fragment"><p>Assuming a particular null <span class="math inline">\(H_0: \tau = \tau_0\)</span> implies that</p>
 <p><span class="math display">\[\delta_{\text{ITT}} - \gamma \times \tau_0 = 0\]</span></p></li>
@@ -2007,8 +2004,8 @@ Test Stat=0.00223, p-value is 1
 <li class="fragment"><p>We can construct a test statistic based on the difference between the estimated ITT and the estimated first stage adjusted by the null which we know is normal in large samples.</p>
 <p><span class="math display">\[g(\tau_0) = \hat{\delta}_{\text{ITT}} - \hat{\gamma} \tau_0 \sim \mathcal{N}(0, \Omega(\tau_0))\]</span></p></li>
 <li class="fragment"><p>The Anderson-Rubin (1949) test statistic is:</p>
-<p><span class="math display">\[AR(\tau) = g(\tau)^\prime \Omega(\tau_0)^{-1}g(\tau)\]</span></p>
-<p>Under the null <span class="math inline">\(H_0: \tau = \tau_0\)</span>, this has a chi-squared distribution which does not depend on the value of the first stage.</p></li>
+<p><span class="math display">\[AR(\tau) = g(\tau)^\prime \Omega(\tau)^{-1}g(\tau)\]</span></p>
+<p>Under the null <span class="math inline">\(H_0: \tau = \tau_0\)</span>, this has a chi-squared distribution which does not directly depend on the value of the first stage <span class="math inline">\(\gamma\)</span>!</p></li>
 <li class="fragment"><p><strong>Intuitively</strong>: Statistical properties of <strong>differences</strong> in two normal random variables are well-known and easy. Statistical properties of <strong>ratios</strong> are much more complicated!</p>
 <ul>
 <li class="fragment">Again, invert the test to get a confidence interval</li>

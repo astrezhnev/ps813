@@ -193,21 +193,21 @@
     "href": "slides/week9/week9_differences_in_differences.html#two-way-fixed-effects",
     "title": "Week 9: Differences-in-Differences",
     "section": "Two-way fixed effects",
-    "text": "Two-way fixed effects\n\nSuppose our dataset is organized where each row is a unit/time period - \\(it\\).\n\nLet \\(D_{it}\\) denote whether a unit is treated at time \\(t\\)\n\nWe can recover our 2x2 DiD estimator (in the simple two unit, two period setting) using a “two-way” fixed effects regression\n\nUnique parameter for each treatment timing group (or equivalently unit)\nUnique parameter for each time period\n\\[Y_{it} = \\alpha + \\beta D_i + \\delta_{t} + \\tau D_{it} + \\epsilon_{it}\\]"
+    "text": "Two-way fixed effects\n\nSuppose our dataset is organized where each row is a unit/time period - \\(it\\).\n\nLet \\(D_{it}\\) denote whether a unit is treated at time \\(t\\)\n\nWe can recover our 2x2 DiD estimator (in the simple two unit, two period setting) using a “two-way” fixed effects regression\n\nUnique parameter for each unit or treatment timing group\nUnique parameter for each time period\n\nCommonly written as:\n\\[Y_{it} = \\alpha_i + \\delta_{t} + \\tau D_{it} + \\epsilon_{it}\\]\nEquivalently (with timing group FEs instead of unit FEs)\n\\[Y_{it} = \\alpha + \\beta D_i + \\delta_{t} + \\tau D_{it} + \\epsilon_{it}\\]"
   },
   {
-    "objectID": "slides/week9/week9_differences_in_differences.html#fixed-effects-estimators",
-    "href": "slides/week9/week9_differences_in_differences.html#fixed-effects-estimators",
+    "objectID": "slides/week9/week9_differences_in_differences.html#two-way-fixed-effects-1",
+    "href": "slides/week9/week9_differences_in_differences.html#two-way-fixed-effects-1",
     "title": "Week 9: Differences-in-Differences",
-    "section": "Fixed-effects estimators",
-    "text": "Fixed-effects estimators\n\nExpectations:\n\n\\(E[Y_{i0} | D_i = 0] = \\alpha + \\delta_0\\)\n\\(E[Y_{i1} | D_i = 0] = \\alpha + \\delta_1\\)\n\\(E[Y_{i0} | D_i = 1] = \\alpha + \\beta  + \\delta_0\\)\n\\(E[Y_{i1} | D_i = 1] = \\alpha + \\beta + \\delta_1 + \\tau\\)\n\nDifferences\n\n\\(E[Y_{i1} | D_i = 1] - E[Y_{i0} | D_i = 1] = \\delta_1 - \\delta_0 + \\tau\\)\n\\(E[Y_{i1} | D_i = 0] - E[Y_{i0} | D_i = 0] = \\delta_1 - \\delta_0\\)\n\nDifference-in-differences\n\n\\(\\{E[Y_{i1} | D_i = 1] - E[Y_{i0} | D_i = 1]\\} - \\{E[Y_{i1} | D_i = 0] - E[Y_{i0} | D_i = 0]\\} = \\tau\\)"
+    "section": "Two-way fixed effects",
+    "text": "Two-way fixed effects\n\nExpectations:\n\n\\(E[Y_{i0} | D_i = 0] = \\alpha + \\delta_0\\)\n\\(E[Y_{i1} | D_i = 0] = \\alpha + \\delta_1\\)\n\\(E[Y_{i0} | D_i = 1] = \\alpha + \\beta  + \\delta_0\\)\n\\(E[Y_{i1} | D_i = 1] = \\alpha + \\beta + \\delta_1 + \\tau\\)\n\nDifferences\n\n\\(E[Y_{i1} | D_i = 1] - E[Y_{i0} | D_i = 1] = \\delta_1 - \\delta_0 + \\tau\\)\n\\(E[Y_{i1} | D_i = 0] - E[Y_{i0} | D_i = 0] = \\delta_1 - \\delta_0\\)\n\nDifference-in-differences\n\n\\(\\{E[Y_{i1} | D_i = 1] - E[Y_{i0} | D_i = 1]\\} - \\{E[Y_{i1} | D_i = 0] - E[Y_{i0} | D_i = 0]\\} = \\tau\\)"
   },
   {
-    "objectID": "slides/week9/week9_differences_in_differences.html#fixed-effects-estimators-1",
-    "href": "slides/week9/week9_differences_in_differences.html#fixed-effects-estimators-1",
+    "objectID": "slides/week9/week9_differences_in_differences.html#two-way-fixed-effects-2",
+    "href": "slides/week9/week9_differences_in_differences.html#two-way-fixed-effects-2",
     "title": "Week 9: Differences-in-Differences",
-    "section": "Fixed-effects estimators",
-    "text": "Fixed-effects estimators\n\nDoes not generalize neatly to many time periods w/ variation in treatment timing.\n\nNeed to also assume a constant, instantaneous treatment effect \\(\\tau\\)\nWe’ll spend a lot more time on this next week!\n\nNeed to account for dependence in observations between time periods w/in same unit\n\n“Cluster-robust” SEs or block bootstrap\nWe’ll discuss this more later!"
+    "section": "Two-way fixed effects",
+    "text": "Two-way fixed effects\n\nDoes not generalize neatly to many time periods w/ variation in treatment timing.\n\nNeed to also assume a constant, instantaneous treatment effect \\(\\tau\\)\nWe’ll spend a lot more time on this next week!\n\nNeed to account for dependence in observations between time periods w/in same unit\n\n“Cluster-robust” SEs or block bootstrap\nWe’ll discuss this more later!"
   },
   {
     "objectID": "slides/week9/week9_differences_in_differences.html#example-card-and-krueger-1994-aer",
@@ -221,21 +221,28 @@
     "href": "slides/week9/week9_differences_in_differences.html#example-card-and-krueger-1994-aer-1",
     "title": "Week 9: Differences-in-Differences",
     "section": "Example: Card and Krueger (1994, AER)",
-    "text": "Example: Card and Krueger (1994, AER)\n\n# Load the data for Card and Krueger (1994)\nminwage &lt;- read_csv(\"assets/data/minwage.csv\")\n# Index of observations\nminwage$unit &lt;- 1:nrow(minwage)\n\n# Change in full-time employment\nminwage$CHG_EMPFT &lt;- minwage$EMPFT2 - minwage$EMPFT\n\n# Regress change on treatment (STATE = 1 for NJ)\ndiff &lt;- lm_robust(CHG_EMPFT ~ STATE, data=minwage, se_type = \"HC2\")\ntidy(diff)\n\n         term  estimate std.error statistic    p.value   conf.low conf.high  df\n1 (Intercept) -2.492537  1.645117 -1.515112 0.13063130 -5.7279069 0.7428322 356\n2       STATE  2.927245  1.729880  1.692167 0.09148915 -0.4748228 6.3293132 356\n    outcome\n1 CHG_EMPFT\n2 CHG_EMPFT"
+    "text": "Example: Card and Krueger (1994, AER)\n\n# Load the data for Card and Krueger (1994)\nminwage &lt;- read_csv(\"assets/data/minwage.csv\")\n# Index of observations\nminwage$unit &lt;- 1:nrow(minwage)\n\n# Change in full-time employment\nminwage$CHG_EMPFT &lt;- minwage$EMPFT2 - minwage$EMPFT\n\n# Regress change on treatment (STATE = 1 for NJ)\ndiff &lt;- lm_robust(CHG_EMPFT ~ STATE, data=minwage, se_type = \"HC2\")\ntidy(diff)\n\n         term estimate std.error statistic p.value conf.low conf.high  df\n1 (Intercept)    -2.49      1.65     -1.52  0.1306   -5.728     0.743 356\n2       STATE     2.93      1.73      1.69  0.0915   -0.475     6.329 356\n    outcome\n1 CHG_EMPFT\n2 CHG_EMPFT"
   },
   {
     "objectID": "slides/week9/week9_differences_in_differences.html#example-card-and-krueger-1994-aer-2",
     "href": "slides/week9/week9_differences_in_differences.html#example-card-and-krueger-1994-aer-2",
     "title": "Week 9: Differences-in-Differences",
     "section": "Example: Card and Krueger (1994, AER)",
-    "text": "Example: Card and Krueger (1994, AER)\n\n# Equivalence of TWFE in 2x2 case\nminwage_long &lt;- minwage %&gt;% pivot_longer(cols = starts_with(\"EMPFT\"),\n                names_to = \"time_str\", names_prefix = \"EMPFT\", values_to = \"EMPFT\")\n\n# Recode time variable\nminwage_long$time &lt;- NA\nminwage_long$time[minwage_long$time_str == \"\"] &lt;- 0\nminwage_long$time[minwage_long$time_str == \"2\"] &lt;- 1\n\n# Make the treatment variable\nminwage_long$treat &lt;- as.integer(minwage_long$STATE == 1&minwage_long$time==1)\n\n# TWFE\ntwfe_reg &lt;- lm_robust(EMPFT ~ treat + as.factor(time) + as.factor(unit),\n                      data=minwage_long, cluster=unit, se_type = \"CR2\")\ntidy(twfe_reg) %&gt;% filter(term == \"treat\")\n\n   term estimate std.error statistic    p.value   conf.low conf.high      df\n1 treat 2.927245   1.72988  1.692167 0.09376894 -0.5053407  6.359831 98.6997\n  outcome\n1   EMPFT"
+    "text": "Example: Card and Krueger (1994, AER)\n\n# Equivalence of TWFE in 2x2 case\nminwage_long &lt;- minwage %&gt;% pivot_longer(cols = starts_with(\"EMPFT\"),\n                names_to = \"time_str\", names_prefix = \"EMPFT\", values_to = \"EMPFT\")\n\n# Recode time variable\nminwage_long$time &lt;- NA\nminwage_long$time[minwage_long$time_str == \"\"] &lt;- 0\nminwage_long$time[minwage_long$time_str == \"2\"] &lt;- 1\n\n# Make the treatment variable\nminwage_long$treat &lt;- as.integer(minwage_long$STATE == 1&minwage_long$time==1)\n\n# TWFE\ntwfe_reg &lt;- lm_robust(EMPFT ~ treat + as.factor(time) + as.factor(unit),\n                      data=minwage_long, cluster=unit, se_type = \"CR2\")\ntidy(twfe_reg) %&gt;% filter(term == \"treat\")\n\n   term estimate std.error statistic p.value conf.low conf.high   df outcome\n1 treat     2.93      1.73      1.69  0.0938   -0.505      6.36 98.7   EMPFT"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#example-card-and-krueger-1994-aer-3",
+    "href": "slides/week9/week9_differences_in_differences.html#example-card-and-krueger-1994-aer-3",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "Example: Card and Krueger (1994, AER)",
+    "text": "Example: Card and Krueger (1994, AER)"
   },
   {
     "objectID": "slides/week9/week9_differences_in_differences.html#conditional-parallel-trends",
     "href": "slides/week9/week9_differences_in_differences.html#conditional-parallel-trends",
     "title": "Week 9: Differences-in-Differences",
     "section": "Conditional parallel trends",
-    "text": "Conditional parallel trends\n\nWhat if parallel trends holds only conditional on a set of pre-treatment covariates\n\\[\\underbrace{\\left\\{E[Y_{i1}(0) - Y_{i0} | D_i = 1, X_i = x] \\right\\}}_{\\text{Average counterfactual trend among treated}} = \\underbrace{\\left\\{E[Y_{i1} - Y_{i0}| D_i = 0, X_i = x]\\right\\}}_{\\text{Average trend among controls}}\\]\nWe can include the covariates in the regression or TWFE\n\nBut beware of unit-constant covariates in TWFE - they get soaked up by the unit fixed effects"
+    "text": "Conditional parallel trends\n\nWhat if parallel trends holds only conditional on a set of pre-treatment covariates\n\\[\\underbrace{\\left\\{E[Y_{i1}(0) - Y_{i0} | D_i = 1, X_i = x] \\right\\}}_{\\text{Average counterfactual trend among treated}} = \\underbrace{\\left\\{E[Y_{i1} - Y_{i0}| D_i = 0, X_i = x]\\right\\}}_{\\text{Average trend among controls}}\\]\nWe can include the covariates in the regression or TWFE\n\nBut beware of unit-constant covariates in TWFE - they get soaked up by the unit fixed effects\nAnd be careful with time-varying covariates - we don’t want to control for consequences of treatment."
   },
   {
     "objectID": "slides/week9/week9_differences_in_differences.html#conditional-parallel-trends-1",
@@ -245,32 +252,39 @@
     "text": "Conditional parallel trends\n\nCan we adjust without strong assumptions on the outcome model?\n\nAbadie (2005) shows that an IPTW estimator can identify the ATT under conditional parallel trends\nIntuition: Treated units get a constant weight. Control units are reweighted to match the covariate distribution among the treateds.\n\\[E[Y_{i1}(1) - Y_{i1}(0)| D_i = 1] = E\\left[\\frac{(Y_{i1} - Y_{i0})}{P(D_i = 1)} \\times \\frac{D_i - P(D_i = 1 | X_i)}{1 - P(D_i = 1 | X_i)}\\right]\\]\nSant’anna and Zhao (2020) extend this to an AIPW/doubly-robust estimator with an outcome model for \\(Y_{i1} - Y_{i0}\\)"
   },
   {
-    "objectID": "slides/week9/week9_differences_in_differences.html#example-card-and-krueger-1994-aer-3",
-    "href": "slides/week9/week9_differences_in_differences.html#example-card-and-krueger-1994-aer-3",
-    "title": "Week 9: Differences-in-Differences",
-    "section": "Example: Card and Krueger (1994, AER)",
-    "text": "Example: Card and Krueger (1994, AER)\n\nSuppose we thought that parallel trends in Card and Krueger (1994) only held conditional on the type of fast food restaurant\n\n\n# 1=Burger King; 2=KFC; 3=Roy Rogers; 4=Wendy's\nminwage %&gt;% group_by(STATE) %&gt;% summarize(mean(CHAIN == 1), mean(CHAIN==2), mean(CHAIN == 3), mean(CHAIN ==4))\n\n# A tibble: 2 × 5\n  STATE `mean(CHAIN == 1)` `mean(CHAIN == 2)` `mean(CHAIN == 3)`\n  &lt;dbl&gt;              &lt;dbl&gt;              &lt;dbl&gt;              &lt;dbl&gt;\n1     0              0.463              0.149              0.224\n2     1              0.405              0.223              0.251\n# ℹ 1 more variable: `mean(CHAIN == 4)` &lt;dbl&gt;\n\n# Fit a propensity score model\nweight_model &lt;- glm(STATE ~ as.factor(CHAIN), data=minwage, family=binomial(link=\"logit\"))\n\n# Predict weights\nminwage$e &lt;- predict(weight_model, type=\"response\")\nminwage$did_wt &lt;- (1/mean(minwage$STATE)) * ((minwage$STATE -minwage$e)/(1-minwage$e))"
-  },
-  {
     "objectID": "slides/week9/week9_differences_in_differences.html#example-card-and-krueger-1994-aer-4",
     "href": "slides/week9/week9_differences_in_differences.html#example-card-and-krueger-1994-aer-4",
     "title": "Week 9: Differences-in-Differences",
     "section": "Example: Card and Krueger (1994, AER)",
-    "text": "Example: Card and Krueger (1994, AER)\n\n# Point estimate\nmean(minwage$CHG_EMPFT*minwage$did_wt)\n\n[1] 2.45845\n\n# Slight fix of the weights to make this work in OLS\nminwage$did_wt_reg &lt;- minwage$did_wt*minwage$STATE - minwage$did_wt*(1-minwage$STATE)\nlm_robust(CHG_EMPFT ~ STATE, data=minwage, weight=did_wt_reg)\n\n             Estimate Std. Error   t value  Pr(&gt;|t|)  CI Lower  CI Upper  DF\n(Intercept) -2.023742   1.485824 -1.362033 0.1740486 -4.945839 0.8983545 356\nSTATE        2.458450   1.579161  1.556808 0.1204045 -0.647206 5.5641063 356"
+    "text": "Example: Card and Krueger (1994, AER)\n\nSuppose we thought that parallel trends in Card and Krueger (1994) only held conditional on the type of fast food restaurant\n\n\n# 1=Burger King; 2=KFC; 3=Roy Rogers; 4=Wendy's\nminwage %&gt;% group_by(STATE) %&gt;% summarize(mean(CHAIN == 1), mean(CHAIN==2), mean(CHAIN == 3), mean(CHAIN ==4))\n\n# A tibble: 2 × 5\n  STATE `mean(CHAIN == 1)` `mean(CHAIN == 2)` `mean(CHAIN == 3)`\n  &lt;dbl&gt;              &lt;dbl&gt;              &lt;dbl&gt;              &lt;dbl&gt;\n1     0              0.463              0.149              0.224\n2     1              0.405              0.223              0.251\n# ℹ 1 more variable: `mean(CHAIN == 4)` &lt;dbl&gt;\n\n# Fit a propensity score model\nweight_model &lt;- glm(STATE ~ as.factor(CHAIN), data=minwage, family=binomial(link=\"logit\"))\n\n# Predict weights\nminwage$e &lt;- predict(weight_model, type=\"response\")\nminwage$did_wt &lt;- (1/mean(minwage$STATE)) * ((minwage$STATE -minwage$e)/(1-minwage$e))"
   },
   {
     "objectID": "slides/week9/week9_differences_in_differences.html#example-card-and-krueger-1994-aer-5",
     "href": "slides/week9/week9_differences_in_differences.html#example-card-and-krueger-1994-aer-5",
     "title": "Week 9: Differences-in-Differences",
     "section": "Example: Card and Krueger (1994, AER)",
-    "text": "Example: Card and Krueger (1994, AER)\n\n# Bootstrap\nset.seed(60637)\nniter &lt;- 1000\nboot_est &lt;- rep(NA, niter)\nfor(i in 1:niter){\n  boot_minwage &lt;- minwage[sample(1:nrow(minwage), nrow(minwage), replace=T),]\n  # Fit a propensity score model\n  weight_model_boot &lt;- glm(STATE ~ as.factor(CHAIN), data=boot_minwage, family=binomial(link=\"logit\"))\n\n  # Predict weights\n  boot_minwage$e &lt;- predict(weight_model_boot, type=\"response\")\n  boot_minwage$did_wt &lt;- (1/mean(boot_minwage$STATE)) * ((boot_minwage$STATE - boot_minwage$e)/(1-boot_minwage$e))\n\n  # Point est\n  boot_est[i] &lt;- mean(boot_minwage$CHG_EMPFT*boot_minwage$did_wt)\n}\n#Bootstrap 95% CI\nquantile(boot_est, c(.025, .975))\n\n      2.5%      97.5% \n-0.7073257  5.4636283"
+    "text": "Example: Card and Krueger (1994, AER)\n\n# Point estimate\nmean(minwage$CHG_EMPFT*minwage$did_wt)\n\n[1] 2.46\n\n# Slight fix of the weights to make this work in OLS\nminwage$did_wt_reg &lt;- minwage$did_wt*minwage$STATE - minwage$did_wt*(1-minwage$STATE)\nlm_robust(CHG_EMPFT ~ STATE, data=minwage, weight=did_wt_reg)\n\n            Estimate Std. Error t value Pr(&gt;|t|) CI Lower CI Upper  DF\n(Intercept)    -2.02       1.49   -1.36    0.174   -4.946    0.898 356\nSTATE           2.46       1.58    1.56    0.120   -0.647    5.564 356"
   },
   {
     "objectID": "slides/week9/week9_differences_in_differences.html#example-card-and-krueger-1994-aer-6",
     "href": "slides/week9/week9_differences_in_differences.html#example-card-and-krueger-1994-aer-6",
     "title": "Week 9: Differences-in-Differences",
     "section": "Example: Card and Krueger (1994, AER)",
+    "text": "Example: Card and Krueger (1994, AER)\n\n# Bootstrap\nset.seed(60637)\nniter &lt;- 1000\nboot_est &lt;- rep(NA, niter)\nfor(i in 1:niter){\n  boot_minwage &lt;- minwage[sample(1:nrow(minwage), nrow(minwage), replace=T),]\n  # Fit a propensity score model\n  weight_model_boot &lt;- glm(STATE ~ as.factor(CHAIN), data=boot_minwage, family=binomial(link=\"logit\"))\n\n  # Predict weights\n  boot_minwage$e &lt;- predict(weight_model_boot, type=\"response\")\n  boot_minwage$did_wt &lt;- (1/mean(boot_minwage$STATE)) * ((boot_minwage$STATE - boot_minwage$e)/(1-boot_minwage$e))\n\n  # Point est\n  boot_est[i] &lt;- mean(boot_minwage$CHG_EMPFT*boot_minwage$did_wt)\n}\n#Bootstrap 95% CI\nquantile(boot_est, c(.025, .975))\n\n  2.5%  97.5% \n-0.707  5.464"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#example-card-and-krueger-1994-aer-7",
+    "href": "slides/week9/week9_differences_in_differences.html#example-card-and-krueger-1994-aer-7",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "Example: Card and Krueger (1994, AER)",
     "text": "Example: Card and Krueger (1994, AER)\n\nSant’anna and Zhao (2020) doubly-robust estimator\n\n\n# This package requires using the *long* data\nlibrary(DRDID) \n# Notably this doesn't add much with the fully saturated propensity score model - we're really just stratifying by chain\ndr_minwage &lt;- drdid(yname=\"EMPFT\",\n                    tname=\"time\",\n                    idname=\"unit\",\n                    dname=\"STATE\",\n                    xformla = ~as.factor(CHAIN),\n                    data=minwage_long,\n                    estMethod = \"trad\")\nsummary(dr_minwage)\n\n Call:\ndrdid(yname = \"EMPFT\", tname = \"time\", idname = \"unit\", dname = \"STATE\", \n    xformla = ~as.factor(CHAIN), data = minwage_long, estMethod = \"trad\")\n------------------------------------------------------------------\n Locally efficient DR DID estimator for the ATT:\n \n   ATT     Std. Error  t value    Pr(&gt;|t|)  [95% Conf. Interval] \n  2.4585     1.5383     1.5981      0.11     -0.5567     5.4736  \n------------------------------------------------------------------\n Estimator based on panel data.\n Outcome regression est. method: OLS.\n Propensity score est. method: maximum likelihood.\n Analytical standard error.\n------------------------------------------------------------------\n See Sant'Anna and Zhao (2020) for details."
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#example-card-and-krueger-1994-aer-8",
+    "href": "slides/week9/week9_differences_in_differences.html#example-card-and-krueger-1994-aer-8",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "Example: Card and Krueger (1994, AER)",
+    "text": "Example: Card and Krueger (1994, AER)"
   },
   {
     "objectID": "slides/week9/week9_differences_in_differences.html#difference-in-differences-with-many-time-periods",
@@ -278,6 +292,258 @@
     "title": "Week 9: Differences-in-Differences",
     "section": "Difference-in-differences with many time periods",
     "text": "Difference-in-differences with many time periods"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#classic-2x2-did",
+    "href": "slides/week9/week9_differences_in_differences.html#classic-2x2-did",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "Classic 2x2 DiD",
+    "text": "Classic 2x2 DiD\n\nDifference-in-differences estimators can be understood in terms of their component 2 \\(\\times\\) 2 comparisons\n\n…between two treatment timing groups \\(g\\) and \\(g^\\prime\\)\n…and between two time periods \\(t\\) and \\(t^\\prime\\)\n\\[\\underbrace{\\bigg[\\bar{Y}_{g,t} - \\bar{Y}_{g^\\prime, t} \\bigg]}_{\\text{cross-sectional difference at time } t} - \\underbrace{\\bigg[\\bar{Y}_{g,t^\\prime} - \\bar{Y}_{g^\\prime, t^\\prime} \\bigg]}_{\\text{cross-sectional difference at time } t^\\prime}\\]\n\nIn the classic 2x2 case, we have…\n\ntime period \\(t\\) as the period where treatment is assigned to some units and \\(t^\\prime\\) as the “pre-treatment” period.\ntiming group \\(g\\) as the group that receives treatment (\\(D_i = 1\\)) and timing group \\(g^\\prime\\) as the units that are always under control (\\(D_i = 0\\))"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#classic-2x2-did-1",
+    "href": "slides/week9/week9_differences_in_differences.html#classic-2x2-did-1",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "Classic 2x2 DiD",
+    "text": "Classic 2x2 DiD\n\nDiD with 2 periods, 2 groups"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#many-time-periods-two-timing-groups",
+    "href": "slides/week9/week9_differences_in_differences.html#many-time-periods-two-timing-groups",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "Many time periods, two timing groups",
+    "text": "Many time periods, two timing groups\n\nSuppose that instead of having two time periods, we now have \\(T\\) treatment periods.\n\nWe’ll now characterize our treatment groups based on when they start treatment.\nLet \\(G_i\\) denote the time period when unit \\(i\\) initiates treatment\n\nWe’ll stick with the two timing group case for now\n\nTreated units start treatment at some time \\(g^*: 0 &lt; g^* \\le T\\)\nControl units start treatment at time after \\(T\\) (we’ll use \\(\\infty\\))\n\nDefine potential outcomes in terms of assignment to a timing group\n\n\\(Y_{it}(g) = Y_{it}\\) for units with \\(G_i = g\\)\nWe’ll denote \\(Y_{it}(\\infty)\\) as the “control” potential outcome"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#many-time-periods-two-timing-groups-1",
+    "href": "slides/week9/week9_differences_in_differences.html#many-time-periods-two-timing-groups-1",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "Many time periods, two timing groups",
+    "text": "Many time periods, two timing groups\n\nEstimand: The group-time average treatment effect on the treated\n\nWhat would have happened on average at time \\(t\\) had a unit that started treatment at time \\(g\\) instead never started treatment.\n\\[\\text{ATT}_{g}(t) = \\mathbb{E}[Y_{it}(g) - Y_{it}(\\infty) | G_i = g]\\]\n\nOther target estimands are averages of the group-time ATTs\n\ne.g. the average of all post-treatment group-time ATTs"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#did-with-no-staggered-adoption",
+    "href": "slides/week9/week9_differences_in_differences.html#did-with-no-staggered-adoption",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "DiD with no staggered adoption",
+    "text": "DiD with no staggered adoption\n\nDiD with 4 periods, 2 groups"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#did-with-no-staggered-adoption-1",
+    "href": "slides/week9/week9_differences_in_differences.html#did-with-no-staggered-adoption-1",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "DiD with no staggered adoption",
+    "text": "DiD with no staggered adoption\n\nDiD with 4 periods, 2 groups - relative treatment time"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#identifying-assumptions-1",
+    "href": "slides/week9/week9_differences_in_differences.html#identifying-assumptions-1",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "Identifying assumptions",
+    "text": "Identifying assumptions\n\nNo anticipation: Pre-treatment outcomes are unaffected by future treatment status.\n\\[Y_{it}(g) = Y_{it}(\\infty) \\ \\forall\\  t &lt; g\\]\n(General) Parallel trends: For any two time periods \\(t\\) and \\(t^\\prime\\) and two timing groups \\(g\\) and \\(g^\\prime\\)\n\\[E[Y_{it}(\\infty) - Y_{it'}(\\infty) | G_i = g] = E[Y_{it}(\\infty) - Y_{it'}(\\infty) | G_i = g^\\prime ]\\]\nGeneralizes our prior assumptions to all time periods and across all treatment timing groups"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#two-way-fixed-effects-estimators",
+    "href": "slides/week9/week9_differences_in_differences.html#two-way-fixed-effects-estimators",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "Two-way fixed effects estimators",
+    "text": "Two-way fixed effects estimators\n\nIn the case with two treatment timing groups and many time periods, we have two natural quantities of interest\n\nThe \\(ATT_{g^*}(t)\\) for each time period \\(t \\ge g^*\\)\nThe average of all post-treatment group-time ATTs \\(ATT_{g^*} = \\frac{1}{T - g^* + 1}\\sum_{t = g^*}^T ATT_{g^*}(t)\\)\n\nThere are two common ways to estimate these effects with two-way fixed effects (TWFE) regressions\nThe Static TWFE\n\\[Y_{it} = \\alpha_i + \\delta_{t} + \\tau D_{it} + \\epsilon_{it}\\]\nwhere \\(D_{it}\\) is an indicator for whether unit \\(i\\) is under treatment at time \\(t\\)\nIn the two timing-group case we’re looking at here, \\(D_{it} = \\mathbf{1}(G_i = g^*) \\times \\mathbf{1}(t \\ge g^*)\\)"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#two-way-fixed-effects-estimators-1",
+    "href": "slides/week9/week9_differences_in_differences.html#two-way-fixed-effects-estimators-1",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "Two-way fixed effects estimators",
+    "text": "Two-way fixed effects estimators\n\nThe Dynamic TWFE\n\\[Y_{it} = \\alpha_i + \\delta_{t} + \\sum_{l \\neq -1} \\tau_l D^{(l)}_{it} + \\epsilon_{it}\\]\nwhere \\(D_{it}^{(l)}\\) is a dummy indicator for observation \\(i\\) being \\(l\\) periods from treatment initiation at time \\(t\\)\nIn the two timing-group case, this regression looks like:\n\\[Y_{it} = \\alpha_i + \\delta_{t} + \\sum_{\\substack{l = -(g^* - 1) \\\\ l \\neq -1}}^{T - g^*} \\tau_l \\times \\mathbf{1}(G_i = g^*)\\times\\mathbf{1}(t = g^* + l) + \\epsilon_{it}\\]\nNote that we need to omit at least one relative treatment time indicator!\n\nOtherwise we have perfect collinearity with the TWFE"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#identification-1",
+    "href": "slides/week9/week9_differences_in_differences.html#identification-1",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "Identification",
+    "text": "Identification\n\nDo these regressions identify the target parameters we’re looking for in the two timing group case.\nStatic TWFE: Yes\n\n\\(\\hat{\\tau}\\) is an average over the 2x2 diff-in-diffs between each post-treatment and each pre-treatment period.\nEquivalent to collapsing the data into a 2x2 DiD by averaging overall pre- and post- outcomes for treated/control\nIdentifies the average of post-treatment ATTs \\(ATT_{g^*}\\)\n\nDynamic TWFE: Yes!\n\n\\(\\hat{\\tau_l}\\) is the 2x2 DiD between relative treatment time \\(l\\) and the held-out “baseline” period (period \\(-1\\))\nEach coefficient identifies \\(ATT_{g^*}(g^* + l)\\)"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#twfe-as-an-average-over-2x2s",
+    "href": "slides/week9/week9_differences_in_differences.html#twfe-as-an-average-over-2x2s",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "TWFE as an average over 2x2s",
+    "text": "TWFE as an average over 2x2s\n\nStatic TWFE 2x2s"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#twfe-as-an-average-over-2x2s-1",
+    "href": "slides/week9/week9_differences_in_differences.html#twfe-as-an-average-over-2x2s-1",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "TWFE as an average over 2x2s",
+    "text": "TWFE as an average over 2x2s\n\nDynamic TWFE - relative time 1"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#example-ferwerda-2021",
+    "href": "slides/week9/week9_differences_in_differences.html#example-ferwerda-2021",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "Example: Ferwerda (2021)",
+    "text": "Example: Ferwerda (2021)\n\nFerwerda, Jeremy. “Immigration, voting rights, and redistribution: Evidence from local governments in Europe.” The Journal of Politics 83.1 (2021): 321-339.\n\n\nDoes expanding voting rights in municipal elections to non-citizen foreign residents increase social expenditures?\n\nSetting: Swiss municipalities in the 2000s\n\nIn Switzerland, voting rights vary by cantons\n\nVaud, Fribourg and Geneva implemented foreign voting rights in 2003, 2004 and 2005 respectively.\n\nWe’re going to focus on Vaud (earliest adopter) as the treated group and Geneva (latest adopter) as the control group\n\nActual paper uses a different analysis than DiD/TWFE and has covariates, but we’ll do a simple DiD to illustrate"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#example-ferwerda-2021-1",
+    "href": "slides/week9/week9_differences_in_differences.html#example-ferwerda-2021-1",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "Example: Ferwerda (2021)",
+    "text": "Example: Ferwerda (2021)\n\n# Pre-processing\nvoting &lt;- read_dta(\"assets/data/Swiss_master.dta\", encoding='latin1')\nvoting_complete &lt;- voting %&gt;% filter(year &gt;= 2000, year &lt;= 2005) %&gt;% filter(!is.na(log_net_welfare_head))\n# Keep only units with complete panels (all 6 years)\nvoting_complete &lt;- voting_complete %&gt;% group_by(bfsnr) %&gt;% filter(n() == 6) %&gt;% ungroup()\nvoting_complete &lt;-suppressWarnings(voting_complete %&gt;% \n                          mutate(first_year = min(year[vf == 1]), .by=bfsnr))"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#example-ferwerda-2021-2",
+    "href": "slides/week9/week9_differences_in_differences.html#example-ferwerda-2021-2",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "Example: Ferwerda (2021)",
+    "text": "Example: Ferwerda (2021)\n\nUnique Treatment Histories in Ferwerda (2021) - Dropping all units with years missing from 2000-2006"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#example-ferwerda-2021-3",
+    "href": "slides/week9/week9_differences_in_differences.html#example-ferwerda-2021-3",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "Example: Ferwerda (2021)",
+    "text": "Example: Ferwerda (2021)\n\nLet’s fit the simple static TWFE on the Vaud and Geneva cases\n\n\n## Filter down to the two treatment timing groups\nvoting_vaud_geneva &lt;- voting_complete %&gt;% filter(cantonid %in% c(22, 25))\n## Estimate with fixest::feols\nstatic_twfe &lt;- feols(log_net_welfare_head ~ vf | bfsnr + year, data=voting_vaud_geneva, cluster=\"bfsnr\")\netable(static_twfe)\n\n                         static_twfe\nDependent Var.: log_net_welfare_head\n                                    \nvf                  -0.0927 (0.0599)\nFixed-Effects:  --------------------\nbfsnr                            Yes\nyear                             Yes\n_______________ ____________________\nS.E.: Clustered            by: bfsnr\nObservations                   2,028\nR2                           0.95818\nWithin R2                    0.00791\n---\nSignif. codes: 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\n\nVerify this is equivalent to the simple 2x2 DiD\n\n\nmean(voting_vaud_geneva$log_net_welfare_head[voting_vaud_geneva$year&gt;2003&voting_vaud_geneva$cantonid == 22]) -\nmean(voting_vaud_geneva$log_net_welfare_head[voting_vaud_geneva$year&gt; 2003&voting_vaud_geneva$cantonid == 25]) -\nmean(voting_vaud_geneva$log_net_welfare_head[voting_vaud_geneva$year&lt;=2003&voting_vaud_geneva$cantonid == 22]) +\nmean(voting_vaud_geneva$log_net_welfare_head[voting_vaud_geneva$year&lt;= 2003&voting_vaud_geneva$cantonid == 25])\n\n[1] -0.0927"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#example-ferwerda-2021-4",
+    "href": "slides/week9/week9_differences_in_differences.html#example-ferwerda-2021-4",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "Example: Ferwerda (2021)",
+    "text": "Example: Ferwerda (2021)\n\nHow about the dynamic TWFE regression?\n\nIn the non-staggered case, you can just interact an indicator for the treated unit with the time FEs.\nWe’ll just use the sunab() syntax here to match next week’s lecture\n\n\n\ndynamic_twfe &lt;- feols(log_net_welfare_head ~ sunab(first_year, year, ref.p = -1) | bfsnr + year,\n                         data = voting_vaud_geneva, cluster = \"bfsnr\")\netable(dynamic_twfe)\n\n                        dynamic_twfe\nDependent Var.: log_net_welfare_head\n                                    \nyear = -4         0.2409*** (0.0563)\nyear = -3          0.1709** (0.0569)\nyear = -2            0.0635 (0.0441)\nyear = 0             0.0378 (0.0337)\nyear = 1             0.0144 (0.0566)\nFixed-Effects:  --------------------\nbfsnr                            Yes\nyear                             Yes\n_______________ ____________________\nS.E.: Clustered            by: bfsnr\nObservations                   2,028\nR2                           0.95920\nWithin R2                    0.03213\n---\nSignif. codes: 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#example-ferwerda-2021-5",
+    "href": "slides/week9/week9_differences_in_differences.html#example-ferwerda-2021-5",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "Example: Ferwerda (2021)",
+    "text": "Example: Ferwerda (2021)"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#pre-trends-tests",
+    "href": "slides/week9/week9_differences_in_differences.html#pre-trends-tests",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "“Pre-trends” tests",
+    "text": "“Pre-trends” tests\n\nWe might be concerned that our parallel trends assumption is violated.\n\nWe can’t test the parallel trends assumption we care about (between pre-treatment \\(t\\) and a post-treatment \\(t^\\prime\\))\n\nBut if we think parallel trends holds generally across all time periods, there are observable implications\n\nConsider \\(t\\) and \\(t^\\prime\\) that are both pre-treatment\n\nWhat is the observed difference-in-differences between those two periods and our two treatment timing groups going to be equal to?\n\\[E[Y_{it} - Y_{it^\\prime} | G_i = g^*] - E[Y_{it} - Y_{it^\\prime} | G_i = \\infty]\\]"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#pre-trends-tests-1",
+    "href": "slides/week9/week9_differences_in_differences.html#pre-trends-tests-1",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "“Pre-trends” tests",
+    "text": "“Pre-trends” tests\n\nBy consistency\n\\[E[Y_{it}(g^*) - Y_{it^\\prime}(g^*) | G_i = g^*] - E[Y_{it}(\\infty) - Y_{it^\\prime}(\\infty) | G_i = \\infty]\\]\nBy no anticipation\n\\[E[Y_{it}(\\infty) - Y_{it^\\prime}(\\infty) | G_i = g^*] - E[Y_{it}(\\infty) - Y_{it^\\prime}(\\infty) | G_i = \\infty]\\]\nAnd by the definition of parallel trends, we know this equals zero"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#pre-trends-tests-2",
+    "href": "slides/week9/week9_differences_in_differences.html#pre-trends-tests-2",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "“Pre-trends” tests",
+    "text": "“Pre-trends” tests\n\nPlacebo/Pre-trends test\n\nIt is common to plot the combined treatment effect estimates and pre-treatment placebos in a single event study plot\nAll point estimates denote differences-in-differences relative to the held-out baseline (typically the period just before treatment)\nUnder no anticipation + parallel trends between all periods, the placebo pre-treatment DiD should be statistically indistinguishable from zero.\n\nBut be careful\n\n“Good” pre-trends is no guarantee that parallel trends holds!\nIn low powered studies, we may fail to reject the null even when there’s a sizeable parallel trends violation.\nConversely, sometimes we might find significant pre-trends but the sizes suggest the acutal violation is negligible.\nWe’ll discuss methods for partial identification and sensitivity analysis next week."
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#event-study-plots",
+    "href": "slides/week9/week9_differences_in_differences.html#event-study-plots",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "“Event study” plots",
+    "text": "“Event study” plots\n\nWhat we want!"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#event-study-plots-1",
+    "href": "slides/week9/week9_differences_in_differences.html#event-study-plots-1",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "“Event study” plots",
+    "text": "“Event study” plots\n\nWhat is likely very concerning!"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#example-ferwerda-2021-6",
+    "href": "slides/week9/week9_differences_in_differences.html#example-ferwerda-2021-6",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "Example: Ferwerda (2021)",
+    "text": "Example: Ferwerda (2021)"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#parametric-time-trends",
+    "href": "slides/week9/week9_differences_in_differences.html#parametric-time-trends",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "Parametric time trends",
+    "text": "Parametric time trends\n\nSuppose we believe that parallel trends is violated but we’re willing to assume that the violation takes on a particular parametric form\nParallel trends-in-trends (Mora and Reggio, 2019; Egami and Yamauchi, 2023)\n\\[\\underbrace{\\mathbb{E}[Y_{it}(\\infty) - Y_{it^\\prime}(\\infty) | G_i = g]}_{\\text{Counterfactual trend in the treated group}} - \\underbrace{\\mathbb{E}[Y_{it}(\\infty) - Y_{it^\\prime}(\\infty) | G_i = g^\\prime]}_{\\text{Counterfactual trend in the control group}} = \\Delta_g(t - t^\\prime)\\]\nThere is a violation of parallel trends but it is equal to a constant (\\(\\Delta_g\\)) scaled by the time gap \\(t - t^\\prime\\)"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#parametric-time-trends-1",
+    "href": "slides/week9/week9_differences_in_differences.html#parametric-time-trends-1",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "Parametric time trends",
+    "text": "Parametric time trends\n\nIt’s straightforward to see that the difference-in-differences will not identify the ATT\n\nFor a post-treatment \\(t\\) and pre-treatment \\(t^\\prime\\)\n\\[\\mathbb{E}[\\hat{\\tau}_{\\text{DD}}] = \\underbrace{ATT_{g^*}(t)}_{\\text{Treatment effect}} + \\underbrace{\\Delta_g(t - t^\\prime)}_{\\text{divergence in parallel trends}}\\]\n\nHow do we solve this? Add another difference\n\n\\(\\Delta_g\\) can be estimated from a difference-in-difference comparison entirely in the pre-treatment period\nRescale this (by the time gap) and subtract from the main DiD.\n\nTriple-differences (in time)"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#group-specific-linear-trends",
+    "href": "slides/week9/week9_differences_in_differences.html#group-specific-linear-trends",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "Group-specific linear trends",
+    "text": "Group-specific linear trends\n\nThis approach is connected to the TWFE regression specification with group-specific linear trends\n\\[Y_{it} = \\alpha_i + \\delta_{t} + \\beta \\times \\mathbf{1}(G_i = g^*) \\times t + \\sum_{l = 0}^{T - g^*} \\tau_l D_{it}^{(l)} + \\epsilon_{it}\\]\nWith linear time trends, \\(\\tau_l\\) correspond to averages over triple-differences-in-time\nBut be careful - you need to at a minimum include all post-treatment indicators even with only two timing groups.\n\nOtherwise we get “invalid” triple-differences (using two post-treatment periods to estimate the time trend)\nSimilar to the “forbidden comparisons” problem in staggered adoption which we’ll talk about next week.\n\nYou can also still estimate pre-trends but you now have to leave in at least two pre-treatment periods to estimate the linear trend!\n\nAt least three for a quadratic (quadruple differences), four for a cubic, etc…"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#group-specific-linear-trends-1",
+    "href": "slides/week9/week9_differences_in_differences.html#group-specific-linear-trends-1",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "Group-specific linear trends",
+    "text": "Group-specific linear trends"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#group-specific-linear-trends-2",
+    "href": "slides/week9/week9_differences_in_differences.html#group-specific-linear-trends-2",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "Group-specific linear trends",
+    "text": "Group-specific linear trends"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#example-ferwerda-2021-7",
+    "href": "slides/week9/week9_differences_in_differences.html#example-ferwerda-2021-7",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "Example: Ferwerda (2021)",
+    "text": "Example: Ferwerda (2021)\n\nLet’s estimate the linear time trend specification in feols\n\n\nlin_trend &lt;- feols(log_net_welfare_head ~ sunab(first_year, year, ref.p = c(-1:-4)) +\n                     as.factor(cantonid)*year| bfsnr + year,\n                         data = voting_vaud_geneva, cluster = \"bfsnr\")\netable(lin_trend)\n\n                                        lin_trend\nDependent Var.:              log_net_welfare_head\n                                                 \nyear = 0                       0.1266*** (0.0373)\nyear = 1                        0.1862** (0.0581)\nas.factor(cantonid)25 x year   0.0830*** (0.0178)\nFixed-Effects:               --------------------\nbfsnr                                         Yes\nyear                                          Yes\n____________________________ ____________________\nS.E.: Clustered                         by: bfsnr\nObservations                                2,028\nR2                                        0.95919\nWithin R2                                 0.03189\n---\nSignif. codes: 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#example-ferwerda-2021-8",
+    "href": "slides/week9/week9_differences_in_differences.html#example-ferwerda-2021-8",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "Example: Ferwerda (2021)",
+    "text": "Example: Ferwerda (2021)\n\nDo we get different results if we specify different parametric forms?\n\n\nquad_trend &lt;- feols(log_net_welfare_head ~ sunab(first_year, year, ref.p = c(-1:-4)) + \n                      as.factor(cantonid)*year + as.factor(cantonid)*I(year^2) | bfsnr + year,\n                         data = voting_vaud_geneva, cluster = \"bfsnr\")\netable(quad_trend)\n\n                                            quad_trend\nDependent Var.:                   log_net_welfare_head\n                                                      \nyear = 0                               0.1183 (0.0798)\nyear = 1                               0.1679 (0.1528)\nas.factor(cantonid)25 x year             6.725 (61.70)\nas.factor(cantonid)25 x I(year^2)     -0.0017 (0.0154)\nFixed-Effects:                    --------------------\nbfsnr                                              Yes\nyear                                               Yes\n_________________________________ ____________________\nS.E.: Clustered                              by: bfsnr\nObservations                                     2,028\nR2                                             0.95919\nWithin R2                                      0.03190\n---\nSignif. codes: 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#example-ferwerda-2021-9",
+    "href": "slides/week9/week9_differences_in_differences.html#example-ferwerda-2021-9",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "Example: Ferwerda (2021)",
+    "text": "Example: Ferwerda (2021)\n\nLet’s hold out some periods to use as placebos"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#example-ferwerda-2021-10",
+    "href": "slides/week9/week9_differences_in_differences.html#example-ferwerda-2021-10",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "Example: Ferwerda (2021)",
+    "text": "Example: Ferwerda (2021)\n\nWhat if we fit a quadratic time trend instead?"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#parametric-time-trends-2",
+    "href": "slides/week9/week9_differences_in_differences.html#parametric-time-trends-2",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "Parametric time trends",
+    "text": "Parametric time trends\n\nBe careful with just throwing in a linear or quadratic time trend into your TWFE regressions\n\nYou’re still making strong assumptions about how to extrapolate the pre-treatment trend into the post-treatment period\nDifferent functional form choices can lead to different results (esp. with higher-order polynomials)\n\nIf you are using a linear time trend, make sure you’re using a dynamic TWFE estimator and include indicators for each post-treatment period\n\nOtherwise, you’re using comparisons between post-treatment periods to learn about the time trend - implicit constant effects assumption\nTreatment effect heterogeneity and a parametric time trend are observationally equivalent post-treatment.\n\nIdeally, you’ll have some theory to motivate the form of the parallel trends violation\n\nWe’ll talk about another triple-differences strategy that uses an unexposed cross-sectional unit next week."
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#conclusion",
+    "href": "slides/week9/week9_differences_in_differences.html#conclusion",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "Conclusion",
+    "text": "Conclusion\n\nMost differences-in-differences designs have many pre- and post-treatment periods\n\nCan estimate effects for many post-treatment periods - plot trajectory of the effect over time\nCan estimate effects for pre-treatment periods - placebo/pre-trends tests\n\nWhen we have no staggering in treatment adoption (two timing groups), TWFE estimators are equivalent to averages over valid 2x2 differences-in-differences\n\nStatic - Single coefficient on treatment\nDynamic - Coefficients for every relative-treatment-time\nDon’t forget to be clear about what your baseline (held-out) period is when using the dynamic specification!"
+  },
+  {
+    "objectID": "slides/week9/week9_differences_in_differences.html#next-week",
+    "href": "slides/week9/week9_differences_in_differences.html#next-week",
+    "title": "Week 9: Differences-in-Differences",
+    "section": "Next week",
+    "text": "Next week\n\nWhat happens when we have staggered adoption of treatment?\n\nTWFE estimators are biased unless we make strong constant effects assumptions - “forbidden comparisons”/“negative weighting problem”\nStatic and Dynamic TWFE require different constant effects assumptions!\n\nAlternatives: “New DiD”\n\nFirst-differences approaches: construct the DiD for each group-time ATT and aggregate (Callaway/Sant’anna estimator)\nRegression imputation: Fit TWFE to controls and impute on the treateds (Borusyak/Jaravel/Spiess estimator)\nProperly saturate the TWFE (Sun and Abraham/Wooldridge estimators)\nMany equivalencies between these!\n\nPartial identification by bounding the parallel trends violations - Rambachan/Roth approach"
   },
   {
     "objectID": "slides/week7/week7_matching.html#last-week",
@@ -3091,7 +3357,7 @@
     "href": "slides/week8/week8_instrumental_variables.html#iv-ratio-in-matrix-form",
     "title": "Week 8: Instrumental Variables",
     "section": "IV ratio in matrix form",
-    "text": "IV ratio in matrix form\n\nLet \\(\\mathbf{Z}\\) be our matrix of instruments and covariates\nLet \\(\\mathbf{X}\\) be our matrix of treatments and covariates\n\nCovariates here refers to stuff that’s not a treatment or a - possibly things that are needed to satisfy ignorability for the instrument.\n\nFor identification, we need as many instruments as we have treatments\n\nMost typical case in political science: single-instrument, single-treatment case\nMore “structural equation”-oriented discplines also consider multiple-instrument/multiple-treatment cases\nSometimes we might have more instruments than treatments (“overidentification”)\n\nWe can write the just-identified (no. instruments = no. treatments) IV estimator as:\n\\[\\hat{\\tau}_{\\text{IV}} = (\\mathbf{Z}^{\\prime}\\mathbf{X})^{-1}(\\mathbf{Z}^{\\prime} Y)\\]"
+    "text": "IV ratio in matrix form\n\nLet \\(\\mathbf{Z}\\) be our matrix of instruments and covariates\nLet \\(\\mathbf{X}\\) be our matrix of treatments and covariates\n\nCovariates here refers to stuff that’s not a treatment or an instrument\nPossibly variables that are needed to satisfy ignorability for the instrument.\n\nFor identification, we need as many instruments as we have treatments\n\nMost typical case in political science: single-instrument, single-treatment case\nMore “structural equation”-oriented discplines also consider multiple-instrument/multiple-treatment cases\nSometimes we might have more instruments than treatments (“overidentification”)\n\nWe can write the just-identified (no. instruments = no. treatments) IV estimator as:\n\\[\\hat{\\tau}_{\\text{IV}} = (\\mathbf{Z}^{\\prime}\\mathbf{X})^{-1}(\\mathbf{Z}^{\\prime} Y)\\]"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#iv-ratio-in-matrix-form-1",
@@ -3119,14 +3385,7 @@
     "href": "slides/week8/week8_instrumental_variables.html#iv-as-two-stage-least-squares",
     "title": "Week 8: Instrumental Variables",
     "section": "IV as “two-stage” least squares",
-    "text": "IV as “two-stage” least squares\n\nAnother way of interpreting \\(\\hat{\\tau}_{\\text{IV}}\\) is in terms two ordinary least squares regressions\n\nAccommodates the “overidentified” case (more instruments than treatments)\n\nIntuition - We want to regress \\(Y\\) on the part of the treatment that is explained entirely by the instrument (the “exogenous” variation)\nFirst stage - Project \\(\\mathbf{X}\\) into the space of the instrument \\(\\mathbf{Z}\\)\n\\[\\widehat{\\mathbf{X}} = \\underbrace{\\mathbf{Z}(\\mathbf{Z}^\\prime\\mathbf{Z})^{-1}\\mathbf{Z}^\\prime}_{P_{\\mathbf{Z}}}\\mathbf{X}\\]\nSecond stage - Regress \\(Y\\) on the “fitted values” \\(\\widehat{\\mathbf{X}}\\)\n\\[\\hat{\\beta}_{\\text{2SLS}} = (\\widehat{\\mathbf{X}}^{\\prime}\\mathbf{X})^{-1}(\\widehat{\\mathbf{X}}^{\\prime}Y)\\]"
-  },
-  {
-    "objectID": "slides/week8/week8_instrumental_variables.html#two-stage-least-squares",
-    "href": "slides/week8/week8_instrumental_variables.html#two-stage-least-squares",
-    "title": "Week 8: Instrumental Variables",
-    "section": "Two-stage least squares",
-    "text": "Two-stage least squares\n\nPutting it all together, the 2SLS estimator is:\n\\[\\hat{\\tau}_{\\text{2SLS}} =  (\\mathbf{X}^{\\prime}\\mathbf{Z}(\\mathbf{Z}^{\\prime}\\mathbf{Z})^{-1}\\mathbf{Z}^\\prime\\mathbf{X})^{-1}(\\mathbf{X}^{\\prime}\\mathbf{Z}(\\mathbf{Z}^{\\prime}\\mathbf{Z})^{-1}\\mathbf{Z}^\\prime Y)\\]"
+    "text": "IV as “two-stage” least squares\n\nAnother way of interpreting \\(\\hat{\\tau}_{\\text{IV}}\\) is in terms two ordinary least squares regressions\n\nAccommodates the “overidentified” case (more instruments than treatments)\n\nIntuition - We want to regress \\(Y\\) on the part of the treatment that is explained entirely by the instrument (the “exogenous” variation)\nFirst stage - Project \\(\\mathbf{X}\\) into the space of the instrument \\(\\mathbf{Z}\\)\n\\[\\widehat{\\mathbf{X}} = \\underbrace{\\mathbf{Z}(\\mathbf{Z}^\\prime\\mathbf{Z})^{-1}\\mathbf{Z}^\\prime}_{P_{\\mathbf{Z}}}\\mathbf{X}\\]\nSecond stage - Regress \\(Y\\) on the “fitted values” \\(\\widehat{\\mathbf{X}}\\)\n\\[\\hat{\\beta}_{\\text{2SLS}} = (\\widehat{\\mathbf{X}}^{\\prime}\\mathbf{X})^{-1}(\\widehat{\\mathbf{X}}^{\\prime}Y)\\]\nPutting it all together, gives the 2SLS estimator!\n\\[\\hat{\\tau}_{\\text{2SLS}} =  (\\mathbf{X}^{\\prime}\\mathbf{Z}(\\mathbf{Z}^{\\prime}\\mathbf{Z})^{-1}\\mathbf{Z}^\\prime\\mathbf{X})^{-1}(\\mathbf{X}^{\\prime}\\mathbf{Z}(\\mathbf{Z}^{\\prime}\\mathbf{Z})^{-1}\\mathbf{Z}^\\prime Y)\\]"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#illustrating-2sls",
@@ -3217,28 +3476,28 @@
     "href": "slides/week8/week8_instrumental_variables.html#the-weak-instrument-problem-8",
     "title": "Week 8: Instrumental Variables",
     "section": "The weak instrument problem",
-    "text": "The weak instrument problem\n\nWhen is an instrument too weak?\nClassic result: Stock and Yogo (2005) use first stage F-statistic thresholds\n\n\\(\\leadsto\\) heuristic of first-stage \\(F &gt; 10\\)\nProblem! These are benchmarks under homoskedasticity\n\nMontiel Olea and Pflueger (2013)\n\nRobust F-statistics\nComparable threshold to Stock and Yogo bias is \\(F &gt; 23.1\\)\n\nLee, Moreira, McCrary, Porter (2020)\nThese are thresholds that the bias is “small” (approximately 10%)\nIf we want to use the F-statistic as a screen for \\(p &lt; .05\\) to be valid, then we actually need \\(F &gt; 104.7\\)\nAngrist and Pischke (2009) - with “just-identified” IV bias is usually overwhelmed by the large standard errors."
+    "text": "The weak instrument problem\n\nWhen is an instrument too weak?\nClassic result: Stock and Yogo (2005) use first stage F-statistic thresholds\n\n\\(\\leadsto\\) heuristic of first-stage \\(F &gt; 10\\)\nProblem! These are benchmarks under homoskedasticity\n\nMontiel Olea and Pflueger (2013)\n\nRobust F-statistics\nComparable threshold to Stock and Yogo bias is \\(F &gt; 23.1\\)\n\nLee, Moreira, McCrary, Porter (2020)\n\nThese are thresholds that the bias is “small” (approximately 10%)\nIf we want to use the F-statistic as a screen for \\(p &lt; .05\\) to be valid, then we actually need \\(F &gt; 104.7\\)\n\nAngrist and Pischke (2009) - with “just-identified” IV bias is usually overwhelmed by the large standard errors."
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#permutation-test",
     "href": "slides/week8/week8_instrumental_variables.html#permutation-test",
     "title": "Week 8: Instrumental Variables",
     "section": "Permutation test",
-    "text": "Permutation test\n\nWhen the assignment process of \\(Z_i\\) is known, we can construct hypothesis tests using permutation inference assuming a constant treatment effect \\(\\tau\\) (Imbens and Rosenbaum, 2005).\n\nWith a single, de-meaned instrument \\(\\tilde{Z_i} = Z_i - \\bar{Z}\\), we can construct a test statistic based on the sample covariance between \\(Z_i\\) and \\(Y_i\\) with the effect removed:\n\n\n\\[T(\\tau) = \\frac{1}{N} \\sum_{i=1}^N \\tilde{Z_i} \\times (Y_i - \\tau D_i)\\]\n\nIf the instrument is valid, under the null hypothesis that \\(\\tau = \\tau_0\\), we can get the randomization distribution of the test statistic by simply re-randomizing treatment according to the known assignment process.\n\nConstruct confidence intervals by “inverting the test” - what values of \\(\\tau_0\\) does the test fail to reject?\n\nAlternative test statistics based on ranks of \\(Y_i - \\tau D_i\\) (possibly within strata) can also be used."
+    "text": "Permutation test\n\nWhen the assignment process of \\(Z_i\\) is known, we can construct hypothesis tests using permutation inference assuming a constant treatment effect \\(\\tau\\) (Imbens and Rosenbaum, 2005).\n\nWith a single, de-meaned instrument \\(\\tilde{Z_i} = Z_i - \\bar{Z}\\), we can construct a test statistic based on the sample covariance between \\(Z_i\\) and \\(Y_i\\) with the effect removed:\n\n\\[T(\\tau) = \\frac{1}{N} \\sum_{i=1}^N \\tilde{Z_i} \\times (Y_i - \\tau D_i)\\]\nIf the instrument is valid, under the null hypothesis that \\(\\tau = \\tau_0\\), we can get the randomization distribution of the test statistic by simply re-randomizing treatment according to the known assignment process.\n\nConstruct confidence intervals by “inverting the test” - what values of \\(\\tau_0\\) does the test fail to reject?\n\nAlternative test statistics based on ranks of \\(Y_i - \\tau D_i\\) (possibly within strata) can also be used."
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#anderson-rubin-test",
     "href": "slides/week8/week8_instrumental_variables.html#anderson-rubin-test",
     "title": "Week 8: Instrumental Variables",
     "section": "Anderson-Rubin Test",
-    "text": "Anderson-Rubin Test\n\nEven when the assignment process is not known, the IV assumptions allow us to construct a test statistic that does not depend on the first stage.\n\nThis is the Anderson-Rubin (1949) approach - Andrews, Stock and Sun (2019) provide a good explanation especially for the “just-identified” case\n\nLet \\(\\hat{\\delta}_{\\text{ITT}}\\) be the reduced form or intent-to-treat estimate.\nUnder the IV assumptions, the reduced form is the product of first stage \\(\\pi\\) and the treatment effect \\(\\tau\\)\n\\[\\delta_{\\text{ITT}} = \\gamma \\times \\tau\\]\nAssuming a particular null \\(H_0: \\tau = \\tau_0\\) implies that\n\\[\\delta_{\\text{ITT}} - \\gamma \\times \\tau_0 = 0\\]"
+    "text": "Anderson-Rubin Test\n\nEven when the assignment process is not known, the IV assumptions allow us to construct a test statistic that does not depend on the first stage.\n\nThis is the Anderson-Rubin (1949) approach\nAndrews, Stock and Sun (2019) provide a good explanation especially for the “just-identified” case\n\nLet \\(\\hat{\\delta}_{\\text{ITT}}\\) be the reduced form or intent-to-treat estimate.\nUnder the IV assumptions, the reduced form is the product of first stage \\(\\gamma\\) and the treatment effect \\(\\tau\\)\n\\[\\delta_{\\text{ITT}} = \\gamma \\times \\tau\\]\nAssuming a particular null \\(H_0: \\tau = \\tau_0\\) implies that\n\\[\\delta_{\\text{ITT}} - \\gamma \\times \\tau_0 = 0\\]"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#anderson-rubin-test-1",
     "href": "slides/week8/week8_instrumental_variables.html#anderson-rubin-test-1",
     "title": "Week 8: Instrumental Variables",
     "section": "Anderson-Rubin Test",
-    "text": "Anderson-Rubin Test\n\nWe can construct a test statistic based on the difference between the estimated ITT and the estimated first stage adjusted by the null which we know is normal in large samples.\n\\[g(\\tau_0) = \\hat{\\delta}_{\\text{ITT}} - \\hat{\\gamma} \\tau_0 \\sim \\mathcal{N}(0, \\Omega(\\tau_0))\\]\nThe Anderson-Rubin (1949) test statistic is:\n\\[AR(\\tau) = g(\\tau)^\\prime \\Omega(\\tau_0)^{-1}g(\\tau)\\]\nUnder the null \\(H_0: \\tau = \\tau_0\\), this has a chi-squared distribution which does not depend on the value of the first stage.\nIntuitively: Statistical properties of differences in two normal random variables are well-known and easy. Statistical properties of ratios are much more complicated!\n\nAgain, invert the test to get a confidence interval\nCan get infinite confidence bounds with a weak instrument - the test never rejects for any value of \\(\\tau_0\\)"
+    "text": "Anderson-Rubin Test\n\nWe can construct a test statistic based on the difference between the estimated ITT and the estimated first stage adjusted by the null which we know is normal in large samples.\n\\[g(\\tau_0) = \\hat{\\delta}_{\\text{ITT}} - \\hat{\\gamma} \\tau_0 \\sim \\mathcal{N}(0, \\Omega(\\tau_0))\\]\nThe Anderson-Rubin (1949) test statistic is:\n\\[AR(\\tau) = g(\\tau)^\\prime \\Omega(\\tau)^{-1}g(\\tau)\\]\nUnder the null \\(H_0: \\tau = \\tau_0\\), this has a chi-squared distribution which does not directly depend on the value of the first stage \\(\\gamma\\)!\nIntuitively: Statistical properties of differences in two normal random variables are well-known and easy. Statistical properties of ratios are much more complicated!\n\nAgain, invert the test to get a confidence interval\nCan get infinite confidence bounds with a weak instrument - the test never rejects for any value of \\(\\tau_0\\)"
   },
   {
     "objectID": "slides/week8/week8_instrumental_variables.html#example-strong-instrument",
