@@ -1642,14 +1642,14 @@
     "href": "slides/week10/week10_modern_differences_in_differences.html#two-way-fe-w-staggered-adoption-3",
     "title": "Week 10: Modern Differences-in-Differences",
     "section": "Two-way FE w/ staggered adoption",
-    "text": "Two-way FE w/ staggered adoption\n\nConsider the “forbidden comparison” with -\\(t^\\prime &gt; t\\), (baseline period is in the “future”) -\\(g \\le t &lt; t^\\prime\\) (timing group of interest is treated prior to both periods). -\\(t &lt; g^\\prime \\le t^\\prime\\), (comparison group is treated at the baseline period)\nThe 2x2 difference-in-difference is:\n\\[\\bar{Y}_{g, t} - \\bar{Y}_{g^\\prime, t} - \\bar{Y}_{g, t^\\prime} + \\bar{Y}_{g^\\prime, t^\\prime}\\]\nUnder parallel trends, this identifies\n\\[ATT_{g}(t) - ATT_{g^\\prime}(t) - ATT_{g}(t^\\prime) + ATT_{g^\\prime}(t^\\prime)\\]\nUnder no anticipation, only \\(ATT_{g^\\prime}(t)\\) is zero."
+    "text": "Two-way FE w/ staggered adoption\n\nConsider the “forbidden comparison” with\n\n\\(t^\\prime &gt; t\\), (baseline period is in the “future”)\n\\(g \\le t &lt; t^\\prime\\) (timing group of interest is treated prior to both periods).\n\\(t &lt; g^\\prime \\le t^\\prime\\), (comparison group is treated at the baseline period)\n\nThe 2x2 difference-in-difference is:\n\\[\\bar{Y}_{g, t} - \\bar{Y}_{g^\\prime, t} - \\bar{Y}_{g, t^\\prime} + \\bar{Y}_{g^\\prime, t^\\prime}\\]\nUnder parallel trends, this identifies\n\\[ATT_{g}(t) - ATT_{g^\\prime}(t) - ATT_{g}(t^\\prime) + ATT_{g^\\prime}(t^\\prime)\\]\nUnder no anticipation, only \\(ATT_{g^\\prime}(t)\\) is zero."
   },
   {
     "objectID": "slides/week10/week10_modern_differences_in_differences.html#two-way-fe-w-staggered-adoption-4",
     "href": "slides/week10/week10_modern_differences_in_differences.html#two-way-fe-w-staggered-adoption-4",
     "title": "Week 10: Modern Differences-in-Differences",
     "section": "Two-way FE w/ staggered adoption",
-    "text": "Two-way FE w/ staggered adoption\n\nWe need to make an effect homogeneity assumption for this 2x2 to identify a single treatment effect.\n\\[ATT_{g}(t) - ATT_{g}(t^\\prime) + ATT_{g^\\prime}(t^\\prime)\\]\nThe first is to assume homogeneity within unit over time\n\n\\(ATT_{g}(t) = ATT_{g}(t^\\prime)\\)\n\nThe second is to assume homogeneity in calendar time\n\n\\(ATT_{g^\\prime}(t^\\prime) = ATT_{g^\\prime}(t^\\prime)\\)"
+    "text": "Two-way FE w/ staggered adoption\n\nWe need to make an effect homogeneity assumption for this 2x2 to identify a single treatment effect.\n\\[ATT_{g}(t) - ATT_{g}(t^\\prime) + ATT_{g^\\prime}(t^\\prime)\\]\nThe first is to assume homogeneity within unit over time\n\n\\(ATT_{g}(t) = ATT_{g}(t^\\prime)\\)\n\nThe second is to assume homogeneity in calendar time\n\n\\(ATT_{g}(t^\\prime) = ATT_{g^\\prime}(t^\\prime)\\)"
   },
   {
     "objectID": "slides/week10/week10_modern_differences_in_differences.html#two-way-fe-w-staggered-adoption-5",

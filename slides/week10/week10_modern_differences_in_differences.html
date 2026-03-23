@@ -1282,7 +1282,12 @@ Anton Strezhnev
 <section id="two-way-fe-w-staggered-adoption-3" class="slide level2">
 <h2>Two-way FE w/ staggered adoption</h2>
 <ul>
-<li class="fragment"><p>Consider the “forbidden comparison” with -<span class="math inline">\(t^\prime &gt; t\)</span>, (baseline period is in the “future”) -<span class="math inline">\(g \le t &lt; t^\prime\)</span> (timing group of interest is treated prior to both periods). -<span class="math inline">\(t &lt; g^\prime \le t^\prime\)</span>, (comparison group is <strong>treated</strong> at the baseline period)</p></li>
+<li class="fragment"><p>Consider the “forbidden comparison” with</p>
+<ul>
+<li class="fragment"><span class="math inline">\(t^\prime &gt; t\)</span>, (baseline period is in the “future”)</li>
+<li class="fragment"><span class="math inline">\(g \le t &lt; t^\prime\)</span> (timing group of interest is treated prior to both periods).</li>
+<li class="fragment"><span class="math inline">\(t &lt; g^\prime \le t^\prime\)</span>, (comparison group is <strong>treated</strong> at the baseline period)</li>
+</ul></li>
 <li class="fragment"><p>The 2x2 difference-in-difference is:</p>
 <p><span class="math display">\[\bar{Y}_{g, t} - \bar{Y}_{g^\prime, t} - \bar{Y}_{g, t^\prime} + \bar{Y}_{g^\prime, t^\prime}\]</span></p></li>
 <li class="fragment"><p>Under parallel trends, this identifies</p>
@@ -1301,7 +1306,7 @@ Anton Strezhnev
 </ul></li>
 <li class="fragment"><p>The second is to assume homogeneity <strong>in calendar time</strong></p>
 <ul>
-<li class="fragment"><span class="math inline">\(ATT_{g^\prime}(t^\prime) = ATT_{g^\prime}(t^\prime)\)</span></li>
+<li class="fragment"><span class="math inline">\(ATT_{g}(t^\prime) = ATT_{g^\prime}(t^\prime)\)</span></li>
 </ul></li>
 </ul>
 </section>
@@ -1358,15 +1363,15 @@ Anton Strezhnev
 <section id="sun-and-abraham-2021-estimator" class="slide level2">
 <h2>Sun and Abraham (2021) Estimator</h2>
 <ul>
-<li>One solution to the problem of <strong>contamination bias</strong> is to estimate the relative treatment time effects <strong>separately</strong> for each unique treatment timing group
+<li class="fragment">One solution to the problem of <strong>contamination bias</strong> is to estimate the relative treatment time effects <strong>separately</strong> for each unique treatment timing group
 <ul>
-<li>Control group is the <strong>never treated</strong></li>
+<li class="fragment">Control group is the <strong>never treated</strong></li>
 </ul></li>
-<li>Easy to implement in a single TWFE regression with <strong>interactions</strong> between cohort-indicators and relative-treatment time indicators.
+<li class="fragment">Easy to implement in a single TWFE regression with <strong>interactions</strong> between cohort-indicators and relative-treatment time indicators.
 <ul>
-<li>Aggregate into <strong>average</strong> effects for each relative-treatment time by averaging over the distribution of cohorts with a given period.</li>
+<li class="fragment">Aggregate into <strong>average</strong> effects for each relative-treatment time by averaging over the distribution of cohorts with a given period.</li>
 </ul></li>
-<li>Implemented in the <code>fixest</code> R package using the <code>sunab()</code> syntax</li>
+<li class="fragment">Implemented in the <code>fixest</code> R package using the <code>sunab()</code> syntax</li>
 </ul>
 </section>
 <section id="example-paglayan-2019-ajps-2" class="slide level2">
