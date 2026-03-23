@@ -137,7 +137,8 @@ panelview(data=union, D="CBrequired_SY", index=c("State", "year"), axis.adjust=T
 - We'll extend our previous set-up with $T$ treated periods to **also** allow for varying treatment times
   - Let $G_i$ denote the **time period** when unit $i$ initiates treatment
 - $\mathcal{G} \in \{2, 3, \dotsc, T, \infty\}$ denotes the set of possible **treatment timing groups**
-  - We'll use $G_i = \infty$ to denote the **never-treated units
+  - We'll use $G_i = \infty$ to denote the **never-treated** units
+  - $N_{g}$ observations in each timing group $g$
 - Define potential outcomes in terms of assignment to a **timing group**
   - $Y_{it}(g) = Y_{it}$ for units with $G_i = g$
   - We'll denote $Y_{it}(\infty)$ as the "control" potential outcome
@@ -235,7 +236,7 @@ panelview(data=union, D="CBrequired_SY", index=c("State", "year"), axis.adjust=T
 
   $$\widehat{ATT}_g(t) = \bar{Y}_{g, t} - \bar{Y}_{g^\prime, t} - \bar{Y}_{g, t^\prime} + \bar{Y}_{g^\prime, t^\prime}$$
 
-- We can **average** over the DiDs with all "not-yet-treated units at time $t$
+- We can **average** over the DiDs with all **not-yet-treated** units at time $t$
 
   $$\widehat{ATT}_g(t) = \bar{Y}_{g, t} - \sum_{g^\prime > t} \frac{N_{g^\prime}}{N^{(t)}}\bar{Y}_{g^\prime, t} - \bar{Y}_{g, t^\prime} + \sum_{g^\prime > t} \frac{N_{g^\prime}}{N^{(t)}}\bar{Y}_{g^\prime, t^\prime}$$
   
@@ -586,9 +587,9 @@ panelview(data=union, D="CBrequired_SY", index=c("State", "year"), axis.adjust=T
 ::: {.incremental}
 
 - Consider the "forbidden comparison" with 
-  -$t^\prime > t$, (baseline period is in the "future")
-  -$g \le t < t^\prime$ (timing group of interest is treated prior to both periods).
-  -$t < g^\prime \le t^\prime$, (comparison group is **treated** at the baseline period)
+  - $t^\prime > t$, (baseline period is in the "future")
+  - $g \le t < t^\prime$ (timing group of interest is treated prior to both periods).
+  - $t < g^\prime \le t^\prime$, (comparison group is **treated** at the baseline period)
 
 - The 2x2 difference-in-difference is:
 
@@ -609,11 +610,12 @@ panelview(data=union, D="CBrequired_SY", index=c("State", "year"), axis.adjust=T
 - We need to make an **effect homogeneity** assumption for this 2x2 to identify a single treatment effect.
 
   $$ATT_{g}(t) - ATT_{g}(t^\prime) + ATT_{g^\prime}(t^\prime)$$
+  
 - The first is to assume homogeneity **within unit** over time
   - $ATT_{g}(t) = ATT_{g}(t^\prime)$
   
 - The second is to assume homogeneity **in calendar time**
-  - $ATT_{g^\prime}(t^\prime) = ATT_{g^\prime}(t^\prime)$
+  - $ATT_{g}(t^\prime) = ATT_{g^\prime}(t^\prime)$
 
 
 :::
@@ -852,12 +854,15 @@ rep2_1
 
 ## Sun and Abraham (2021) Estimator
 
+::: {.incremental}
+
 - One solution to the problem of **contamination bias** is to estimate the relative treatment time effects **separately** for each unique treatment timing group
   - Control group is the **never treated**
 - Easy to implement in a single TWFE regression with **interactions** between cohort-indicators and relative-treatment time indicators.
   - Aggregate into **average** effects for each relative-treatment time by averaging over the distribution of cohorts with a given period.
 - Implemented in the `fixest` R package using the `sunab()` syntax
 
+:::
 
 ## Example: Paglayan (2019, AJPS)
 
