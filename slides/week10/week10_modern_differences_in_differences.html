@@ -1181,7 +1181,8 @@ Anton Strezhnev
 </ul></li>
 <li class="fragment"><span class="math inline">\(\mathcal{G} \in \{2, 3, \dotsc, T, \infty\}\)</span> denotes the set of possible <strong>treatment timing groups</strong>
 <ul>
-<li class="fragment">We’ll use <span class="math inline">\(G_i = \infty\)</span> to denote the **never-treated units</li>
+<li class="fragment">We’ll use <span class="math inline">\(G_i = \infty\)</span> to denote the <strong>never-treated</strong> units</li>
+<li class="fragment"><span class="math inline">\(N_{g}\)</span> observations in each timing group <span class="math inline">\(g\)</span></li>
 </ul></li>
 <li class="fragment">Define potential outcomes in terms of assignment to a <strong>timing group</strong>
 <ul>
@@ -1218,7 +1219,7 @@ Anton Strezhnev
 <p><span class="math display">\[\bar{Y}_{g, t} = \frac{1}{N_g} \sum_{i: G_i = g} Y_{it}\]</span></p></li>
 <li class="fragment"><p>Any <strong>group-time ATT</strong> can be consistently estimated by the 2x2 difference-in-difference with any <span class="math inline">\(g^\prime &gt; t\)</span> and <span class="math inline">\(t^\prime &lt; g\)</span></p>
 <p><span class="math display">\[\widehat{ATT}_g(t) = \bar{Y}_{g, t} - \bar{Y}_{g^\prime, t} - \bar{Y}_{g, t^\prime} + \bar{Y}_{g^\prime, t^\prime}\]</span></p></li>
-<li class="fragment"><p>We can <strong>average</strong> over the DiDs with all “not-yet-treated units at time <span class="math inline">\(t\)</span></p>
+<li class="fragment"><p>We can <strong>average</strong> over the DiDs with all <strong>not-yet-treated</strong> units at time <span class="math inline">\(t\)</span></p>
 <p><span class="math display">\[\widehat{ATT}_g(t) = \bar{Y}_{g, t} - \sum_{g^\prime &gt; t} \frac{N_{g^\prime}}{N^{(t)}}\bar{Y}_{g^\prime, t} - \bar{Y}_{g, t^\prime} + \sum_{g^\prime &gt; t} \frac{N_{g^\prime}}{N^{(t)}}\bar{Y}_{g^\prime, t^\prime}\]</span></p>
 <p>where <span class="math inline">\(N^{(t)} = \sum_{g^\prime &gt; t} N_{g^\prime}\)</span></p></li>
 </ul>
