@@ -53,8 +53,8 @@ Lecture slides are available as self-contained `.html` files made with RevealJS 
 
 ### Week 10: Modern Differences-in-Differences
 
-- Week 10 Github Repository
-- Week 10 `.html` slides
+- [Week 10 Github Repository](https://github.com/astrezhnev/ps813/tree/main/slides/week10/)
+- [Week 10 `.html` slides](https://www.antonstrezhnev.com/ps813/slides/week10/week10_modern_differences_in_differences.html)
 
 ### Week 11: Panel Data Causal Inference
 

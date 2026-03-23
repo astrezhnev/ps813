@@ -760,7 +760,7 @@ static_plot <- function(frame,  alpha = .05, split = NULL, vis_alpha = .2){
   - We'll now characterize our treatment groups based on *when* they start treatment.
   - Let $G_i$ denote the **time period** when unit $i$ initiates treatment
 - We'll stick with the **two timing group** case for now
-  - **Treated** units start treatment at some time $g^*: 0 < g^* \le T$
+  - **Treated** units start treatment at some time $g^*: 1 < g^* \le T$
   - **Control** units start treatment at time after $T$ (we'll use $\infty$)
 - Define potential outcomes in terms of assignment to a **timing group**
   - $Y_{it}(g) = Y_{it}$ for units with $G_i = g$

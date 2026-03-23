@@ -1,0 +1,1070 @@
+---
+title: "Week 10: Modern Differences-in-Differences"
+subtitle: "PS 813 - Causal Inference"
+author:
+  - name: "Anton Strezhnev"
+    affiliation: "University of Wisconsin-Madison"
+    email: strezhnev@wisc.edu
+date: "March 23, 2026"
+date-format: "MMMM D, YYYY"
+editor:
+  render-on-save: true
+format:
+  revealjs:
+    theme: [default, custom.scss]
+    slide-number: true
+    overview: true
+    navigation-mode: vertical
+    progress: false
+    controls: true
+    link-external-newwindow: true
+    footer: "PS 813 - University of Wisconsin - Madison"
+    html-math-method:
+      method: mathjax
+      url: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+execute:
+  cache: true
+code:
+  execute:
+    - r
+    - python
+embed-resources: true
+
+---
+
+$$
+  \require{cancel}
+$$
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+library(tidyverse)
+library(haven)
+library(estimatr)
+library(panelView)
+library(fixest)
+options(digits=3)
+```
+
+## Last week
+
+::: {.incremental}
+
+- Differences-in-differences with **two groups**
+  - 2x2 comparison: treated and control groups at post-treatment time $t$ vs. treated and control at some pre-treatment $t^\prime$
+- Two approaches to estimation
+  - **First-differences** regression
+  - **Two-way fixed effects** regression (static and "dynamic")
+- Pre-trends placebos
+  - Differences-in-differences in two pre-treatment periods.
+  - **Not** proof that parallel trends hold but a useful diagnostic
+  - Be careful of power here - **underpowered** tests may fail to reject even under sizeable violations!
+
+:::
+
+## Review: Event study plots
+
+![](assets/good_did-1.png){fig-align="center"}
+
+## This week
+
+::: {.incremental}
+
+- Differences-in-differences under **varying treatment adoption**
+  - **Staggered adoption** - Treatment is initiated by units at different time periods
+  - **Treatment reversal** - Units that adopt treatment can later switch to control
+- Problems
+  - Conventional estimation strategies (esp. TWFE) require **additional assumptions** - constant treatment effects
+  - Not feasible in many settings (e.g. persistent effects over time)
+- Alternative estimators
+  - Construct an estimator using **only** the "valid" 2x2 DiDs (no additional effect homogeneity assumptions)
+  - Re-fit the TWFE regression or construct the correct "first-differences" regression.
+
+:::
+
+## Difference-in-differences with staggered adoption {.centered}
+
+## Running Example: Paglayan (2019, AJPS)
+
+::: {.incremental}
+
+> Paglayan, Agustina S. "Public‐sector unions and the size of government." American Journal of Political Science 63, no. 1 (2019): 21-36.
+
+- **Paglayan (2019)** examines whether the implementation of mandatory collective bargaining in some states affects state expenditures on education
+  - Cross-sectionally, states with collective bargaining laws spend more on education
+  - But is this just selection?
+- **Design**: Look at the roll-out of collective bargaining laws over time in U.S. states
+  - Eliminate the baseline differences in spending across states using a DiD approach.
+
+:::
+
+::: {.fragment}
+```{r}
+#| message: false
+#| warning: false
+#| echo: true
+library(panelView)
+union <- read_dta("assets/data/Paglayan Dataset.dta")
+union <- union %>% filter(!is.na(studteachratio)&State !="DC"&State != "WI"&year>1959&year<1997)
+table(union$YearCBrequired)
+```
+:::
+
+
+## Staggered adoption
+
+- Collective bargaining laws were rolled out in a *staggered* fashion
+
+::: {.fragment}
+```{r}
+#| message: false
+#| warning: false
+#| echo: false
+#| fig-align: center
+#| fig-height: 6
+#| fig-width: 9
+library(panelView)
+panelview(data=union, D="CBrequired_SY", index=c("State", "year"), axis.adjust=T, axis.lab = "time", by.timing=T)
+```
+:::
+
+## DiD with staggered adoption
+
+::: {.incremental}
+
+- We'll extend our previous set-up with $T$ treated periods to **also** allow for varying treatment times
+  - Let $G_i$ denote the **time period** when unit $i$ initiates treatment
+- $\mathcal{G} \in \{2, 3, \dotsc, T, \infty\}$ denotes the set of possible **treatment timing groups**
+  - We'll use $G_i = \infty$ to denote the **never-treated units
+- Define potential outcomes in terms of assignment to a **timing group**
+  - $Y_{it}(g) = Y_{it}$ for units with $G_i = g$
+  - We'll denote $Y_{it}(\infty)$ as the "control" potential outcome
+
+:::
+
+
+## DiD with staggered adoption
+
+```{tikz}
+#| echo: false
+#| fig-align: center
+#| fig-cap: "DiD with 4 periods, 3 timing groups"
+#| fig-ext: svg
+\usetikzlibrary{shapes}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes.misc}
+\usetikzlibrary{shapes.symbols}
+\usetikzlibrary{shadows}
+\usetikzlibrary{fit}
+\definecolor{diff1}{RGB}{230,159,0}
+\definecolor{diff2}{RGB}{86,180,233}
+\definecolor{diff3}{RGB}{0,158,115}
+\definecolor{diff4}{RGB}{240,228,66}
+\begin{tikzpicture}[scale=.4]
+\draw (-6, 6) node (l0) {Unit};
+\draw (-6, 4) node (l1) {$1$};
+\draw (-6, 2) node (l2) {$2$};
+\draw (-6, 0) node (l2) {$3$};
+
+\draw (-1, 7.5) node (t0) {Time};
+\draw (-4, 6) node (t1) {$1$};
+\draw (-2, 6) node (t2) {$2$};
+\draw (0, 6) node (t3) {$3$};
+\draw (2, 6) node (t4) {$4$};
+
+\draw (-5, 7) -- (-5, -1);
+\draw (-7, 5) -- (3, 5);
+
+\draw (-4, 4) node (a1t1) {$0$};
+\draw (-2, 4) node (a1t2) {$0$};
+\draw (0, 4) node (a1t3) {$1$};
+\draw (2, 4) node (a1t4) {$1$};
+
+\draw (-4, 2) node (a2t1) {$0$};
+\draw (-2, 2) node (a2t2) {$0$};
+\draw (0, 2) node (a2t3) {$0$};
+\draw (2, 2) node (a2t4) {$1$};
+
+\draw (-4, 0) node (a3t1) {$0$};
+\draw (-2, 0) node (a3t2) {$0$};
+\draw (0, 0) node (a3t3) {$0$};
+\draw (2, 0) node (a3t4) {$0$};
+
+\node[draw=black, fit=(a1t1)  (a1t2) (a1t3) (a1t4), inner sep=.2ex, line width = 1.5, dashed] (cohort1) {};
+\node[draw=red, fit=(a2t1)  (a2t2) (a2t3) (a2t4), inner sep=.2ex, line width = 1.5, dashed] (cohort2) {};
+
+\end{tikzpicture}
+```
+
+
+## DiD with staggered adoption
+
+::: {.incremental}
+
+- Building block: **"Group-Time" ATT** (Callaway and Sant'anna)
+
+  $$\text{ATT}_{g}(t) = E[Y_{it}(g) - Y_{it}(\infty) | G_i = g]$$
+
+- What would have happened to group $g$ at time $t$ had it never received treatment
+- **Assumption**: No reverse causality/anticipation
+
+  $$Y_{it}(g) = Y_{it}(\infty) \forall t < g$$
+
+- The potential outcomes among the "not-yet-treated" at time $t$ are the same as the "never-treated" at time $t$
+- **Assumption**: "General" parallel trends. For all $t \neq t^{\prime}$ and $g \neq g^{\prime}$
+
+  $$E[Y_{it}(\infty) - Y_{it^{\prime}}(\infty)| G_i = g] - E[Y_{it}(\infty) - Y_{it^{\prime}}(\infty)| G_i = g^{\prime}]$$
+
+- Can weaken this
+  - Only assume parallel trends with respect to the **ever-treated** units ($g \neq \infty$) 
+
+:::
+
+## DiD with staggered adoption
+
+::: {.incremental}
+
+- Let $\bar{Y}_{g, t}$ denote the **average** outcome at time $t$ for timing group $g$
+
+  $$\bar{Y}_{g, t} = \frac{1}{N_g} \sum_{i: G_i = g} Y_{it}$$
+
+- Any **group-time ATT** can be consistently estimated by the 2x2 difference-in-difference with any $g^\prime > t$ and $t^\prime < g$
+
+  $$\widehat{ATT}_g(t) = \bar{Y}_{g, t} - \bar{Y}_{g^\prime, t} - \bar{Y}_{g, t^\prime} + \bar{Y}_{g^\prime, t^\prime}$$
+
+- We can **average** over the DiDs with all "not-yet-treated units at time $t$
+
+  $$\widehat{ATT}_g(t) = \bar{Y}_{g, t} - \sum_{g^\prime > t} \frac{N_{g^\prime}}{N^{(t)}}\bar{Y}_{g^\prime, t} - \bar{Y}_{g, t^\prime} + \sum_{g^\prime > t} \frac{N_{g^\prime}}{N^{(t)}}\bar{Y}_{g^\prime, t^\prime}$$
+  
+  where $N^{(t)} = \sum_{g^\prime > t} N_{g^\prime}$
+
+
+:::
+
+
+## Visualizing group effects
+
+```{tikz}
+#| echo: false
+#| fig-align: center
+#| fig-cap: "DiD for group 1, time 3"
+#| fig-ext: svg
+\usetikzlibrary{shapes}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes.misc}
+\usetikzlibrary{shapes.symbols}
+\usetikzlibrary{shadows}
+\usetikzlibrary{fit}
+\definecolor{diff1}{RGB}{230,159,0}
+\definecolor{diff2}{RGB}{86,180,233}
+\definecolor{diff3}{RGB}{0,158,115}
+\definecolor{diff4}{RGB}{240,228,66}
+\begin{tikzpicture}[scale=.4]
+\draw (-6, 6) node (l0) {Unit};
+\draw (-6, 4) node (l1) {$1$};
+\draw (-6, 2) node (l2) {$2$};
+\draw (-6, 0) node (l2) {$3$};
+
+\draw (-1, 7.5) node (t0) {Time};
+\draw (-4, 6) node (t1) {$1$};
+\draw (-2, 6) node (t2) {$2$};
+\draw (0, 6) node (t3) {$3$};
+\draw (2, 6) node (t4) {$4$};
+
+\draw (-5, 7) -- (-5, -1);
+\draw (-7, 5) -- (3, 5);
+
+\draw (-4, 4) node (a1t1) {$0$};
+\draw (-2, 4) node (a1t2) {$0$};
+\draw (0, 4) node (a1t3) {$1$};
+\draw (2, 4) node (a1t4) {$1$};
+
+\draw (-4, 2) node (a2t1) {$0$};
+\draw (-2, 2) node (a2t2) {$0$};
+\draw (0, 2) node (a2t3) {$0$};
+\draw (2, 2) node (a2t4) {$1$};
+
+\draw (-4, 0) node (a3t1) {$0$};
+\draw (-2, 0) node (a3t2) {$0$};
+\draw (0, 0) node (a3t3) {$0$};
+\draw (2, 0) node (a3t4) {$0$};
+
+\node[draw=diff1, fit= (a1t3), inner sep = .5ex, line width=1.5, dashed] (treat) {};
+\node[draw=diff2, fit= (a2t3) (a3t3), inner sep = .5ex, line width=1.5, dashed] (firstdiff) {};
+\node[draw=diff4, fit=  (a1t2), inner sep = .5ex, line width=1.5, dashed] (seconddiff) {};
+\node[draw=diff3, fit=  (a2t2) (a3t2), inner sep = .5ex, line width=1.5, dashed] (thirddiff) {};
+
+\end{tikzpicture}
+```
+
+
+## Visualizing group effects
+
+```{tikz}
+#| echo: false
+#| fig-align: center
+#| fig-cap: "DiD for group 1, time 4"
+#| fig-ext: svg
+\usetikzlibrary{shapes}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes.misc}
+\usetikzlibrary{shapes.symbols}
+\usetikzlibrary{shadows}
+\usetikzlibrary{fit}
+\definecolor{diff1}{RGB}{230,159,0}
+\definecolor{diff2}{RGB}{86,180,233}
+\definecolor{diff3}{RGB}{0,158,115}
+\definecolor{diff4}{RGB}{240,228,66}
+\begin{tikzpicture}[scale=.4]
+\draw (-6, 6) node (l0) {Unit};
+\draw (-6, 4) node (l1) {$1$};
+\draw (-6, 2) node (l2) {$2$};
+\draw (-6, 0) node (l2) {$3$};
+
+\draw (-1, 7.5) node (t0) {Time};
+\draw (-4, 6) node (t1) {$1$};
+\draw (-2, 6) node (t2) {$2$};
+\draw (0, 6) node (t3) {$3$};
+\draw (2, 6) node (t4) {$4$};
+
+\draw (-5, 7) -- (-5, -1);
+\draw (-7, 5) -- (3, 5);
+
+\draw (-4, 4) node (a1t1) {$0$};
+\draw (-2, 4) node (a1t2) {$0$};
+\draw (0, 4) node (a1t3) {$1$};
+\draw (2, 4) node (a1t4) {$1$};
+
+\draw (-4, 2) node (a2t1) {$0$};
+\draw (-2, 2) node (a2t2) {$0$};
+\draw (0, 2) node (a2t3) {$0$};
+\draw (2, 2) node (a2t4) {$1$};
+
+\draw (-4, 0) node (a3t1) {$0$};
+\draw (-2, 0) node (a3t2) {$0$};
+\draw (0, 0) node (a3t3) {$0$};
+\draw (2, 0) node (a3t4) {$0$};
+
+\node[draw=diff1, fit= (a1t4), inner sep = .5ex, line width=1.5, dashed] (treat) {};
+\node[draw=diff2, fit=  (a3t4), inner sep = .5ex, line width=1.5, dashed] (firstdiff) {};
+\node[draw=diff4, fit=  (a1t2), inner sep = .5ex, line width=1.5, dashed] (seconddiff) {};
+\node[draw=diff3, fit=  (a3t2), inner sep = .5ex, line width=1.5, dashed] (thirddiff) {};
+
+\end{tikzpicture}
+```
+
+
+## Visualizing group effects
+
+```{tikz}
+#| echo: false
+#| fig-align: center
+#| fig-cap: "DiD for group 2, time 4"
+#| fig-ext: svg
+\usetikzlibrary{shapes}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes.misc}
+\usetikzlibrary{shapes.symbols}
+\usetikzlibrary{shadows}
+\usetikzlibrary{fit}
+\definecolor{diff1}{RGB}{230,159,0}
+\definecolor{diff2}{RGB}{86,180,233}
+\definecolor{diff3}{RGB}{0,158,115}
+\definecolor{diff4}{RGB}{240,228,66}
+\begin{tikzpicture}[scale=.4]
+\draw (-6, 6) node (l0) {Unit};
+\draw (-6, 4) node (l1) {$1$};
+\draw (-6, 2) node (l2) {$2$};
+\draw (-6, 0) node (l2) {$3$};
+
+\draw (-1, 7.5) node (t0) {Time};
+\draw (-4, 6) node (t1) {$1$};
+\draw (-2, 6) node (t2) {$2$};
+\draw (0, 6) node (t3) {$3$};
+\draw (2, 6) node (t4) {$4$};
+
+\draw (-5, 7) -- (-5, -1);
+\draw (-7, 5) -- (3, 5);
+
+\draw (-4, 4) node (a1t1) {$0$};
+\draw (-2, 4) node (a1t2) {$0$};
+\draw (0, 4) node (a1t3) {$1$};
+\draw (2, 4) node (a1t4) {$1$};
+
+\draw (-4, 2) node (a2t1) {$0$};
+\draw (-2, 2) node (a2t2) {$0$};
+\draw (0, 2) node (a2t3) {$0$};
+\draw (2, 2) node (a2t4) {$1$};
+
+\draw (-4, 0) node (a3t1) {$0$};
+\draw (-2, 0) node (a3t2) {$0$};
+\draw (0, 0) node (a3t3) {$0$};
+\draw (2, 0) node (a3t4) {$0$};
+
+\node[draw=diff1, fit= (a2t4), inner sep = .5ex, line width=1.5, dashed] (treat) {};
+\node[draw=diff2, fit=  (a3t4), inner sep = .5ex, line width=1.5, dashed] (firstdiff) {};
+\node[draw=diff4, fit=  (a2t2), inner sep = .5ex, line width=1.5, dashed] (seconddiff) {};
+\node[draw=diff3, fit=  (a3t2), inner sep = .5ex, line width=1.5, dashed] (thirddiff) {};
+
+\end{tikzpicture}
+```
+
+
+## Visualizing group effects
+
+```{r}
+#| message: false
+#| warning: false
+#| echo: false
+#| fig-align: center
+#| fig-height: 7
+#| fig-width: 9
+library(panelView)
+panelview(data=union, D="CBrequired_SY", index=c("State", "year"), axis.adjust=T, axis.lab = "time", by.timing=T)
+```
+
+
+## Aggregating group-time ATTs
+
+::: {.incremental}
+
+- It is unlikely that we can estimate each particular group-time ATT with much precision
+  - And we're probably more interested in some *overall* effect of treatment or an *average* of group-time ATTs.
+- How should we aggregate?
+- Defining a single "post-treatment" average is tricky - multiple ways to aggregate
+
+  $$ATT = \frac{1}{N}\sum_{g = 2}^T  \frac{N_{g}}{T-g -1}\sum_{t \ge g}^T ATT_{g}(t)$$
+  
+  $$ATT = \frac{1}{T-1}\sum_{t=2}^{T} \sum_{g=2}^{t} \frac{N_g}{\sum_{g^\prime=2}^{t} N_{g^\prime}} ATT_{g}(t)$$
+
+- "Relative-treatment-time" effects - average of all group-time ATTs where $t = g + q$
+
+  $$RTT(q) = \sum_{g=\max(2,\, 1-q)}^{T - \max(0,\, q)} \frac{N_g}{\sum_{g^\prime=\max(2,\, 1-q)}^{T-\max(0,\, q)} N_{g^\prime}} ATT_g(g + q) \quad \text{for } q = -(T-1), \dotsc, T-2$$
+
+:::
+
+
+## Two-way FE w/ staggered adoption
+
+::: {.incremental}
+
+- Does the **static** specification identify an average of group-time ATTs?
+
+  $$Y_{it} = \alpha_i + \delta_{t} + \tau D_{it} + \epsilon_{it}$$
+
+- No! **(Goodman-Bacon, 2021)**
+  - $\hat{\tau}$ is a weighted average over 2x2 differences-in-differences.
+  - Only **some** of those are valid under our identification assumptions
+  - Others require an additional **constant effects** assumption in order to identify an ATT.
+- Intuition:
+  - The TWFE estimator under staggered adoption incorporates 2x2 DiD terms where the "baseline" period is in the **future** (where both units are under treatment)
+  
+:::
+
+
+## Two-way FE w/ staggered adoption
+
+```{tikz}
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Good 2x2"
+#| fig-ext: svg
+\usetikzlibrary{shapes}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes.misc}
+\usetikzlibrary{shapes.symbols}
+\usetikzlibrary{shadows}
+\usetikzlibrary{fit}
+\definecolor{diff1}{RGB}{230,159,0}
+\definecolor{diff2}{RGB}{86,180,233}
+\definecolor{diff3}{RGB}{0,158,115}
+\definecolor{diff4}{RGB}{240,228,66}
+\begin{tikzpicture}[scale=.4]
+\draw (-6, 6) node (l0) {Unit};
+\draw (-6, 4) node (l1) {$1$};
+\draw (-6, 2) node (l2) {$2$};
+\draw (-6, 0) node (l2) {$3$};
+
+\draw (-1, 7.5) node (t0) {Time};
+\draw (-4, 6) node (t1) {$1$};
+\draw (-2, 6) node (t2) {$2$};
+\draw (0, 6) node (t3) {$3$};
+\draw (2, 6) node (t4) {$4$};
+
+\draw (-5, 7) -- (-5, -1);
+\draw (-7, 5) -- (3, 5);
+
+\draw (-4, 4) node (a1t1) {$0$};
+\draw (-2, 4) node (a1t2) {$0$};
+\draw (0, 4) node (a1t3) {$1$};
+\draw (2, 4) node (a1t4) {$1$};
+
+\draw (-4, 2) node (a2t1) {$0$};
+\draw (-2, 2) node (a2t2) {$0$};
+\draw (0, 2) node (a2t3) {$0$};
+\draw (2, 2) node (a2t4) {$1$};
+
+\draw (-4, 0) node (a3t1) {$0$};
+\draw (-2, 0) node (a3t2) {$0$};
+\draw (0, 0) node (a3t3) {$0$};
+\draw (2, 0) node (a3t4) {$0$};
+
+\node[draw=diff1, fit= (a1t3), inner sep = .5ex, line width=1.5, dashed] (treat) {};
+\node[draw=diff2, fit= (a2t3), inner sep = .5ex, line width=1.5, dashed] (firstdiff) {};
+\node[draw=diff4, fit=  (a1t2), inner sep = .5ex, line width=1.5, dashed] (seconddiff) {};
+\node[draw=diff3, fit=  (a2t2), inner sep = .5ex, line width=1.5, dashed] (thirddiff) {};
+
+\end{tikzpicture}
+```
+
+
+## Two-way FE w/ staggered adoption
+
+```{tikz}
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Bad 2x2"
+#| fig-ext: svg
+\usetikzlibrary{shapes}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes.misc}
+\usetikzlibrary{shapes.symbols}
+\usetikzlibrary{shadows}
+\usetikzlibrary{fit}
+\definecolor{diff1}{RGB}{230,159,0}
+\definecolor{diff2}{RGB}{86,180,233}
+\definecolor{diff3}{RGB}{0,158,115}
+\definecolor{diff4}{RGB}{240,228,66}
+\begin{tikzpicture}[scale=.4]
+\draw (-6, 6) node (l0) {Unit};
+\draw (-6, 4) node (l1) {$1$};
+\draw (-6, 2) node (l2) {$2$};
+\draw (-6, 0) node (l2) {$3$};
+
+\draw (-1, 7.5) node (t0) {Time};
+\draw (-4, 6) node (t1) {$1$};
+\draw (-2, 6) node (t2) {$2$};
+\draw (0, 6) node (t3) {$3$};
+\draw (2, 6) node (t4) {$4$};
+
+\draw (-5, 7) -- (-5, -1);
+\draw (-7, 5) -- (3, 5);
+
+\draw (-4, 4) node (a1t1) {$0$};
+\draw (-2, 4) node (a1t2) {$0$};
+\draw (0, 4) node (a1t3) {$1$};
+\draw (2, 4) node (a1t4) {$1$};
+
+\draw (-4, 2) node (a2t1) {$0$};
+\draw (-2, 2) node (a2t2) {$0$};
+\draw (0, 2) node (a2t3) {$0$};
+\draw (2, 2) node (a2t4) {$1$};
+
+\draw (-4, 0) node (a3t1) {$0$};
+\draw (-2, 0) node (a3t2) {$0$};
+\draw (0, 0) node (a3t3) {$0$};
+\draw (2, 0) node (a3t4) {$0$};
+
+\node[draw=diff1, fit= (a1t3), inner sep = .5ex, line width=1.5, dashed] (treat) {};
+\node[draw=diff2, fit= (a2t3), inner sep = .5ex, line width=1.5, dashed] (firstdiff) {};
+\node[draw=diff4, fit=  (a1t4), inner sep = .5ex, line width=1.5, dashed] (seconddiff) {};
+\node[draw=diff3, fit=  (a2t4), inner sep = .5ex, line width=1.5, dashed] (thirddiff) {};
+
+\end{tikzpicture}
+```
+
+## Two-way FE w/ staggered adoption
+
+::: {.incremental}
+
+- Consider the "forbidden comparison" with 
+  -$t^\prime > t$, (baseline period is in the "future")
+  -$g \le t < t^\prime$ (timing group of interest is treated prior to both periods).
+  -$t < g^\prime \le t^\prime$, (comparison group is **treated** at the baseline period)
+
+- The 2x2 difference-in-difference is:
+
+  $$\bar{Y}_{g, t} - \bar{Y}_{g^\prime, t} - \bar{Y}_{g, t^\prime} + \bar{Y}_{g^\prime, t^\prime}$$
+  
+- Under parallel trends, this identifies
+
+  $$ATT_{g}(t) - ATT_{g^\prime}(t) - ATT_{g}(t^\prime) + ATT_{g^\prime}(t^\prime)$$
+  
+- Under no anticipation, only $ATT_{g^\prime}(t)$ is zero.
+
+:::
+
+## Two-way FE w/ staggered adoption
+
+::: {.incremental}
+
+- We need to make an **effect homogeneity** assumption for this 2x2 to identify a single treatment effect.
+
+  $$ATT_{g}(t) - ATT_{g}(t^\prime) + ATT_{g^\prime}(t^\prime)$$
+- The first is to assume homogeneity **within unit** over time
+  - $ATT_{g}(t) = ATT_{g}(t^\prime)$
+  
+- The second is to assume homogeneity **in calendar time**
+  - $ATT_{g^\prime}(t^\prime) = ATT_{g^\prime}(t^\prime)$
+
+
+:::
+
+## Two-way FE w/ staggered adoption
+
+::: {.incremental}
+
+- What about the **dynamic** specification?
+
+  $$Y_{it} = \alpha_i + \delta_{t} + \sum_{l \neq -1} \tau_l D^{(l)}_{it} + \epsilon_{it}$$
+
+- Also no! **(Sun and Abraham, 2021)**
+  - Both $\tau_l$ incorporate ATTs from *other* relative-times $\neq l$ ("contamination bias")
+  - The **dynamic** specification is only valid if we believe each relative-time treatment effect is constant across timing groups.
+- **Li and Strezhnev (2024)** develop some more of the intuition
+  - Each $\hat{\tau_l}$ incorporates 2x2 DiDs with units that are also **already treated** but at different times
+  - The bias due to the "contaminating" treatment effects gets differenced out by estimating those relative time effects with **different units**
+
+:::
+
+## Dynamic TWFE
+
+```{tikz}
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Dynamic specification - good 2x2s"
+#| fig-ext: svg
+\usetikzlibrary{shapes}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes.misc}
+\usetikzlibrary{shapes.symbols}
+\usetikzlibrary{shadows}
+\usetikzlibrary{fit}
+\definecolor{diff1}{RGB}{230,159,0}
+\definecolor{diff2}{RGB}{86,180,233}
+\definecolor{diff3}{RGB}{0,158,115}
+\definecolor{diff4}{RGB}{240,228,66}
+\begin{tikzpicture}[scale=.4]
+\draw (-6, 6) node (l0) {Unit};
+\draw (-6, 4) node (l1) {$1$};
+\draw (-6, 2) node (l2) {$2$};
+\draw (-6, 0) node (l2) {$3$};
+
+\draw (-1, 7.5) node (t0) {Time};
+\draw (-4, 6) node (t1) {$1$};
+\draw (-2, 6) node (t2) {$2$};
+\draw (0, 6) node (t3) {$3$};
+\draw (2, 6) node (t4) {$4$};
+
+\draw (-5, 7) -- (-5, -1);
+\draw (-7, 5) -- (3, 5);
+
+\draw (-4, 4) node (a1t1) {$-2$};
+\draw (-2, 4) node (a1t2) {$-1$};
+\draw (0, 4) node (a1t3) {$0$};
+\draw (2, 4) node (a1t4) {$1$};
+
+\draw (-4, 2) node (a2t1) {$-3$};
+\draw (-2, 2) node (a2t2) {$-2$};
+\draw (0, 2) node (a2t3) {$-1$};
+\draw (2, 2) node (a2t4) {$0$};
+
+\draw (-4, 0) node (a3t1) {$\infty$};
+\draw (-2, 0) node (a3t2) {$\infty$};
+\draw (0, 0) node (a3t3) {$\infty$};
+\draw (2, 0) node (a3t4) {$\infty$};
+
+\node[draw=diff1, fit= (a1t4), inner sep = .5ex, line width=1.5, dashed] (treat) {};
+\node[draw=diff2, fit= (a3t4), inner sep = .5ex, line width=1.5, dashed] (firstdiff) {};
+\node[draw=diff4, fit=  (a1t2), inner sep = .5ex, line width=1.5, dashed] (seconddiff) {};
+\node[draw=diff3, fit=  (a3t2), inner sep = .5ex, line width=1.5, dashed] (thirddiff) {};
+
+\end{tikzpicture}
+```
+
+
+
+## Dynamic TWFE
+
+```{tikz}
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Dynamic specification - contaminated 2x2s"
+#| fig-ext: svg
+\usetikzlibrary{shapes}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes.misc}
+\usetikzlibrary{shapes.symbols}
+\usetikzlibrary{shadows}
+\usetikzlibrary{fit}
+\definecolor{diff1}{RGB}{230,159,0}
+\definecolor{diff2}{RGB}{86,180,233}
+\definecolor{diff3}{RGB}{0,158,115}
+\definecolor{diff4}{RGB}{240,228,66}
+\begin{tikzpicture}[scale=.4]
+\draw (-6, 6) node (l0) {Unit};
+\draw (-6, 4) node (l1) {$1$};
+\draw (-6, 2) node (l2) {$2$};
+\draw (-6, 0) node (l2) {$3$};
+
+\draw (-1, 7.5) node (t0) {Time};
+\draw (-4, 6) node (t1) {$1$};
+\draw (-2, 6) node (t2) {$2$};
+\draw (0, 6) node (t3) {$3$};
+\draw (2, 6) node (t4) {$4$};
+
+\draw (-5, 7) -- (-5, -1);
+\draw (-7, 5) -- (3, 5);
+
+\draw (-4, 4) node (a1t1) {$-2$};
+\draw (-2, 4) node (a1t2) {$-1$};
+\draw (0, 4) node (a1t3) {$0$};
+\draw (2, 4) node (a1t4) {$1$};
+
+\draw (-4, 2) node (a2t1) {$-3$};
+\draw (-2, 2) node (a2t2) {$-2$};
+\draw (0, 2) node (a2t3) {$-1$};
+\draw (2, 2) node (a2t4) {$0$};
+
+\draw (-4, 0) node (a3t1) {$\infty$};
+\draw (-2, 0) node (a3t2) {$\infty$};
+\draw (0, 0) node (a3t3) {$\infty$};
+\draw (2, 0) node (a3t4) {$\infty$};
+
+\node[draw=diff1, fit= (a1t4), inner sep = .5ex, line width=1.5, dashed] (treat) {};
+\node[draw=diff2, fit= (a2t4), inner sep = .5ex, line width=1.5, dashed] (firstdiff) {};
+\node[draw=diff4, fit=  (a1t2), inner sep = .5ex, line width=1.5, dashed] (seconddiff) {};
+\node[draw=diff3, fit=  (a2t2), inner sep = .5ex, line width=1.5, dashed] (thirddiff) {};
+
+\end{tikzpicture}
+```
+
+
+## Dynamic TWFE
+
+```{tikz}
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Dynamic specification - (some) de-contamination"
+#| fig-ext: svg
+\usetikzlibrary{shapes}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes.misc}
+\usetikzlibrary{shapes.symbols}
+\usetikzlibrary{shadows}
+\usetikzlibrary{fit}
+\definecolor{diff1}{RGB}{230,159,0}
+\definecolor{diff2}{RGB}{86,180,233}
+\definecolor{diff3}{RGB}{0,158,115}
+\definecolor{diff4}{RGB}{240,228,66}
+\begin{tikzpicture}[scale=.4]
+\draw (-6, 6) node (l0) {Unit};
+\draw (-6, 4) node (l1) {$1$};
+\draw (-6, 2) node (l2) {$2$};
+\draw (-6, 0) node (l2) {$3$};
+
+\draw (-1, 7.5) node (t0) {Time};
+\draw (-4, 6) node (t1) {$1$};
+\draw (-2, 6) node (t2) {$2$};
+\draw (0, 6) node (t3) {$3$};
+\draw (2, 6) node (t4) {$4$};
+
+\draw (-5, 7) -- (-5, -1);
+\draw (-7, 5) -- (3, 5);
+
+\draw (-4, 4) node (a1t1) {$-2$};
+\draw (-2, 4) node (a1t2) {$-1$};
+\draw (0, 4) node (a1t3) {$0$};
+\draw (2, 4) node (a1t4) {$1$};
+
+\draw (-4, 2) node (a2t1) {$-3$};
+\draw (-2, 2) node (a2t2) {$-2$};
+\draw (0, 2) node (a2t3) {$-1$};
+\draw (2, 2) node (a2t4) {$0$};
+
+\draw (-4, 0) node (a3t1) {$\infty$};
+\draw (-2, 0) node (a3t2) {$\infty$};
+\draw (0, 0) node (a3t3) {$\infty$};
+\draw (2, 0) node (a3t4) {$\infty$};
+
+\node[draw=diff1, fit= (a2t4), inner sep = .5ex, line width=1.5, dashed] (treat) {};
+\node[draw=diff2, fit= (a3t4), inner sep = .5ex, line width=1.5, dashed] (firstdiff) {};
+\node[draw=diff4, fit=  (a2t2), inner sep = .5ex, line width=1.5, dashed] (seconddiff) {};
+\node[draw=diff3, fit=  (a3t2), inner sep = .5ex, line width=1.5, dashed] (thirddiff) {};
+
+\end{tikzpicture}
+```
+
+
+## Example: Paglayan (2019, AJPS)
+
+- Let's fit the **dynamic** specification on the Paglyan (2019) dataset.
+
+```{r, echo=T}
+# Keep all
+union_rep2 <- union
+union_rep2 <- union_rep2 %>% mutate(yearFromCB = year - YearCBrequired)
+
+# Make the never-treateds "infinity" (ensure that their dummy will be dropped as well)
+union_rep2$yearFromCB[is.na(union_rep2$YearCBrequired)] <- Inf
+
+# Make the dummy variables using the factor syntax - make -1 the reference period
+union_rep2$yearFromCBFactor <- relevel(as.factor(union_rep2$yearFromCB), ref="-1")
+```
+
+
+## Example: Paglayan (2019, AJPS)
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-align: center
+#| fig-width: 10
+#| 
+### Per-pupil expenditure
+dyn_reg_rep2_1 <- lm_robust(lnppexpend ~ yearFromCBFactor,
+                            fixed_effects = ~ as.factor(year) + as.factor(State),
+                            data=union_rep2, cluster=State)
+
+### Make this into a plot
+dyn_plot_rep2_1 <- tidy(dyn_reg_rep2_1) %>% filter(!is.na(estimate)) %>% mutate(period = as.numeric(str_remove(term, fixed("yearFromCBFactor")))) %>%
+  select(period, estimate, conf.low, conf.high) %>% bind_rows(data.frame(period = -1, estimate = 0, conf.low=0, conf.high=0))
+
+rep2_1 <- dyn_plot_rep2_1  %>% filter(period >= -6&period<=10) %>% ggplot(aes(x=as.numeric(period), y = estimate, ymin=conf.low, ymax=conf.high)) +  geom_vline(xintercept = -0, lty=2) + geom_hline(yintercept = 0, lty=2) + geom_errorbar(width=.2, col="darkgrey") + geom_point(size=2.5) +
+  xlab("Years relative to mandatory collective bargaining law") + ylab("Difference (Treated - Control)")  + scale_x_continuous(breaks=seq(-6, 10, by=1)) + scale_y_continuous(limits=c(-.1,.1)) +
+  theme_bw() + ggtitle("Log per-pupil expenditures")
+
+rep2_1
+```
+
+
+## Sun and Abraham (2021) Estimator
+
+- One solution to the problem of **contamination bias** is to estimate the relative treatment time effects **separately** for each unique treatment timing group
+  - Control group is the **never treated**
+- Easy to implement in a single TWFE regression with **interactions** between cohort-indicators and relative-treatment time indicators.
+  - Aggregate into **average** effects for each relative-treatment time by averaging over the distribution of cohorts with a given period.
+- Implemented in the `fixest` R package using the `sunab()` syntax
+
+
+## Example: Paglayan (2019, AJPS)
+
+- Implementing the Sun and Abraham (2021) estimator
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+
+### Per-pupil expenditure
+# Code never-treated (NA) as Inf so sunab treats them as the control cohort
+union_rep2_sa <- union_rep2
+union_rep2_sa$YearCBrequired[is.na(union_rep2_sa$YearCBrequired)] <- Inf
+dyn_reg_rep2_sa <- feols(lnppexpend ~ sunab(YearCBrequired, year, ref.p=-1) | year + State,
+                            data=union_rep2_sa, cluster="State")
+
+```
+
+## Example: Paglayan (2019, AJPS)
+
+```{r}
+#| message: false
+#| warning: false
+#| echo: false
+#| fig-align: center
+#| fig-width: 10
+
+### Aggregate cohort-specific estimates into relative-time ATTs
+sa_agg <- summary(dyn_reg_rep2_sa, agg = "period")
+sa_coefs <- coeftable(sa_agg)
+dyn_plot_sa <- data.frame(
+  period = as.numeric(gsub(".*::(.*)", "\\1", rownames(sa_coefs))),
+  estimate = sa_coefs[, "Estimate"],
+  conf.low = sa_coefs[, "Estimate"] - 1.96 * sa_coefs[, "Std. Error"],
+  conf.high = sa_coefs[, "Estimate"] + 1.96 * sa_coefs[, "Std. Error"]
+) %>% bind_rows(data.frame(period = -1, estimate = 0, conf.low = 0, conf.high = 0))
+
+sa_1 <- dyn_plot_sa %>% filter(period >= -6 & period <= 10) %>%
+  ggplot(aes(x = period, y = estimate, ymin = conf.low, ymax = conf.high)) +
+  geom_vline(xintercept = 0, lty = 2) + geom_hline(yintercept = 0, lty = 2) +
+  geom_errorbar(width = .2, col = "darkgrey") + geom_point(size = 2.5) +
+  xlab("Years relative to mandatory collective bargaining law") +
+  ylab("Difference (Treated - Control)") +
+  scale_x_continuous(breaks = seq(-6, 10, by = 1)) +
+  scale_y_continuous(limits = c(-.1, .1)) +
+  theme_bw() + ggtitle("Log per-pupil expenditures")
+
+sa_1
+```
+
+## Callaway and Sant'anna (2021) Estimator
+
+::: {.incremental}
+
+- Rather than correcting the TWFE regression, directly estimate each **group-time** ATT via a simple 2x2 DiD
+  - Compare each treated cohort $g$ at time $t$ to a **not-yet-treated** (or **never-treated**) control group
+  - Use the period just before treatment ($g - 1$) as the baseline
+  - Can use **earlier** periods if concerned about **anticipation** at time $g-1$
+- Aggregate group-time ATTs into summary measures (overall ATT, calendar-time ATTs, relative-time ATTs)
+- Implemented in the `did` R package
+
+:::
+
+
+## Example: Paglayan (2019, AJPS)
+
+- Implementing the CS estimator in the `did` R package
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+library(did)
+
+dyn_reg_cs_1 <- att_gt(yname = "lnppexpend", tname="year", idname="Stateid",
+                       gname="YearCBrequired", xformla = ~1,
+                       base_period = "universal", control_group = "notyettreated",
+                       cband = F, data=union_rep2)
+
+dyn_reg_cs_1_agg <- aggte(dyn_reg_cs_1, type="dynamic")
+```
+
+## Example: Paglayan (2019, AJPS)
+
+```{r}
+#| message: false
+#| warning: false
+#| echo: false
+#| fig-align: center
+#| fig-width: 10
+dyn_plot_cs_1 <- tidy(dyn_reg_cs_1_agg) %>%
+    filter(!is.na(estimate)) %>%
+    mutate(term = str_remove_all(term, "`")) %>%
+    mutate(period = as.numeric(str_remove_all(term, ("ATT\\(|\\)")))) %>%
+    select(period, estimate, conf.low, conf.high)
+
+dyn_plot_cs_1[dyn_plot_cs_1$period == -1,]$conf.low <- 0
+dyn_plot_cs_1[dyn_plot_cs_1$period == -1,]$conf.high <- 0
+
+cs_1 <- dyn_plot_cs_1  %>% filter(period >= -6&period<=10) %>% ggplot(aes(x=as.numeric(period), y = estimate, ymin=conf.low, ymax=conf.high)) +  geom_vline(xintercept = -0, lty=2) + geom_hline(yintercept = 0, lty=2) + geom_errorbar(width=.2, col="darkgrey") + geom_point(size=2.5) +
+  xlab("Years relative to mandatory collective bargaining law") + ylab("Difference (Treated - Control)")  + scale_x_continuous(breaks=seq(-6, 10, by=1)) + scale_y_continuous(limits=c(-.1,.1)) +
+  theme_bw() + ggtitle("Log per-pupil expenditures")
+cs_1
+```
+
+## Example: Paglayan (2019, AJPS)
+
+- What happens if we implement CS with only the **never-treated** as the controls? Equivalent to Sun and Abraham w/ reference group -1!
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+library(did)
+union_rep2$YearCBrequired[is.na(union_rep2$YearCBrequired)] <- 0
+dyn_reg_cs_1 <- att_gt(yname = "lnppexpend", tname="year", idname="Stateid",
+                       gname="YearCBrequired", xformla = ~1,
+                       base_period = "universal", control_group = "nevertreated",
+                       cband = F,
+                        allow_unbalanced_panel = T, data=union_rep2)
+
+dyn_reg_cs_1_agg <- aggte(dyn_reg_cs_1, type="dynamic", na.rm = T)
+```
+
+## Example: Paglayan (2019, AJPS)
+
+```{r}
+#| message: false
+#| warning: false
+#| echo: false
+#| fig-align: center
+#| fig-width: 10
+dyn_plot_cs_1 <- tidy(dyn_reg_cs_1_agg) %>%
+    filter(!is.na(estimate)) %>%
+    mutate(term = str_remove_all(term, "`")) %>%
+    mutate(period = as.numeric(str_remove_all(term, ("ATT\\(|\\)")))) %>%
+    select(period, estimate, conf.low, conf.high)
+
+dyn_plot_cs_1[dyn_plot_cs_1$period == -1,]$conf.low <- 0
+dyn_plot_cs_1[dyn_plot_cs_1$period == -1,]$conf.high <- 0
+
+cs_1 <- dyn_plot_cs_1  %>% filter(period >= -6&period<=10) %>% ggplot(aes(x=as.numeric(period), y = estimate, ymin=conf.low, ymax=conf.high)) +  geom_vline(xintercept = -0, lty=2) + geom_hline(yintercept = 0, lty=2) + geom_errorbar(width=.2, col="darkgrey") + geom_point(size=2.5) +
+  xlab("Years relative to mandatory collective bargaining law") + ylab("Difference (Treated - Control)")  + scale_x_continuous(breaks=seq(-6, 10, by=1)) + scale_y_continuous(limits=c(-.1,.1)) +
+  theme_bw() + ggtitle("Log per-pupil expenditures")
+cs_1
+```
+
+
+## Regression Imputation Estimator
+
+::: {.incremental}
+
+- Alternative approach: **impute** the missing counterfactual $Y_{it}(\infty)$ for treated observations
+  - Proposed by **Borusyak, Jaravel, and Spiess (2024)**; **Gardner (2022)**; **Liu, Wang, and Xu (2024)**
+  
+- Fit unit and time fixed effects using **only** the untreated observations (control units + pre-treatment periods of treated units)
+  - **Predict** $\hat{Y}_{it}(\infty)$ for treated observations using the estimated model
+  - Treatment effect for unit $i$ at time $t$: $\hat{\tau}_{it} = Y_{it} - \hat{Y}_{it}(\infty)$
+- Can be expressed as an average over 2 $\times$ 2 comparisons...
+  - ...but estimates have a **sequential** structure
+  - Effects for (e.g.) 2 periods post-treatment use the imputed values for units 1 period after as controls.
+- Implemented in the `fect` R package (among others)
+
+:::
+
+## Example: Paglayan (2019, AJPS)
+
+- Implementing the regression imputation estimator using `fect`
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+library(fect)
+union_fect <- union
+union_fect$CBrequired_SY <- as.numeric(union_fect$CBrequired_SY)
+fect_fit <- fect(lnppexpend ~ CBrequired_SY, data = union_fect,
+                 index = c("State", "year"), method = "fe",
+                 force = "two-way", se = TRUE)
+```
+
+## Example: Paglayan (2019, AJPS)
+
+```{r}
+#| message: false
+#| warning: false
+#| echo: false
+#| fig-align: center
+#| fig-width: 10
+
+fect_att <- data.frame(
+  period = as.numeric(rownames(fect_fit$est.att)),
+  estimate = fect_fit$est.att[, 1],
+  conf.low = fect_fit$est.att[, 3],
+  conf.high = fect_fit$est.att[, 4]
+)
+
+fect_1 <- fect_att %>% filter(period >= -6 & period <= 10) %>%
+  ggplot(aes(x = period, y = estimate, ymin = conf.low, ymax = conf.high)) +
+  geom_vline(xintercept = 0, lty = 2) + geom_hline(yintercept = 0, lty = 2) +
+  geom_errorbar(width = .2, col = "darkgrey") + geom_point(size = 2.5) +
+  xlab("Years relative to mandatory collective bargaining law") +
+  ylab("Difference (Treated - Control)") +
+  scale_x_continuous(breaks = seq(-6, 10, by = 1)) +
+  scale_y_continuous(limits = c(-.1, .1)) +
+  theme_bw() + ggtitle("Log per-pupil expenditures")
+
+fect_1
+```
