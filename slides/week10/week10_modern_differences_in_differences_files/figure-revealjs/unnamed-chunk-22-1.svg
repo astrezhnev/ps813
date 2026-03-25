@@ -53,7 +53,7 @@ text.f1 {font-family:cmr10;font-size:9.96264px}
 <text class='f1' x='9.175233' y='19.762439' transform='matrix(1 0 0 1 20.18637 3.2102)'>0</text>
 <path d='M1.01953-16.7187H17.33203V-34.4687H1.01953Z' stroke='#e69f00' fill='none' stroke-width='1.49442' stroke-miterlimit='10' stroke-dasharray='2.98883 2.98883'/>
 <path d='M1.01953 28.63672H17.33203V-11.7891H1.01953Z' stroke='#56b4e9' fill='none' stroke-width='1.49442' stroke-miterlimit='10' stroke-dasharray='2.98883 2.98883'/>
-<path d='M-21.66017-16.7187H-5.34767V-34.4687H-21.66017Z' stroke='#f0e442' fill='none' stroke-width='1.49442' stroke-miterlimit='10' stroke-dasharray='2.98883 2.98883'/>
-<path d='M-21.66017 28.63672H-5.34767V-11.7891H-21.66017Z' stroke='#009e73' fill='none' stroke-width='1.49442' stroke-miterlimit='10' stroke-dasharray='2.98883 2.98883'/>
+<path d='M-44.33597-16.7187H-5.34767V-34.4687H-44.33597Z' stroke='#009e73' fill='none' stroke-width='1.49442' stroke-miterlimit='10' stroke-dasharray='2.98883 2.98883'/>
+<path d='M-44.33597 28.63672H-5.34767V-11.7891H-44.33597Z' stroke='#f0e442' fill='none' stroke-width='1.49442' stroke-miterlimit='10' stroke-dasharray='2.98883 2.98883'/>
 </g>
 </svg>

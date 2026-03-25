@@ -1586,21 +1586,21 @@
     "href": "slides/week10/week10_modern_differences_in_differences.html#visualizing-group-effects",
     "title": "Week 10: Modern Differences-in-Differences",
     "section": "Visualizing group effects",
-    "text": "Visualizing group effects\n\nDiD for group 1, time 3"
+    "text": "Visualizing group effects\n\nDiD for group 3, time 3"
   },
   {
     "objectID": "slides/week10/week10_modern_differences_in_differences.html#visualizing-group-effects-1",
     "href": "slides/week10/week10_modern_differences_in_differences.html#visualizing-group-effects-1",
     "title": "Week 10: Modern Differences-in-Differences",
     "section": "Visualizing group effects",
-    "text": "Visualizing group effects\n\nDiD for group 1, time 4"
+    "text": "Visualizing group effects\n\nDiD for group 3, time 4"
   },
   {
     "objectID": "slides/week10/week10_modern_differences_in_differences.html#visualizing-group-effects-2",
     "href": "slides/week10/week10_modern_differences_in_differences.html#visualizing-group-effects-2",
     "title": "Week 10: Modern Differences-in-Differences",
     "section": "Visualizing group effects",
-    "text": "Visualizing group effects\n\nDiD for group 2, time 4"
+    "text": "Visualizing group effects\n\nDiD for group 4, time 4"
   },
   {
     "objectID": "slides/week10/week10_modern_differences_in_differences.html#visualizing-group-effects-3",
@@ -1614,7 +1614,14 @@
     "href": "slides/week10/week10_modern_differences_in_differences.html#aggregating-group-time-atts",
     "title": "Week 10: Modern Differences-in-Differences",
     "section": "Aggregating group-time ATTs",
-    "text": "Aggregating group-time ATTs\n\nIt is unlikely that we can estimate each particular group-time ATT with much precision\n\nAnd we’re probably more interested in some overall effect of treatment or an average of group-time ATTs.\n\nHow should we aggregate?\nDefining a single “post-treatment” average is tricky - multiple ways to aggregate\n\\[ATT = \\frac{1}{N}\\sum_{g = 2}^T  \\frac{N_{g}}{T-g -1}\\sum_{t \\ge g}^T ATT_{g}(t)\\]\n\\[ATT = \\frac{1}{T-1}\\sum_{t=2}^{T} \\sum_{g=2}^{t} \\frac{N_g}{\\sum_{g^\\prime=2}^{t} N_{g^\\prime}} ATT_{g}(t)\\]\n“Relative-treatment-time” effects - average of all group-time ATTs where \\(t = g + q\\)\n\\[RTT(q) = \\sum_{g=\\max(2,\\, 1-q)}^{T - \\max(0,\\, q)} \\frac{N_g}{\\sum_{g^\\prime=\\max(2,\\, 1-q)}^{T-\\max(0,\\, q)} N_{g^\\prime}} ATT_g(g + q) \\quad \\text{for } q = -(T-1), \\dotsc, T-2\\]"
+    "text": "Aggregating group-time ATTs\n\nIt is unlikely that we can estimate each particular group-time ATT with much precision\n\nAnd we’re probably more interested in some overall effect of treatment or an average of group-time ATTs.\n\nHow should we aggregate?\n\nDefining a single “post-treatment” average is tricky - multiple ways to aggregate\n\nAveraging uniformly within unit first - non-uniform weights on time.\n\\[ATT = \\frac{1}{N}\\sum_{g = 2}^T  \\frac{N_{g}}{T-g -1}\\sum_{t \\ge g}^T ATT_{g}(t)\\]\nAveraging uniformly within time first - non-uniform weights on units\n\\[ATT = \\frac{1}{T-1}\\sum_{t=2}^{T} \\sum_{g=2}^{t} \\frac{N_g}{\\sum_{g^\\prime=2}^{t} N_{g^\\prime}} ATT_{g}(t)\\]"
+  },
+  {
+    "objectID": "slides/week10/week10_modern_differences_in_differences.html#aggregating-group-time-atts-1",
+    "href": "slides/week10/week10_modern_differences_in_differences.html#aggregating-group-time-atts-1",
+    "title": "Week 10: Modern Differences-in-Differences",
+    "section": "Aggregating group-time ATTs",
+    "text": "Aggregating group-time ATTs\n\n“Relative-treatment-time” effects - average of all group-time ATTs where \\(t = g + q\\)\n\\[RTT(q) = \\sum_{g=\\max(2,\\, 1-q)}^{T - \\max(0,\\, q)} \\frac{N_g}{\\sum_{g^\\prime=\\max(2,\\, 1-q)}^{T-\\max(0,\\, q)} N_{g^\\prime}} ATT_g(g + q) \\quad \\text{for } q = -(T-1), \\dotsc, T-2\\]\nIn staggered adoption, the relative-treatment time estimates for the earlier pre- and later post- periods will involve different sets of units!\n\nComposition changes might mask parallel trends violations!"
   },
   {
     "objectID": "slides/week10/week10_modern_differences_in_differences.html#two-way-fe-w-staggered-adoption",
@@ -1656,7 +1663,7 @@
     "href": "slides/week10/week10_modern_differences_in_differences.html#two-way-fe-w-staggered-adoption-5",
     "title": "Week 10: Modern Differences-in-Differences",
     "section": "Two-way FE w/ staggered adoption",
-    "text": "Two-way FE w/ staggered adoption\n\nWhat about the dynamic specification?\n\\[Y_{it} = \\alpha_i + \\delta_{t} + \\sum_{l \\neq -1} \\tau_l D^{(l)}_{it} + \\epsilon_{it}\\]\nAlso no! (Sun and Abraham, 2021)\n\nBoth \\(\\tau_l\\) incorporate ATTs from other relative-times \\(\\neq l\\) (“contamination bias”)\nThe dynamic specification is only valid if we believe each relative-time treatment effect is constant across timing groups.\n\nLi and Strezhnev (2024) develop some more of the intuition\n\nEach \\(\\hat{\\tau_l}\\) incorporates 2x2 DiDs with units that are also already treated but at different times\nThe bias due to the “contaminating” treatment effects gets differenced out by estimating those relative time effects with different units"
+    "text": "Two-way FE w/ staggered adoption\n\nWhat about the dynamic specification?\n\\[Y_{it} = \\alpha_i + \\delta_{t} + \\sum_{l \\neq -1} \\tau_l D^{(l)}_{it} + \\epsilon_{it}\\]\nAlso no! (Sun and Abraham, 2021)\n\nBoth \\(\\tau_l\\) incorporate ATTs from other relative-times \\(\\neq l\\) (“contamination bias”)\nThe dynamic specification is only valid if we believe each relative-time treatment effect is constant across timing groups.\n\nLi and Strezhnev (2024) develop some more of the intuition\n\nEach \\(\\hat{\\tau_l}\\) incorporates 2x2 DiDs with units that are also already treated but at different times\nThe bias due to the “contaminating” treatment effects gets differenced out by estimates of those relative time effects with different units"
   },
   {
     "objectID": "slides/week10/week10_modern_differences_in_differences.html#dynamic-twfe",
@@ -1698,7 +1705,7 @@
     "href": "slides/week10/week10_modern_differences_in_differences.html#sun-and-abraham-2021-estimator",
     "title": "Week 10: Modern Differences-in-Differences",
     "section": "Sun and Abraham (2021) Estimator",
-    "text": "Sun and Abraham (2021) Estimator\n\nOne solution to the problem of contamination bias is to estimate the relative treatment time effects separately for each unique treatment timing group\n\nControl group is the never treated\n\nEasy to implement in a single TWFE regression with interactions between cohort-indicators and relative-treatment time indicators.\n\nAggregate into average effects for each relative-treatment time by averaging over the distribution of cohorts with a given period.\n\nImplemented in the fixest R package using the sunab() syntax"
+    "text": "Sun and Abraham (2021) Estimator\n\nOne solution to the problem of contamination bias is to estimate the relative treatment time effects separately for each unique treatment timing group\n\nControl group is the never treated\n\nEasy to implement in a single TWFE regression with interactions between cohort-indicators and relative-treatment time indicators.\n\\[Y_{it} = \\alpha_i + \\delta_{t} + \\sum_{g= 2}^T\\sum_{l \\neq -1} \\tau_l^{(g)} (D^{(l)}_{it} \\times \\mathbf{1}(G_i = g)) + \\epsilon_{it}\\]\nAggregate into average effects for each relative-treatment time by averaging over the cohorts with that particular relative treatment time.\nImplemented in the fixest R package using the sunab() syntax"
   },
   {
     "objectID": "slides/week10/week10_modern_differences_in_differences.html#example-paglayan-2019-ajps-2",
@@ -1719,7 +1726,7 @@
     "href": "slides/week10/week10_modern_differences_in_differences.html#callaway-and-santanna-2021-estimator",
     "title": "Week 10: Modern Differences-in-Differences",
     "section": "Callaway and Sant’anna (2021) Estimator",
-    "text": "Callaway and Sant’anna (2021) Estimator\n\nRather than correcting the TWFE regression, directly estimate each group-time ATT via a simple 2x2 DiD\n\nCompare each treated cohort \\(g\\) at time \\(t\\) to a not-yet-treated (or never-treated) control group\nUse the period just before treatment (\\(g - 1\\)) as the baseline\nCan use earlier periods if concerned about anticipation at time \\(g-1\\)\n\nAggregate group-time ATTs into summary measures (overall ATT, calendar-time ATTs, relative-time ATTs)\nImplemented in the did R package"
+    "text": "Callaway and Sant’anna (2021) Estimator\n\nRather than correcting the TWFE regression, directly estimate each group-time ATT via a simple 2x2 DiD\n\nCompare each treated cohort \\(g\\) at time \\(t\\) to a not-yet-treated (or never-treated) control group\nUse the period just before treatment (\\(g - 1\\)) as the baseline\n\\[\\widehat{ATT}_g(t) = \\bar{Y}_{g, t} - \\bar{Y}_{g, g-1} - \\left(\\sum_{g^\\prime &gt; t} \\frac{N_{g^\\prime}}{N^{(t)}}\\bar{Y}_{g^\\prime, t} - \\sum_{g^\\prime &gt; t} \\frac{N_{g^\\prime}}{N^{(t)}}\\bar{Y}_{g^\\prime, g-1}\\right)\\]\nwhere \\(N^{(t)} = \\sum_{g^\\prime &gt; t} N_{g^\\prime}\\) is the total number of not-yet-treated units at time \\(t\\)\n\nAggregate group-time ATTs into summary measures (overall ATT, calendar-time ATTs, relative-time ATTs, etc…)\n\nCan add IPW + outcome model to allow for conditional parallel trends to hold\nEasy to adjust for both time-varying and time-invariant confounders of parallel trends (Caetano and Callaway, 2026)\n\nImplemented in the did R package"
   },
   {
     "objectID": "slides/week10/week10_modern_differences_in_differences.html#example-paglayan-2019-ajps-4",
@@ -1740,7 +1747,7 @@
     "href": "slides/week10/week10_modern_differences_in_differences.html#example-paglayan-2019-ajps-6",
     "title": "Week 10: Modern Differences-in-Differences",
     "section": "Example: Paglayan (2019, AJPS)",
-    "text": "Example: Paglayan (2019, AJPS)\n\nWhat happens if we implement CS with only the never-treated as the controls? Equivalent to Sun and Abraham w/ reference group -1!\n\n\nlibrary(did)\nunion_rep2$YearCBrequired[is.na(union_rep2$YearCBrequired)] &lt;- 0\ndyn_reg_cs_1 &lt;- att_gt(yname = \"lnppexpend\", tname=\"year\", idname=\"Stateid\",\n                       gname=\"YearCBrequired\", xformla = ~1,\n                       base_period = \"universal\", control_group = \"nevertreated\",\n                       cband = F,\n                        allow_unbalanced_panel = T, data=union_rep2)\n\ndyn_reg_cs_1_agg &lt;- aggte(dyn_reg_cs_1, type=\"dynamic\", na.rm = T)"
+    "text": "Example: Paglayan (2019, AJPS)\n\nWhat happens if we implement CS with only the never-treated as the controls?\n\nEquivalent to Sun and Abraham w/ reference group -1!\n\n\n\nlibrary(did)\nunion_rep2$YearCBrequired[is.na(union_rep2$YearCBrequired)] &lt;- 0\ndyn_reg_cs_1 &lt;- att_gt(yname = \"lnppexpend\", tname=\"year\", idname=\"Stateid\",\n                       gname=\"YearCBrequired\", xformla = ~1,\n                       base_period = \"universal\", control_group = \"nevertreated\",\n                       cband = F,\n                        allow_unbalanced_panel = T, data=union_rep2)\n\ndyn_reg_cs_1_agg &lt;- aggte(dyn_reg_cs_1, type=\"dynamic\", na.rm = T)"
   },
   {
     "objectID": "slides/week10/week10_modern_differences_in_differences.html#example-paglayan-2019-ajps-7",
@@ -1754,7 +1761,35 @@
     "href": "slides/week10/week10_modern_differences_in_differences.html#regression-imputation-estimator",
     "title": "Week 10: Modern Differences-in-Differences",
     "section": "Regression Imputation Estimator",
-    "text": "Regression Imputation Estimator\n\nAlternative approach: impute the missing counterfactual \\(Y_{it}(\\infty)\\) for treated observations\n\nProposed by Borusyak, Jaravel, and Spiess (2024); Gardner (2022); Liu, Wang, and Xu (2024)\n\nFit unit and time fixed effects using only the untreated observations (control units + pre-treatment periods of treated units)\n\nPredict \\(\\hat{Y}_{it}(\\infty)\\) for treated observations using the estimated model\nTreatment effect for unit \\(i\\) at time \\(t\\): \\(\\hat{\\tau}_{it} = Y_{it} - \\hat{Y}_{it}(\\infty)\\)\n\nCan be expressed as an average over 2 \\(\\times\\) 2 comparisons…\n\n…but estimates have a sequential structure\nEffects for (e.g.) 2 periods post-treatment use the imputed values for units 1 period after as controls.\n\nImplemented in the fect R package (among others)"
+    "text": "Regression Imputation Estimator\n\nAlternative approach: impute the missing counterfactual \\(Y_{it}(\\infty)\\) for treated observations\n\nProposed by Borusyak, Jaravel, and Spiess (2024); Gardner (2022); Liu, Wang, and Xu (2024)\n\nStep 1: Fit unit and time fixed effects using only the untreated observations (control units + pre-treatment periods of treated units)\n\\[Y_{it} = \\alpha_i + \\delta_t + \\epsilon_{it}\\]\nStep 2: For each treated unit predict\n\\[\\widehat{Y_{it}}(\\infty) = \\hat{\\alpha_i} + \\hat{\\delta_t}\\]\nStep 3: For each treated unit and time period, impute the treatment effect\n\\[\\hat{\\tau}_{it} = Y_{it} - \\widehat{Y_{it}}(\\infty)\\]\nStep 4: Aggregate the \\(\\hat{\\tau}_{it}\\) into relevant quantities (e.g. relative time effects, overall average, etc…)\nImplemented in fect (among other packages)"
+  },
+  {
+    "objectID": "slides/week10/week10_modern_differences_in_differences.html#regression-imputation-estimator-1",
+    "href": "slides/week10/week10_modern_differences_in_differences.html#regression-imputation-estimator-1",
+    "title": "Week 10: Modern Differences-in-Differences",
+    "section": "Regression Imputation Estimator",
+    "text": "Regression Imputation Estimator\n\nThe regression imputation estimator for a given group-time ATT \\[ATT_{g}(t)\\] can be expressed as an average over 2x2 differences-in-differences\n\nUsing all the pre-treatment periods as baselines (\\(t^\\prime &lt; g\\))\nAnd using all units that adopt treatment after \\(g\\) (\\(g^\\prime &gt; g\\))\n\nThis creates a kind of sequential structure to the imputations for each post-treatment period\n\n\\(ATT_{g}(g)\\) is a simple average over DiDs…\n…but \\(ATT_{g}(g+1)\\) incorporates the estimates from \\(ATT_{g+1}(g+1)\\)…\n…and so on…\n\nUnits under treatment are used as “controls” with the model-imputed counterfactual acting as \\(Y_{it}\\) for that period."
+  },
+  {
+    "objectID": "slides/week10/week10_modern_differences_in_differences.html#regression-imputation-estimator-2",
+    "href": "slides/week10/week10_modern_differences_in_differences.html#regression-imputation-estimator-2",
+    "title": "Week 10: Modern Differences-in-Differences",
+    "section": "Regression Imputation Estimator",
+    "text": "Regression Imputation Estimator\n\nRegression Imputation Group 3, Time 3"
+  },
+  {
+    "objectID": "slides/week10/week10_modern_differences_in_differences.html#regression-imputation-estimator-3",
+    "href": "slides/week10/week10_modern_differences_in_differences.html#regression-imputation-estimator-3",
+    "title": "Week 10: Modern Differences-in-Differences",
+    "section": "Regression Imputation Estimator",
+    "text": "Regression Imputation Estimator\n\nRegression Imputation Group 4, Time 4"
+  },
+  {
+    "objectID": "slides/week10/week10_modern_differences_in_differences.html#regression-imputation-estimator-4",
+    "href": "slides/week10/week10_modern_differences_in_differences.html#regression-imputation-estimator-4",
+    "title": "Week 10: Modern Differences-in-Differences",
+    "section": "Regression Imputation Estimator",
+    "text": "Regression Imputation Estimator\n\nRegression Imputation Group 3, Time 4"
   },
   {
     "objectID": "slides/week10/week10_modern_differences_in_differences.html#example-paglayan-2019-ajps-8",
@@ -1769,6 +1804,139 @@
     "title": "Week 10: Modern Differences-in-Differences",
     "section": "Example: Paglayan (2019, AJPS)",
     "text": "Example: Paglayan (2019, AJPS)"
+  },
+  {
+    "objectID": "slides/week10/week10_modern_differences_in_differences.html#new-did-is-just-old-did",
+    "href": "slides/week10/week10_modern_differences_in_differences.html#new-did-is-just-old-did",
+    "title": "Week 10: Modern Differences-in-Differences",
+    "section": "New DiD is just old DiD",
+    "text": "New DiD is just old DiD\n\nAll of the “heterogeneity-robust” difference-in-differences methods work in basically the same way\n\nEstimate the group-time ATTs using only the 2x2 comparisons that are valid w/o additional homogeneity assumptions\n\nThere are basically two classes of estimators\n\nEither “fix the TWFE regression” (Sun and Abraham, regression imputation, ‘extended’ TWFE)\nOr construct the “first-differences” regression (Callaway/Sant’anna)\n\nImplementations of these methods will differ on other options, but these are researcher choices\n\nWhich units are used as “controls”\nWhich periods act as the baseline\nHow to estimate standard errors (some form of asymptotic cluster SEs or bootstrap)"
+  },
+  {
+    "objectID": "slides/week10/week10_modern_differences_in_differences.html#interpreting-event-study-plots-w-new-did-estimators",
+    "href": "slides/week10/week10_modern_differences_in_differences.html#interpreting-event-study-plots-w-new-did-estimators",
+    "title": "Week 10: Modern Differences-in-Differences",
+    "section": "Interpreting event study plots w/ “new” DiD estimators",
+    "text": "Interpreting event study plots w/ “new” DiD estimators\n\nOne downside of abandoning the traditional “event study plot” is that there are no clear convention for how to construct the plot of the treatment effects and the pre-treatment placebos usinig the new DiD estimators.\n\nCommon software implementations don’t generate figures that have the same interpretation as the dynamic TWFE (Roth, 2026)\n\nSun and Abraham (2021) is the most direct equivalent to the original event study plot\n\nAll treatment effects and placebos are estimated from the same held out common baseline.\nBut remember that the composition of each relative treatment time varies\n\nLate adopters don’t contribute to many of the treatment effects, early adopters don’t contribute to many of the placebos."
+  },
+  {
+    "objectID": "slides/week10/week10_modern_differences_in_differences.html#callawaysantanna---perils-of-the-varying-baseline",
+    "href": "slides/week10/week10_modern_differences_in_differences.html#callawaysantanna---perils-of-the-varying-baseline",
+    "title": "Week 10: Modern Differences-in-Differences",
+    "section": "Callaway/Sant’anna - Perils of the “varying” baseline",
+    "text": "Callaway/Sant’anna - Perils of the “varying” baseline\n\nOne option in the Callaway-Sant’anna package is to compute placebos using a varying baseline.\n\nThis generates event study plots that are asymmetric\nPost-treatment estimates all use \\(-1\\) as the baseline time period\nBut the pre-treatment estimates are always relative to adjacent periods\n\n“Short” DiDs only, not “long”\n\n\nVisually there is a kink even in the absence of any treatment effect!\n\nAlways us the universal baseline option!\n\n\n\ndyn_reg_cs_1 &lt;- att_gt(yname = \"lnppexpend\", tname=\"year\", idname=\"Stateid\",\n                       gname=\"YearCBrequired\", xformla = ~1,\n                       base_period = \"varying\", control_group = \"notyettreated\",\n                       cband = F, data=union_rep2)\n\ndyn_reg_cs_1_agg &lt;- aggte(dyn_reg_cs_1, type=\"dynamic\")"
+  },
+  {
+    "objectID": "slides/week10/week10_modern_differences_in_differences.html#example-of-varying-baseline-paglayan-2019",
+    "href": "slides/week10/week10_modern_differences_in_differences.html#example-of-varying-baseline-paglayan-2019",
+    "title": "Week 10: Modern Differences-in-Differences",
+    "section": "Example of varying baseline (Paglayan, 2019)",
+    "text": "Example of varying baseline (Paglayan, 2019)"
+  },
+  {
+    "objectID": "slides/week10/week10_modern_differences_in_differences.html#regression-imputation",
+    "href": "slides/week10/week10_modern_differences_in_differences.html#regression-imputation",
+    "title": "Week 10: Modern Differences-in-Differences",
+    "section": "Regression Imputation",
+    "text": "Regression Imputation\n\nRegression imputation estimators exhibit an even more troubling problem\n\nHow do you construct a placebo test if all of the control observations are being used to estimate the treatment effects?\n\nTrilemma - You have to give up one of…\n\nNot using the same observations twice (imputing for units in the imputation regression)\nUsing the same baselines as the treatment effect estimates\nImputing for all of the pre-treatment periods\n\nWhat you give up depends on how you plan to use the pre-treatment placebo estimates.\n\nBut…you should definitely avoid imputing from the same regression as you used for the post-treatment observations (the default in fect)"
+  },
+  {
+    "objectID": "slides/week10/week10_modern_differences_in_differences.html#example-with-the-fect-defaults",
+    "href": "slides/week10/week10_modern_differences_in_differences.html#example-with-the-fect-defaults",
+    "title": "Week 10: Modern Differences-in-Differences",
+    "section": "Example with the fect defaults",
+    "text": "Example with the fect defaults"
+  },
+  {
+    "objectID": "slides/week10/week10_modern_differences_in_differences.html#regression-imputation-1",
+    "href": "slides/week10/week10_modern_differences_in_differences.html#regression-imputation-1",
+    "title": "Week 10: Modern Differences-in-Differences",
+    "section": "Regression Imputation",
+    "text": "Regression Imputation\n\nLi and Strezhnev (2026) show that the in-sample imputation approach suffers from two biases if you care about the magnitudes of the pre-treatment coefficients\n\nAttenuation bias - Some of the component DiD comparisons are zero by construction since they re-use the same unit or period twice\nContamination bias - Under staggered adoption, placebo estimates for periods further away from treatment incorporate estimates for periods closer to treatment\n\nPossible solution\n\n“Double-leave-one-out” approach - Estimate the placebo effects using separate models for each treatment timing group and time period.\nLeave out all units that adopt treatment prior to the cohort of interest and the time period being imputed-for."
+  },
+  {
+    "objectID": "slides/week10/week10_modern_differences_in_differences.html#in-sample-imputation-bias",
+    "href": "slides/week10/week10_modern_differences_in_differences.html#in-sample-imputation-bias",
+    "title": "Week 10: Modern Differences-in-Differences",
+    "section": "In-sample imputation bias",
+    "text": "In-sample imputation bias\n\nWe can write the regression imputation estimator for a pre-treatment period as\n\n\\[\\begin{align*}\n    \\widehat{ATT}_{g}(t) &= \\frac{1}{(g-1)N^{(t)}} \\bigg[\\sum_{g^\\prime \\ge g} \\sum_{t^\\prime = 1}^{g-1} N_{g^\\prime}(\\bar{Y}_{g,t} - \\bar{Y}_{g,t^\\prime} - \\bar{Y}_{g^\\prime, t} + \\bar{Y}_{g^\\prime, t^\\prime}) + \\\\\n    &\\hskip4em   \\sum_{g^\\prime = t+1}^{g-1} \\sum_{t^\\prime = 1}^{g^\\prime-1} N_{g^\\prime}(\\bar{Y}_{g,t}  - \\bar{Y}_{g,t^\\prime} - \\bar{Y}_{g^\\prime, t} + \\bar{Y}_{g^\\prime, t^\\prime}) + \\\\ &\\hskip4em \\sum_{g^\\prime = t+1}^{g-1} \\sum_{t^\\prime = g^\\prime}^{g-1} N_{g^\\prime}(\\bar{Y}_{g,t} - \\bar{Y}_{g,t^\\prime} - \\bar{Y}_{g^\\prime, t} + \\hat{Y}_{g^\\prime, t^\\prime})\\bigg]\n\\end{align*}\\]\nwhere \\(N^{(t)} = \\sum_{g^\\prime = t + 1}^G N_{g^\\prime}\\)"
+  },
+  {
+    "objectID": "slides/week10/week10_modern_differences_in_differences.html#in-sample-imputation-bias-1",
+    "href": "slides/week10/week10_modern_differences_in_differences.html#in-sample-imputation-bias-1",
+    "title": "Week 10: Modern Differences-in-Differences",
+    "section": "In-sample imputation bias",
+    "text": "In-sample imputation bias\n\n2x2 comparisons in in-sample TWFE imputation of placebo for group 3, time 1"
+  },
+  {
+    "objectID": "slides/week10/week10_modern_differences_in_differences.html#in-sample-imputation-non-staggered-case",
+    "href": "slides/week10/week10_modern_differences_in_differences.html#in-sample-imputation-non-staggered-case",
+    "title": "Week 10: Modern Differences-in-Differences",
+    "section": "In-sample imputation: Non-staggered case",
+    "text": "In-sample imputation: Non-staggered case\n\nConsider the simplest case: all treated units start treatment at time \\(g^*\\). The expression for the in-sample imputation estimator simplifies to:\n\\[\\widehat{\\text{ATT}_{is}(t)} = \\frac{1}{(g^*-1)N}\\bigg\\{\\sum_{t^\\prime=1}^{g^*-1} N_{g^*}(\\bar{Y}_{g^*, t} - \\bar{Y}_{g^*,t} - \\bar{Y}_{g^*, t^\\prime} + \\bar{Y}_{g^*, t^\\prime}) + N_{\\infty} (\\bar{Y}_{g^*, t} - \\bar{Y}_{\\infty,t} - \\bar{Y}_{g^*, t^\\prime} + \\bar{Y}_{\\infty, t^\\prime})\\bigg\\}\\]\nIt’s straightforward to see that the first part of that sum is always zero (since we are comparing \\(g^*\\) to itself)\n\nAdditionally, any term where \\(t^\\prime = t\\) is also zero.\n\nCombined, the in-sample imputation estimator (compared to the “leave-one-out” estimator) exhibits an attenuation towards zero\n\\[\\widehat{\\text{ATT}}_{\\text{is}}(t) = \\bigg(\\frac{N_{G}}{N}\\times\\frac{g^*-2}{g^*-1}\\bigg)\\times\\bigg(\\widehat{\\text{ATT}}_{\\text{loo}}(t)\\bigg)\\]"
+  },
+  {
+    "objectID": "slides/week10/week10_modern_differences_in_differences.html#application-gazmararian-2025",
+    "href": "slides/week10/week10_modern_differences_in_differences.html#application-gazmararian-2025",
+    "title": "Week 10: Modern Differences-in-Differences",
+    "section": "Application: Gazmararian (2025)",
+    "text": "Application: Gazmararian (2025)\n\nGazmararian, Alexander F. “Sources of partisan change: Evidence from the shale gas shock in American coal country.” The Journal of Politics 87, no. 2 (2025): 601-615.\n\n\nExamines whether the 2008 shale gas shock (fracking boom) shifted Republican presidential vote share in U.S. coal counties\n\nGas substitutes for coal, accelerating coal’s decline\nVoters dependent on coal shift toward Republicans who promised looser environmental regulation\nTreatment: coal county (\\(\\geq\\) 1% coal employment pre-2008) \\(\\times\\) post-2008\nCounty-level analysis, presidential elections 1976-2020\n\nOriginal analysis uses fect with in-sample imputation (the default)\n\nPre-trends are statistically distinguishable from zero\nBut appear to be small - an equivalence testing approach concludes that the size of the violation is “negligible”"
+  },
+  {
+    "objectID": "slides/week10/week10_modern_differences_in_differences.html#equivalence-testing",
+    "href": "slides/week10/week10_modern_differences_in_differences.html#equivalence-testing",
+    "title": "Week 10: Modern Differences-in-Differences",
+    "section": "Equivalence testing",
+    "text": "Equivalence testing\n\nConventional null hypothesis tests assume a null of no difference and reject in favor of an alternative that a difference exists\n\\[H_0: \\tau = 0; H_a: \\tau \\neq 0\\]\nBut with placebo tests, this is kind of begging the question\n\nYou are assuming what you set out to demonstrate (that a parallel trends violation is negligible)\nUnder low power settings, you might fail to reject under large violations!"
+  },
+  {
+    "objectID": "slides/week10/week10_modern_differences_in_differences.html#equivalence-testing-1",
+    "href": "slides/week10/week10_modern_differences_in_differences.html#equivalence-testing-1",
+    "title": "Week 10: Modern Differences-in-Differences",
+    "section": "Equivalence testing",
+    "text": "Equivalence testing\n\nEquivalence testing inverts this - assume a null that the true difference is greater than some “equivalence region” and an alternative that\n\\[H_0: |\\tau| \\ge \\epsilon; H_a: |\\tau| &lt; \\epsilon\\]\nResearcher selects the \\(\\epsilon\\) - what size of an effect is considered “negligible”\n\nExisting recommendations mostly come from the literature on balance checking (Hartman and Hidalgo, 2018).\nFor assessing pre-trends, most intuitive to just benchmark against observed effects.\n\nEasy implementation - Two One-Sided Test (TOST) approach\n\nReject (in favor of a negligible difference) if the 90% confidence interval is entirely within the “equivalence region”"
+  },
+  {
+    "objectID": "slides/week10/week10_modern_differences_in_differences.html#replication-in-sample-vs.-leave-one-out",
+    "href": "slides/week10/week10_modern_differences_in_differences.html#replication-in-sample-vs.-leave-one-out",
+    "title": "Week 10: Modern Differences-in-Differences",
+    "section": "Replication: In-sample vs. leave-one-out",
+    "text": "Replication: In-sample vs. leave-one-out"
+  },
+  {
+    "objectID": "slides/week10/week10_modern_differences_in_differences.html#replication-fixed-baseline-estimates",
+    "href": "slides/week10/week10_modern_differences_in_differences.html#replication-fixed-baseline-estimates",
+    "title": "Week 10: Modern Differences-in-Differences",
+    "section": "Replication: Fixed baseline estimates",
+    "text": "Replication: Fixed baseline estimates"
+  },
+  {
+    "objectID": "slides/week10/week10_modern_differences_in_differences.html#honestdid-partial-identification",
+    "href": "slides/week10/week10_modern_differences_in_differences.html#honestdid-partial-identification",
+    "title": "Week 10: Modern Differences-in-Differences",
+    "section": "HonestDiD: Partial identification",
+    "text": "HonestDiD: Partial identification\n\nAn alternative approach to incorporating the actual pre-treatment placebos is to use them to bound the potential violation of parallel trends in the post-treatment period.\n\nRambachan and Roth (2023) propose a partial identification approach based on such a user specified bound\nDevelop an approach for construct confidence sets under this violation\n\nIn our conventional event-study regression, we get estimates of…\n\n\\(\\beta_{l}^{\\text{post}} = \\tau_{l}^{\\text{post}} + \\delta_l^{\\text{post}}\\) - the treatment effects - a combination of the “true” effect and the parallel trends violation\n\\(\\beta_{l}^{\\text{pre}} = \\delta_l^{\\text{pre}}\\) - the pre-treatment “placebos” - these are only capturing the parallel trends violation\n\nWe don’t want to assume \\(\\delta = 0\\).\n\nInstead, we’ll relax that assumption by assuming \\(\\delta \\in \\Delta\\), some user-specified set of restrictions"
+  },
+  {
+    "objectID": "slides/week10/week10_modern_differences_in_differences.html#honestdid-partial-identification-1",
+    "href": "slides/week10/week10_modern_differences_in_differences.html#honestdid-partial-identification-1",
+    "title": "Week 10: Modern Differences-in-Differences",
+    "section": "HonestDiD: Partial identification",
+    "text": "HonestDiD: Partial identification\n\nOne popular approach recommended in Rambachan and Roth (2023) is to bound the relative magnitudes\n\\[\\Delta^{\\text{RM}}(\\bar{M}) = \\bigg\\{\\delta: \\forall l \\ge 0, |\\delta_{l+1} - \\delta_{l}| \\le \\bar{M} \\times \\max_{s &lt; 0} |\\delta_{s - 1} - \\delta_{s}|\\bigg\\}\\]\nThe per-period change in the violation of parallel trends in the post-treatment period is no more than \\(\\bar{M}\\) times the largest observed per-period violation in the pre-treatment period\n\n\\(\\bar{M} = 0\\): Our parallel trends assumption holds\n\\(\\bar{M} = 1\\): The violation in the post-treatment period is as bad as it is in the pre-treatment period.\n\nConstruct a hypothesis test under the system of moment inequalities implied by the bound\n\nInvert to obtain a confidence set\nSensitivity analysis - vary \\(\\bar{M}\\) and see at what level the results “break”"
+  },
+  {
+    "objectID": "slides/week10/week10_modern_differences_in_differences.html#honestdid-twfe-event-study-gazmararian-2025",
+    "href": "slides/week10/week10_modern_differences_in_differences.html#honestdid-twfe-event-study-gazmararian-2025",
+    "title": "Week 10: Modern Differences-in-Differences",
+    "section": "HonestDiD: TWFE event study (Gazmararian, 2025)",
+    "text": "HonestDiD: TWFE event study (Gazmararian, 2025)"
+  },
+  {
+    "objectID": "slides/week10/week10_modern_differences_in_differences.html#summary",
+    "href": "slides/week10/week10_modern_differences_in_differences.html#summary",
+    "title": "Week 10: Modern Differences-in-Differences",
+    "section": "Summary",
+    "text": "Summary\n\nDiff-in-diff with two periods, two treatment groups\n\nParallel trends assumption - sensitive to transformations of the outcome (e.g. logs vs. levels)\nStraightforward non-parametric estimator - can weight + use regression if parallel trends holds conditionally\n\nDiff-in-diff with multiple periods, two treatment groups\n\nNo changes! Everything is fine - TWFE still gives you a difference-in-difference under no effect homogeneity assumptions\nUse pre-trends tests as a diagnostic, but be careful (w/ small samples, low power to violations)\n\nDiff-in-diff with staggered adoption\n\nCan break down into a bunch of 2x2 DiDs for different treatment groups and time periods\nBut beware of naive 2-way fixed effects, both static and dynamic specifications - “bad” 2x2s if effects aren’t constant"
   },
   {
     "objectID": "schedule.html",
