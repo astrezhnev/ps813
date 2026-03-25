@@ -166,9 +166,9 @@ panelview(data=union, D="CBrequired_SY", index=c("State", "year"), axis.adjust=T
 \definecolor{diff4}{RGB}{240,228,66}
 \begin{tikzpicture}[scale=.4]
 \draw (-6, 6) node (l0) {Unit};
-\draw (-6, 4) node (l1) {$1$};
-\draw (-6, 2) node (l2) {$2$};
-\draw (-6, 0) node (l2) {$3$};
+\draw (-6, 4) node (l1) {$3$};
+\draw (-6, 2) node (l2) {$4$};
+\draw (-6, 0) node (l2) {$\infty$};
 
 \draw (-1, 7.5) node (t0) {Time};
 \draw (-4, 6) node (t1) {$1$};
@@ -251,7 +251,7 @@ panelview(data=union, D="CBrequired_SY", index=c("State", "year"), axis.adjust=T
 ```{tikz}
 #| echo: false
 #| fig-align: center
-#| fig-cap: "DiD for group 1, time 3"
+#| fig-cap: "DiD for group 3, time 3"
 #| fig-ext: svg
 \usetikzlibrary{shapes}
 \usetikzlibrary{positioning}
@@ -266,9 +266,9 @@ panelview(data=union, D="CBrequired_SY", index=c("State", "year"), axis.adjust=T
 \definecolor{diff4}{RGB}{240,228,66}
 \begin{tikzpicture}[scale=.4]
 \draw (-6, 6) node (l0) {Unit};
-\draw (-6, 4) node (l1) {$1$};
-\draw (-6, 2) node (l2) {$2$};
-\draw (-6, 0) node (l2) {$3$};
+\draw (-6, 4) node (l1) {$3$};
+\draw (-6, 2) node (l2) {$4$};
+\draw (-6, 0) node (l2) {$\infty$};
 
 \draw (-1, 7.5) node (t0) {Time};
 \draw (-4, 6) node (t1) {$1$};
@@ -308,7 +308,7 @@ panelview(data=union, D="CBrequired_SY", index=c("State", "year"), axis.adjust=T
 ```{tikz}
 #| echo: false
 #| fig-align: center
-#| fig-cap: "DiD for group 1, time 4"
+#| fig-cap: "DiD for group 3, time 4"
 #| fig-ext: svg
 \usetikzlibrary{shapes}
 \usetikzlibrary{positioning}
@@ -323,9 +323,9 @@ panelview(data=union, D="CBrequired_SY", index=c("State", "year"), axis.adjust=T
 \definecolor{diff4}{RGB}{240,228,66}
 \begin{tikzpicture}[scale=.4]
 \draw (-6, 6) node (l0) {Unit};
-\draw (-6, 4) node (l1) {$1$};
-\draw (-6, 2) node (l2) {$2$};
-\draw (-6, 0) node (l2) {$3$};
+\draw (-6, 4) node (l1) {$3$};
+\draw (-6, 2) node (l2) {$4$};
+\draw (-6, 0) node (l2) {$\infty$};
 
 \draw (-1, 7.5) node (t0) {Time};
 \draw (-4, 6) node (t1) {$1$};
@@ -365,7 +365,7 @@ panelview(data=union, D="CBrequired_SY", index=c("State", "year"), axis.adjust=T
 ```{tikz}
 #| echo: false
 #| fig-align: center
-#| fig-cap: "DiD for group 2, time 4"
+#| fig-cap: "DiD for group 4, time 4"
 #| fig-ext: svg
 \usetikzlibrary{shapes}
 \usetikzlibrary{positioning}
@@ -380,9 +380,9 @@ panelview(data=union, D="CBrequired_SY", index=c("State", "year"), axis.adjust=T
 \definecolor{diff4}{RGB}{240,228,66}
 \begin{tikzpicture}[scale=.4]
 \draw (-6, 6) node (l0) {Unit};
-\draw (-6, 4) node (l1) {$1$};
-\draw (-6, 2) node (l2) {$2$};
-\draw (-6, 0) node (l2) {$3$};
+\draw (-6, 4) node (l1) {$3$};
+\draw (-6, 2) node (l2) {$4$};
+\draw (-6, 0) node (l2) {$\infty$};
 
 \draw (-1, 7.5) node (t0) {Time};
 \draw (-4, 6) node (t1) {$1$};
@@ -438,16 +438,29 @@ panelview(data=union, D="CBrequired_SY", index=c("State", "year"), axis.adjust=T
 - It is unlikely that we can estimate each particular group-time ATT with much precision
   - And we're probably more interested in some *overall* effect of treatment or an *average* of group-time ATTs.
 - How should we aggregate?
-- Defining a single "post-treatment" average is tricky - multiple ways to aggregate
+  - Defining a single "post-treatment" average is tricky - multiple ways to aggregate
+
+- Averaging **uniformly** within unit first - non-uniform weights on time.
 
   $$ATT = \frac{1}{N}\sum_{g = 2}^T  \frac{N_{g}}{T-g -1}\sum_{t \ge g}^T ATT_{g}(t)$$
   
+- Averaging **uniformly** within time first - non-uniform weights on units
+
   $$ATT = \frac{1}{T-1}\sum_{t=2}^{T} \sum_{g=2}^{t} \frac{N_g}{\sum_{g^\prime=2}^{t} N_{g^\prime}} ATT_{g}(t)$$
+
+:::
+
+## Aggregating group-time ATTs
+
+::: {.incremental}
 
 - "Relative-treatment-time" effects - average of all group-time ATTs where $t = g + q$
 
   $$RTT(q) = \sum_{g=\max(2,\, 1-q)}^{T - \max(0,\, q)} \frac{N_g}{\sum_{g^\prime=\max(2,\, 1-q)}^{T-\max(0,\, q)} N_{g^\prime}} ATT_g(g + q) \quad \text{for } q = -(T-1), \dotsc, T-2$$
 
+- In staggered adoption, the **relative-treatment time** estimates for the earlier pre- and later post- periods will involve **different** sets of units!
+  - Composition changes might mask parallel trends violations!
+  
 :::
 
 
@@ -489,9 +502,9 @@ panelview(data=union, D="CBrequired_SY", index=c("State", "year"), axis.adjust=T
 \definecolor{diff4}{RGB}{240,228,66}
 \begin{tikzpicture}[scale=.4]
 \draw (-6, 6) node (l0) {Unit};
-\draw (-6, 4) node (l1) {$1$};
-\draw (-6, 2) node (l2) {$2$};
-\draw (-6, 0) node (l2) {$3$};
+\draw (-6, 4) node (l1) {$3$};
+\draw (-6, 2) node (l2) {$4$};
+\draw (-6, 0) node (l2) {$\infty$};
 
 \draw (-1, 7.5) node (t0) {Time};
 \draw (-4, 6) node (t1) {$1$};
@@ -546,9 +559,9 @@ panelview(data=union, D="CBrequired_SY", index=c("State", "year"), axis.adjust=T
 \definecolor{diff4}{RGB}{240,228,66}
 \begin{tikzpicture}[scale=.4]
 \draw (-6, 6) node (l0) {Unit};
-\draw (-6, 4) node (l1) {$1$};
-\draw (-6, 2) node (l2) {$2$};
-\draw (-6, 0) node (l2) {$3$};
+\draw (-6, 4) node (l1) {$3$};
+\draw (-6, 2) node (l2) {$4$};
+\draw (-6, 0) node (l2) {$\infty$};
 
 \draw (-1, 7.5) node (t0) {Time};
 \draw (-4, 6) node (t1) {$1$};
@@ -633,7 +646,7 @@ panelview(data=union, D="CBrequired_SY", index=c("State", "year"), axis.adjust=T
   - The **dynamic** specification is only valid if we believe each relative-time treatment effect is constant across timing groups.
 - **Li and Strezhnev (2024)** develop some more of the intuition
   - Each $\hat{\tau_l}$ incorporates 2x2 DiDs with units that are also **already treated** but at different times
-  - The bias due to the "contaminating" treatment effects gets differenced out by estimating those relative time effects with **different units**
+  - The bias due to the "contaminating" treatment effects gets differenced out by estimates of those relative time effects with **different units**
 
 :::
 
@@ -657,9 +670,9 @@ panelview(data=union, D="CBrequired_SY", index=c("State", "year"), axis.adjust=T
 \definecolor{diff4}{RGB}{240,228,66}
 \begin{tikzpicture}[scale=.4]
 \draw (-6, 6) node (l0) {Unit};
-\draw (-6, 4) node (l1) {$1$};
-\draw (-6, 2) node (l2) {$2$};
-\draw (-6, 0) node (l2) {$3$};
+\draw (-6, 4) node (l1) {$3$};
+\draw (-6, 2) node (l2) {$4$};
+\draw (-6, 0) node (l2) {$\infty$};
 
 \draw (-1, 7.5) node (t0) {Time};
 \draw (-4, 6) node (t1) {$1$};
@@ -715,9 +728,9 @@ panelview(data=union, D="CBrequired_SY", index=c("State", "year"), axis.adjust=T
 \definecolor{diff4}{RGB}{240,228,66}
 \begin{tikzpicture}[scale=.4]
 \draw (-6, 6) node (l0) {Unit};
-\draw (-6, 4) node (l1) {$1$};
-\draw (-6, 2) node (l2) {$2$};
-\draw (-6, 0) node (l2) {$3$};
+\draw (-6, 4) node (l1) {$3$};
+\draw (-6, 2) node (l2) {$4$};
+\draw (-6, 0) node (l2) {$\infty$};
 
 \draw (-1, 7.5) node (t0) {Time};
 \draw (-4, 6) node (t1) {$1$};
@@ -772,9 +785,9 @@ panelview(data=union, D="CBrequired_SY", index=c("State", "year"), axis.adjust=T
 \definecolor{diff4}{RGB}{240,228,66}
 \begin{tikzpicture}[scale=.4]
 \draw (-6, 6) node (l0) {Unit};
-\draw (-6, 4) node (l1) {$1$};
-\draw (-6, 2) node (l2) {$2$};
-\draw (-6, 0) node (l2) {$3$};
+\draw (-6, 4) node (l1) {$3$};
+\draw (-6, 2) node (l2) {$4$};
+\draw (-6, 0) node (l2) {$\infty$};
 
 \draw (-1, 7.5) node (t0) {Time};
 \draw (-4, 6) node (t1) {$1$};
@@ -859,7 +872,10 @@ rep2_1
 - One solution to the problem of **contamination bias** is to estimate the relative treatment time effects **separately** for each unique treatment timing group
   - Control group is the **never treated**
 - Easy to implement in a single TWFE regression with **interactions** between cohort-indicators and relative-treatment time indicators.
-  - Aggregate into **average** effects for each relative-treatment time by averaging over the distribution of cohorts with a given period.
+
+  $$Y_{it} = \alpha_i + \delta_{t} + \sum_{g= 2}^T\sum_{l \neq -1} \tau_l^{(g)} (D^{(l)}_{it} \times \mathbf{1}(G_i = g)) + \epsilon_{it}$$
+
+- Aggregate into **average** effects for each relative-treatment time by averaging over the cohorts with that particular relative treatment time.
 - Implemented in the `fixest` R package using the `sunab()` syntax
 
 :::
@@ -921,12 +937,17 @@ sa_1
 - Rather than correcting the TWFE regression, directly estimate each **group-time** ATT via a simple 2x2 DiD
   - Compare each treated cohort $g$ at time $t$ to a **not-yet-treated** (or **never-treated**) control group
   - Use the period just before treatment ($g - 1$) as the baseline
-  - Can use **earlier** periods if concerned about **anticipation** at time $g-1$
-- Aggregate group-time ATTs into summary measures (overall ATT, calendar-time ATTs, relative-time ATTs)
+
+    $$\widehat{ATT}_g(t) = \bar{Y}_{g, t} - \bar{Y}_{g, g-1} - \left(\sum_{g^\prime > t} \frac{N_{g^\prime}}{N^{(t)}}\bar{Y}_{g^\prime, t} - \sum_{g^\prime > t} \frac{N_{g^\prime}}{N^{(t)}}\bar{Y}_{g^\prime, g-1}\right)$$
+
+  - where $N^{(t)} = \sum_{g^\prime > t} N_{g^\prime}$ is the total number of not-yet-treated units at time $t$
+
+- Aggregate group-time ATTs into summary measures (overall ATT, calendar-time ATTs, relative-time ATTs, etc...)
+  - Can add IPW + outcome model to allow for **conditional** parallel trends to hold
+  - Easy to adjust for both **time-varying** and **time-invariant** confounders of parallel trends **(Caetano and Callaway, 2026)**
 - Implemented in the `did` R package
 
 :::
-
 
 ## Example: Paglayan (2019, AJPS)
 
@@ -971,7 +992,8 @@ cs_1
 
 ## Example: Paglayan (2019, AJPS)
 
-- What happens if we implement CS with only the **never-treated** as the controls? Equivalent to Sun and Abraham w/ reference group -1!
+- What happens if we implement CS with only the **never-treated** as the controls? 
+  - Equivalent to Sun and Abraham w/ reference group -1!
 
 ```{r}
 #| echo: true
@@ -1019,15 +1041,209 @@ cs_1
 - Alternative approach: **impute** the missing counterfactual $Y_{it}(\infty)$ for treated observations
   - Proposed by **Borusyak, Jaravel, and Spiess (2024)**; **Gardner (2022)**; **Liu, Wang, and Xu (2024)**
   
-- Fit unit and time fixed effects using **only** the untreated observations (control units + pre-treatment periods of treated units)
-  - **Predict** $\hat{Y}_{it}(\infty)$ for treated observations using the estimated model
-  - Treatment effect for unit $i$ at time $t$: $\hat{\tau}_{it} = Y_{it} - \hat{Y}_{it}(\infty)$
-- Can be expressed as an average over 2 $\times$ 2 comparisons...
-  - ...but estimates have a **sequential** structure
-  - Effects for (e.g.) 2 periods post-treatment use the imputed values for units 1 period after as controls.
-- Implemented in the `fect` R package (among others)
+- **Step 1**: Fit unit and time fixed effects using **only** the untreated observations (control units + pre-treatment periods of treated units)
+
+  $$Y_{it} = \alpha_i + \delta_t + \epsilon_{it}$$
+  
+- **Step 2**: For each treated unit predict 
+
+  $$\widehat{Y_{it}}(\infty) = \hat{\alpha_i} + \hat{\delta_t}$$
+
+- **Step 3**: For each treated unit and time period, impute the treatment effect
+
+  $$\hat{\tau}_{it} = Y_{it} - \widehat{Y_{it}}(\infty)$$
+
+- **Step 4**: Aggregate the $\hat{\tau}_{it}$ into relevant quantities (e.g. relative time effects, overall average, etc...)
+
+- Implemented in `fect` (among other packages)
 
 :::
+
+## Regression Imputation Estimator
+
+::: {.incremental}
+
+- The regression imputation estimator for a given **group-time ATT** $$ATT_{g}(t)$$ can be expressed as an average over 2x2 differences-in-differences
+  - Using all the pre-treatment periods as **baselines** ($t^\prime < g$)
+  - And using all units that adopt treatment **after** $g$ ($g^\prime > g$)
+  
+- This creates a kind of **sequential structure** to the imputations for each post-treatment period
+  - $ATT_{g}(g)$ is a simple average over DiDs...
+  - ...but $ATT_{g}(g+1)$ incorporates the estimates from $ATT_{g+1}(g+1)$...
+  - ...and so on...
+  
+- Units under **treatment** are used as "controls" with the model-imputed counterfactual acting as $Y_{it}$ for that period.
+
+:::
+
+## Regression Imputation Estimator
+
+```{tikz}
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Regression Imputation Group 3, Time 3"
+#| fig-ext: svg
+\usetikzlibrary{shapes}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes.misc}
+\usetikzlibrary{shapes.symbols}
+\usetikzlibrary{shadows}
+\usetikzlibrary{fit}
+\definecolor{diff1}{RGB}{230,159,0}
+\definecolor{diff2}{RGB}{86,180,233}
+\definecolor{diff3}{RGB}{0,158,115}
+\definecolor{diff4}{RGB}{240,228,66}
+\begin{tikzpicture}[scale=.4]
+\draw (-6, 6) node (l0) {Unit};
+\draw (-6, 4) node (l1) {$3$};
+\draw (-6, 2) node (l2) {$4$};
+\draw (-6, 0) node (l2) {$\infty$};
+
+\draw (-1, 7.5) node (t0) {Time};
+\draw (-4, 6) node (t1) {$1$};
+\draw (-2, 6) node (t2) {$2$};
+\draw (0, 6) node (t3) {$3$};
+\draw (2, 6) node (t4) {$4$};
+
+\draw (-5, 7) -- (-5, -1);
+\draw (-7, 5) -- (3, 5);
+
+\draw (-4, 4) node (a1t1) {$0$};
+\draw (-2, 4) node (a1t2) {$0$};
+\draw (0, 4) node (a1t3) {$1$};
+\draw (2, 4) node (a1t4) {$1$};
+
+\draw (-4, 2) node (a2t1) {$0$};
+\draw (-2, 2) node (a2t2) {$0$};
+\draw (0, 2) node (a2t3) {$0$};
+\draw (2, 2) node (a2t4) {$1$};
+
+\draw (-4, 0) node (a3t1) {$0$};
+\draw (-2, 0) node (a3t2) {$0$};
+\draw (0, 0) node (a3t3) {$0$};
+\draw (2, 0) node (a3t4) {$0$};
+
+\node[draw=diff1, fit= (a1t3), inner sep = .5ex, line width=1.5, dashed] (treat) {};
+\node[draw=diff2, fit= (a2t3) (a3t3), inner sep = .5ex, line width=1.5, dashed] (firstdiff) {};
+\node[draw=diff3, fit= (a1t1) (a1t2), inner sep = .5ex, line width=1.5, dashed] (seconddiff) {};
+\node[draw=diff4, fit= (a2t1) (a2t2) (a3t1) (a3t2), inner sep = .5ex, line width=1.5, dashed] (thirddiff) {};
+
+\end{tikzpicture}
+```
+
+## Regression Imputation Estimator
+
+
+```{tikz}
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Regression Imputation Group 4, Time 4"
+#| fig-ext: svg
+\usetikzlibrary{shapes}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes.misc}
+\usetikzlibrary{shapes.symbols}
+\usetikzlibrary{shadows}
+\usetikzlibrary{fit}
+\definecolor{diff1}{RGB}{230,159,0}
+\definecolor{diff2}{RGB}{86,180,233}
+\definecolor{diff3}{RGB}{0,158,115}
+\definecolor{diff4}{RGB}{240,228,66}
+\begin{tikzpicture}[scale=.4]
+\draw (-6, 6) node (l0) {Unit};
+\draw (-6, 4) node (l1) {$3$};
+\draw (-6, 2) node (l2) {$4$};
+\draw (-6, 0) node (l2) {$\infty$};
+
+\draw (-1, 7.5) node (t0) {Time};
+\draw (-4, 6) node (t1) {$1$};
+\draw (-2, 6) node (t2) {$2$};
+\draw (0, 6) node (t3) {$3$};
+\draw (2, 6) node (t4) {$4$};
+
+\draw (-5, 7) -- (-5, -1);
+\draw (-7, 5) -- (3, 5);
+
+\draw (-4, 4) node (a1t1) {$0$};
+\draw (-2, 4) node (a1t2) {$0$};
+\draw (0, 4) node (a1t3) {$1$};
+\draw (2, 4) node (a1t4) {$1$};
+
+\draw (-4, 2) node (a2t1) {$0$};
+\draw (-2, 2) node (a2t2) {$0$};
+\draw (0, 2) node (a2t3) {$0$};
+\draw (2, 2) node (a2t4) {$1$};
+
+\draw (-4, 0) node (a3t1) {$0$};
+\draw (-2, 0) node (a3t2) {$0$};
+\draw (0, 0) node (a3t3) {$0$};
+\draw (2, 0) node (a3t4) {$0$};
+
+\node[draw=diff1, fit= (a2t4), inner sep = .5ex, line width=1.5, dashed] (treat) {};
+\node[draw=diff2, fit= (a3t4), inner sep = .5ex, line width=1.5, dashed] (firstdiff) {};
+\node[draw=diff3, fit= (a2t1) (a2t2) (a2t3), inner sep = .5ex, line width=1.5, dashed] (seconddiff) {};
+\node[draw=diff4, fit= (a3t1) (a3t2) (a3t3), inner sep = .5ex, line width=1.5, dashed] (thirddiff) {};
+
+\end{tikzpicture}
+```
+
+## Regression Imputation Estimator
+
+```{tikz}
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Regression Imputation Group 3, Time 4"
+#| fig-ext: svg
+\usetikzlibrary{shapes}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes.misc}
+\usetikzlibrary{shapes.symbols}
+\usetikzlibrary{shadows}
+\usetikzlibrary{fit}
+\definecolor{diff1}{RGB}{230,159,0}
+\definecolor{diff2}{RGB}{86,180,233}
+\definecolor{diff3}{RGB}{0,158,115}
+\definecolor{diff4}{RGB}{240,228,66}
+\begin{tikzpicture}[scale=.4]
+\draw (-6, 6) node (l0) {Unit};
+\draw (-6, 4) node (l1) {$3$};
+\draw (-6, 2) node (l2) {$4$};
+\draw (-6, 0) node (l2) {$\infty$};
+
+\draw (-1, 7.5) node (t0) {Time};
+\draw (-4, 6) node (t1) {$1$};
+\draw (-2, 6) node (t2) {$2$};
+\draw (0, 6) node (t3) {$3$};
+\draw (2, 6) node (t4) {$4$};
+
+\draw (-5, 7) -- (-5, -1);
+\draw (-7, 5) -- (3, 5);
+
+\draw (-4, 4) node (a1t1) {$0$};
+\draw (-2, 4) node (a1t2) {$0$};
+\draw (0, 4) node (a1t3) {$1$};
+\draw (2, 4) node (a1t4) {$1$};
+
+\draw (-4, 2) node (a2t1) {$0$};
+\draw (-2, 2) node (a2t2) {$0$};
+\draw (0, 2) node (a2t3) {$0$};
+\draw (2, 2) node[text=red] (a2t4) {$1$};
+
+\draw (-4, 0) node (a3t1) {$0$};
+\draw (-2, 0) node (a3t2) {$0$};
+\draw (0, 0) node (a3t3) {$0$};
+\draw (2, 0) node (a3t4) {$0$};
+
+\node[draw=diff1, fit= (a1t4), inner sep = .5ex, line width=1.5, dashed] (treat) {};
+\node[draw=diff2, fit= (a2t4) (a3t4), inner sep = .5ex, line width=1.5, dashed] (firstdiff) {};
+\node[draw=diff3, fit= (a1t1) (a1t2), inner sep = .5ex, line width=1.5, dashed] (seconddiff) {};
+\node[draw=diff4, fit= (a2t1) (a2t2) (a3t1) (a3t2), inner sep = .5ex, line width=1.5, dashed] (thirddiff) {};
+
+\end{tikzpicture}
+```
 
 ## Example: Paglayan (2019, AJPS)
 
@@ -1055,7 +1271,7 @@ fect_fit <- fect(lnppexpend ~ CBrequired_SY, data = union_fect,
 #| fig-width: 10
 
 fect_att <- data.frame(
-  period = as.numeric(rownames(fect_fit$est.att)),
+  period = as.numeric(rownames(fect_fit$est.att)) - 1,
   estimate = fect_fit$est.att[, 1],
   conf.low = fect_fit$est.att[, 3],
   conf.high = fect_fit$est.att[, 4]
@@ -1073,3 +1289,880 @@ fect_1 <- fect_att %>% filter(period >= -6 & period <= 10) %>%
 
 fect_1
 ```
+
+## New DiD is just old DiD
+
+::: {.incremental}
+
+- All of the "heterogeneity-robust" difference-in-differences methods work in basically the same way
+  - Estimate the **group-time ATTs** using only the 2x2 comparisons that are valid w/o additional homogeneity assumptions
+- There are basically **two classes** of estimators
+  - Either "fix the TWFE regression" (Sun and Abraham, regression imputation, 'extended' TWFE)
+  - Or construct the "first-differences" regression (Callaway/Sant'anna)
+- Implementations of these methods will differ on other options, but these are **researcher choices**
+  - Which units are used as "controls" 
+  - Which periods act as the baseline
+  - How to estimate standard errors (some form of asymptotic cluster SEs or bootstrap)
+
+:::
+
+## Interpreting event study plots w/ "new" DiD estimators
+
+::: {.incremental}
+
+- One downside of abandoning the traditional "event study plot" is that there are no clear convention for how to construct the plot of the treatment effects and the pre-treatment placebos usinig the **new** DiD estimators.
+  - Common software implementations **don't** generate figures that have the **same interpretation** as the dynamic TWFE **(Roth, 2026)**
+- **Sun and Abraham (2021)** is the most direct equivalent to the original event study plot
+  - All treatment effects and placebos are estimated from the same **held out** common baseline.
+  - But remember that the **composition** of each relative treatment time **varies**
+    - Late adopters don't contribute to many of the treatment effects, early adopters don't contribute to many of the placebos.
+
+:::
+
+## Callaway/Sant'anna - Perils of the "varying" baseline
+
+- One option in the Callaway-Sant'anna package is to compute placebos using a **varying** baseline.
+  - This generates event study plots that are **asymmetric**
+  - Post-treatment estimates all use $-1$ as the baseline time period
+  - But the pre-treatment estimates are always relative to adjacent periods
+    - "Short" DiDs only, not "long"
+  
+- Visually there is a **kink** even in the absence of any treatment effect!
+  - Always us the **universal** baseline option!
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+dyn_reg_cs_1 <- att_gt(yname = "lnppexpend", tname="year", idname="Stateid",
+                       gname="YearCBrequired", xformla = ~1,
+                       base_period = "varying", control_group = "notyettreated",
+                       cband = F, data=union_rep2)
+
+dyn_reg_cs_1_agg <- aggte(dyn_reg_cs_1, type="dynamic")
+```
+
+## Example of varying baseline (Paglayan, 2019)
+
+```{r}
+#| message: false
+#| warning: false
+#| echo: false
+#| fig-align: center
+#| fig-width: 10
+dyn_plot_cs_1 <- tidy(dyn_reg_cs_1_agg) %>%
+    filter(!is.na(estimate)) %>%
+    mutate(term = str_remove_all(term, "`")) %>%
+    mutate(period = as.numeric(str_remove_all(term, ("ATT\\(|\\)")))) %>%
+    select(period, estimate, conf.low, conf.high)
+
+cs_1 <- dyn_plot_cs_1  %>% filter(period >= -6&period<=10) %>% ggplot(aes(x=as.numeric(period), y = estimate, ymin=conf.low, ymax=conf.high)) +  geom_vline(xintercept = -0, lty=2) + geom_hline(yintercept = 0, lty=2) + geom_errorbar(width=.2, col="darkgrey") + geom_point(size=2.5) +
+  xlab("Years relative to mandatory collective bargaining law") + ylab("Difference (Treated - Control)")  + scale_x_continuous(breaks=seq(-6, 10, by=1)) + scale_y_continuous(limits=c(-.1,.1)) +
+  theme_bw() + ggtitle("Log per-pupil expenditures")
+cs_1
+```
+
+## Regression Imputation
+
+:::{.incremental}
+
+- Regression imputation estimators exhibit an even more troubling problem
+  - How do you construct a **placebo test** if **all** of the control observations are being used to estimate the treatment effects?
+- **Trilemma** - You have to give up one of...
+  1. Not using the same observations twice (imputing for units in the imputation regression)
+  2. Using the same baselines as the treatment effect estimates
+  3. Imputing for *all* of the pre-treatment periods
+  
+- What you give up depends on how you plan to use the pre-treatment placebo estimates.
+  - But...you should definitely **avoid** imputing from the same regression as you used for the post-treatment observations (the default in `fect`)
+
+:::
+
+## Example with the `fect` defaults
+
+```{r}
+#| message: false
+#| warning: false
+#| echo: false
+#| fig-align: center
+#| fig-width: 10
+
+fect_att <- data.frame(
+  period = as.numeric(rownames(fect_fit$est.att)) - 1,
+  estimate = fect_fit$est.att[, 1],
+  conf.low = fect_fit$est.att[, 3],
+  conf.high = fect_fit$est.att[, 4]
+)
+
+fect_1 <- fect_att %>% filter(period >= -6 & period <= 10) %>%
+  ggplot(aes(x = period, y = estimate, ymin = conf.low, ymax = conf.high)) +
+  geom_vline(xintercept = 0, lty = 2) + geom_hline(yintercept = 0, lty = 2) +
+  geom_errorbar(width = .2, col = "darkgrey") + geom_point(size = 2.5) +
+  xlab("Years relative to mandatory collective bargaining law") +
+  ylab("Difference (Treated - Control)") +
+  scale_x_continuous(breaks = seq(-6, 10, by = 1)) +
+  scale_y_continuous(limits = c(-.1, .1)) +
+  theme_bw() + ggtitle("Log per-pupil expenditures")
+
+fect_1
+```
+
+
+## Regression Imputation
+
+::: {.incremental}
+
+- **Li and Strezhnev (2026)** show that the **in-sample** imputation approach suffers from two **biases** if you care about the **magnitudes** of the pre-treatment coefficients
+  - **Attenuation bias** - Some of the component DiD comparisons are **zero by construction** since they re-use the same unit or period twice
+  - **Contamination bias** - Under staggered adoption, placebo estimates for periods further away from treatment incorporate estimates for periods *closer* to treatment
+  
+- **Possible solution**
+  - **"Double-leave-one-out"** approach - Estimate the placebo effects using **separate** models for each treatment timing group and time period.
+  - Leave out all units that adopt treatment **prior** to the cohort of interest **and** the time period being imputed-for.
+
+:::
+
+## In-sample imputation bias
+
+- We can write the regression imputation estimator for a **pre-treatment** period as
+
+$$\begin{align*}
+    \widehat{ATT}_{g}(t) &= \frac{1}{(g-1)N^{(t)}} \bigg[\sum_{g^\prime \ge g} \sum_{t^\prime = 1}^{g-1} N_{g^\prime}(\bar{Y}_{g,t} - \bar{Y}_{g,t^\prime} - \bar{Y}_{g^\prime, t} + \bar{Y}_{g^\prime, t^\prime}) + \\
+    &\hskip4em   \sum_{g^\prime = t+1}^{g-1} \sum_{t^\prime = 1}^{g^\prime-1} N_{g^\prime}(\bar{Y}_{g,t}  - \bar{Y}_{g,t^\prime} - \bar{Y}_{g^\prime, t} + \bar{Y}_{g^\prime, t^\prime}) + \\ &\hskip4em \sum_{g^\prime = t+1}^{g-1} \sum_{t^\prime = g^\prime}^{g-1} N_{g^\prime}(\bar{Y}_{g,t} - \bar{Y}_{g,t^\prime} - \bar{Y}_{g^\prime, t} + \hat{Y}_{g^\prime, t^\prime})\bigg]
+\end{align*}$$
+
+where $N^{(t)} = \sum_{g^\prime = t + 1}^G N_{g^\prime}$
+
+## In-sample imputation bias
+
+```{tikz}
+#| echo: false
+#| fig-align: center
+#| fig-cap: "2x2 comparisons in in-sample TWFE imputation of placebo for group 3, time 1"
+#| fig-ext: svg
+\usetikzlibrary{shapes}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes.misc}
+\usetikzlibrary{shapes.symbols}
+\usetikzlibrary{shadows}
+\usetikzlibrary{fit}
+\definecolor{diff1}{RGB}{230,159,0}
+\definecolor{diff2}{RGB}{86,180,233}
+\definecolor{diff3}{RGB}{0,158,115}
+\definecolor{diff4}{RGB}{240,228,66}
+\begin{tikzpicture}[scale=0.75, every node/.style={transform shape}]
+
+% --- Panel 1: g'=3, t'=1 (degenerate) ---
+\begin{scope}[shift={(0,0)}]
+\draw (-3, 3) node (p1l0) {$g$};
+\draw (-3, 2) node (p1l1) {$2$};
+\draw (-3, 1) node (p1l2) {$3$};
+\draw (-3, 0) node (p1l3) {$\infty$};
+\draw (-1, 3.75) node (p1t0) {Time};
+\draw (-2, 3) node (p1t1) {$1$};
+\draw (-1, 3) node (p1t2) {$2$};
+\draw (0, 3) node (p1t3) {$3$};
+\draw (-2.5,3.5) -- (-2.5, -0.5);
+\draw (-2.5, 2.5) -- (0.5, 2.5);
+\draw (-2, 2) node (p1a1t1) {$\scriptstyle\bar{Y}_{2,1}$};
+\draw (-1, 2) node (p1a1t2) {$\scriptstyle{\color{red!70!black}\boldsymbol{\hat{Y}_{2,2}}}$};
+\draw (0, 2) node (p1a1t3) {$\scriptstyle{\color{red!70!black}\boldsymbol{\hat{Y}_{2,3}}}$};
+\draw (-2, 1) node (p1a2t1) {$\scriptstyle\bar{Y}_{3,1}$};
+\draw (-1, 1) node (p1a2t2) {$\scriptstyle\bar{Y}_{3,2}$};
+\draw (0, 1) node (p1a2t3) {$\scriptstyle{\color{red!70!black}\boldsymbol{\hat{Y}_{3,3}}}$};
+\draw (-2, 0) node (p1a3t1) {$\scriptstyle\bar{Y}_{\infty,1}$};
+\draw (-1, 0) node (p1a3t2) {$\scriptstyle\bar{Y}_{\infty,2}$};
+\draw (0, 0) node (p1a3t3) {$\scriptstyle\bar{Y}_{\infty,3}$};
+\draw[dotted, line width=1.2] (-1.5, 2.5) -- (-1.5, 1.5) -- (-0.5, 1.5) -- (-0.5, 0.5) -- (0.5, 0.5);
+\node[draw=diff4, fit=(p1a2t1), inner sep=1.5ex, line width=1.5, dashed] {};
+\node[draw=diff3, fit=(p1a2t1), inner sep=1.1ex, line width=1.5, dashed] {};
+\node[draw=diff2, fit=(p1a2t1), inner sep=.7ex, line width=1.5, dashed] {};
+\node[draw=diff1, fit=(p1a2t1), inner sep=.3ex, line width=1.5, dashed] {};
+\end{scope}
+
+% --- Panel 2: g'=2, t'=1 --- re-use by time ---
+\begin{scope}[shift={(6,0)}]
+\draw (-3, 3) node (p2l0) {$g$};
+\draw (-3, 2) node (p2l1) {$2$};
+\draw (-3, 1) node (p2l2) {$3$};
+\draw (-3, 0) node (p2l3) {$\infty$};
+\draw (-1, 3.75) node (p2t0) {Time};
+\draw (-2, 3) node (p2t1) {$1$};
+\draw (-1, 3) node (p2t2) {$2$};
+\draw (0, 3) node (p2t3) {$3$};
+\draw (-2.5,3.5) -- (-2.5, -0.5);
+\draw (-2.5, 2.5) -- (0.5, 2.5);
+\draw (-2, 2) node (p2a1t1) {$\scriptstyle\bar{Y}_{2,1}$};
+\draw (-1, 2) node (p2a1t2) {$\scriptstyle{\color{red!70!black}\boldsymbol{\hat{Y}_{2,2}}}$};
+\draw (0, 2) node (p2a1t3) {$\scriptstyle{\color{red!70!black}\boldsymbol{\hat{Y}_{2,3}}}$};
+\draw (-2, 1) node (p2a2t1) {$\scriptstyle\bar{Y}_{3,1}$};
+\draw (-1, 1) node (p2a2t2) {$\scriptstyle\bar{Y}_{3,2}$};
+\draw (0, 1) node (p2a2t3) {$\scriptstyle{\color{red!70!black}\boldsymbol{\hat{Y}_{3,3}}}$};
+\draw (-2, 0) node (p2a3t1) {$\scriptstyle\bar{Y}_{\infty,1}$};
+\draw (-1, 0) node (p2a3t2) {$\scriptstyle\bar{Y}_{\infty,2}$};
+\draw (0, 0) node (p2a3t3) {$\scriptstyle\bar{Y}_{\infty,3}$};
+\draw[dotted, line width=1.2] (-1.5, 2.5) -- (-1.5, 1.5) -- (-0.5, 1.5) -- (-0.5, 0.5) -- (0.5, 0.5);
+\node[draw=diff1, fit=(p2a2t1), inner sep=.5ex, line width=1.5, dashed] {};
+\node[draw=diff3, fit=(p2a2t1), inner sep=1.2ex, line width=1.5, dashed] {};
+\node[draw=diff2, fit=(p2a1t1), inner sep=.5ex, line width=1.5, dashed] {};
+\node[draw=diff4, fit=(p2a1t1), inner sep=1.2ex, line width=1.5, dashed] {};
+\end{scope}
+
+% --- Panel 3: g'=infty, t'=1 --- re-use by time ---
+\begin{scope}[shift={(12,0)}]
+\draw (-3, 3) node (p3l0) {$g$};
+\draw (-3, 2) node (p3l1) {$2$};
+\draw (-3, 1) node (p3l2) {$3$};
+\draw (-3, 0) node (p3l3) {$\infty$};
+\draw (-1, 3.75) node (p3t0) {Time};
+\draw (-2, 3) node (p3t1) {$1$};
+\draw (-1, 3) node (p3t2) {$2$};
+\draw (0, 3) node (p3t3) {$3$};
+\draw (-2.5,3.5) -- (-2.5, -0.5);
+\draw (-2.5, 2.5) -- (0.5, 2.5);
+\draw (-2, 2) node (p3a1t1) {$\scriptstyle\bar{Y}_{2,1}$};
+\draw (-1, 2) node (p3a1t2) {$\scriptstyle{\color{red!70!black}\boldsymbol{\hat{Y}_{2,2}}}$};
+\draw (0, 2) node (p3a1t3) {$\scriptstyle{\color{red!70!black}\boldsymbol{\hat{Y}_{2,3}}}$};
+\draw (-2, 1) node (p3a2t1) {$\scriptstyle\bar{Y}_{3,1}$};
+\draw (-1, 1) node (p3a2t2) {$\scriptstyle\bar{Y}_{3,2}$};
+\draw (0, 1) node (p3a2t3) {$\scriptstyle{\color{red!70!black}\boldsymbol{\hat{Y}_{3,3}}}$};
+\draw (-2, 0) node (p3a3t1) {$\scriptstyle\bar{Y}_{\infty,1}$};
+\draw (-1, 0) node (p3a3t2) {$\scriptstyle\bar{Y}_{\infty,2}$};
+\draw (0, 0) node (p3a3t3) {$\scriptstyle\bar{Y}_{\infty,3}$};
+\draw[dotted, line width=1.2] (-1.5, 2.5) -- (-1.5, 1.5) -- (-0.5, 1.5) -- (-0.5, 0.5) -- (0.5, 0.5);
+\node[draw=diff1, fit=(p3a2t1), inner sep=.5ex, line width=1.5, dashed] {};
+\node[draw=diff3, fit=(p3a2t1), inner sep=1.2ex, line width=1.5, dashed] {};
+\node[draw=diff2, fit=(p3a3t1), inner sep=.5ex, line width=1.5, dashed] {};
+\node[draw=diff4, fit=(p3a3t1), inner sep=1.2ex, line width=1.5, dashed] {};
+\end{scope}
+
+% --- Panel 4: g'=3, t'=2 --- re-use by group ---
+\begin{scope}[shift={(0,-5)}]
+\draw (-3, 3) node (p4l0) {$g$};
+\draw (-3, 2) node (p4l1) {$2$};
+\draw (-3, 1) node (p4l2) {$3$};
+\draw (-3, 0) node (p4l3) {$\infty$};
+\draw (-1, 3.75) node (p4t0) {Time};
+\draw (-2, 3) node (p4t1) {$1$};
+\draw (-1, 3) node (p4t2) {$2$};
+\draw (0, 3) node (p4t3) {$3$};
+\draw (-2.5,3.5) -- (-2.5, -0.5);
+\draw (-2.5, 2.5) -- (0.5, 2.5);
+\draw (-2, 2) node (p4a1t1) {$\scriptstyle\bar{Y}_{2,1}$};
+\draw (-1, 2) node (p4a1t2) {$\scriptstyle{\color{red!70!black}\boldsymbol{\hat{Y}_{2,2}}}$};
+\draw (0, 2) node (p4a1t3) {$\scriptstyle{\color{red!70!black}\boldsymbol{\hat{Y}_{2,3}}}$};
+\draw (-2, 1) node (p4a2t1) {$\scriptstyle\bar{Y}_{3,1}$};
+\draw (-1, 1) node (p4a2t2) {$\scriptstyle\bar{Y}_{3,2}$};
+\draw (0, 1) node (p4a2t3) {$\scriptstyle{\color{red!70!black}\boldsymbol{\hat{Y}_{3,3}}}$};
+\draw (-2, 0) node (p4a3t1) {$\scriptstyle\bar{Y}_{\infty,1}$};
+\draw (-1, 0) node (p4a3t2) {$\scriptstyle\bar{Y}_{\infty,2}$};
+\draw (0, 0) node (p4a3t3) {$\scriptstyle\bar{Y}_{\infty,3}$};
+\draw[dotted, line width=1.2] (-1.5, 2.5) -- (-1.5, 1.5) -- (-0.5, 1.5) -- (-0.5, 0.5) -- (0.5, 0.5);
+\node[draw=diff1, fit=(p4a2t1), inner sep=.5ex, line width=1.5, dashed] {};
+\node[draw=diff2, fit=(p4a2t1), inner sep=1.2ex, line width=1.5, dashed] {};
+\node[draw=diff3, fit=(p4a2t2), inner sep=.5ex, line width=1.5, dashed] {};
+\node[draw=diff4, fit=(p4a2t2), inner sep=1.2ex, line width=1.5, dashed] {};
+\end{scope}
+
+% --- Panel 5: g'=infty, t'=2 --- the "correct" DiD ---
+\begin{scope}[shift={(6,-5)}]
+\draw (-3, 3) node (p5l0) {$g$};
+\draw (-3, 2) node (p5l1) {$2$};
+\draw (-3, 1) node (p5l2) {$3$};
+\draw (-3, 0) node (p5l3) {$\infty$};
+\draw (-1, 3.75) node (p5t0) {Time};
+\draw (-2, 3) node (p5t1) {$1$};
+\draw (-1, 3) node (p5t2) {$2$};
+\draw (0, 3) node (p5t3) {$3$};
+\draw (-2.5,3.5) -- (-2.5, -0.5);
+\draw (-2.5, 2.5) -- (0.5, 2.5);
+\draw (-2, 2) node (p5a1t1) {$\scriptstyle\bar{Y}_{2,1}$};
+\draw (-1, 2) node (p5a1t2) {$\scriptstyle{\color{red!70!black}\boldsymbol{\hat{Y}_{2,2}}}$};
+\draw (0, 2) node (p5a1t3) {$\scriptstyle{\color{red!70!black}\boldsymbol{\hat{Y}_{2,3}}}$};
+\draw (-2, 1) node (p5a2t1) {$\scriptstyle\bar{Y}_{3,1}$};
+\draw (-1, 1) node (p5a2t2) {$\scriptstyle\bar{Y}_{3,2}$};
+\draw (0, 1) node (p5a2t3) {$\scriptstyle{\color{red!70!black}\boldsymbol{\hat{Y}_{3,3}}}$};
+\draw (-2, 0) node (p5a3t1) {$\scriptstyle\bar{Y}_{\infty,1}$};
+\draw (-1, 0) node (p5a3t2) {$\scriptstyle\bar{Y}_{\infty,2}$};
+\draw (0, 0) node (p5a3t3) {$\scriptstyle\bar{Y}_{\infty,3}$};
+\draw[dotted, line width=1.2] (-1.5, 2.5) -- (-1.5, 1.5) -- (-0.5, 1.5) -- (-0.5, 0.5) -- (0.5, 0.5);
+\node[draw=diff1, fit=(p5a2t1), inner sep=.5ex, line width=1.5, dashed] {};
+\node[draw=diff2, fit=(p5a3t1), inner sep=.5ex, line width=1.5, dashed] {};
+\node[draw=diff3, fit=(p5a2t2), inner sep=.5ex, line width=1.5, dashed] {};
+\node[draw=diff4, fit=(p5a3t2), inner sep=.5ex, line width=1.5, dashed] {};
+\end{scope}
+
+% --- Panel 6: g'=2, t'=2 --- "future" period with post-treatment cell ---
+\begin{scope}[shift={(12,-5)}]
+\draw (-3, 3) node (p6l0) {$g$};
+\draw (-3, 2) node (p6l1) {$2$};
+\draw (-3, 1) node (p6l2) {$3$};
+\draw (-3, 0) node (p6l3) {$\infty$};
+\draw (-1, 3.75) node (p6t0) {Time};
+\draw (-2, 3) node (p6t1) {$1$};
+\draw (-1, 3) node (p6t2) {$2$};
+\draw (0, 3) node (p6t3) {$3$};
+\draw (-2.5,3.5) -- (-2.5, -0.5);
+\draw (-2.5, 2.5) -- (0.5, 2.5);
+\draw (-2, 2) node (p6a1t1) {$\scriptstyle\bar{Y}_{2,1}$};
+\draw (-1, 2) node (p6a1t2) {$\scriptstyle{\color{red!70!black}\boldsymbol{\hat{Y}_{2,2}}}$};
+\draw (0, 2) node (p6a1t3) {$\scriptstyle{\color{red!70!black}\boldsymbol{\hat{Y}_{2,3}}}$};
+\draw (-2, 1) node (p6a2t1) {$\scriptstyle\bar{Y}_{3,1}$};
+\draw (-1, 1) node (p6a2t2) {$\scriptstyle\bar{Y}_{3,2}$};
+\draw (0, 1) node (p6a2t3) {$\scriptstyle{\color{red!70!black}\boldsymbol{\hat{Y}_{3,3}}}$};
+\draw (-2, 0) node (p6a3t1) {$\scriptstyle\bar{Y}_{\infty,1}$};
+\draw (-1, 0) node (p6a3t2) {$\scriptstyle\bar{Y}_{\infty,2}$};
+\draw (0, 0) node (p6a3t3) {$\scriptstyle\bar{Y}_{\infty,3}$};
+\draw[dotted, line width=1.2] (-1.5, 2.5) -- (-1.5, 1.5) -- (-0.5, 1.5) -- (-0.5, 0.5) -- (0.5, 0.5);
+\node[draw=diff1, fit=(p6a2t1), inner sep=.5ex, line width=1.5, dashed] {};
+\node[draw=diff2, fit=(p6a1t1), inner sep=.5ex, line width=1.5, dashed] {};
+\node[draw=diff3, fit=(p6a2t2), inner sep=.5ex, line width=1.5, dashed] {};
+\node[draw=diff4, fit=(p6a1t2), inner sep=.5ex, line width=1.5, dashed] {};
+\end{scope}
+
+\end{tikzpicture}
+```
+
+## In-sample imputation: Non-staggered case
+
+- Consider the simplest case: all treated units start treatment at time $g^*$. The expression for the **in-sample** imputation estimator simplifies to:
+
+  $$\widehat{\text{ATT}_{is}(t)} = \frac{1}{(g^*-1)N}\bigg\{\sum_{t^\prime=1}^{g^*-1} N_{g^*}(\bar{Y}_{g^*, t} - \bar{Y}_{g^*,t} - \bar{Y}_{g^*, t^\prime} + \bar{Y}_{g^*, t^\prime}) + N_{\infty} (\bar{Y}_{g^*, t} - \bar{Y}_{\infty,t} - \bar{Y}_{g^*, t^\prime} + \bar{Y}_{\infty, t^\prime})\bigg\}$$
+- It's straightforward to see that the first part of that sum is always **zero** (since we are comparing $g^*$ to itself)
+  - Additionally, any term where $t^\prime = t$ is also zero.
+
+- Combined, the **in-sample** imputation estimator (compared to the "leave-one-out" estimator) exhibits an **attenuation** towards zero
+
+  $$\widehat{\text{ATT}}_{\text{is}}(t) = \bigg(\frac{N_{G}}{N}\times\frac{g^*-2}{g^*-1}\bigg)\times\bigg(\widehat{\text{ATT}}_{\text{loo}}(t)\bigg)$$
+
+
+## Application: Gazmararian (2025)
+
+::: {.incremental}
+
+ >Gazmararian, Alexander F. "Sources of partisan change: Evidence from the shale gas shock in American coal country." The Journal of Politics 87, no. 2 (2025): 601-615.
+
+- Examines whether the 2008 **shale gas shock** (fracking boom) shifted Republican presidential vote share in U.S. **coal counties**
+  - Gas substitutes for coal, accelerating coal's decline
+  - Voters dependent on coal shift toward Republicans who promised looser environmental regulation
+  - Treatment: coal county ($\geq$ 1% coal employment pre-2008) $\times$ post-2008
+  - County-level analysis, presidential elections 1976-2020
+
+- Original analysis uses `fect` with **in-sample** imputation (the default)
+  - Pre-trends are **statistically distinguishable** from zero
+  - But appear to be small - an **equivalence testing** approach concludes that the size of the violation is "negligible"
+
+:::
+
+## Equivalence testing
+
+::: {.incremental}
+
+- **Conventional** null hypothesis tests assume a null of **no** difference and reject in favor of an alternative that a difference exists
+
+  $$H_0: \tau = 0; H_a: \tau \neq 0$$
+- But with placebo tests, this is kind of **begging the question**
+  - You are **assuming** what you set out to demonstrate (that a parallel trends violation is negligible)
+  - Under low power settings, you might fail to reject under **large** violations!
+  
+:::
+  
+## Equivalence testing
+
+::: {.incremental}
+  
+- **Equivalence testing** inverts this - assume a null that the true difference is greater than some "equivalence region" and an alternative that 
+
+  $$H_0: |\tau| \ge \epsilon; H_a: |\tau| < \epsilon$$
+  
+- Researcher selects the $\epsilon$ - what size of an effect is considered "negligible"
+  - Existing recommendations mostly come from the literature on **balance checking** (Hartman and Hidalgo, 2018).
+  - For assessing pre-trends, most intuitive to just benchmark against observed effects.
+
+- Easy implementation - **Two One-Sided Test (TOST)** approach
+  - Reject (in favor of a **negligible difference**) if the 90% confidence interval is entirely within the "equivalence region"
+
+:::
+
+
+## Replication: In-sample vs. leave-one-out
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+library(fect)
+library(fixest)
+library(HonestDiD)
+
+dff <- readRDS("assets/data/matched_df.rds")
+
+dff <- dff %>% filter(!is.na(oilgas_prop)) %>% arrange(year) %>%
+  group_by(county_state) %>%
+  mutate(yearT = map_dbl(year, ~year[min(which(treated == 1))])) %>%
+  ungroup() %>%
+  mutate(yearT = case_when(is.na(yearT) ~ -Inf, TRUE ~ yearT))
+
+dff$yearSinceT <- dff$year - dff$yearT
+dff$treatment <- dff$treated
+dff$treated <- dff$treat
+dff$Y <- dff$RepVotesMajorPercent
+dff$time <- dff$year
+dff$unit_id <- dff$county_state
+```
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| cache: true
+
+un_not_yet_treated <- dff[dff$treatment == 0,]
+
+# --- Imputation functions ---
+imputation <- function(df, model=formula("Y ~ 1|time + unit_id")) {
+  period_imp <- function(data_sub){
+    placebo_model <- fixest::feols(model, se = "standard",
+      data = df[df$treatment == 0,], warn = FALSE, notes = FALSE)
+    data_sub$placebo_Y <- predict(placebo_model, newdata = data_sub)
+    data_sub$dif <- data_sub$Y - data_sub$placebo_Y
+    return(mean(data_sub$dif, na.rm = T))
+  }
+  df %>% filter(treated == 1) %>% group_by(yearSinceT) %>%
+    nest() %>% mutate(estimate = unlist(purrr::map(data, period_imp)))
+}
+
+imputation_loo <- function(df, model=formula("Y ~ 1|time + unit_id")) {
+  period_imp <- function(data_sub){
+    data_sub$yearSinceT <- data_sub$time - data_sub$yearT
+    leave_out_period <- unique(data_sub$yearSinceT)
+    placebo_model <- fixest::feols(model, se = "standard",
+      data = df[df$treatment == 0 & df$yearSinceT != leave_out_period,],
+      warn = FALSE, notes = FALSE)
+    data_sub$placebo_Y <- predict(placebo_model, newdata = data_sub)
+    data_sub$dif <- data_sub$Y - data_sub$placebo_Y
+    return(mean(data_sub$dif, na.rm = T))
+  }
+  df %>% filter(treated == 1) %>% group_by(yearSinceT) %>%
+    nest() %>% mutate(estimate = unlist(purrr::map(data, period_imp)))
+}
+
+# --- Bootstrap functions ---
+bayes_bstrap <- function(output_data, un_not_yet_treated, iter = 500,
+  model = formula("Y ~ 1|time + unit_id"), base_seed = 12345) {
+  output_data$yearSinceT <- output_data$time - output_data$yearT
+  unit_ids <- data.frame(unit_id = unique(un_not_yet_treated$unit_id))
+  dif <- sapply(1:iter, function(i) {
+    set.seed(base_seed + i)
+    local_uid <- unit_ids
+    local_uid$weights <- rexp(nrow(local_uid), 1)
+    local_uid <- local_uid %>% mutate(weights = weights/sum(weights))
+    local_data <- un_not_yet_treated %>% left_join(local_uid, by = 'unit_id')
+    local_out <- output_data %>% left_join(local_uid, by = 'unit_id')
+    pm <- fixest::feols(model, se = "standard", data = local_data,
+      warn = FALSE, notes = FALSE, weights = local_data$weights)
+    local_out$placebo_Y <- predict(pm, newdata = local_out)
+    local_out$dif <- local_out$Y - local_out$placebo_Y
+    ok <- !is.na(local_out$dif)
+    weighted.mean(local_out$dif[ok], local_out$weights[ok])
+  })
+  return(sd(dif))
+}
+
+bayes_bstrap_loo <- function(output_data, un_not_yet_treated, iter = 500,
+  model = formula("Y ~ 1|time + unit_id"), base_seed = 12345) {
+  output_data$yearSinceT <- output_data$time - output_data$yearT
+  lo_period <- unique(output_data$yearSinceT)
+  un_loo <- un_not_yet_treated[un_not_yet_treated$yearSinceT != lo_period,]
+  unit_ids <- data.frame(unit_id = unique(un_loo$unit_id))
+  dif <- sapply(1:iter, function(i) {
+    set.seed(base_seed + i)
+    local_uid <- unit_ids
+    local_uid$weights <- rexp(nrow(local_uid), 1)
+    local_uid <- local_uid %>% mutate(weights = weights/sum(weights))
+    local_data <- un_loo %>% left_join(local_uid, by = 'unit_id')
+    local_out <- output_data %>% left_join(local_uid, by = 'unit_id')
+    pm <- fixest::feols(model, se = "standard", data = local_data,
+      warn = FALSE, notes = FALSE, weights = local_data$weights)
+    local_out$placebo_Y <- predict(pm, newdata = local_out)
+    local_out$dif <- local_out$Y - local_out$placebo_Y
+    ok <- !is.na(local_out$dif)
+    weighted.mean(local_out$dif[ok], local_out$weights[ok])
+  })
+  return(sd(dif))
+}
+
+# --- Compute estimates ---
+imp_model <- formula("Y ~ oilgas_prop|time + unit_id")
+
+imp_estimates <- imputation(dff, model = imp_model)
+imp_estimates_loo <- imputation_loo(dff, model = imp_model)
+
+bayes_bstrap_updated <- function(x, controldat = un_not_yet_treated) {
+  bayes_bstrap(x, un_not_yet_treated = controldat, iter = 500, model = imp_model)
+}
+bayes_bstrap_loo_updated <- function(x, controldat = un_not_yet_treated) {
+  bayes_bstrap_loo(x, un_not_yet_treated = controldat, iter = 500, model = imp_model)
+}
+
+results_imp_loo <- dff %>% filter(treated == 1) %>%
+  group_by(yearSinceT) %>% nest() %>%
+  mutate(sd = purrr::map(data, bayes_bstrap_loo_updated),
+         bayes_boostrap_sd = unlist(sd)) %>%
+  select(yearSinceT, bayes_boostrap_sd) %>%
+  left_join(imp_estimates_loo, by = "yearSinceT") %>%
+  mutate(loo = 1, conf.low = estimate - qnorm(0.975)*bayes_boostrap_sd,
+         conf.high = estimate + qnorm(0.975)*bayes_boostrap_sd,
+         model = "Imputation_LOO") %>%
+  dplyr::rename(period = yearSinceT)
+
+results_imp <- dff %>% filter(treated == 1) %>%
+  group_by(yearSinceT) %>% nest() %>%
+  mutate(sd = purrr::map(data, bayes_bstrap_updated),
+         bayes_boostrap_sd = unlist(sd)) %>%
+  select(yearSinceT, bayes_boostrap_sd) %>%
+  left_join(imp_estimates, by = "yearSinceT") %>%
+  mutate(conf.low = estimate - qnorm(0.975)*bayes_boostrap_sd,
+         conf.high = estimate + qnorm(0.975)*bayes_boostrap_sd,
+         model = "Imputation") %>%
+  dplyr::rename(period = yearSinceT) %>% mutate(loo = 0)
+
+# Sigma for equivalence test
+placebo_model <- fixest::feols(Y ~ oilgas_prop|time + unit_id,
+  se = "standard", data = un_not_yet_treated, warn = FALSE, notes = FALSE)
+un_not_yet_treated$Y_resid <- un_not_yet_treated$Y - placebo_model$fitted
+sigma_val <- sd(un_not_yet_treated$Y_resid)
+
+results_imp_all <- rbind(results_imp, results_imp_loo)
+results_imp_all$sigma <- sigma_val
+```
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 4.5
+
+combined_df2 <- results_imp_all %>%
+  mutate(
+    model = case_when(
+      loo == 0 ~ "Original Estimates (In-sample)",
+      loo == 1 ~ "Leave-one-out Estimates",
+      TRUE ~ as.character(NA)
+    )
+  )
+
+combined_df2$conf.low90 <- combined_df2$estimate -
+  combined_df2$bayes_boostrap_sd*qnorm(.95)
+combined_df2$conf.high90 <- combined_df2$estimate +
+  combined_df2$bayes_boostrap_sd*qnorm(.95)
+
+combined_df2$model <- relevel(factor(combined_df2$model),
+                              ref = "Original Estimates (In-sample)")
+
+ggplot(combined_df2,
+  aes(x = period/4, y = estimate, color = model, shape = model)) +
+  geom_line() + geom_point() +
+  geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 0.2) +
+  geom_pointrange(aes(ymin = conf.low90, ymax = conf.high90), linewidth = 1) +
+  facet_grid(cols = vars(model),
+    labeller = labeller(model = label_wrap_gen(width = 40))) +
+  labs(x = "Period (presidential elections)", y = "Estimate (pp)") +
+  scale_color_manual(
+    values = c("Leave-one-out Estimates" = "indianred",
+               "Original Estimates (In-sample)" = "dodgerblue")) +
+  scale_x_continuous(breaks = seq(from = min(combined_df2$period/4),
+                                  to = max(combined_df2$period/4), by = 2)) +
+  scale_y_continuous(breaks = c(-5, 0, 5, 10), limits = c(-5, 10)) +
+  scale_shape_manual(values = c("Leave-one-out Estimates" = 16,
+                                "Original Estimates (In-sample)" = 17)) +
+  geom_hline(aes(yintercept = 0.36*sigma), linetype = "dotted", color = "darkgrey") +
+  geom_hline(aes(yintercept = -0.36*sigma), linetype = "dotted", color = "darkgrey") +
+  geom_hline(aes(yintercept = 0), linetype = "dashed") +
+  geom_vline(xintercept = -0.5, linetype = "dashed", color = "#FF0000") +
+  guides(col = "none", shape = "none", linetype = "none") +
+  theme_bw() + theme(legend.position = "bottom")
+```
+
+
+## Replication: Fixed baseline estimates
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 4.5
+#| cache: true
+
+# Placebo test: hold out 1976-1992 as baselines
+dff$treatmentPlacebo <- dff$treatment
+dff$treatmentPlacebo[dff$yearSinceT < 0 & dff$yearSinceT >= -12] <- 1
+un_not_yet_treated_placebo <- dff[dff$treatmentPlacebo == 0,]
+
+placebo_model_pt <- fixest::feols(Y ~ oilgas_prop|time + unit_id,
+  se = "standard", data = un_not_yet_treated_placebo, warn = FALSE, notes = FALSE)
+un_not_yet_treated_placebo$Y_resid <- un_not_yet_treated_placebo$Y - placebo_model_pt$fitted
+sigma_placebotest <- sd(un_not_yet_treated_placebo$Y_resid)
+
+# Fixed baseline: hold out 2004 only
+dff$treatmentFixedBaseline <- 1
+dff$treatmentFixedBaseline[dff$yearSinceT == -4 | dff$yearSinceT == Inf] <- 0
+un_not_yet_treated_fixed <- dff[dff$treatmentFixedBaseline == 0,]
+
+placebo_model_fb <- fixest::feols(Y ~ oilgas_prop|time + unit_id,
+  se = "standard", data = un_not_yet_treated_fixed, warn = FALSE, notes = FALSE)
+un_not_yet_treated_fixed$Y_resid <- un_not_yet_treated_fixed$Y - placebo_model_fb$fitted
+sigma_fixed <- sd(un_not_yet_treated_fixed$Y_resid)
+
+imp_estimates_placebo <- imputation(
+  dff %>% mutate(treatment = treatmentPlacebo), model = imp_model)
+imp_estimates_fixed <- imputation_loo(
+  dff %>% mutate(treatment = treatmentFixedBaseline), model = imp_model)
+
+results_imp_placebo <- dff %>% mutate(treatment = treatmentPlacebo) %>%
+  filter(treated == 1) %>% group_by(yearSinceT) %>%
+  filter(yearSinceT >= -12) %>% nest() %>%
+  mutate(sd = map(data, function(x) bayes_bstrap_updated(
+    x, controldat = un_not_yet_treated_placebo)),
+    bayes_boostrap_sd = unlist(sd)) %>%
+  select(yearSinceT, bayes_boostrap_sd) %>%
+  left_join(imp_estimates_placebo, by = "yearSinceT") %>%
+  mutate(conf.low = estimate - qnorm(0.975)*bayes_boostrap_sd,
+         conf.high = estimate + qnorm(0.975)*bayes_boostrap_sd,
+         model = "Placebo3Period") %>%
+  dplyr::rename(period = yearSinceT)
+
+results_imp_fixed <- dff %>% mutate(treatment = treatmentFixedBaseline) %>%
+  filter(treated == 1) %>% group_by(yearSinceT) %>% nest() %>%
+  mutate(sd = map(data, function(x) bayes_bstrap_updated(
+    x, controldat = un_not_yet_treated_fixed)),
+    bayes_boostrap_sd = unlist(sd)) %>%
+  select(yearSinceT, bayes_boostrap_sd) %>%
+  left_join(imp_estimates_fixed, by = "yearSinceT")
+
+results_imp_fixed$estimate[results_imp_fixed$yearSinceT == -4] <- 0
+
+results_imp_fixed <- results_imp_fixed %>%
+  mutate(conf.low = estimate - qnorm(0.975)*bayes_boostrap_sd,
+         conf.high = estimate + qnorm(0.975)*bayes_boostrap_sd,
+         model = "Fixed") %>%
+  dplyr::rename(period = yearSinceT)
+
+results_fixed_all <- rbind(results_imp_placebo, results_imp_fixed)
+results_fixed_all$sigma <- sigma_placebotest
+results_fixed_all$sigma[results_fixed_all$model == "Fixed"] <- sigma_fixed
+
+combined_df3 <- results_fixed_all %>%
+  mutate(modelname = case_when(
+    model == "Placebo3Period" ~ "Baseline periods: 1976-1992",
+    model == "Fixed" ~ "Baseline period: 2004",
+    TRUE ~ as.character(NA)))
+
+combined_df3$conf.low90 <- combined_df3$estimate -
+  combined_df3$bayes_boostrap_sd*qnorm(.95)
+combined_df3$conf.high90 <- combined_df3$estimate +
+  combined_df3$bayes_boostrap_sd*qnorm(.95)
+
+combined_df3$modelname <- relevel(factor(combined_df3$modelname),
+                                  ref = "Baseline periods: 1976-1992")
+
+ggplot(combined_df3,
+  aes(x = period/4, y = estimate, color = modelname, shape = modelname)) +
+  geom_line() + geom_point() +
+  geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 0.2) +
+  geom_pointrange(aes(ymin = conf.low90, ymax = conf.high90), linewidth = 1) +
+  facet_grid(cols = vars(modelname),
+    labeller = labeller(modelname = label_wrap_gen(width = 40))) +
+  labs(x = "Period (presidential elections)", y = "Estimate (pp)") +
+  scale_color_manual(
+    values = c("Baseline period: 2004" = "dodgerblue",
+               "Baseline periods: 1976-1992" = "indianred")) +
+  scale_x_continuous(breaks = seq(-8, 3, by = 2)) +
+  scale_y_continuous(breaks = c(-10, -5, 0, 5, 10), limits = c(-10, 12)) +
+  scale_shape_manual(values = c("Baseline period: 2004" = 16,
+                                "Baseline periods: 1976-1992" = 17)) +
+  geom_hline(aes(yintercept = 0.36*sigma), linetype = "dotted", color = "darkgrey") +
+  geom_hline(aes(yintercept = -0.36*sigma), linetype = "dotted", color = "darkgrey") +
+  geom_hline(aes(yintercept = 0), linetype = "dashed") +
+  geom_vline(xintercept = -0.5, linetype = "dashed", color = "#FF0000") +
+  guides(col = "none", shape = "none", linetype = "none") +
+  theme_bw() + theme(legend.position = "bottom")
+```
+
+## HonestDiD: Partial identification
+
+::: {.incremental}
+
+- An alternative approach to incorporating the actual pre-treatment placebos is to use them to **bound** the potential violation of parallel trends in the post-treatment period.
+  - **Rambachan and Roth (2023)** propose a **partial identification** approach based on such a user specified bound
+  - Develop an approach for construct **confidence sets** under this violation
+  
+- In our conventional **event-study** regression, we get estimates of...
+  - $\beta_{l}^{\text{post}} = \tau_{l}^{\text{post}} + \delta_l^{\text{post}}$ - the treatment effects - a combination of the "true" effect and the parallel trends violation
+  - $\beta_{l}^{\text{pre}} = \delta_l^{\text{pre}}$ - the pre-treatment "placebos" - these are **only** capturing the parallel trends violation
+  
+- We don't want to assume $\delta = 0$.
+  - Instead, we'll relax that assumption by assuming $\delta \in \Delta$, some user-specified set of **restrictions**
+  
+:::
+
+## HonestDiD: Partial identification
+
+::: {.incremental}
+
+- One popular approach recommended in **Rambachan and Roth (2023)** is to bound the **relative magnitudes**
+
+  $$\Delta^{\text{RM}}(\bar{M}) = \bigg\{\delta: \forall l \ge 0, |\delta_{l+1} - \delta_{l}| \le \bar{M} \times \max_{s < 0} |\delta_{s - 1} - \delta_{s}|\bigg\}$$
+  
+- The **per-period** change in the violation of parallel trends in the **post-treatment** period is no more than $\bar{M}$ times the **largest** observed **per-period** violation in the pre-treatment period
+  - $\bar{M} = 0$: Our **parallel trends** assumption holds
+  - $\bar{M} = 1$: The violation in the post-treatment period is **as bad** as it is in the pre-treatment period.
+  
+- Construct a hypothesis test under the system of moment inequalities implied by the bound
+  - Invert to obtain a **confidence set**
+  - **Sensitivity analysis** - vary $\bar{M}$ and see at what level the results "break"
+:::
+
+## HonestDiD: TWFE event study (Gazmararian, 2025)
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 5
+#| cache: true
+
+# TWFE event study with 2004 as reference
+es_fit <- fixest::feols(
+  Y ~ i(year, treated, ref = 2004) + oilgas_prop | unit_id + time,
+  data = dff, cluster = ~unit_id, warn = FALSE, notes = FALSE)
+
+nm <- names(coef(es_fit))
+es_idx <- grepl("year::", nm)
+betahat_twfe <- coef(es_fit)[es_idx]
+sigma_twfe <- vcov(es_fit)[es_idx, es_idx]
+
+yrs <- as.integer(regmatches(names(betahat_twfe),
+                             regexpr("[0-9]{4}", names(betahat_twfe))))
+ord <- order(yrs)
+betahat_twfe <- betahat_twfe[ord]
+sigma_twfe <- sigma_twfe[ord, ord]
+yrs <- yrs[ord]
+
+inputs_twfe <- list(
+  betahat = unname(betahat_twfe),
+  sigma = unname(sigma_twfe),
+  numPrePeriods = sum(yrs < 2004),
+  numPostPeriods = sum(yrs >= 2008),
+  years = yrs)
+
+mbarvec <- seq(0, 1, by = 0.5)
+nPre <- inputs_twfe$numPrePeriods
+nPost <- inputs_twfe$numPostPeriods
+post_yrs <- tail(inputs_twfe$years, nPost)
+pre_yrs <- head(inputs_twfe$years, nPre)
+
+sensitivity <- purrr::map_dfr(seq_len(nPost), function(j) {
+  HonestDiD::createSensitivityResults_relativeMagnitudes(
+    betahat = inputs_twfe$betahat, sigma = inputs_twfe$sigma,
+    numPrePeriods = nPre, numPostPeriods = nPost,
+    Mbarvec = mbarvec, alpha = 0.05,
+    l_vec = HonestDiD::basisVector(j, nPost)
+  ) |> mutate(year = post_yrs[j])
+})
+
+original <- purrr::map_dfr(seq_len(nPost), function(j) {
+  HonestDiD::constructOriginalCS(
+    betahat = inputs_twfe$betahat, sigma = inputs_twfe$sigma,
+    numPrePeriods = nPre, numPostPeriods = nPost,
+    alpha = 0.05,
+    l_vec = HonestDiD::basisVector(j, nPost)
+  ) |> mutate(year = post_yrs[j])
+})
+
+pre_df <- tibble(
+  year = pre_yrs,
+  estimate = inputs_twfe$betahat[seq_len(nPre)],
+  se = sqrt(diag(inputs_twfe$sigma)[seq_len(nPre)])
+) |> mutate(lb = estimate - qnorm(0.975) * se,
+            ub = estimate + qnorm(0.975) * se)
+
+post_df <- tibble(
+  year = post_yrs,
+  estimate = inputs_twfe$betahat[(nPre + 1):(nPre + nPost)])
+
+ref_df <- tibble(year = 2004, estimate = 0)
+
+mbar_colors <- c("0" = "#084594", "0.5" = "#2171b5", "1" = "#4292c6")
+
+ggplot() +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "grey60") +
+  geom_vline(xintercept = 2006, color = "red", linewidth = 0.4) +
+  geom_linerange(data = pre_df,
+    aes(x = year, ymin = lb, ymax = ub), linewidth = 0.6) +
+  geom_point(data = pre_df, aes(x = year, y = estimate), size = 1.5) +
+  geom_point(data = ref_df, aes(x = year, y = estimate), size = 1.5) +
+  geom_linerange(
+    data = sensitivity |> arrange(desc(Mbar)),
+    mapping = aes(x = year, ymin = lb, ymax = ub, color = factor(Mbar)),
+    linewidth = 4) +
+  geom_linerange(data = original,
+    aes(x = year, ymin = lb, ymax = ub),
+    color = "black", linewidth = 1.2) +
+  geom_point(data = post_df, aes(x = year, y = estimate), size = 2) +
+  scale_color_manual(values = mbar_colors, name = expression(bar(M))) +
+  scale_x_continuous(breaks = seq(1976, 2020, 4)) +
+  coord_cartesian(ylim = c(-10, 18)) +
+  labs(x = "Year", y = "Effect on Republican Vote Share (pp)",
+       title = "TWFE Event Study with HonestDiD Robust Confidence Sets") +
+  theme_bw(base_size = 12) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "right",
+        panel.grid.minor = element_blank())
+```
+
+
+## Summary
+
+::: {.incremental}
+
+- Diff-in-diff with two periods, two treatment groups
+  - Parallel trends assumption - sensitive to transformations of the outcome (e.g. logs vs. levels)
+  - Straightforward non-parametric estimator - can weight + use regression if parallel trends holds conditionally
+
+- Diff-in-diff with multiple periods, two treatment groups
+  - No changes! Everything is fine - TWFE still gives you a difference-in-difference under no effect homogeneity assumptions
+  - Use pre-trends tests as a diagnostic, but be careful (w/ small samples, low power to violations)
+
+- Diff-in-diff with staggered adoption
+  - Can break down into a bunch of 2x2 DiDs for different treatment *groups* and *time* periods
+  - But beware of naive 2-way fixed effects, both **static** and **dynamic** specifications - "bad" 2x2s if effects aren't constant
+
+:::
+
+# Next week
+
+::: {.incremental}
+
+- Grab-bag of other topics on "time-series causal inference"
+  - Diff-in-diff is **not** the only design when you have **time**
+  - In fact, it's arguably **not** even a "time-series" method
+
+- When outcome in the past affects future treatment, DiD assumptions are violated!
+  - We need a different design - back to selection-on-observables conditional on **lagged** outcome and treatment
+  - Identification under "sequential ignorability" - lagged DV/IV regressions.
+  
+- "Synthetic control" designs - reweight controls to match treated units on lagged outcomes.
+  
+- Additional bit of discussion on what "fixed effects" accomplish and how to think about them
+  - Fixed effects are a form of **de-meaning** - equivalent to controlling for **averages** of the outcome (the "Mundlak" device)
+
+:::
+
