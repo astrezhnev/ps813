@@ -1083,7 +1083,7 @@ Anton Strezhnev
 <ul>
 <li class="fragment"><p>Differences-in-differences designs for dealing with unobserved confounding.</p></li>
 <li class="fragment"><p>Identification under <strong>Parallel trends</strong></p>
-<p><span class="math display">\[E[Y_{it}(0) - Y_{it^{\prime}}(0) \mid D_i = 1] - E[Y_{it}(0) - Y_{it^{\prime}}(0) \mid D_i = 0]\]</span></p></li>
+<p><span class="math display">\[\mathbb{E}[Y_{it}(0) - Y_{it^{\prime}}(0) \mid D_i = 1] - \mathbb{E}[Y_{it}(0) - Y_{it^{\prime}}(0) \mid D_i = 0]\]</span></p></li>
 <li class="fragment"><p>Estimation via <strong>first-differences</strong> regression (Callaway and Sant’Anna, 2021)</p>
 <ul>
 <li class="fragment">Can adjust for <strong>time-varying</strong> and <strong>time-invariant</strong> threats to parallel trends.</li>
@@ -1127,7 +1127,7 @@ Anton Strezhnev
 <li class="fragment">Let <span class="math inline">\(\mathbf{U}_i = \{U_{i1}, U_{i2}, U_{i3}, \dotsc, U_{iT}\}\)</span> denote the unit’s latent factor history</li>
 </ul></li>
 <li class="fragment"><p><strong>Strict exogeneity</strong></p>
-<p><span class="math display">\[\{Y_{it}(0), Y_{it}(1) \} \perp\!\!\!\perp D_{i} | \mathbf{X}_{i}, \mathbf{U}_i\]</span></p></li>
+<p><span class="math display">\[\{Y_{it}(0), Y_{it}(1) \} \perp\!\!\!\perp D_{i} \mid \mathbf{X}_{i}, \mathbf{U}_i\]</span></p></li>
 </ul>
 </section>
 <section id="strict-exogeneity" class="slide level2">
@@ -1147,7 +1147,7 @@ Anton Strezhnev
 <li class="fragment">We assume that we can decompose the latent factor into two additive components: <span class="math inline">\(U_{it} = \alpha_i + \delta_t\)</span></li>
 </ul></li>
 <li class="fragment"><p>This gives us the classic <strong>two-way fixed effect</strong> formulation:</p>
-<p><span class="math display">\[Y_{it}(0) = \alpha_i + \delta_t + f(\mathbf{X_i}) + \varepsilon_{it}\]</span></p></li>
+<p><span class="math display">\[Y_{it}(0) = \alpha_i + \delta_t + f(\mathbf{X}_i) + \varepsilon_{it}\]</span></p></li>
 </ul>
 </section>
 <section id="did-and-parallel-trends-1" class="slide level2">
@@ -1200,11 +1200,11 @@ Anton Strezhnev
 <li class="fragment">Adjust for some number of <strong>lagged</strong> treatments (distributed lag)</li>
 </ul></li>
 <li class="fragment"><p>For example, a one-lag linear model</p>
-<p><span class="math display">\[Y_{it} = X_{it}^\prime\beta + \alpha Y_{it-1} + \tau_0 D_{it} + \tau_1 D_{it-1} + \epsilon_{it}\]</span></p></li>
+<p><span class="math display">\[Y_{it} = X_{it}^\prime\beta + \alpha Y_{it-1} + \tau_0 D_{it} + \tau_1 D_{it-1} + \varepsilon_{it}\]</span></p></li>
 <li class="fragment"><p>If we believe the parametric assumptions behind this model (e.g. constant effects), <span class="math inline">\(\tau_0\)</span> identifies the <strong>average</strong> contemporaneous effect of treatment at time <span class="math inline">\(t\)</span>.</p></li>
 <li class="fragment"><p>But does <span class="math inline">\(\tau_1\)</span> identify the effect <strong>one period out</strong>?</p>
 <ul>
-<li class="fragment">No! We have <strong>post-treatment</strong> bias <strong>(Glynn and Blackwell, 2018)</strong>.</li>
+<li class="fragment">No! We have <strong>post-treatment</strong> bias <strong>(Blackwell and Glynn, 2018)</strong>.</li>
 <li class="fragment">This is the <strong>Table 2 fallacy</strong> all over again.</li>
 </ul></li>
 </ul>
@@ -1258,7 +1258,7 @@ Anton Strezhnev
 <li class="fragment">Time-invariant confounder: <span class="math inline">\(\alpha_i \sim N(0, 1)\)</span></li>
 <li class="fragment">Treatment correlated with confounder: <span class="math inline">\(D_i \sim \text{Bernoulli}(\text{logit}^{-1}(\alpha_i))\)</span></li>
 <li class="fragment">Outcome at <span class="math inline">\(t{-}1\)</span>: <span class="math inline">\(Y_{it-1} = \alpha_i + \varepsilon_{it-1}\)</span>, where <span class="math inline">\(\varepsilon_{it-1} \sim N(0, \sigma_\varepsilon^2)\)</span></li>
-<li class="fragment">Outcome at <span class="math inline">\(t\)</span>: <span class="math inline">\(Y_{it} = \alpha_i + \beta D_i + \varepsilon_{it}\)</span>, where <span class="math inline">\(\varepsilon_{it} \sim N(0, \sigma_\varepsilon^2)\)</span></li>
+<li class="fragment">Outcome at <span class="math inline">\(t\)</span>: <span class="math inline">\(Y_{it} = \alpha_i + \tau D_i + \varepsilon_{it}\)</span>, where <span class="math inline">\(\varepsilon_{it} \sim N(0, \sigma_\varepsilon^2)\)</span></li>
 </ul></li>
 <li class="fragment"><strong>Parallel trends</strong> holds by construction: <span class="math inline">\(\alpha_i\)</span> is time-invariant</li>
 <li class="fragment">Vary <span class="math inline">\(\sigma_\varepsilon \in \{0.5, 1, 2, 4, 8\}\)</span> to control how <strong>noisy</strong> the proxy <span class="math inline">\(Y_{it-1}\)</span> is for <span class="math inline">\(\alpha_i\)</span></li>
