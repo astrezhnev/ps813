@@ -209,12 +209,38 @@ options(digits=3)
 ::: {.incremental}
 
 - But in many panel data settings, ruling out the arrow from $Y_{t-1}$ to $D_{t}$ is implausible!
-  - We'll need a **different** assumption
-- **Sequential ignorability** (Robins, 1986; Blackwell and Glynn, 2018)
-  - At each time period, treatment is as-if random conditional on observed covariate and outcome history
+  - We'll need to make a **different** assumption
+  - Before that though, we need to define the potential outcomes in a new way!
+- We now have to consider potential outcomes in terms of the entire **treatment history** assigned up to time $t$
 
-    $$\{Y_{it}(1), Y_{it}(0)\} \perp\!\!\!\perp  D_{it} \mid X_{it}, Y_{it-1}, D_{it-1}$$
-  - We can relax this by conditioning on a **longer** history of outcomes, treatments and covariates.
+  $$Y_{it}(d_1, d_2, \dotsc, d_t) = Y_{it}(d_{1:t})$$
+  
+- We can partition this joint potential outcome into the **contemporaneous** treatment $d_t$ and past values $d_1, d_2, \dotsc, d_{t-1}$
+
+  $$Y_{it}(d_{1:t}) = Y_{it}(d_{t}; d_{1:t-1})$$
+  
+- We'll define the **Contemporaneous Effect** of treatment at time $t$ as:
+
+  $$Y_{it}(1; d_{1:t-1}) - Y_{it}(0; d_{1:t-1}) = Y_{it}(1) - Y_{it}(0)$$
+  
+- Later on when we talk about **mediation**, we'll introduce other kinds of estimands for **cumulative** effects over time.
+
+:::
+
+## Sequential ignorability
+
+::: {.incremental}
+
+- Identification of causal effects under outcome-treatment feedback can be done under a **sequential ignorability** assumption (Robins, 1986; Blackwell and Glynn, 2018).
+- At each time period, treatment is as-if random conditional on observed covariate and outcome history
+
+  $$\{Y_{it}(1), Y_{it}(0)\} \perp\!\!\!\perp  D_{it} \mid X_{it}, Y_{it-1}, D_{it-1}$$
+- We can relax this by conditioning on a **longer** history of outcomes, treatments and covariates.
+- Here we're focusing on the version of sequential ignorability needed for the contemporaneous treatment effect, but can make it more **general**
+
+  $$\{Y_{is}(d_{1:s}) : s = t, \dotsc, T\} \perp\!\!\!\perp  D_{it} \mid X_{it}, Y_{it-1}, D_{it-1}$$
+  
+- We'll cover this more when we talk about **mediation**
 
 :::
 
@@ -286,25 +312,7 @@ options(digits=3)
 \end{tikzpicture}
 ```
 
-## Causal estimands
 
-::: {.incremental}
-
-- We now have to consider potential outcomes in terms of the entire **treatment history** assigned up to time $t$
-
-  $$Y_{it}(d_1, d_2, \dotsc, d_t) = Y_{it}(d_{1:t})$$
-  
-- Partition this into the **contemporaneous** treatment $d_t$ and past values $d_1, d_2, \dotsc, d_{t-1}$
-
-  $$Y_{it}(d_{1:t}) = Y_{it}(d_{t}; d_{1:t-1})$$
-  
-- The **Contemporaneous Effect** of Treatment
-
-  $$Y_{it}(1; d_{1:t-1}) - Y_{it}(0; d_{1:t-1}) = Y_{it}(1) - Y_{it}(0)$$
-  
-- Later on when we talk about **mediation**, we'll introduce other kinds of estimands for **cumulative** effects over time.
-
-:::
 
 ## Estimation of treatment effects
 
