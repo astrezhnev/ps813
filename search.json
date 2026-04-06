@@ -1512,6 +1512,622 @@
     "text": "Next week\n\nUsing covariates to improve precision in experiments\n\nWhy blocking/stratification can’t hurt you!\nCovariate adjustment using linear regression\n\nAgnostic approach to linear regression\n\nLinear regression as the best linear predictor\nWhat assumptions do we really need to justify OLS as an estimator\nWhy (properly specified) OLS regression is fine in a randomized experiment even if you get the model wrong!\n\nAnalysis of cluster-randomized experiments (time permitting!)"
   },
   {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#last-two-weeks",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#last-two-weeks",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "Last two weeks",
+    "text": "Last two weeks\n\nDifferences-in-differences designs for dealing with unobserved confounding.\nIdentification under Parallel trends\n\\[E[Y_{it}(0) - Y_{it^{\\prime}}(0) \\mid D_i = 1] - E[Y_{it}(0) - Y_{it^{\\prime}}(0) \\mid D_i = 0]\\]\nEstimation via first-differences regression (Callaway and Sant’Anna, 2021)\n\nCan adjust for time-varying and time-invariant threats to parallel trends.\n\nPre-treatment placebo test diagnostics\nBe careful with software defaults!"
+  },
+  {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#this-week",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#this-week",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "This week",
+    "text": "This week\n\nIn DiD, our identifying assumptions rule out outcome-treatment feedback\n\nTreatment is exogenous conditional on observed and unobserved (but structurally constrained) factors\nBut past outcomes do not directly affect present treatment.\n\nNot uncommon to have dynamic treatment settings where this assumption is violated.\n\nDoctors change treatment regimen in response to patient outcomes.\nPolitical campaigns adjust their strategy in response to observed poll numbers.\nEconomic growth affects democratization (which affects economic growth)\n\nIn all of these settings, we have \\(Y_{t-1}\\) affecting treatment \\(D_{t}\\)\n\nAnd typically also lagged treatment \\(D_{t-1}\\) affecting current treatment \\(D_{t}\\)"
+  },
+  {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#review-did-and-strict-exogeneity",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#review-did-and-strict-exogeneity",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "Review: DiD and Strict Exogeneity",
+    "text": "Review: DiD and Strict Exogeneity\n\nFor this section, we’re going to work with binary treatment \\(D_{it}\\) observed at each time period \\(t\\)\n\nFor simplicity, we’ll consider two time periods generically as \\(t\\) and \\(t-1\\)\nLet \\(D_i = \\{D_{i1}, D_{i2}, D_{i3}, \\dotsc, D_{iT}\\}\\) denote the entire treatment history for a unit\n\nIn DiD, our parallel trends assumption is a special case of a particular kind of exogeneity/ignorability assumption\n\nWe assume that treatment history is as-good-as-randomly assigned given observed covariates and some latent factor\nLet \\(\\mathbf{X}_i = \\{X_{i1}, X_{i2}, X_{i3}, \\dotsc, X_{iT}\\}\\) denote the unit’s observed covariate history\nLet \\(\\mathbf{U}_i = \\{U_{i1}, U_{i2}, U_{i3}, \\dotsc, U_{iT}\\}\\) denote the unit’s latent factor history\n\nStrict exogeneity\n\\[\\{Y_{it}(0), Y_{it}(1) \\} \\perp\\!\\!\\!\\perp D_{i} | \\mathbf{X}_{i}, \\mathbf{U}_i\\]"
+  },
+  {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#strict-exogeneity",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#strict-exogeneity",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "Strict exogeneity",
+    "text": "Strict exogeneity\n\nAdapted from Xu (2023) ‘Causal Inference with Time-Series Cross-Sectional Data: A Reflection’"
+  },
+  {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#did-and-parallel-trends",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#did-and-parallel-trends",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "DiD and parallel trends",
+    "text": "DiD and parallel trends\n\nIf we want to identify the effect of \\(D_{t}\\) on \\(Y_{t}\\) (the “instantaneous” effect), via a standard selection-on-observables design, we would need to adjust for both \\(X\\) and \\(U\\)\nBut here, we’ve supposed that \\(U\\) is unobserved - can’t control for it directly.\n\nWe need more assumptions!\n\nDiD works by making an additional functional form assumption about the latent factor.\n\nWe assume that we can decompose the latent factor into two additive components: \\(U_{it} = \\alpha_i + \\delta_t\\)\n\nThis gives us the classic two-way fixed effect formulation:\n\\[Y_{it}(0) = \\alpha_i + \\delta_t + f(\\mathbf{X_i}) + \\varepsilon_{it}\\]"
+  },
+  {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#did-and-parallel-trends-1",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#did-and-parallel-trends-1",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "DiD and parallel trends",
+    "text": "DiD and parallel trends\n\nIt’s straightforward to see under this functional form assumption and the strict exogeneity assumption, we get parallel trends\n\\[\\mathbb{E}[Y_{it}(0) - Y_{it-1}(0) \\mid D_{it} = 0, \\mathbf{X}] = \\mathbb{E}[Y_{it}(0) - Y_{it-1}(0) \\mid D_{it} = 1, \\mathbf{X}] = \\delta_{t} - \\delta_{t-1}\\]\nUnder strict exogeneity \\(\\text{Cov}(\\varepsilon_{it}, D_{it}) = 0\\)"
+  },
+  {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#sequential-ignorability",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#sequential-ignorability",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "Sequential ignorability",
+    "text": "Sequential ignorability\n\nBut in many panel data settings, ruling out the arrow from \\(Y_{t-1}\\) to \\(D_{t}\\) is implausible!\n\nWe’ll need a different assumption\n\nSequential ignorability (Robins, 1986; Blackwell and Glynn, 2018)\n\nAt each time period, treatment is as-if random conditional on observed covariate and outcome history\n\\[\\{Y_{it}(1), Y_{it}(0)\\} \\perp\\!\\!\\!\\perp  D_{it} \\mid X_{it}, Y_{it-1}, D_{it-1}\\]\nWe can relax this by conditioning on a longer history of outcomes, treatments and covariates."
+  },
+  {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#sequential-ignorability-1",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#sequential-ignorability-1",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "Sequential ignorability",
+    "text": "Sequential ignorability\n\nAdapted from Blackwell and Glynn (2018) ‘How to Make Causal Inferences with Time-Series Cross-Sectional Data under Selection on Observables’"
+  },
+  {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#causal-estimands",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#causal-estimands",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "Causal estimands",
+    "text": "Causal estimands\n\nWe now have to consider potential outcomes in terms of the entire treatment history assigned up to time \\(t\\)\n\\[Y_{it}(d_1, d_2, \\dotsc, d_t) = Y_{it}(d_{1:t})\\]\nPartition this into the contemporaneous treatment \\(d_t\\) and past values \\(d_1, d_2, \\dotsc, d_{t-1}\\)\n\\[Y_{it}(d_{1:t}) = Y_{it}(d_{t}; d_{1:t-1})\\]\nThe Contemporaneous Effect of Treatment\n\\[Y_{it}(1; d_{1:t-1}) - Y_{it}(0; d_{1:t-1}) = Y_{it}(1) - Y_{it}(0)\\]\nLater on when we talk about mediation, we’ll introduce other kinds of estimands for cumulative effects over time."
+  },
+  {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#estimation-of-treatment-effects",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#estimation-of-treatment-effects",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "Estimation of treatment effects",
+    "text": "Estimation of treatment effects\n\nUnder sequential ignorability, we can motivate estimation of the contemporaneous effect of treatment using an Autoregressive Distributed Lag (ADL) model framework.\n\nAdjust for some number of lagged outcomes (autoregressive)\nAdjust for some number of lagged treatments (distributed lag)\n\nFor example, a one-lag linear model\n\\[Y_{it} = X_{it}^\\prime\\beta + \\alpha Y_{it-1} + \\tau_0 D_{it} + \\tau_1 D_{it-1} + \\epsilon_{it}\\]\nIf we believe the parametric assumptions behind this model (e.g. constant effects), \\(\\tau_0\\) identifies the average contemporaneous effect of treatment at time \\(t\\).\nBut does \\(\\tau_1\\) identify the effect one period out?\n\nNo! We have post-treatment bias (Glynn and Blackwell, 2018).\nThis is the Table 2 fallacy all over again."
+  },
+  {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#sequential-ignorability-2",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#sequential-ignorability-2",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "Sequential ignorability",
+    "text": "Sequential ignorability\n\nAdapted from Blackwell and Glynn (2018) ‘How to Make Causal Inferences with Time-Series Cross-Sectional Data under Selection on Observables’"
+  },
+  {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#ldv-vs.-did",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#ldv-vs.-did",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "LDV vs. DiD",
+    "text": "LDV vs. DiD\n\nWe’ll talk about how to estimate these long-term and cumulative effects under sequential ignorability when we get to mediation in a few weeks.\n\nThe relevant estimands and estimators come from this literature.\nFuture treatment and covariates are mediators of past treatment!\n\nBut let’s consider the simple setting with two time periods and two treatment groups\n\nEveryone is under control at time \\(t-1\\), some units are treated at time \\(t\\)\n\nTwo possible ways to estimate the treatment effect.\n\nDifference-in-differences - Regress \\(Y_{it} - Y_{it-1}\\) on \\(D_{it}\\)\nLagged-DV adjustment - Regress \\(Y_{it}\\) on \\(D_{it}\\) and \\(Y_{it-1}\\)"
+  },
+  {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#controlling-for-ldv-under-strict-exogeneity",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#controlling-for-ldv-under-strict-exogeneity",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "Controlling for LDV under strict exogeneity",
+    "text": "Controlling for LDV under strict exogeneity\n\nWhat happens if we control for the lagged dependent variable under strict exogeneity?\n\nWe have a reversion-to-the-mean problem\n\nWhat we actually want to do is adjust for the expected lagged outcome.\n\nBut the actual observed outcome contains random error\n\\(Y_{it-1}\\) can be high because of the latent factor or the error\n\nThis is another case of endogenous selection bias or collider bias\n\nIf treated units tend to be higher in their outcomes than control (on average), then control units with similar observed outcomes are outliers\nWe’d expect the subsequent outcome to be closer to the mean!"
+  },
+  {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#simulation-controlling-for-ldv",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#simulation-controlling-for-ldv",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "Simulation: Controlling for LDV",
+    "text": "Simulation: Controlling for LDV\n\nTo see the bias from controlling for lagged \\(Y\\), consider the following DGP:\n\n\\(N = 2000\\) units, two periods (\\(t{-}1\\) and \\(t\\)), true treatment effect \\(\\tau = 0\\)\nTime-invariant confounder: \\(\\alpha_i \\sim N(0, 1)\\)\nTreatment correlated with confounder: \\(D_i \\sim \\text{Bernoulli}(\\text{logit}^{-1}(\\alpha_i))\\)\nOutcome at \\(t{-}1\\): \\(Y_{it-1} = \\alpha_i + \\varepsilon_{it-1}\\), where \\(\\varepsilon_{it-1} \\sim N(0, \\sigma_\\varepsilon^2)\\)\nOutcome at \\(t\\): \\(Y_{it} = \\alpha_i + \\beta D_i + \\varepsilon_{it}\\), where \\(\\varepsilon_{it} \\sim N(0, \\sigma_\\varepsilon^2)\\)\n\nParallel trends holds by construction: \\(\\alpha_i\\) is time-invariant\nVary \\(\\sigma_\\varepsilon \\in \\{0.5, 1, 2, 4, 8\\}\\) to control how noisy the proxy \\(Y_{it-1}\\) is for \\(\\alpha_i\\)\nCompare three estimators: simple difference-in-means post-treatment, DiD, and LDV"
+  },
+  {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#simulation-ldv-bias-from-measurement-error",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#simulation-ldv-bias-from-measurement-error",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "Simulation: LDV bias from measurement error",
+    "text": "Simulation: LDV bias from measurement error\n\n\nCode\nset.seed(53703)\nN &lt;- 2000\nn_sims &lt;- 500\nnoise_levels &lt;- c(0.5, 1, 2, 4, 8)\n\nsim_results &lt;- map_dfr(noise_levels, function(sigma_e) {\n  map_dfr(1:n_sims, function(s) {\n    # Time-invariant confounder\n    alpha_i &lt;- rnorm(N, 0, 1)\n    # Treatment correlated with confounder\n    D_i &lt;- rbinom(N, 1, plogis(alpha_i))\n    # True treatment effect is ZERO\n    beta &lt;- 0\n    # Pre and post outcomes: parallel trends holds\n    Y_pre &lt;- alpha_i + rnorm(N, 0, sigma_e)\n    Y_post &lt;- alpha_i + beta * D_i + rnorm(N, 0, sigma_e)\n\n    # Difference-in-means (biased by alpha_i)\n    dim_est &lt;- coef(lm(Y_post ~ D_i))[\"D_i\"]\n    # DiD (unbiased)\n    did_est &lt;- coef(lm(I(Y_post - Y_pre) ~ D_i))[\"D_i\"]\n    # LDV (biased -- errors in variables)\n    ldv_est &lt;- coef(lm(Y_post ~ D_i + Y_pre))[\"D_i\"]\n\n    tibble(sigma_e = sigma_e, sim = s,\n           `Diff-in-means` = dim_est, DiD = did_est, LDV = ldv_est)\n  })\n})\n\nsim_summary &lt;- sim_results %&gt;%\n  pivot_longer(cols = c(`Diff-in-means`, DiD, LDV),\n               names_to = \"Estimator\", values_to = \"estimate\") %&gt;%\n  group_by(sigma_e, Estimator) %&gt;%\n  summarize(mean_est = mean(estimate),\n            ci_low = quantile(estimate, 0.025),\n            ci_high = quantile(estimate, 0.975), .groups = \"drop\")\n\nsim_summary$Estimator &lt;- factor(sim_summary$Estimator,\n                                levels = c(\"Diff-in-means\", \"LDV\", \"DiD\"))\n\nggplot(sim_summary, aes(x = factor(sigma_e), y = mean_est,\n                        color = Estimator, group = Estimator)) +\n  geom_point(size = 3, position = position_dodge(width = 0.4)) +\n  geom_errorbar(aes(ymin = ci_low, ymax = ci_high),\n                width = 0.3, position = position_dodge(width = 0.4)) +\n  geom_hline(yintercept = 0, linetype = \"dashed\") +\n  labs(x = expression(paste(\"Noise in pre-treatment outcome (\", sigma[epsilon], \")\")),\n       y = \"Estimate\",\n       title = \"LDV bias under the DiD model (true effect = 0)\",\n       subtitle = \"More noise in Y(pre) = worse proxy for confounder = more residual bias\") +\n  scale_color_manual(values = c(\"Diff-in-means\" = \"gray60\",\n                                \"LDV\" = \"dodgerblue\",\n                                \"DiD\" = \"indianred\")) +\n  theme_bw() + theme(legend.position = \"bottom\")"
+  },
+  {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#simulation-what-if-outcomes-are-autocorrelated",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#simulation-what-if-outcomes-are-autocorrelated",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "Simulation: What if outcomes are autocorrelated?",
+    "text": "Simulation: What if outcomes are autocorrelated?\n\nIn the previous simulation, \\(\\varepsilon_{it-1}\\) and \\(\\varepsilon_{it}\\) are independent — the only thing linking outcomes over time is \\(\\alpha_i\\)\nIn practice, outcomes are often autocorrelated: a unit that is high at \\(t{-}1\\) (beyond \\(\\alpha_i\\)) tends to stay high at \\(t\\)\nModified DGP: let \\(\\varepsilon_{it} = \\rho \\cdot \\varepsilon_{it-1} + \\nu_i\\) where \\(\\nu_i \\sim N(0, \\sigma_\\varepsilon^2)\\)\n\nWhen \\(\\rho &gt; 0\\), \\(Y_{it-1}\\) is a better proxy for \\(Y_{it}\\)’s non-treatment component\nLDV should perform better because controlling for \\(Y_{it-1}\\) captures more of the variation\n\nWe fix \\(\\sigma_\\varepsilon = 2\\) and vary \\(\\rho \\in \\{0, 0.25, 0.5, 0.75, 0.95\\}\\)"
+  },
+  {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#simulation-autocorrelation-reduces-ldv-bias",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#simulation-autocorrelation-reduces-ldv-bias",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "Simulation: Autocorrelation reduces LDV bias",
+    "text": "Simulation: Autocorrelation reduces LDV bias\n\n\nCode\nset.seed(53703)\nN &lt;- 2000\nn_sims &lt;- 500\nsigma_e &lt;- 2\nrho_levels &lt;- c(0, 0.25, 0.5, 0.75, 0.95)\n\nsim_results_rho &lt;- map_dfr(rho_levels, function(rho) {\n  map_dfr(1:n_sims, function(s) {\n    alpha_i &lt;- rnorm(N, 0, 1)\n    D_i &lt;- rbinom(N, 1, plogis(alpha_i))\n    beta &lt;- 0\n\n    eps_pre &lt;- rnorm(N, 0, sigma_e)\n    eps_post &lt;- rho * eps_pre + rnorm(N, 0, sigma_e)\n\n    Y_pre &lt;- alpha_i + eps_pre\n    Y_post &lt;- alpha_i + beta * D_i + eps_post\n\n    dim_est &lt;- coef(lm(Y_post ~ D_i))[\"D_i\"]\n    did_est &lt;- coef(lm(I(Y_post - Y_pre) ~ D_i))[\"D_i\"]\n    ldv_est &lt;- coef(lm(Y_post ~ D_i + Y_pre))[\"D_i\"]\n\n    tibble(rho = rho, sim = s,\n           `Diff-in-means` = dim_est, DiD = did_est, LDV = ldv_est)\n  })\n})\n\nsim_summary_rho &lt;- sim_results_rho %&gt;%\n  pivot_longer(cols = c(`Diff-in-means`, DiD, LDV),\n               names_to = \"Estimator\", values_to = \"estimate\") %&gt;%\n  group_by(rho, Estimator) %&gt;%\n  summarize(mean_est = mean(estimate),\n            ci_low = quantile(estimate, 0.025),\n            ci_high = quantile(estimate, 0.975), .groups = \"drop\")\n\nsim_summary_rho$Estimator &lt;- factor(sim_summary_rho$Estimator,\n                                    levels = c(\"Diff-in-means\", \"LDV\", \"DiD\"))\n\nggplot(sim_summary_rho, aes(x = factor(rho), y = mean_est,\n                            color = Estimator, group = Estimator)) +\n  geom_point(size = 3, position = position_dodge(width = 0.4)) +\n  geom_errorbar(aes(ymin = ci_low, ymax = ci_high),\n                width = 0.3, position = position_dodge(width = 0.4)) +\n  geom_hline(yintercept = 0, linetype = \"dashed\") +\n  labs(x = expression(paste(\"Autocorrelation (\", rho, \")\")),\n       y = \"Estimate\",\n       title = expression(paste(\"LDV bias with autocorrelated errors (\", sigma[epsilon], \" = 2, true effect = 0)\")),\n       subtitle = \"More autocorrelation = lagged Y is better proxy = less LDV bias\") +\n  scale_color_manual(values = c(\"Diff-in-means\" = \"gray60\",\n                                \"LDV\" = \"dodgerblue\",\n                                \"DiD\" = \"indianred\")) +\n  theme_bw() + theme(legend.position = \"bottom\")"
+  },
+  {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#remember-the-dag",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#remember-the-dag",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "Remember the DAG!",
+    "text": "Remember the DAG!\n\nAdapted from Xu (2023) ‘Causal Inference with Time-Series Cross-Sectional Data: A Reflection’"
+  },
+  {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#illustration-the-effects-of-the-shale-shock",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#illustration-the-effects-of-the-shale-shock",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "Illustration: The Effects of the Shale Shock",
+    "text": "Illustration: The Effects of the Shale Shock\n\nLet’s return to our example of the effect of the “shale shock” on coal county voting for the Republican party (Gazmararian, 2025).\n\nLast week we showed concerning evidence of a parallel trends violation - coal-heavy regions were already trending Republican prior to 2008.\nExtrapolating the trend (triple-differences in time) eliminates the observed effect.\n\nWhat if, instead of DiD, we controlled for lagged Republican party vote share in 2004 and 2000."
+  },
+  {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#lagged-dv-approach-setup",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#lagged-dv-approach-setup",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "Lagged DV approach: Setup",
+    "text": "Lagged DV approach: Setup\n\n\nCode\ndff &lt;- readRDS(\"assets/data/matched_df.rds\")\ndff &lt;- dff %&gt;% filter(!is.na(oilgas_prop))\n\n# Create wide-format lagged outcomes\nlag_vars &lt;- dff %&gt;%\n  select(county_state, year, RepVotesMajorPercent) %&gt;%\n  pivot_wider(names_from = year, values_from = RepVotesMajorPercent,\n              names_prefix = \"Y_\")\n\ndff &lt;- dff %&gt;% left_join(lag_vars, by = \"county_state\")"
+  },
+  {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#lagged-dv-estimates-by-year",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#lagged-dv-estimates-by-year",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "Lagged DV: Estimates by year",
+    "text": "Lagged DV: Estimates by year\n\n\nCode\n# LDV regressions for each post-treatment year\nldv_years &lt;- c(2008, 2012, 2016, 2020)\nldv_results &lt;- map_dfr(ldv_years, function(yr) {\n  df_yr &lt;- dff %&gt;% filter(year == yr)\n  fit &lt;- estimatr::lm_robust(\n    RepVotesMajorPercent ~ treat + Y_2004 + Y_2000 + oilgas_prop,\n    data = df_yr, clusters = county_state, se_type = \"stata\")\n  tidy_fit &lt;- broom::tidy(fit) %&gt;% filter(term == \"treat\")\n  tidy_fit$year &lt;- yr\n  tidy_fit\n})\n\nggplot(ldv_results, aes(x = year, y = estimate)) +\n  geom_point(size = 3) +\n  geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 0.5) +\n  geom_hline(yintercept = 0, linetype = \"dashed\") +\n  geom_vline(xintercept = 2006, linetype = \"dashed\", color = \"red\") +\n  labs(x = \"Year\", y = \"Estimate (pp)\",\n       title = \"LDV: Effect of coal county on Republican vote share\",\n       subtitle = \"Controlling for Y[2004], Y[2000], and oil/gas employment\") +\n  scale_x_continuous(breaks = ldv_years) +\n  theme_bw()"
+  },
+  {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#did-estimates-by-year",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#did-estimates-by-year",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "DiD: Estimates by year",
+    "text": "DiD: Estimates by year\n\n\nCode\n# DiD regressions for each post-treatment year\ndid_results &lt;- map_dfr(ldv_years, function(yr) {\n  df_yr &lt;- dff %&gt;%\n    filter(year == yr) %&gt;%\n    mutate(dY = RepVotesMajorPercent - Y_2004)\n  fit &lt;- estimatr::lm_robust(\n    dY ~ treat + oilgas_prop,\n    data = df_yr, clusters = county_state, se_type = \"stata\")\n  tidy_fit &lt;- broom::tidy(fit) %&gt;% filter(term == \"treat\")\n  tidy_fit$year &lt;- yr\n  tidy_fit\n})\n\nggplot(did_results, aes(x = year, y = estimate)) +\n  geom_point(size = 3) +\n  geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 0.5) +\n  geom_hline(yintercept = 0, linetype = \"dashed\") +\n  geom_vline(xintercept = 2006, linetype = \"dashed\", color = \"red\") +\n  labs(x = \"Year\", y = \"Estimate (pp)\",\n       title = \"DiD: Effect of coal county on change in Republican vote share\",\n       subtitle = \"Outcome: Y[t] - Y[2004], controlling for oil/gas employment\") +\n  scale_x_continuous(breaks = ldv_years) +\n  theme_bw()"
+  },
+  {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#comparing-ldv-and-did",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#comparing-ldv-and-did",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "Comparing LDV and DiD",
+    "text": "Comparing LDV and DiD"
+  },
+  {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#placebo-test-pre-treatment-hold-out",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#placebo-test-pre-treatment-hold-out",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "Placebo test: Pre-treatment hold-out",
+    "text": "Placebo test: Pre-treatment hold-out\n\nLet’s construct a placebo test for the lagged DV approach.\n\nBecause we have many pre-treatment periods, we can apply the LDV approach to pre-treatment outcomes\n\nPlacebo 1: Outcome year 2004, controlling for \\(Y_{2000}\\) and \\(Y_{1996}\\)\nPlacebo 2: Outcome year 2000, controlling for \\(Y_{1996}\\) and \\(Y_{1992}\\)\nPlacebo 3: Outcome year 1996, controlling for \\(Y_{1992}\\) and \\(Y_{1988}\\)"
+  },
+  {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#placebo-ldv-estimates",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#placebo-ldv-estimates",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "Placebo: LDV estimates",
+    "text": "Placebo: LDV estimates\n\n\nCode\n# Placebo LDV regressions (2 lagged controls, matching main spec)\nplacebo_ldv_results &lt;- bind_rows(\n  # 2004 outcome, controlling for 2000, 1996\n  {\n    df_yr &lt;- dff %&gt;% filter(year == 2004)\n    fit &lt;- estimatr::lm_robust(\n      RepVotesMajorPercent ~ treat + Y_2000 + Y_1996 + oilgas_prop,\n      data = df_yr, clusters = county_state, se_type = \"stata\")\n    broom::tidy(fit) %&gt;% filter(term == \"treat\") %&gt;% mutate(year = 2004)\n  },\n  # 2000 outcome, controlling for 1996, 1992\n  {\n    df_yr &lt;- dff %&gt;% filter(year == 2000)\n    fit &lt;- estimatr::lm_robust(\n      RepVotesMajorPercent ~ treat + Y_1996 + Y_1992 + oilgas_prop,\n      data = df_yr, clusters = county_state, se_type = \"stata\")\n    broom::tidy(fit) %&gt;% filter(term == \"treat\") %&gt;% mutate(year = 2000)\n  },\n  # 1996 outcome, controlling for 1992, 1988\n  {\n    df_yr &lt;- dff %&gt;% filter(year == 1996)\n    fit &lt;- estimatr::lm_robust(\n      RepVotesMajorPercent ~ treat + Y_1992 + Y_1988 + oilgas_prop,\n      data = df_yr, clusters = county_state, se_type = \"stata\")\n    broom::tidy(fit) %&gt;% filter(term == \"treat\") %&gt;% mutate(year = 1996)\n  }\n)\n\nggplot(placebo_ldv_results, aes(x = year, y = estimate)) +\n  geom_point(size = 3) +\n  geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 0.5) +\n  geom_hline(yintercept = 0, linetype = \"dashed\") +\n  labs(x = \"Year\", y = \"Estimate (pp)\",\n       title = \"Placebo test: LDV estimates in pre-treatment periods\",\n       subtitle = \"Each placebo controls for two prior election outcomes + oil/gas share\") +\n  scale_x_continuous(breaks = c(1996, 2000, 2004)) +\n  theme_bw()"
+  },
+  {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#bracketing-angrist-and-pischke-2009",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#bracketing-angrist-and-pischke-2009",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "Bracketing: Angrist and Pischke (2009)",
+    "text": "Bracketing: Angrist and Pischke (2009)\n\nAngrist and Pischke (2009, Ch. 5.4) show that LDV and DiD estimates bracket the true causal effect if one of the two identifying assumptions holds.\n\nFocus on the simple linear model case - Ding and Li (2019) extend to the non-parametric setting.\n\nTwo-period DiD. All units under control at time \\(0\\)\n\nAssume \\(\\tau &gt; 0\\) (positive effect)\n\nFor exposition, assume time-effects are already removed via differencing and no covariates."
+  },
+  {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#bracketing-case-1-did-is-correct-ldv-is-misspecified",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#bracketing-case-1-did-is-correct-ldv-is-misspecified",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "Bracketing: Case 1 – DiD is correct, LDV is misspecified",
+    "text": "Bracketing: Case 1 – DiD is correct, LDV is misspecified\n\nSuppose the FE model is the truth:\n\\[Y_{it} = \\alpha_i + \\tau D_{it} + \\varepsilon_{it}\\]\nwhere \\(\\varepsilon_{it}\\) is serially uncorrelated and independent of \\(\\alpha_i\\) and \\(D_{it}\\). Since \\(D_{it-1} = 0\\): \\(Y_{it-1} = \\alpha_i + \\varepsilon_{it-1}\\)\nYou mistakenly estimate the LDV regression (controlling for \\(Y_{it-1}\\) instead of \\(\\alpha_i\\)):\n\\[Y_{it} = a + b \\cdot Y_{it-1} + \\tau^{\\text{LDV}} D_{it} + u_{it}\\]"
+  },
+  {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#bracketing-case-1-fwl-decomposition",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#bracketing-case-1-fwl-decomposition",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "Bracketing: Case 1 – FWL decomposition",
+    "text": "Bracketing: Case 1 – FWL decomposition\n\nBy FWL, the LDV estimand is \\(\\hat{\\tau}^{\\text{LDV}} \\xrightarrow{p} \\frac{\\text{Cov}(Y_{it}, \\tilde{D}_{it})}{\\text{Var}(\\tilde{D}_{it})}\\)\n\n\\(\\tilde{D}_{it} = D_{it} - \\hat{\\gamma} Y_{it-1}\\) is the residual from the auxiliary regression of \\(D_{it}\\) on \\(Y_{it-1}\\)\n\nTo evaluate this, substitute \\(\\alpha_i = Y_{it-1} - \\varepsilon_{it-1}\\) into the true model:\n\\[Y_{it} = \\alpha_i + \\tau D_{it} + \\varepsilon_{it} = (Y_{it-1} - \\varepsilon_{it-1}) + \\tau D_{it} + \\varepsilon_{it}\\]\n\\[\\Rightarrow Y_{it} = Y_{it-1} + \\tau D_{it} + (\\varepsilon_{it} - \\varepsilon_{it-1})\\]"
+  },
+  {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#bracketing-case-1-deriving-the-bias",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#bracketing-case-1-deriving-the-bias",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "Bracketing: Case 1 – Deriving the bias",
+    "text": "Bracketing: Case 1 – Deriving the bias\n\nSubstitute in and use properties of covariances\n\\[\\frac{\\text{Cov}(Y_{it}, \\tilde{D}_{it})}{\\text{Var}(\\tilde{D}_{it})} = \\frac{\\text{Cov}(Y_{it-1} + \\tau D_{it} + \\varepsilon_{it} - \\varepsilon_{it-1},\\; \\tilde{D}_{it})}{\\text{Var}(\\tilde{D}_{it})}\\]\n\\(\\text{Cov}(Y_{it-1}, \\tilde{D}_{it}) = 0\\) by construction (FWL residualizes out \\(Y_{it-1}\\))\n\\(\\text{Cov}(D_{it}, \\tilde{D}_{it}) = \\text{Var}(\\tilde{D}_{it})\\)\n\\(\\text{Cov}(\\varepsilon_{it}, \\tilde{D}_{it}) = 0\\) since \\(\\varepsilon_{it} \\perp\\!\\!\\!\\perp (D_{it}, Y_{it-1})\\)\nBut \\(\\text{Cov}(\\varepsilon_{it-1}, \\tilde{D}_{it}) = \\text{Cov}(\\varepsilon_{it-1}, D_{it}) - \\hat{\\gamma}\\text{Cov}(\\varepsilon_{it-1}, Y_{it-1})\\)\n\nAnd since \\(Y_{it-1} = \\alpha_i + \\varepsilon_{it-1}\\)…\n\\(\\text{Cov}(\\varepsilon_{it-1}, \\tilde{D}_{it})  = -\\hat{\\gamma}\\sigma^2_{\\varepsilon}\\)\n\nSo: \\(\\hat{\\tau}^{\\text{LDV}} \\xrightarrow{p} \\tau + \\frac{\\hat{\\gamma} \\sigma^2_\\varepsilon}{\\text{Var}(\\tilde{D}_{it})}\\), with bias having the same sign as \\(\\hat{\\gamma}\\) (the sign of selection)"
+  },
+  {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#bracketing-case-1-why-is-ldv-biased",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#bracketing-case-1-why-is-ldv-biased",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "Bracketing: Case 1 – Why is LDV biased?",
+    "text": "Bracketing: Case 1 – Why is LDV biased?\n\n\\(Y_{it-1} = \\alpha_i + \\varepsilon_{it-1}\\) is a noisy proxy for the confounder \\(\\alpha_i\\)\n\nControlling for a noisy proxy does not fully remove confounding\n\nWith positive selection (high outcome \\(\\leadsto\\) more likely to be treated) (\\(\\hat{\\gamma} &gt; 0\\))\n\nLDV overestimates \\(\\tau\\)\n\nWith negative selection (\\(\\hat{\\gamma} &lt; 0\\))\n\nLDV underestimates \\(\\tau\\)"
+  },
+  {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#bracketing-case-2-ldv-is-correct-did-is-misspecified",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#bracketing-case-2-ldv-is-correct-did-is-misspecified",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "Bracketing: Case 2 – LDV is correct, DiD is misspecified",
+    "text": "Bracketing: Case 2 – LDV is correct, DiD is misspecified\n\nNow suppose the LDV model is the truth:\n\\[Y_{it} = \\alpha + \\theta Y_{it-1} + \\tau D_{it} + \\varepsilon_{it}\\]\nWhere \\(\\varepsilon_{it}\\) is serially uncorrelated, \\(0 &lt; \\theta &lt; 1\\) (stationary)\nYou mistakenly estimate the first-differenced regression (no control for \\(Y_{it-1}\\)):\n\\[\\Delta Y_{it} = a + \\tau^{\\text{DiD}} D_{it} + u_{it}\\]\nwhere \\(\\Delta Y_{it} = Y_{it} - Y_{it-1}\\) and \\(D_{it-1} = 0\\) for everyone"
+  },
+  {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#bracketing-case-2-fwl-decomposition",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#bracketing-case-2-fwl-decomposition",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "Bracketing: Case 2 – FWL decomposition",
+    "text": "Bracketing: Case 2 – FWL decomposition\n\nThe DiD estimand is \\(\\hat{\\tau}^{\\text{DiD}} \\xrightarrow{p} \\frac{\\text{Cov}(\\Delta Y_{it}, D_{it})}{\\text{Var}(D_{it})}\\)\nSubtract \\(Y_{it-1}\\) from both sides of the true model:\n\\[Y_{it} - Y_{it-1} = \\alpha + (\\theta - 1)Y_{it-1} + \\tau D_{it} + \\varepsilon_{it}\\]\nSo \\(\\Delta Y_{it} = \\alpha + (\\theta - 1)Y_{it-1} + \\tau D_{it} + \\varepsilon_{it}\\). Substituting:\n\\[\\frac{\\text{Cov}(\\Delta Y_{it}, D_{it})}{\\text{Var}(D_{it})} = \\frac{\\text{Cov}(\\alpha + (\\theta - 1)Y_{it-1} + \\tau D_{it} + \\varepsilon_{it}, D_{it})}{\\text{Var}(D_{it})} \\]\n\\[\\frac{\\text{Cov}(\\Delta Y_{it}, D_{it})}{\\text{Var}(D_{it})} = \\tau + (\\theta - 1)\\frac{\\text{Cov}(Y_{it-1}, D_{it})}{\\text{Var}(D_{it})} + \\frac{\\text{Cov}(\\varepsilon_{it}, D_{it})}{\\text{Var}(D_{it})}\\]\n\\(\\text{Cov}(\\varepsilon_{it}, D_{it}) = 0\\) by assumption (LDV model has no unobserved confounding)"
+  },
+  {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#bracketing-case-2-deriving-the-bias",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#bracketing-case-2-deriving-the-bias",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "Bracketing: Case 2 – Deriving the bias",
+    "text": "Bracketing: Case 2 – Deriving the bias\n\nTherefore:\n\\[\\hat{\\tau}^{\\text{DiD}} \\xrightarrow{p} \\tau + (\\theta - 1)\\frac{\\text{Cov}(Y_{it-1}, D_{it})}{\\text{Var}(D_{it})}\\]\nThe bias is \\((\\theta - 1)\\frac{\\text{Cov}(Y_{it-1}, D_{it})}{\\text{Var}(D_{it})}\\)\nThe bias has the opposite sign from the selection:\n\nWith positive selection (\\(\\text{Cov}(Y_{it-1}, D_{it}) &gt; 0\\)) and \\(\\theta &lt; 1\\): bias is negative → DiD underestimates\nWith negative selection: bias is positive → DiD overestimates\n\nUnder this model, LDV is unbiased: it correctly controls for \\(Y_{it-1}\\)"
+  },
+  {
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#bracketing",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#bracketing",
+    "title": "Week 11: Panel Data Causal Inference",
+    "section": "Bracketing",
+    "text": "Bracketing\n\nCombining both cases with positive selection (\\(\\text{Cov}(\\alpha_i, D_i) &gt; 0\\)):\n\nIf strict exogeneity is correct: LDV overestimates, DiD is exact\nIf sequential ignorability is correct: DiD underestimates, LDV is exact\n\nThe true effect is bracketed between the two estimates if one of these two assumptions is true.\nThis is a useful result, but important to be aware of its limitations\n\nIt guarantees nothing if neither assumption is true!\n\nIn many cases, we’re skeptical of parallel trends but we don’t think sequential ignorability is right either\n\nRather, we think the unobserved latent factor structure might be more complicated than \\(U_{it} = \\alpha_i + \\delta_t\\)\nWhat do we do then?"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#welcome",
+    "href": "slides/week1/week1_intro_and_review.html#welcome",
+    "title": "Week 1: Review!",
+    "section": "Welcome!",
+    "text": "Welcome!\n\\[\n  \\require{cancel}\n\\]"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#course-overview",
+    "href": "slides/week1/week1_intro_and_review.html#course-overview",
+    "title": "Week 1: Review!",
+    "section": "Course Overview",
+    "text": "Course Overview\n\nInstructor: Anton Strezhnev\nTA: Junda Li\nLogistics:\n\nLectures M/W - 9:30am - 10:45am\n5 Problem Sets (~ 2 weeks)\nIn-class midterm (March 4th)\nIn-class final (May 4th)\nMy office hours: Tuesdays 2pm-4pm (North Hall 322D)\nJunda’s office hours: Thursdays, 1:30pm-3:30pm, (North Hall 101/Grad Lounge)\nCourse Website: https://www.antonstrezhnev.com/ps813\nAnnouncements will be posted on Ed - please let me know if you do not have access."
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#course-objectives",
+    "href": "slides/week1/week1_intro_and_review.html#course-objectives",
+    "title": "Week 1: Review!",
+    "section": "Course Objectives",
+    "text": "Course Objectives\n\nWhat is this course about?\n\nDefining causal effects w/ a structured statistical framework (potential outcomes)\nOutlining assumptions necessary to identify causal effects from data\nEstimating and conducting inference on causal effects\n\nGoals for the course\n\nGive you the tools you need to develop your own causal research designs and comment on others’ designs.\nEquip you with an understanding of the fundamentals of causal inference to enable you to learn new methods.\nProfessionalization - how did causal inference emerge as a field and how do different disciplines approach the topic?"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#course-workflow",
+    "href": "slides/week1/week1_intro_and_review.html#course-workflow",
+    "title": "Week 1: Review!",
+    "section": "Course workflow",
+    "text": "Course workflow\n\nLectures\n\nOne set of slides for each of the two lectures in each week\nYour primary point of instruction - goal is to synthesize the core material + give you the tools to learn more.\nI want lectures to be interactive - you should ask questions and interrupt!\nYou should do the readings prior to each week, but definitely be sure to do them before the Wednesday.\n\nReadings\n\nMix of textbooks and papers\nCombination of “theory” readings w/ selected applications to political science (and sociology/econ)\nOrganized on the syllabus by priority. Try to do all of them, but if you need to prioritize, start with the first ones on the list for the week.\nAll readings available digitally on the course website."
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#course-workflow-1",
+    "href": "slides/week1/week1_intro_and_review.html#course-workflow-1",
+    "title": "Week 1: Review!",
+    "section": "Course workflow",
+    "text": "Course workflow\n\nProblem sets (25% of your grade)\n\nMain day-to-day component of the class – meant to get you working with your colleagues and thinking hard about the material.\nCollaboration is strongly encouraged – you should ask and answer questions on our class Ed Discussion board\nSubmit on the Gradescope assignment platform\nGrading is on a plus/check/minus scale.\n\nConversion to grade point is somewhat holistic.\nMajority plusses is an A, Majority checks is an AB, Majority minus is a B\n\nSolutions will be posted after the due-date."
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#course-workflow-2",
+    "href": "slides/week1/week1_intro_and_review.html#course-workflow-2",
+    "title": "Week 1: Review!",
+    "section": "Course workflow",
+    "text": "Course workflow\n\nMidterm Exam (30% of your grade)\n\nThe midterm will be in-class on March 4th\n\nCovers all material up to that point (experiments + selection-on-observables)\nCombination of theoretical questions and code/results analysis.\n\n\nFinal Exam (35% of your grade)\n\nThe final exam will be in-person and written during the exam period (May 4th)\nA longer version of the midterm exam (to cover the 2 hour exam block).\n\nParticipation (10% of your grade)\n\nIt is important that you actively engage with lecture and with the teaching staff – ask and answer questions.\nDo the reading!\nParticipating on Ed counts towards this as well."
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#class-requirements",
+    "href": "slides/week1/week1_intro_and_review.html#class-requirements",
+    "title": "Week 1: Review!",
+    "section": "Class Requirements",
+    "text": "Class Requirements\n\nOverall: An interest in learning and willingness to ask questions.\nGenerally assume some background in probability theory and statistics (e.g. an intro course taught in most departments)\nMain concepts to be familiar with:\n\nproperties of random variables\nestimands and estimators\nbias, variance, consistency\ncentral limit theorem\nconfidence intervals; hypothesis testing"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#a-brief-overview",
+    "href": "slides/week1/week1_intro_and_review.html#a-brief-overview",
+    "title": "Week 1: Review!",
+    "section": "A brief overview",
+    "text": "A brief overview\n\nWeek 1: Review of the properties of estimators\nWeek 2-4: Experiments\nWeek 5-7: Selection-on-observables\nWeek 8: Instrumental variables\nWeek 9-10: Differences-in-differences\nWeek 11: Panel data causal inference\nWeek 12: Regression discontinuity designs\nWeek 13: Causal mediation; sensitivity analysis\nWeek 14: Shift-share designs and experiments with interference"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#review-estimators-and-their-properties",
+    "href": "slides/week1/week1_intro_and_review.html#review-estimators-and-their-properties",
+    "title": "Week 1: Review!",
+    "section": "Review: Estimators and their properties",
+    "text": "Review: Estimators and their properties"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#estimation",
+    "href": "slides/week1/week1_intro_and_review.html#estimation",
+    "title": "Week 1: Review!",
+    "section": "Estimation",
+    "text": "Estimation\n\nOne critical use of statistical theory is understanding how to learn about things we don’t observe using things that we do observe. We call this estimation.\n\nWhat is the share of voters in Wisconsin who will turn out in the 2026 election?\nWhat is the share of voters who turn out among those assigned to receive a GOTV phone call?\n\nEstimand: The unobserved quantity that we want to learn about. Often denoted via a greek letter (e.g. \\(\\mu\\), \\(\\pi\\))\n\nOften a “population” characteristic that we want to learn about via a sample.\n\nBut in this class, you’ll learn another reason why we sometimes can’t observe a quantity of interest even in a sample!\n\nImportant to define your estimand well. (Lundberg, Johnson and Stewart, 2022)"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#estimation-1",
+    "href": "slides/week1/week1_intro_and_review.html#estimation-1",
+    "title": "Week 1: Review!",
+    "section": "Estimation",
+    "text": "Estimation\n\nEstimator: The function of random variables that we will use to try to estimate the quantity of interest. Often denoted with a hat on the parameter of interest (e.g. \\(\\hat{\\mu}\\), \\(\\hat{\\pi}\\))\n\nWhy are the variables random?\n\nClassic inference: We have a random sample from the population - if we took another sample, we would obtain a different realization when applying our estimator to the new sample.\nDesign-based inference: We have a randomly assigned treatment - if we were to re-run the experiment, we would observe a different treatment/control difference b/c of different allocation of units.\n\n\nEstimate: A single realization of our estimator (e.g. 0.3, 9.535)\n\nWe often report both point estimates (“best guess”) and interval estimates (e.g. confidence intervals).\nCareful not to confuse properties of estimators with properties of the estimates themselves."
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#estimation-2",
+    "href": "slides/week1/week1_intro_and_review.html#estimation-2",
+    "title": "Week 1: Review!",
+    "section": "Estimation",
+    "text": "Estimation\n\n\n\nIllustrating Estimation"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#estimation-3",
+    "href": "slides/week1/week1_intro_and_review.html#estimation-3",
+    "title": "Week 1: Review!",
+    "section": "Estimation",
+    "text": "Estimation\n\nThe classic estimation problem in statistics is to estimate some unknown population mean \\(\\mu\\) from an i.i.d. sample of \\(n\\) observations \\(Y_1, Y_2, \\dotsc, Y_n\\).\n\nWe assume that each \\(Y_i\\) is a draw from the target population with mean \\(\\mu\\) and population variance \\(\\sigma^2\\) (identically distributed) - therefore \\(E[Y_i] = \\mu\\) and \\(Var(Y_i) = \\sigma^2\\)\nWe’ll also assume that conditioning on \\(Y_i\\) tells us nothing about any other \\(Y_j\\)\n\\(Y_i \\perp \\!\\!\\! \\perp Y_j\\) (independently distributed) - this implies \\(Cov(Y_i, Y_j) = 0\\)\n\nOur estimand: \\(\\mu\\)\nOur estimator: The sample mean \\(\\hat{\\mu} = \\bar{Y} = \\frac{1}{n}\\sum_{i=1}^n Y_i\\)\nOur estimate: A particular realization of that estimator based on our observed sample (e.g. \\(0.4\\))\nNote that our estimator is a random variable – it’s a function of \\(Y_i\\)s which are random variables.\n\nTherefore it has an expectation \\(E[\\hat{\\mu}]\\)\nIt has a variance \\(Var(\\hat{\\mu})\\)\nIt has a distribution (which we may or may not know)."
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#estimation-4",
+    "href": "slides/week1/week1_intro_and_review.html#estimation-4",
+    "title": "Week 1: Review!",
+    "section": "Estimation",
+    "text": "Estimation\n\nHow do we know if we’ve picked a good estimator? Will it be close to the truth? Will it be systematically higher or lower than the target?\nWe want to derive some of its properties\n\nBias: \\(E[\\hat{\\mu}] - \\mu\\)\nVariance: \\(Var(\\hat{\\mu})\\)\nConsistency: Does \\(\\hat{\\mu}\\) converge in probability to \\(\\mu\\) as \\(n\\) goes to infinity?\nAsymptotic distribution: Is the sampling distribution of \\(\\hat{\\mu}\\) well approximated by a known distribution?"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#estimation-5",
+    "href": "slides/week1/week1_intro_and_review.html#estimation-5",
+    "title": "Week 1: Review!",
+    "section": "Estimation",
+    "text": "Estimation\n\n\n\nProperties of Estimators"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#unbiasedness",
+    "href": "slides/week1/week1_intro_and_review.html#unbiasedness",
+    "title": "Week 1: Review!",
+    "section": "Unbiasedness",
+    "text": "Unbiasedness\n\nIs the expectation of \\(\\hat{\\mu}\\) equal to \\(\\mu\\)?\nFirst we pull out the constant.\n\\[E[\\hat{\\mu}] = E\\left[\\frac{1}{n}\\sum_{i=1}^n Y_i\\right] = \\frac{1}{n}E\\left[\\sum_{i=1}^n Y_i\\right]\\]\nNext we use linearity of expectations\n\\[\\frac{1}{n}E\\left[\\sum_{i=1}^n Y_i\\right] = \\frac{1}{n}\\sum_{i=1}^n E\\left[Y_i\\right]\\]\nFinally, under our i.i.d. assumption\n\\[\\frac{1}{n}\\sum_{i=1}^n E\\left[Y_i\\right] = \\frac{1}{n}\\sum_{i=1}^n \\mu = \\frac{n \\mu}{n} = \\mu\\]\nTherefore, the bias, \\(\\text{Bias}(\\hat{\\mu}) = E[\\hat{\\mu}] - \\mu = 0\\)"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#variance",
+    "href": "slides/week1/week1_intro_and_review.html#variance",
+    "title": "Week 1: Review!",
+    "section": "Variance",
+    "text": "Variance\n\nWhat is the variance of \\(\\hat{\\mu}\\)? Again, start by pulling out the constant.\n\\[Var(\\hat{\\mu}) = Var\\left[\\frac{1}{n}\\sum_{i=1}^n Y_i\\right] = \\frac{1}{n^2}Var\\left[\\sum_{i=1}^n Y_i\\right]\\]\nWe can further simplify by using our i.i.d. assumption. The variance of a sum of i.i.d. random variables is the sum of the variances.\n\\[\\frac{1}{n^2}Var\\left[\\sum_{i=1}^n Y_i\\right] = \\frac{1}{n^2}\\sum_{i=1}^n Var\\left[Y_i\\right]\\]\n“identically distributed”\n\\[\\frac{1}{n^2}\\sum_{i=1}^n Var\\left[Y_i\\right] = \\frac{1}{n^2}\\sum_{i=1}^n \\sigma^2 = \\frac{n\\sigma^2}{n^2} = \\frac{\\sigma^2}{n}\\]\nTherefore, the variance is \\(\\frac{\\sigma^2}{n}\\)"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#asymptotic-properties",
+    "href": "slides/week1/week1_intro_and_review.html#asymptotic-properties",
+    "title": "Week 1: Review!",
+    "section": "Asymptotic properties",
+    "text": "Asymptotic properties\n\nAnother way of talking about properties of estimators is to consider how they behave as the sample size gets large.\n\nSometimes this is just easier than working with finite sample expectations.\nAdditionally, we might have a biased estimator. Does that bias “go away” in large samples?\n\nThis requires us to talk about sequences of estimators indexed (typically) by sample size.\n\nWe’ll typically denote this sequence with a subscript - for example, for the sample mean…\n\n\\[\\bar{Y}_n = \\{\\bar{Y}_1, \\bar{Y}_2, \\bar{Y}_3, \\dotsc\\}\\]\nCan we characterize the limit of this sequence of estimators?\n\nIt’s a random variable…so we need a slightly different language compared to deterministic series.\nBut a lot of intuitions from convergence of series carry over!"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#convergence-in-probability",
+    "href": "slides/week1/week1_intro_and_review.html#convergence-in-probability",
+    "title": "Week 1: Review!",
+    "section": "Convergence in probability",
+    "text": "Convergence in probability\n\nFirst, we can talk about the convergence of a sequence to a single value\n\nThere are lots of different forms of convergence here, but the most common that we use is convergence in probability\nThis is the form of convergence in the “weak” law of large numbers\n\nConvergence in probability\n\nA sequence of random variables \\(\\hat{\\mu}_n\\) is said to converge in probability to some value \\(\\mu\\) if for every \\(\\epsilon &gt; 0\\),\n\\[\\Pr(|\\hat{\\mu}_n - \\mu| \\ge \\epsilon) \\to 0\\] as \\(n \\to \\infty\\).\n\nWe’ll denote this as \\(\\hat{\\mu_n} \\xrightarrow{p} \\mu\\). You’ll see other texts use the term “plim”\nAn estimator that converges in probability to the target estimand is called consistent."
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#properties-of-convergence-in-probability",
+    "href": "slides/week1/week1_intro_and_review.html#properties-of-convergence-in-probability",
+    "title": "Week 1: Review!",
+    "section": "Properties of convergence in probability",
+    "text": "Properties of convergence in probability\n\nConsider two sequences \\(X_n \\xrightarrow{p} x\\) and \\(Y_n \\xrightarrow{p} y\\) and continuous function \\(g()\\). By the continuous mapping theorem\n\n\n\\(X_n + Y_n \\xrightarrow{p} x + y\\)\n\\(X_nY_n \\xrightarrow{p} xy\\)\n\\(X_n/Y_n \\xrightarrow{p} x/y\\) if \\(y \\neq 0\\)\n\\(g(X_n) \\xrightarrow{p} g(x)\\)"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#convergence-in-distribution",
+    "href": "slides/week1/week1_intro_and_review.html#convergence-in-distribution",
+    "title": "Week 1: Review!",
+    "section": "Convergence in distribution",
+    "text": "Convergence in distribution\n\nIn addition to asking whether the estimator will get closer to our target as \\(n\\) gets large, we also want to know whether its sampling distribution will be well approximated by a known distribution\n\nSpecifically, we care about whether it is approximately normally distributed\nThis lets us use our typical hypothesis tests and confidence intervals that rely on normal distribution critical values!\n\nConvergence in distribution\n\nA sequence of random variables \\(X_n\\) with CDF \\(F_n(x)\\) is said to converge in distribution to some random variable \\(X\\) with CDF \\(F(x)\\) if\n\\[\\lim_{n \\to \\infty} F_n(x) = F(x)\\]\n\nWe’ll typically denote this as as \\(X_n \\xrightarrow{d} X\\)."
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#properties-of-convergence-in-distribution",
+    "href": "slides/week1/week1_intro_and_review.html#properties-of-convergence-in-distribution",
+    "title": "Week 1: Review!",
+    "section": "Properties of convergence in distribution",
+    "text": "Properties of convergence in distribution\n\nIn addition to the continuous mapping theorem from before, it is also useful to know Slutsky’s theorem which involves one sequence converging in distribution and another converging in probability\nConsider two sequences \\(X_n \\xrightarrow{d} X\\) and \\(Y_n \\xrightarrow{p} y\\)\n\n\n\\(X_n + Y_n \\xrightarrow{d} X + y\\)\n\\(X_nY_n \\xrightarrow{d} Xy\\)\n\\(X_n/Y_n \\xrightarrow{d} X/y\\) if \\(y \\neq 0\\)"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#the-central-limit-theorem",
+    "href": "slides/week1/week1_intro_and_review.html#the-central-limit-theorem",
+    "title": "Week 1: Review!",
+    "section": "The Central Limit Theorem",
+    "text": "The Central Limit Theorem\n\nThe most famous convergence in distribution result is the central limit theorem\n\nThe mean of \\(n\\) independent and identically distributed random variables converges in distribution to a normal distribution\nMany other central limit theorems under different assumptions on the random variables (e.g. “weak” dependence)\nShowing that an estimator is asymptotically normal often involves showing we can write it in a form that admits one of these CLTs\n\nBy the central limit theorem\n\\[\\sqrt{n}(\\hat{\\mu}_n - \\mu) \\xrightarrow{d} \\mathcal{N}(0, \\sigma^2)\\]\nAnd we’ll use this result to justify our asymptotic approximation of the sampling distribution of \\(\\hat{\\mu}_n\\)\n\\[\\hat{\\mu}_n \\overset{a}{\\sim} \\mathcal{N}\\bigg(\\mu, \\frac{\\sigma^2}{n}\\bigg)\\]"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#big-o_p-and-little-o_p-notation",
+    "href": "slides/week1/week1_intro_and_review.html#big-o_p-and-little-o_p-notation",
+    "title": "Week 1: Review!",
+    "section": "Big-\\(O_p\\) and little-\\(o_p\\) notation",
+    "text": "Big-\\(O_p\\) and little-\\(o_p\\) notation\n\nSometimes we’ll want to use shorthand to characterize the asymptotic behavior of a given term\nLittle-\\(o_p\\) notation denotes convergence (in probability) to zero\n\n\\(Y_n = o_p(1)\\) means \\(\\Pr(|Y_n| \\ge \\epsilon) \\to 0\\) as \\(n \\to \\infty\\)\ne.g. for a consistent estimator, we can write \\(\\hat{\\mu}_n = \\mu + o_p(1)\\)\n\nBig-\\(O_p\\) notation denotes boundedness of a sequence as \\(n \\to \\infty\\)\n\n\\(Y_n = O_p(1)\\) means that \\(Pr(|Y_n| &gt; M) &lt; \\epsilon\\) for sufficiently large \\(n\\)"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#big-o_p-and-little-o_p-notation-1",
+    "href": "slides/week1/week1_intro_and_review.html#big-o_p-and-little-o_p-notation-1",
+    "title": "Week 1: Review!",
+    "section": "Big-\\(O_p\\) and little-\\(o_p\\) notation",
+    "text": "Big-\\(O_p\\) and little-\\(o_p\\) notation\n\nThe rest of the orders are defined recursively\n\nSo \\(Y_n = O_p(a_n)\\) means that \\(\\frac{Y_n}{a_n} = O_p(1)\\)\n\nUseful properties\n\n\\(o_p(1) + o_p(1) = o_p(1)\\)\n\\(o_p(1) + O_p(1) = O_p(1)\\)\n\\(O_p(1)o_p(1) = o_p(1)\\)\nIf a sequence is \\(o_p(1)\\), it is \\(O_p(1)\\) but not vice-versa."
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#sqrtn-consistency",
+    "href": "slides/week1/week1_intro_and_review.html#sqrtn-consistency",
+    "title": "Week 1: Review!",
+    "section": "\\(\\sqrt{n}\\)-consistency",
+    "text": "\\(\\sqrt{n}\\)-consistency\n\nMost common place where you will see Big-\\(O_p\\) notation is in discussion of convergence rates of estimators\n\nNot just whether \\(\\hat{\\mu}\\) converges to \\(\\mu\\), but how quickly?\nThis matters for determining whether our approximation is going to be good quality in finite samples!\n\nAn estimator \\(\\hat{\\mu}_n\\) has a convergence rate \\(r_n \\to \\infty\\) if\n\\[r_n(\\hat{\\mu}_n - \\mu) = O_p(1)\\]\nThis implies that the estimation error \\(\\hat{\\mu}_n - \\mu\\) is \\(O_p(1/r_n)\\) or in other words bounded in probability by \\(1/r_n \\to 0\\)."
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#sqrtn-consistency-1",
+    "href": "slides/week1/week1_intro_and_review.html#sqrtn-consistency-1",
+    "title": "Week 1: Review!",
+    "section": "\\(\\sqrt{n}\\)-consistency",
+    "text": "\\(\\sqrt{n}\\)-consistency\n\nFrom the central limit theorem, the most common convergence rate that you’ll encounter is \\(\\sqrt{n}\\)\n\nSlower rates appear in nonparametrics and machine learning and create challenges for inference!\n\nSuppose the central limit theorem holds w.r.t. \\(\\hat{\\mu}_n\\) (e.g. it’s the sample mean).\n\\[\\sqrt{n}(\\hat{\\mu}_n - \\mu) \\sim \\mathcal{N}(0, \\sigma^2)\\]\nThe variance is finite, does not depend on \\(n\\), and the distribution is normal\n\nSo we can always find an \\(M\\) sufficiently large that the probability of observing \\(|\\hat{\\mu}_n - \\mu|\\) greater than that \\(M\\) is less than any arbitrary \\(\\epsilon &gt; 0\\).\n\nAnd therefore\n\\[\\sqrt{n}(\\hat{\\mu}_n - \\mu) = O_p(1)\\]"
+  },
+  {
+    "objectID": "slides/week1/week1_intro_and_review.html#next-week",
+    "href": "slides/week1/week1_intro_and_review.html#next-week",
+    "title": "Week 1: Review!",
+    "section": "Next week",
+    "text": "Next week\n\nPotential outcomes model\n\nDefining treatment effects as contrasts in counterfactuals\n\nCausal identification\n\nHow do we connect something we can observe (e.g. a difference-in-means) to something we can’t observe (an average treatment effect)?\nWe need to make assumptions!\nEvery identification assumption imposes some outside knowledge on the data-generating process.\n\nRandomized experiments\n\nRandomized experiments solve the identification problem (for the sample ATE)\nWhat can we get just with randomization of treatment?"
+  },
+  {
+    "objectID": "resources.html",
+    "href": "resources.html",
+    "title": "Resources",
+    "section": "",
+    "text": "These textbooks provide a number of the readings that will be used through the course of the semester. Each is available either as a free online version or in digital form via UW-Madison library access.\n\nCunningham, Scott. Causal inference: The Mixtape. Yale University Press, 2021.\n\nFree online version\n\nHuntington-Klein, Nick. The Effect: An Introduction to Research Design and Causality. Chapman and Hall/CRC, 2021.\n\nFree online version\n\nHernán, Miguel A. and James M. Robins. Causal Inference: What If. Chapman & Hall/CRC. 2020.\n\nFree PDF available\n\nImbens, Guido W. and Donald B. Rubin. Causal Inference for Statistics, Social, and Biomedical Sciences. Cambridge University Press. 2015.\n\nUW-Madison Library Access\n\nMorgan, Stephen L., and Christopher Winship. Counterfactuals and Causal Inference. Cambridge University Press, 2015.\n\nUW-Madison Library Access\n\nWager, Stefan. Causal inference: A statistical learning approach.\n\nDraft PDF available here"
+  },
+  {
+    "objectID": "resources.html#textbooks",
+    "href": "resources.html#textbooks",
+    "title": "Resources",
+    "section": "",
+    "text": "These textbooks provide a number of the readings that will be used through the course of the semester. Each is available either as a free online version or in digital form via UW-Madison library access.\n\nCunningham, Scott. Causal inference: The Mixtape. Yale University Press, 2021.\n\nFree online version\n\nHuntington-Klein, Nick. The Effect: An Introduction to Research Design and Causality. Chapman and Hall/CRC, 2021.\n\nFree online version\n\nHernán, Miguel A. and James M. Robins. Causal Inference: What If. Chapman & Hall/CRC. 2020.\n\nFree PDF available\n\nImbens, Guido W. and Donald B. Rubin. Causal Inference for Statistics, Social, and Biomedical Sciences. Cambridge University Press. 2015.\n\nUW-Madison Library Access\n\nMorgan, Stephen L., and Christopher Winship. Counterfactuals and Causal Inference. Cambridge University Press, 2015.\n\nUW-Madison Library Access\n\nWager, Stefan. Causal inference: A statistical learning approach.\n\nDraft PDF available here"
+  },
+  {
+    "objectID": "resources.html#software",
+    "href": "resources.html#software",
+    "title": "Resources",
+    "section": "Software",
+    "text": "Software\n\nR and RStudio\nThis course uses R for all programming assignments. You are welcome to use the RStudio Interactive Development Environment (IDE) to write code and edit the assignment write-up. Due to the extensive integration of Quarto into Posit-developed IDEs, I encourage using either RStudio or the more recent Positron IDE.\n\nR: Download from https://www.r-project.org\nRStudio: Download from https://posit.co/download/rstudio-desktop/\nPositron: Download from https://positron.posit.co/\n\n\nRecommended Guides for R Programming\n\nR For Data Science Available at https://r4ds.hadley.nz/\nData Visualization: A Practical Introduction Available at https://socviz.co/\n\n\n\n\nQuarto and Markdown\nThe assignments are distributed as .qmd Quarto files. Quarto is the successor to R Markdown and lets you present your analysis, code, figures and written discussion all in a single document. It uses Markdown syntax for formatting text and supports embedded R code chunks that execute when you render the document. This lets you present your analysis, code, figures, and written discussion all in one place.\nTo complete assignments, you will edit the provided .qmd file, adding your code and written responses, then render it to an HTML file for submission. Both your .html output and .qmd file will be submitted via Gradescope\n\nQuarto: Download from https://quarto.org/docs/get-started/\nQuarto Guide: https://quarto.org/docs/guide/\nMarkdown Basics: https://quarto.org/docs/authoring/markdown-basics.html\nNote also the chapter on Quarto in R For Data Science"
+  },
+  {
+    "objectID": "resources.html#tutorials",
+    "href": "resources.html#tutorials",
+    "title": "Resources",
+    "section": "Tutorials",
+    "text": "Tutorials\nBelow are some additional tutorials to help supplement the main course material. They will generally focus on specific topics in statistical computing and things that we did not have time to cover as part of the main set of lectures.\n\nBasics of Monte Carlo simulations\nPower calculations"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "PoliSci 813",
+    "section": "",
+    "text": "Causal Inference\nDesigning studies to uncover cause and effect from data\nPoliSci 813 • Spring 2026University of Wisconsin-Madison\n\n\n\n\n\n\n\n\nInstructor\n\n   Anton Strezhnev\n   North Hall 322D\n   strezhnev@wisc.edu\n\n\n\nTeaching Assistant\n\n   Junda Li\n   jli2458@wisc.edu\n\n\n\n\nCourse details\n\n   Mondays & Wednesdays\n   1/21/2026 - 5/4/2026\n   9:30am - 10:45am\n   North Hall 422\n\n\n\nContacting me\nE-mail is the best way to get in touch with me. My dedicated office hours are Tuesdays from 2pm-4pm if you want to meet in-person. I am also generally in my office on weekdays during normal hours and my door is open, so you are welcome to drop in. You can also feel free to e-mail me to confirm availability or to schedule a virtual meeting via Zoom."
+  },
+  {
+    "objectID": "assignments.html",
+    "href": "assignments.html",
+    "title": "Assignments",
+    "section": "",
+    "text": "Assignment\nAssigned\nDue\n\n\n\n\nProblem Set 1\nJan 21 (Week 1)\nFeb 4 (Week 3)\n\n\nProblem Set 2\nFeb 4 (Week 3)\nFeb 18 (Week 5)\n\n\nProblem Set 3\nFeb 18 (Week 5)\nMarch 4 (Week 7)\n\n\nMidterm Exam\nMarch 4 (Week 7)\nIn-Class\n\n\nProblem Set 4\nMarch 11 (Week 8)\nMarch 25 (Week 10)\n\n\nProblem Set 5\nApril 8 (Week 11)\nApril 22 (Week 13)\n\n\nFinal Exam\nMay 4 (Exam Week)\nLocation TBA"
+  },
+  {
+    "objectID": "assignments.html#schedule",
+    "href": "assignments.html#schedule",
+    "title": "Assignments",
+    "section": "",
+    "text": "Assignment\nAssigned\nDue\n\n\n\n\nProblem Set 1\nJan 21 (Week 1)\nFeb 4 (Week 3)\n\n\nProblem Set 2\nFeb 4 (Week 3)\nFeb 18 (Week 5)\n\n\nProblem Set 3\nFeb 18 (Week 5)\nMarch 4 (Week 7)\n\n\nMidterm Exam\nMarch 4 (Week 7)\nIn-Class\n\n\nProblem Set 4\nMarch 11 (Week 8)\nMarch 25 (Week 10)\n\n\nProblem Set 5\nApril 8 (Week 11)\nApril 22 (Week 13)\n\n\nFinal Exam\nMay 4 (Exam Week)\nLocation TBA"
+  },
+  {
+    "objectID": "assignments.html#problem-sets",
+    "href": "assignments.html#problem-sets",
+    "title": "Assignments",
+    "section": "Problem Sets",
+    "text": "Problem Sets\nProblem sets are distributed as .qmd files along with their rendered .html form. You should edit the provided .qmd file and render to .html when submitting the assignment. Additional files (e.g. datasets) are located in sub-folders. For convenience, all the combined files are also distributed as a .zip compressed archive.\n\nProblem Set 1\n\nGithub Repository\n.zip archive\n\n\n\nProblem Set 2\n\nGithub Repository\n.zip archive\n\n\n\nProblem Set 3\n\nGithub Repository\n.zip archive\n\n\n\nProblem Set 4\n\nGithub Repository\n.zip archive"
+  },
+  {
+    "objectID": "lectures.html",
+    "href": "lectures.html",
+    "title": "Lectures",
+    "section": "",
+    "text": "Lecture slides are available as self-contained .html files made with RevealJS from a Quarto .qmd file. You can choose to print these to a PDF document by using the “PDF Export Mode” in the Tools menu accessed via the settings button in the lower left-hand side of the page. You are also welcome to directly download the .qmd file and supporting data/images/etc… from the Github repository. Slides are organized by week and combine Monday and Wednesday’s lectures.\n\n\n\nWeek 1 Github Repository\nWeek 1 .html slides\n\n\n\n\n\nWeek 2 Github Repository\nWeek 2 .html slides\n\n\n\n\n\nWeek 3 Github Repository\nWeek 3 .html slides\n\n\n\n\n\nWeek 4 Github Repository\nWeek 4 .html slides\n\n\n\n\n\nWeek 5 Github Repository\nWeek 5 .html slides\n\n\n\n\n\nWeek 6 Github Repository\nWeek 6 .html slides\n\n\n\n\n\nWeek 7 Github Repository\nWeek 7 .html slides\n\n\n\n\n\nWeek 8 Github Repository\nWeek 8 .html slides\n\n\n\n\n\nWeek 9 Github Repository\nWeek 9 .html slides\n\n\n\n\n\nWeek 10 Github Repository\nWeek 10 .html slides\n\n\n\n\n\nWeek 11 Github Repository\nWeek 11 .html slides\n\n\n\n\n\nWeek 12 Github Repository\nWeek 12 .html slides\n\n\n\n\n\nWeek 13 Github Repository\nWeek 13 .html slides\n\n\n\n\n\nWeek 14 Github Repository\nWeek 14 .html slides"
+  },
+  {
+    "objectID": "lectures.html#lecture-slides",
+    "href": "lectures.html#lecture-slides",
+    "title": "Lectures",
+    "section": "",
+    "text": "Lecture slides are available as self-contained .html files made with RevealJS from a Quarto .qmd file. You can choose to print these to a PDF document by using the “PDF Export Mode” in the Tools menu accessed via the settings button in the lower left-hand side of the page. You are also welcome to directly download the .qmd file and supporting data/images/etc… from the Github repository. Slides are organized by week and combine Monday and Wednesday’s lectures.\n\n\n\nWeek 1 Github Repository\nWeek 1 .html slides\n\n\n\n\n\nWeek 2 Github Repository\nWeek 2 .html slides\n\n\n\n\n\nWeek 3 Github Repository\nWeek 3 .html slides\n\n\n\n\n\nWeek 4 Github Repository\nWeek 4 .html slides\n\n\n\n\n\nWeek 5 Github Repository\nWeek 5 .html slides\n\n\n\n\n\nWeek 6 Github Repository\nWeek 6 .html slides\n\n\n\n\n\nWeek 7 Github Repository\nWeek 7 .html slides\n\n\n\n\n\nWeek 8 Github Repository\nWeek 8 .html slides\n\n\n\n\n\nWeek 9 Github Repository\nWeek 9 .html slides\n\n\n\n\n\nWeek 10 Github Repository\nWeek 10 .html slides\n\n\n\n\n\nWeek 11 Github Repository\nWeek 11 .html slides\n\n\n\n\n\nWeek 12 Github Repository\nWeek 12 .html slides\n\n\n\n\n\nWeek 13 Github Repository\nWeek 13 .html slides\n\n\n\n\n\nWeek 14 Github Repository\nWeek 14 .html slides"
+  },
+  {
+    "objectID": "schedule.html",
+    "href": "schedule.html",
+    "title": "Schedule",
+    "section": "",
+    "text": "A schedule of topics and readings is provided below. Each week will cover a single topic or group of topics. Monday lectures will typically be an introduction to the topic while Wednesday lectures will go into greater detail and involve some applications of the method. You should make sure to review the readings prior to that week’s lectures with an aim towards completing the reading assignments prior to Wednesday’s lecture.\nApplications are optional but useful examples of a given methodological approach implemented in a published political science (or adjacent discipline) paper. I have tried to curate some examples for each week that provide a contrast between an “older” vs. a more “modern” paper using a particular methodology, highlight a debate over an interesting empirical question that hinges on a methodological problem, and/or just generally provide a cool empirical application using the framework being taught that week.\nAll hyperlinks to papers are either to the published version of the paper (if published) or to the working paper. You should use your university library access to obtain the full version if the article is not open access. Likewise, textbook readings will be to the free/open version of the book (if available) or to the UW-Madison university library eBook."
+  },
+  {
+    "objectID": "schedule.html#week-1-statistical-review",
+    "href": "schedule.html#week-1-statistical-review",
+    "title": "Schedule",
+    "section": "Week 1: Statistical Review",
+    "text": "Week 1: Statistical Review\nWednesday, January 21\nTopics:\n\nEstimands and estimators\nReview of statistical properties of estimators (bias/variance)\nLarge sample theory, big-O/little-o notation\n\nReadings:\n\nLundberg, Ian, Rebecca Johnson, and Brandon M. Stewart. 2021. “What Is Your Estimand? Defining the Target Quantity Connects Statistical Evidence to Theory.” American Sociological Review 86 (3): 532–565.\nTorreblanca, Carolina, William Dinneen, Guy Grossman, and Yiqing Xu. 2025. “The Credibility Revolution in Political Science.” Working paper.\nSamii, Cyrus. 2023. “The ‘Problem Solving’ Approach and Social Science Methodology.” Blog post.\nChapter 3; Blackwell, Matthew. 2025. A User’s Guide to Statistical Inference and Regression."
+  },
+  {
+    "objectID": "schedule.html#week-2-potential-outcomes-randomized-experiments",
+    "href": "schedule.html#week-2-potential-outcomes-randomized-experiments",
+    "title": "Schedule",
+    "section": "Week 2: Potential Outcomes + Randomized Experiments",
+    "text": "Week 2: Potential Outcomes + Randomized Experiments\nMonday, January 26 & Wednesday, January 28\nTopics:\n\nCounterfactual reasoning and the potential outcomes model\nWhat assumptions are needed to identify average treatment effects\nWhy randomized experiments satisfy these assumptions\nEstimation and randomization inference in standard experimental designs\n\nReadings:\n\nChapter 1; Imbens, Guido W., and Donald B. Rubin. 2015. Causal Inference for Statistics, Social, and Biomedical Sciences: An Introduction. Cambridge: Cambridge University Press.\nChapters 1–2; Hernán, Miguel A., and James M. Robins. 2020. Causal Inference: What If. Boca Raton: Chapman & Hall/CRC.\nSections 1–5; Athey, Susan, and Guido W. Imbens. 2017. “The Econometrics of Randomized Experiments.” In Handbook of Economic Field Experiments, vol. 1, edited by Abhijit Vinayak Banerjee and Esther Duflo, 73–140. Amsterdam: North-Holland.\nDruckman, James N., Donald P. Green, James H. Kuklinski, and Arthur Lupia. 2006. “The Growth and Development of Experimental Research in Political Science.” American Political Science Review 100 (4): 627–635.\n\nApplications:\n\nGerber, Alan S., Donald P. Green, and Christopher W. Larimer. 2008. “Social Pressure and Voter Turnout: Evidence from a Large-Scale Field Experiment.” American Political Science Review 102 (1): 33–48.\nBroockman, David E., and Joshua L. Kalla. 2025. “Consuming Cross-Cutting Media Causes Learning and Moderates Attitudes: A Field Experiment with Fox News Viewers.” Journal of Politics 87 (1): 246–261."
+  },
+  {
+    "objectID": "schedule.html#week-3-experiments-attrition-and-generalizability",
+    "href": "schedule.html#week-3-experiments-attrition-and-generalizability",
+    "title": "Schedule",
+    "section": "Week 3: Experiments: Attrition and Generalizability",
+    "text": "Week 3: Experiments: Attrition and Generalizability\nMonday, February 2 & Wednesday, February 4\nTopics:\n\nWhat do we do when things happen after the experiment (e.g. attrition)?\nBounding treatment effects and partial identification.\nGeneralizing experimental results beyond the sample ATE\n\nReadings:\n\nEgami, Naoki, and Erin Hartman. 2023. “Elements of External Validity: Framework, Design, and Analysis.” American Political Science Review 117 (3): 1070–1088.\nZhang, Junni L., and Donald B. Rubin. 2003. “Estimation of Causal Effects via Principal Stratification When Some Outcomes Are Truncated by ‘Death.’” Journal of Educational and Behavioral Statistics 28 (4): 353–368.\nLee, David S. 2009. “Training, Wages, and Sample Selection: Estimating Sharp Bounds on Treatment Effects.” Review of Economic Studies 76 (3): 1071–1102.\n\nApplications:\n\nBassan-Nygate, Lotem, Jonathan Renshon, Jessica L. P. Weeks, and Chagai M. Weiss. 2024. “The Generalizability of IR Experiments beyond the United States.” American Political Science Review 118 (4): 1–16.\nDunning, Thad, Guy Grossman, Macartan Humphreys, Susan D. Hyde, Craig McIntosh, Gareth Nellis, Claire L. Adida, et al. 2019. “Voter Information Campaigns and Political Accountability: Cumulative Findings from a Preregistered Meta-Analysis of Coordinated Trials.” Science Advances 5 (7): eaaw2612."
+  },
+  {
+    "objectID": "schedule.html#week-4-experiments-incorporating-covariates",
+    "href": "schedule.html#week-4-experiments-incorporating-covariates",
+    "title": "Schedule",
+    "section": "Week 4: Experiments: Incorporating Covariates",
+    "text": "Week 4: Experiments: Incorporating Covariates\nMonday, February 9 & Wednesday, February 11\nTopics:\n\nStratification/blocking and using covariates in experiments\nAnalysis of cluster-randomized experiments\nIntroduction to regression estimators\n\nReadings:\n\nSections 6–12; Athey, Susan, and Guido W. Imbens. 2017. “The Econometrics of Randomized Experiments.” In Handbook of Economic Field Experiments, vol. 1, edited by Abhijit Vinayak Banerjee and Esther Duflo, 73–140. Amsterdam: North-Holland.\nChapters 5–7; Blackwell, Matthew. 2025. A User’s Guide to Statistical Inference and Regression.\nChapter 7; Imbens, Guido W., and Donald B. Rubin. 2015. Causal Inference for Statistics, Social, and Biomedical Sciences: An Introduction. Cambridge: Cambridge University Press.\nLin, Winston. 2013. “Agnostic Notes on Regression Adjustments to Experimental Data: Reexamining Freedman’s Critique.” Annals of Applied Statistics 7 (1): 295–318.\nBonus: Samii, Cyrus, and P. M. Aronow. 2012. “On Equivalencies between Design-Based and Regression-Based Variance Estimators for Randomized Experiments.” Statistics & Probability Letters 82 (2): 365–370.\n\nApplications:\n\nNyhan, Brendan, and Jason Reifler. 2015. “The Effect of Fact-Checking on Elites: A Field Experiment on US State Legislators.” American Journal of Political Science 59 (3): 628–640.\nRaffler, Pia J. 2022. “Does Political Oversight of the Bureaucracy Increase Accountability? Field Experimental Evidence from a Dominant Party Regime.” American Political Science Review 116 (4): 1443–1459."
+  },
+  {
+    "objectID": "schedule.html#week-5-selection-on-observables",
+    "href": "schedule.html#week-5-selection-on-observables",
+    "title": "Schedule",
+    "section": "Week 5: Selection-on-Observables",
+    "text": "Week 5: Selection-on-Observables\nMonday, February 16 & Wednesday, February 18\nTopics:\n\nWhat to do when random assignment of treatment is not possible - common challenges of observational designs\nAssumptions behind “no unobserved confounding” designs\nRepresenting assumptions using graphical models\nCovariate adjustment using stratification\n\nReadings:\n\nChapter 12; Imbens, Guido W., and Donald B. Rubin. 2015. Causal Inference for Statistics, Social, and Biomedical Sciences: An Introduction. Cambridge: Cambridge University Press.\nChapters 3, 6–8; Hernán, Miguel A., and James M. Robins. 2020. Causal Inference: What If. Boca Raton: Chapman & Hall/CRC.\nChapters 6–8; Huntington-Klein, Nick. 2021. The Effect: An Introduction to Research Design and Causality. Boca Raton: Chapman and Hall/CRC.\nSupplementary: Cinelli, Carlos, Andrew Forney, and Judea Pearl. 2024. “A Crash Course in Good and Bad Controls.” Sociological Methods & Research 53 (3): 1071–1104.\nSupplementary: Rohrer, Julia M. 2018. “Thinking Clearly about Correlations and Causation: Graphical Causal Models for Observational Data.” Advances in Methods and Practices in Psychological Science 1 (1): 27–42.\n\nApplications:\n\nWashington, Ebonya L. 2008. “Female Socialization: How Daughters Affect Their Legislator Fathers.” American Economic Review 98 (1): 311–332.\nBa, Bocar A., Dean Knox, Jonathan Mummolo, and Roman Rivera. 2021. “The Role of Officer Race and Gender in Police-Civilian Interactions in Chicago.” Science 371 (6530): 696–702.\nKnox, Dean, Will Lowe, and Jonathan Mummolo. 2020. “Administrative records mask racially biased policing.” American Political Science Review 114 (3): 619-637."
+  },
+  {
+    "objectID": "schedule.html#week-6-selection-on-observables---regression-and-weighting",
+    "href": "schedule.html#week-6-selection-on-observables---regression-and-weighting",
+    "title": "Schedule",
+    "section": "Week 6: Selection-on-Observables - Regression and Weighting",
+    "text": "Week 6: Selection-on-Observables - Regression and Weighting\nMonday, February 23 & Wednesday, February 25\nTopics:\n\nCovariate adjustment using regression estimators\nPropensity scores and covariate adjustment via weighting\nCombining treatment and outcome models for a “doubly-robust” estimator\n\nReadings:\n\nImbens, Guido W. 2004. “Nonparametric Estimation of Average Treatment Effects under Exogeneity: A Review.” Review of Economics and Statistics 86 (1): 4–29.\nGlynn, Adam N., and Kevin M. Quinn. 2010. “An Introduction to the Augmented Inverse Propensity Weighted Estimator.” Political Analysis 18 (1): 36–56.\nAronow, P. M., and Cyrus Samii. 2016. “Does Regression Produce Representative Estimates of Causal Effects?” American Journal of Political Science 60 (1): 250–267.\nChapters 11–12; Hernán, Miguel A., and James M. Robins. 2020. Causal Inference: What If. Boca Raton: Chapman & Hall/CRC.\n\nApplications:\n\nHübert, Ryan, and Ryan Copus. 2022. “Political Appointments and Outcomes in Federal District Courts.” Journal of Politics 84 (2): 908–922.\nJares, Jake Alton, and Neil Malhotra. 2025. “Policy Impact and Voter Mobilization: Evidence from Farmers’ Trade War Experiences.” American Political Science Review 119 (2): 847–869."
+  },
+  {
+    "objectID": "schedule.html#week-7-selection-on-observables---matching",
+    "href": "schedule.html#week-7-selection-on-observables---matching",
+    "title": "Schedule",
+    "section": "Week 7: Selection-on-Observables - Matching",
+    "text": "Week 7: Selection-on-Observables - Matching\nMonday, March 2 & Wednesday, March 4\nTopics:\n\nCovariate adjustment using matching estimators\nMidterm exam on Wednesday March 4th\n\nReadings:\n\nRosenbaum, Paul R. 2020. “Modern Algorithms for Matching in Observational Studies.” Annual Review of Statistics and Its Application 7 (1): 143–176.\nAbadie, Alberto, and Guido W. Imbens. 2011. “Bias-Corrected Matching Estimators for Average Treatment Effects.” Journal of Business & Economic Statistics 29 (1): 1–11.\nImbens, Guido W., and Yiqing Xu. 2025. “Comparing Experimental and Nonexperimental Methods: What Lessons Have We Learned Four Decades after LaLonde (1986)?” Journal of Economic Perspectives 39 (4): 173–201.\n\nApplications:\n\nImai, Kosuke. 2005. “Do Get-Out-the-Vote Calls Reduce Turnout? The Importance of Statistical Methods for Field Experiments.” American Political Science Review 99 (2): 283–300.\nHansen, Ben B., and Jake Bowers. 2009. “Attributing Effects to a Cluster-Randomized Get-Out-the-Vote Campaign.” Journal of the American Statistical Association 104 (487): 873–885."
+  },
+  {
+    "objectID": "schedule.html#week-8-instrumental-variables",
+    "href": "schedule.html#week-8-instrumental-variables",
+    "title": "Schedule",
+    "section": "Week 8: Instrumental Variables",
+    "text": "Week 8: Instrumental Variables\nMonday, March 9 & Wednesday, March 11\nTopics:\n\nIdentifying causal effects under unobserved confounding using exogenous variation in treatment induced by an instrument\nEstimation via the Wald estimator and two stage least squares (TSLS)\nInterpreting the IV estimand - the LATE theorem\n\nReadings:\n\nChapter 7; Cunningham, Scott. 2021. Causal Inference: The Mixtape. New Haven: Yale University Press.\nAngrist, Joshua D., Guido W. Imbens, and Donald B. Rubin. 1996. “Identification of Causal Effects Using Instrumental Variables.” Journal of the American Statistical Association 91 (434): 444–455.\nAndrews, Isaiah, James H. Stock, and Liyang Sun. 2019. “Weak Instruments in Instrumental Variables Regression: Theory and Practice.” Annual Review of Economics 11: 727–753.\nSłoczyński, Tymon. 2024. “When Should We (Not) Interpret Linear IV Estimands as LATE?” Working paper.\n\nApplications:\n\nWhite, Ariel. 2019. “Misdemeanor Disenfranchisement? The Demobilizing Effects of Brief Jail Spells on Potential Voters.” American Political Science Review 113 (2): 311–324.\nLal, Apoorva, Mackenzie Lockhart, Yiqing Xu, and Ziwen Zu. 2024. “How Much Should We Trust Instrumental Variable Estimates in Political Science? Practical Advice Based on 67 Replicated Studies.” Political Analysis 32 (4): 521–540.\nAngrist, Joshua D., and Peter Hull. 2023. “Instrumental Variables Methods Reconcile Intention-to-Screen Effects across Pragmatic Cancer Screening Trials.” Proceedings of the National Academy of Sciences 120 (51): e2311556120."
+  },
+  {
+    "objectID": "schedule.html#week-9-differences-in-differences",
+    "href": "schedule.html#week-9-differences-in-differences",
+    "title": "Schedule",
+    "section": "Week 9: Differences-in-Differences",
+    "text": "Week 9: Differences-in-Differences\nMonday, March 16 & Wednesday, March 18\nTopics:\n\nLeveraging repeated outcomes over time to address unobserved confounding\nAssumptions behind the “differences-in-differences” strategy – parallel trends\nEstimation and diagnostics for the identification assumptions\nConnection to regression estimators with “two-way fixed effects”\n\nReadings:\n\nBaker, Andrew, Brantly Callaway, Scott Cunningham, Andrew Goodman-Bacon, and Pedro H. C. Sant’Anna. 2025. “Difference-in-Differences Designs: A Practitioner’s Guide.” Working paper.\nChapter 9; Cunningham, Scott. 2021. Causal Inference: The Mixtape. New Haven: Yale University Press.\nChapter 3; de Chaisemartin, Clément, and Xavier D’Haultfœuille. 2023. Credible Answers to Hard Questions: Differences-in-Differences for Natural Experiments. Working paper.\n\nApplications:\n\nCard, David, and Alan B. Krueger. 1994. “Minimum Wages and Employment: A Case Study of the Fast-Food Industry in New Jersey and Pennsylvania.” American Economic Review 84 (4): 772–793.\nMiller, Sarah, Norman Johnson, and Laura R. Wherry. 2021. “Medicaid and Mortality: New Evidence from Linked Survey and Administrative Data.” Quarterly Journal of Economics 136 (3): 1783–1829."
+  },
+  {
+    "objectID": "schedule.html#week-10-modern-differences-in-differences",
+    "href": "schedule.html#week-10-modern-differences-in-differences",
+    "title": "Schedule",
+    "section": "Week 10: Modern Differences-in-Differences",
+    "text": "Week 10: Modern Differences-in-Differences\nMonday, March 23 & Wednesday, March 25\nTopics:\n\nDifferences-in-differences under staggered adoption\n“New” DiD estimators - TWFE regression imputation vs. AIPW\nDiagnosing pre-trends violations and assessing robustness\nRelaxing parallel trends assumptions\n\nReadings:\n\nRoth, Jonathan, Pedro H. C. Sant’Anna, Alyssa Bilinski, and John Poe. 2023. “What’s Trending in Difference-in-Differences? A Synthesis of the Recent Econometrics Literature.” Journal of Econometrics 235 (2): 2218–2244.\nLiu, Licheng, Ye Wang, and Yiqing Xu. 2024. “A Practical Guide to Counterfactual Estimators for Causal Inference with Time-Series Cross-Sectional Data.” American Journal of Political Science 68 (1): 160–176.\nCaetano, Carolina, and Brantly Callaway. 2024. “Difference-in-Differences When Parallel Trends Holds Conditional on Covariates.” Working paper.\nRambachan, Ashesh, and Jonathan Roth. 2023. “A More Credible Approach to Parallel Trends.” Review of Economic Studies 90 (5): 2555–2591.\nStrezhnev, Anton. 2024. “Group-Specific Linear Trends and the Triple-Differences in Time Design.” Working paper.\n\nApplications:\n\nChiu, Albert, Xingchen Lan, Ziyi Liu, and Yiqing Xu. 2023. “Causal Panel Analysis under Parallel Trends: Lessons from a Large Reanalysis Study.” American Political Science Review 118 (4): 1–22."
+  },
+  {
+    "objectID": "schedule.html#spring-break",
+    "href": "schedule.html#spring-break",
+    "title": "Schedule",
+    "section": "Spring Break",
+    "text": "Spring Break\nNo Class: Monday, March 23 & Wednesday, March 25"
+  },
+  {
+    "objectID": "schedule.html#week-11-panel-data-causal-inference",
+    "href": "schedule.html#week-11-panel-data-causal-inference",
+    "title": "Schedule",
+    "section": "Week 11: Panel Data Causal Inference",
+    "text": "Week 11: Panel Data Causal Inference\nMonday, April 6 & Wednesday, April 8\nTopics:\n\nEstimating effects when past outcomes affect future treatments\nEstimators for effects of treatment histories\nPitfalls and cautions with lagged outcome regressions\n\nReadings:\n\nBlackwell, Matthew, and Adam N. Glynn. 2018. “How to Make Causal Inferences with Time-Series Cross-Sectional Data under Selection on Observables.” American Political Science Review 112 (4): 1067–1082.\nXu, Yiqing. 2023. “Causal Inference with Time-Series Cross-Sectional Data: A Reflection.” In The SAGE Handbook of Research Methods in Political Science and International Relations, edited by Luigi Curini and Robert Franzese. London: SAGE.\nDaw, Jamie R., and Laura A. Hatfield. 2018. “Matching and Regression to the Mean in Difference-in-Differences Analysis.” Health Services Research 53 (6): 4138–4156.\n\nApplications:\n\nHarvey, Cole J. 2022. “Who Delivers the Votes? Elected versus Appointed Local Executives, Election Manipulation, and Natural Support for Ruling Parties.” Electoral Studies 76: 102455.\nBach, Laurent, Antoine Bozio, Arthur Guillouzouic, and Clément Malgouyres. 2023. “Dividend Taxes and the Allocation of Capital: Comment.” American Economic Review 113 (7): 2048–2052."
+  },
+  {
+    "objectID": "schedule.html#week-12-regression-discontinuity-designs",
+    "href": "schedule.html#week-12-regression-discontinuity-designs",
+    "title": "Schedule",
+    "section": "Week 12: Regression Discontinuity Designs",
+    "text": "Week 12: Regression Discontinuity Designs\nMonday, April 13 & Wednesday, April 15\nTopics:\n\nIdentification under unobserved confounding using quasi-random assignment at a cutpoint\nLocal randomization vs. continuity-based approaches\nEstimation using local polynomial regression\nDiagnostics for design assumptions - “bunching” tests and placebo outcomes\n\nReadings:\n\nCattaneo, Matias D., Nicolás Idrobo, and Rocío Titiunik. 2019. A Practical Introduction to Regression Discontinuity Designs: Foundations. Cambridge: Cambridge University Press.\nCattaneo, Matias D., Nicolás Idrobo, and Rocío Titiunik. 2024. A Practical Introduction to Regression Discontinuity Designs: Extensions. Cambridge: Cambridge University Press.\nMarshall, John. 2024. “Can Close Election Regression Discontinuity Designs Identify Effects of Winning Politician Characteristics?” American Journal of Political Science 68 (2): 494–510.\nHausman, Catherine, and David S. Rapson. 2018. “Regression Discontinuity in Time: Considerations for Empirical Applications.” Annual Review of Resource Economics 10 (1): 533–552.\n\nApplications:\n\nCaughey, Devin, and Jasjeet S. Sekhon. 2011. “Elections and the Regression Discontinuity Design: Lessons from Close US House Races, 1942–2008.” Political Analysis 19 (4): 385–408.\nEggers, Andrew C., Anthony Fowler, Jens Hainmueller, Andrew B. Hall, and James M. Snyder Jr. 2015. “On the Validity of the Regression Discontinuity Design for Estimating Electoral Effects: New Evidence from Over 40,000 Close Races.” American Journal of Political Science 59 (1): 259–274.\nDe la Cuesta, Brandon, and Kosuke Imai. 2016. “Misunderstandings about the Regression Discontinuity Design in the Study of Close Elections.” Annual Review of Political Science 19 (1): 375–396."
+  },
+  {
+    "objectID": "schedule.html#week-13-mediation-and-sensitivity-analysis",
+    "href": "schedule.html#week-13-mediation-and-sensitivity-analysis",
+    "title": "Schedule",
+    "section": "Week 13: Mediation and Sensitivity Analysis",
+    "text": "Week 13: Mediation and Sensitivity Analysis\nMonday, April 20 & Wednesday, April 22\nTopics:\n\nAssessing the robustness of selection-on-observables results to hypothetical unobserved confounding.\nDecomposing causal effects into “direct” and “indirect” components\nEstimating mediation effects under ignorability assumptions\nChallenges and pitfalls of mediation analysis\n\nReadings:\n\nCinelli, Carlos, and Chad Hazlett. 2020. “Making Sense of Sensitivity: Extending Omitted Variable Bias.” Journal of the Royal Statistical Society: Series B (Statistical Methodology) 82 (1): 39–67.\nImai, Kosuke, Luke Keele, Dustin Tingley, and Teppei Yamamoto. 2011. “Unpacking the Black Box of Causality: Learning about Causal Mechanisms from Experimental and Observational Studies.” American Political Science Review 105 (4): 765–789.\nBonus: Green, Donald P., Shang E. Ha, and John G. Bullock. 2010. “Enough Already about ‘Black Box’ Experiments: Studying Mediation Is More Difficult than Most Scholars Suppose.” Annals of the American Academy of Political and Social Science 628 (1): 200–208.\nAcharya, Avidit, Matthew Blackwell, and Maya Sen. 2016. “Explaining Causal Findings without Bias: Detecting and Assessing Direct Effects.” American Political Science Review 110 (3): 512–529.\nBlackwell, Matthew, Ruofan Ma, and Aleksei Opacic. 2024. “Assumption Smuggling in Intermediate Outcome Tests of Causal Mechanisms.” Working paper.\n\nApplications:\n\nRathbun, Brian C., Christopher Sebastian Parker, and Caleb Pomeroy. 2025. “Separate but Unequal: Ethnocentrism and Racialization Explain the ‘Democratic’ Peace in Public Opinion.” American Political Science Review 119 (2): 621–636.\nTomz, Michael, and Jessica L. P. Weeks. 2025. “Race, Democracy, and Public Support for War.” American Political Science Review: 1–18.\nHazlett, Chad. 2020. “Angry or Weary? How Violence Impacts Attitudes toward Peace among Darfurian Refugees.” Journal of Conflict Resolution 64 (5): 844–870."
+  },
+  {
+    "objectID": "schedule.html#week-14-shift-share-designs-and-experiments-with-interference",
+    "href": "schedule.html#week-14-shift-share-designs-and-experiments-with-interference",
+    "title": "Schedule",
+    "section": "Week 14: Shift-share designs and experiments with interference",
+    "text": "Week 14: Shift-share designs and experiments with interference\nMonday, April 27 & Wednesday, April 29\nTopics:\n\nIdentification with instruments that are inner products of unit-specific “shares” and independent global “shifts”\n“Share-exogeneity” and connections to differences-in-differences/“multiple instruments”\n“Shift-exogeneity” and connections to experiments with interference\n\nReadings:\n\nBorusyak, Kirill, Peter Hull, and Xavier Jaravel. 2025. “A Practical Guide to Shift-Share Instruments.” Journal of Economic Perspectives 39 (1): 181–204.\nBorusyak, Kirill, Peter Hull, and Xavier Jaravel. 2025. “Design-Based Identification with Formula Instruments: A Review.” Econometrics Journal 28 (1): 83–108.\nAronow, P. M., and Cyrus Samii. 2017. “Estimating Average Causal Effects under General Interference, with Application to a Social Network Experiment.” Annals of Applied Statistics 11 (4): 1912–1947.\n\nApplications:\n\nFouka, Vasiliki, and Marco Tabellini. 2022. “Changing In-Group Boundaries: The Effect of Immigration on Race Relations in the United States.” American Political Science Review 116 (3): 968–984.\nGulotty, Robert, and Anton Strezhnev. 2024. “The Political Benefits of the Monoculture: Estimating the Electoral Effect of the Market Facilitation Program.” Working paper."
+  },
+  {
     "objectID": "slides/week10/week10_modern_differences_in_differences.html#last-week",
     "href": "slides/week10/week10_modern_differences_in_differences.html#last-week",
     "title": "Week 10: Modern Differences-in-Differences",
@@ -1937,384 +2553,6 @@
     "title": "Week 10: Modern Differences-in-Differences",
     "section": "Summary",
     "text": "Summary\n\nDiff-in-diff with two periods, two treatment groups\n\nParallel trends assumption - sensitive to transformations of the outcome (e.g. logs vs. levels)\nStraightforward non-parametric estimator - can weight + use regression if parallel trends holds conditionally\n\nDiff-in-diff with multiple periods, two treatment groups\n\nNo changes! Everything is fine - TWFE still gives you a difference-in-difference under no effect homogeneity assumptions\nUse pre-trends tests as a diagnostic, but be careful (w/ small samples, low power to violations)\n\nDiff-in-diff with staggered adoption\n\nCan break down into a bunch of 2x2 DiDs for different treatment groups and time periods\nBut beware of naive 2-way fixed effects, both static and dynamic specifications - “bad” 2x2s if effects aren’t constant"
-  },
-  {
-    "objectID": "schedule.html",
-    "href": "schedule.html",
-    "title": "Schedule",
-    "section": "",
-    "text": "A schedule of topics and readings is provided below. Each week will cover a single topic or group of topics. Monday lectures will typically be an introduction to the topic while Wednesday lectures will go into greater detail and involve some applications of the method. You should make sure to review the readings prior to that week’s lectures with an aim towards completing the reading assignments prior to Wednesday’s lecture.\nApplications are optional but useful examples of a given methodological approach implemented in a published political science (or adjacent discipline) paper. I have tried to curate some examples for each week that provide a contrast between an “older” vs. a more “modern” paper using a particular methodology, highlight a debate over an interesting empirical question that hinges on a methodological problem, and/or just generally provide a cool empirical application using the framework being taught that week.\nAll hyperlinks to papers are either to the published version of the paper (if published) or to the working paper. You should use your university library access to obtain the full version if the article is not open access. Likewise, textbook readings will be to the free/open version of the book (if available) or to the UW-Madison university library eBook."
-  },
-  {
-    "objectID": "schedule.html#week-1-statistical-review",
-    "href": "schedule.html#week-1-statistical-review",
-    "title": "Schedule",
-    "section": "Week 1: Statistical Review",
-    "text": "Week 1: Statistical Review\nWednesday, January 21\nTopics:\n\nEstimands and estimators\nReview of statistical properties of estimators (bias/variance)\nLarge sample theory, big-O/little-o notation\n\nReadings:\n\nLundberg, Ian, Rebecca Johnson, and Brandon M. Stewart. 2021. “What Is Your Estimand? Defining the Target Quantity Connects Statistical Evidence to Theory.” American Sociological Review 86 (3): 532–565.\nTorreblanca, Carolina, William Dinneen, Guy Grossman, and Yiqing Xu. 2025. “The Credibility Revolution in Political Science.” Working paper.\nSamii, Cyrus. 2023. “The ‘Problem Solving’ Approach and Social Science Methodology.” Blog post.\nChapter 3; Blackwell, Matthew. 2025. A User’s Guide to Statistical Inference and Regression."
-  },
-  {
-    "objectID": "schedule.html#week-2-potential-outcomes-randomized-experiments",
-    "href": "schedule.html#week-2-potential-outcomes-randomized-experiments",
-    "title": "Schedule",
-    "section": "Week 2: Potential Outcomes + Randomized Experiments",
-    "text": "Week 2: Potential Outcomes + Randomized Experiments\nMonday, January 26 & Wednesday, January 28\nTopics:\n\nCounterfactual reasoning and the potential outcomes model\nWhat assumptions are needed to identify average treatment effects\nWhy randomized experiments satisfy these assumptions\nEstimation and randomization inference in standard experimental designs\n\nReadings:\n\nChapter 1; Imbens, Guido W., and Donald B. Rubin. 2015. Causal Inference for Statistics, Social, and Biomedical Sciences: An Introduction. Cambridge: Cambridge University Press.\nChapters 1–2; Hernán, Miguel A., and James M. Robins. 2020. Causal Inference: What If. Boca Raton: Chapman & Hall/CRC.\nSections 1–5; Athey, Susan, and Guido W. Imbens. 2017. “The Econometrics of Randomized Experiments.” In Handbook of Economic Field Experiments, vol. 1, edited by Abhijit Vinayak Banerjee and Esther Duflo, 73–140. Amsterdam: North-Holland.\nDruckman, James N., Donald P. Green, James H. Kuklinski, and Arthur Lupia. 2006. “The Growth and Development of Experimental Research in Political Science.” American Political Science Review 100 (4): 627–635.\n\nApplications:\n\nGerber, Alan S., Donald P. Green, and Christopher W. Larimer. 2008. “Social Pressure and Voter Turnout: Evidence from a Large-Scale Field Experiment.” American Political Science Review 102 (1): 33–48.\nBroockman, David E., and Joshua L. Kalla. 2025. “Consuming Cross-Cutting Media Causes Learning and Moderates Attitudes: A Field Experiment with Fox News Viewers.” Journal of Politics 87 (1): 246–261."
-  },
-  {
-    "objectID": "schedule.html#week-3-experiments-attrition-and-generalizability",
-    "href": "schedule.html#week-3-experiments-attrition-and-generalizability",
-    "title": "Schedule",
-    "section": "Week 3: Experiments: Attrition and Generalizability",
-    "text": "Week 3: Experiments: Attrition and Generalizability\nMonday, February 2 & Wednesday, February 4\nTopics:\n\nWhat do we do when things happen after the experiment (e.g. attrition)?\nBounding treatment effects and partial identification.\nGeneralizing experimental results beyond the sample ATE\n\nReadings:\n\nEgami, Naoki, and Erin Hartman. 2023. “Elements of External Validity: Framework, Design, and Analysis.” American Political Science Review 117 (3): 1070–1088.\nZhang, Junni L., and Donald B. Rubin. 2003. “Estimation of Causal Effects via Principal Stratification When Some Outcomes Are Truncated by ‘Death.’” Journal of Educational and Behavioral Statistics 28 (4): 353–368.\nLee, David S. 2009. “Training, Wages, and Sample Selection: Estimating Sharp Bounds on Treatment Effects.” Review of Economic Studies 76 (3): 1071–1102.\n\nApplications:\n\nBassan-Nygate, Lotem, Jonathan Renshon, Jessica L. P. Weeks, and Chagai M. Weiss. 2024. “The Generalizability of IR Experiments beyond the United States.” American Political Science Review 118 (4): 1–16.\nDunning, Thad, Guy Grossman, Macartan Humphreys, Susan D. Hyde, Craig McIntosh, Gareth Nellis, Claire L. Adida, et al. 2019. “Voter Information Campaigns and Political Accountability: Cumulative Findings from a Preregistered Meta-Analysis of Coordinated Trials.” Science Advances 5 (7): eaaw2612."
-  },
-  {
-    "objectID": "schedule.html#week-4-experiments-incorporating-covariates",
-    "href": "schedule.html#week-4-experiments-incorporating-covariates",
-    "title": "Schedule",
-    "section": "Week 4: Experiments: Incorporating Covariates",
-    "text": "Week 4: Experiments: Incorporating Covariates\nMonday, February 9 & Wednesday, February 11\nTopics:\n\nStratification/blocking and using covariates in experiments\nAnalysis of cluster-randomized experiments\nIntroduction to regression estimators\n\nReadings:\n\nSections 6–12; Athey, Susan, and Guido W. Imbens. 2017. “The Econometrics of Randomized Experiments.” In Handbook of Economic Field Experiments, vol. 1, edited by Abhijit Vinayak Banerjee and Esther Duflo, 73–140. Amsterdam: North-Holland.\nChapters 5–7; Blackwell, Matthew. 2025. A User’s Guide to Statistical Inference and Regression.\nChapter 7; Imbens, Guido W., and Donald B. Rubin. 2015. Causal Inference for Statistics, Social, and Biomedical Sciences: An Introduction. Cambridge: Cambridge University Press.\nLin, Winston. 2013. “Agnostic Notes on Regression Adjustments to Experimental Data: Reexamining Freedman’s Critique.” Annals of Applied Statistics 7 (1): 295–318.\nBonus: Samii, Cyrus, and P. M. Aronow. 2012. “On Equivalencies between Design-Based and Regression-Based Variance Estimators for Randomized Experiments.” Statistics & Probability Letters 82 (2): 365–370.\n\nApplications:\n\nNyhan, Brendan, and Jason Reifler. 2015. “The Effect of Fact-Checking on Elites: A Field Experiment on US State Legislators.” American Journal of Political Science 59 (3): 628–640.\nRaffler, Pia J. 2022. “Does Political Oversight of the Bureaucracy Increase Accountability? Field Experimental Evidence from a Dominant Party Regime.” American Political Science Review 116 (4): 1443–1459."
-  },
-  {
-    "objectID": "schedule.html#week-5-selection-on-observables",
-    "href": "schedule.html#week-5-selection-on-observables",
-    "title": "Schedule",
-    "section": "Week 5: Selection-on-Observables",
-    "text": "Week 5: Selection-on-Observables\nMonday, February 16 & Wednesday, February 18\nTopics:\n\nWhat to do when random assignment of treatment is not possible - common challenges of observational designs\nAssumptions behind “no unobserved confounding” designs\nRepresenting assumptions using graphical models\nCovariate adjustment using stratification\n\nReadings:\n\nChapter 12; Imbens, Guido W., and Donald B. Rubin. 2015. Causal Inference for Statistics, Social, and Biomedical Sciences: An Introduction. Cambridge: Cambridge University Press.\nChapters 3, 6–8; Hernán, Miguel A., and James M. Robins. 2020. Causal Inference: What If. Boca Raton: Chapman & Hall/CRC.\nChapters 6–8; Huntington-Klein, Nick. 2021. The Effect: An Introduction to Research Design and Causality. Boca Raton: Chapman and Hall/CRC.\nSupplementary: Cinelli, Carlos, Andrew Forney, and Judea Pearl. 2024. “A Crash Course in Good and Bad Controls.” Sociological Methods & Research 53 (3): 1071–1104.\nSupplementary: Rohrer, Julia M. 2018. “Thinking Clearly about Correlations and Causation: Graphical Causal Models for Observational Data.” Advances in Methods and Practices in Psychological Science 1 (1): 27–42.\n\nApplications:\n\nWashington, Ebonya L. 2008. “Female Socialization: How Daughters Affect Their Legislator Fathers.” American Economic Review 98 (1): 311–332.\nBa, Bocar A., Dean Knox, Jonathan Mummolo, and Roman Rivera. 2021. “The Role of Officer Race and Gender in Police-Civilian Interactions in Chicago.” Science 371 (6530): 696–702.\nKnox, Dean, Will Lowe, and Jonathan Mummolo. 2020. “Administrative records mask racially biased policing.” American Political Science Review 114 (3): 619-637."
-  },
-  {
-    "objectID": "schedule.html#week-6-selection-on-observables---regression-and-weighting",
-    "href": "schedule.html#week-6-selection-on-observables---regression-and-weighting",
-    "title": "Schedule",
-    "section": "Week 6: Selection-on-Observables - Regression and Weighting",
-    "text": "Week 6: Selection-on-Observables - Regression and Weighting\nMonday, February 23 & Wednesday, February 25\nTopics:\n\nCovariate adjustment using regression estimators\nPropensity scores and covariate adjustment via weighting\nCombining treatment and outcome models for a “doubly-robust” estimator\n\nReadings:\n\nImbens, Guido W. 2004. “Nonparametric Estimation of Average Treatment Effects under Exogeneity: A Review.” Review of Economics and Statistics 86 (1): 4–29.\nGlynn, Adam N., and Kevin M. Quinn. 2010. “An Introduction to the Augmented Inverse Propensity Weighted Estimator.” Political Analysis 18 (1): 36–56.\nAronow, P. M., and Cyrus Samii. 2016. “Does Regression Produce Representative Estimates of Causal Effects?” American Journal of Political Science 60 (1): 250–267.\nChapters 11–12; Hernán, Miguel A., and James M. Robins. 2020. Causal Inference: What If. Boca Raton: Chapman & Hall/CRC.\n\nApplications:\n\nHübert, Ryan, and Ryan Copus. 2022. “Political Appointments and Outcomes in Federal District Courts.” Journal of Politics 84 (2): 908–922.\nJares, Jake Alton, and Neil Malhotra. 2025. “Policy Impact and Voter Mobilization: Evidence from Farmers’ Trade War Experiences.” American Political Science Review 119 (2): 847–869."
-  },
-  {
-    "objectID": "schedule.html#week-7-selection-on-observables---matching",
-    "href": "schedule.html#week-7-selection-on-observables---matching",
-    "title": "Schedule",
-    "section": "Week 7: Selection-on-Observables - Matching",
-    "text": "Week 7: Selection-on-Observables - Matching\nMonday, March 2 & Wednesday, March 4\nTopics:\n\nCovariate adjustment using matching estimators\nMidterm exam on Wednesday March 4th\n\nReadings:\n\nRosenbaum, Paul R. 2020. “Modern Algorithms for Matching in Observational Studies.” Annual Review of Statistics and Its Application 7 (1): 143–176.\nAbadie, Alberto, and Guido W. Imbens. 2011. “Bias-Corrected Matching Estimators for Average Treatment Effects.” Journal of Business & Economic Statistics 29 (1): 1–11.\nImbens, Guido W., and Yiqing Xu. 2025. “Comparing Experimental and Nonexperimental Methods: What Lessons Have We Learned Four Decades after LaLonde (1986)?” Journal of Economic Perspectives 39 (4): 173–201.\n\nApplications:\n\nImai, Kosuke. 2005. “Do Get-Out-the-Vote Calls Reduce Turnout? The Importance of Statistical Methods for Field Experiments.” American Political Science Review 99 (2): 283–300.\nHansen, Ben B., and Jake Bowers. 2009. “Attributing Effects to a Cluster-Randomized Get-Out-the-Vote Campaign.” Journal of the American Statistical Association 104 (487): 873–885."
-  },
-  {
-    "objectID": "schedule.html#week-8-instrumental-variables",
-    "href": "schedule.html#week-8-instrumental-variables",
-    "title": "Schedule",
-    "section": "Week 8: Instrumental Variables",
-    "text": "Week 8: Instrumental Variables\nMonday, March 9 & Wednesday, March 11\nTopics:\n\nIdentifying causal effects under unobserved confounding using exogenous variation in treatment induced by an instrument\nEstimation via the Wald estimator and two stage least squares (TSLS)\nInterpreting the IV estimand - the LATE theorem\n\nReadings:\n\nChapter 7; Cunningham, Scott. 2021. Causal Inference: The Mixtape. New Haven: Yale University Press.\nAngrist, Joshua D., Guido W. Imbens, and Donald B. Rubin. 1996. “Identification of Causal Effects Using Instrumental Variables.” Journal of the American Statistical Association 91 (434): 444–455.\nAndrews, Isaiah, James H. Stock, and Liyang Sun. 2019. “Weak Instruments in Instrumental Variables Regression: Theory and Practice.” Annual Review of Economics 11: 727–753.\nSłoczyński, Tymon. 2024. “When Should We (Not) Interpret Linear IV Estimands as LATE?” Working paper.\n\nApplications:\n\nWhite, Ariel. 2019. “Misdemeanor Disenfranchisement? The Demobilizing Effects of Brief Jail Spells on Potential Voters.” American Political Science Review 113 (2): 311–324.\nLal, Apoorva, Mackenzie Lockhart, Yiqing Xu, and Ziwen Zu. 2024. “How Much Should We Trust Instrumental Variable Estimates in Political Science? Practical Advice Based on 67 Replicated Studies.” Political Analysis 32 (4): 521–540.\nAngrist, Joshua D., and Peter Hull. 2023. “Instrumental Variables Methods Reconcile Intention-to-Screen Effects across Pragmatic Cancer Screening Trials.” Proceedings of the National Academy of Sciences 120 (51): e2311556120."
-  },
-  {
-    "objectID": "schedule.html#week-9-differences-in-differences",
-    "href": "schedule.html#week-9-differences-in-differences",
-    "title": "Schedule",
-    "section": "Week 9: Differences-in-Differences",
-    "text": "Week 9: Differences-in-Differences\nMonday, March 16 & Wednesday, March 18\nTopics:\n\nLeveraging repeated outcomes over time to address unobserved confounding\nAssumptions behind the “differences-in-differences” strategy – parallel trends\nEstimation and diagnostics for the identification assumptions\nConnection to regression estimators with “two-way fixed effects”\n\nReadings:\n\nBaker, Andrew, Brantly Callaway, Scott Cunningham, Andrew Goodman-Bacon, and Pedro H. C. Sant’Anna. 2025. “Difference-in-Differences Designs: A Practitioner’s Guide.” Working paper.\nChapter 9; Cunningham, Scott. 2021. Causal Inference: The Mixtape. New Haven: Yale University Press.\nChapter 3; de Chaisemartin, Clément, and Xavier D’Haultfœuille. 2023. Credible Answers to Hard Questions: Differences-in-Differences for Natural Experiments. Working paper.\n\nApplications:\n\nCard, David, and Alan B. Krueger. 1994. “Minimum Wages and Employment: A Case Study of the Fast-Food Industry in New Jersey and Pennsylvania.” American Economic Review 84 (4): 772–793.\nMiller, Sarah, Norman Johnson, and Laura R. Wherry. 2021. “Medicaid and Mortality: New Evidence from Linked Survey and Administrative Data.” Quarterly Journal of Economics 136 (3): 1783–1829."
-  },
-  {
-    "objectID": "schedule.html#week-10-modern-differences-in-differences",
-    "href": "schedule.html#week-10-modern-differences-in-differences",
-    "title": "Schedule",
-    "section": "Week 10: Modern Differences-in-Differences",
-    "text": "Week 10: Modern Differences-in-Differences\nMonday, March 23 & Wednesday, March 25\nTopics:\n\nDifferences-in-differences under staggered adoption\n“New” DiD estimators - TWFE regression imputation vs. AIPW\nDiagnosing pre-trends violations and assessing robustness\nRelaxing parallel trends assumptions\n\nReadings:\n\nRoth, Jonathan, Pedro H. C. Sant’Anna, Alyssa Bilinski, and John Poe. 2023. “What’s Trending in Difference-in-Differences? A Synthesis of the Recent Econometrics Literature.” Journal of Econometrics 235 (2): 2218–2244.\nLiu, Licheng, Ye Wang, and Yiqing Xu. 2024. “A Practical Guide to Counterfactual Estimators for Causal Inference with Time-Series Cross-Sectional Data.” American Journal of Political Science 68 (1): 160–176.\nCaetano, Carolina, and Brantly Callaway. 2024. “Difference-in-Differences When Parallel Trends Holds Conditional on Covariates.” Working paper.\nRambachan, Ashesh, and Jonathan Roth. 2023. “A More Credible Approach to Parallel Trends.” Review of Economic Studies 90 (5): 2555–2591.\nStrezhnev, Anton. 2024. “Group-Specific Linear Trends and the Triple-Differences in Time Design.” Working paper.\n\nApplications:\n\nChiu, Albert, Xingchen Lan, Ziyi Liu, and Yiqing Xu. 2023. “Causal Panel Analysis under Parallel Trends: Lessons from a Large Reanalysis Study.” American Political Science Review 118 (4): 1–22."
-  },
-  {
-    "objectID": "schedule.html#spring-break",
-    "href": "schedule.html#spring-break",
-    "title": "Schedule",
-    "section": "Spring Break",
-    "text": "Spring Break\nNo Class: Monday, March 23 & Wednesday, March 25"
-  },
-  {
-    "objectID": "schedule.html#week-11-panel-data-causal-inference",
-    "href": "schedule.html#week-11-panel-data-causal-inference",
-    "title": "Schedule",
-    "section": "Week 11: Panel Data Causal Inference",
-    "text": "Week 11: Panel Data Causal Inference\nMonday, April 6 & Wednesday, April 8\nTopics:\n\nEstimating effects when past outcomes affect future treatments\nEstimators for effects of treatment histories\nPitfalls and cautions with lagged outcome regressions\n\nReadings:\n\nBlackwell, Matthew, and Adam N. Glynn. 2018. “How to Make Causal Inferences with Time-Series Cross-Sectional Data under Selection on Observables.” American Political Science Review 112 (4): 1067–1082.\nXu, Yiqing. 2023. “Causal Inference with Time-Series Cross-Sectional Data: A Reflection.” In The SAGE Handbook of Research Methods in Political Science and International Relations, edited by Luigi Curini and Robert Franzese. London: SAGE.\nDaw, Jamie R., and Laura A. Hatfield. 2018. “Matching and Regression to the Mean in Difference-in-Differences Analysis.” Health Services Research 53 (6): 4138–4156.\n\nApplications:\n\nHarvey, Cole J. 2022. “Who Delivers the Votes? Elected versus Appointed Local Executives, Election Manipulation, and Natural Support for Ruling Parties.” Electoral Studies 76: 102455.\nBach, Laurent, Antoine Bozio, Arthur Guillouzouic, and Clément Malgouyres. 2023. “Dividend Taxes and the Allocation of Capital: Comment.” American Economic Review 113 (7): 2048–2052."
-  },
-  {
-    "objectID": "schedule.html#week-12-regression-discontinuity-designs",
-    "href": "schedule.html#week-12-regression-discontinuity-designs",
-    "title": "Schedule",
-    "section": "Week 12: Regression Discontinuity Designs",
-    "text": "Week 12: Regression Discontinuity Designs\nMonday, April 13 & Wednesday, April 15\nTopics:\n\nIdentification under unobserved confounding using quasi-random assignment at a cutpoint\nLocal randomization vs. continuity-based approaches\nEstimation using local polynomial regression\nDiagnostics for design assumptions - “bunching” tests and placebo outcomes\n\nReadings:\n\nCattaneo, Matias D., Nicolás Idrobo, and Rocío Titiunik. 2019. A Practical Introduction to Regression Discontinuity Designs: Foundations. Cambridge: Cambridge University Press.\nCattaneo, Matias D., Nicolás Idrobo, and Rocío Titiunik. 2024. A Practical Introduction to Regression Discontinuity Designs: Extensions. Cambridge: Cambridge University Press.\nMarshall, John. 2024. “Can Close Election Regression Discontinuity Designs Identify Effects of Winning Politician Characteristics?” American Journal of Political Science 68 (2): 494–510.\nHausman, Catherine, and David S. Rapson. 2018. “Regression Discontinuity in Time: Considerations for Empirical Applications.” Annual Review of Resource Economics 10 (1): 533–552.\n\nApplications:\n\nCaughey, Devin, and Jasjeet S. Sekhon. 2011. “Elections and the Regression Discontinuity Design: Lessons from Close US House Races, 1942–2008.” Political Analysis 19 (4): 385–408.\nEggers, Andrew C., Anthony Fowler, Jens Hainmueller, Andrew B. Hall, and James M. Snyder Jr. 2015. “On the Validity of the Regression Discontinuity Design for Estimating Electoral Effects: New Evidence from Over 40,000 Close Races.” American Journal of Political Science 59 (1): 259–274.\nDe la Cuesta, Brandon, and Kosuke Imai. 2016. “Misunderstandings about the Regression Discontinuity Design in the Study of Close Elections.” Annual Review of Political Science 19 (1): 375–396."
-  },
-  {
-    "objectID": "schedule.html#week-13-mediation-and-sensitivity-analysis",
-    "href": "schedule.html#week-13-mediation-and-sensitivity-analysis",
-    "title": "Schedule",
-    "section": "Week 13: Mediation and Sensitivity Analysis",
-    "text": "Week 13: Mediation and Sensitivity Analysis\nMonday, April 20 & Wednesday, April 22\nTopics:\n\nAssessing the robustness of selection-on-observables results to hypothetical unobserved confounding.\nDecomposing causal effects into “direct” and “indirect” components\nEstimating mediation effects under ignorability assumptions\nChallenges and pitfalls of mediation analysis\n\nReadings:\n\nCinelli, Carlos, and Chad Hazlett. 2020. “Making Sense of Sensitivity: Extending Omitted Variable Bias.” Journal of the Royal Statistical Society: Series B (Statistical Methodology) 82 (1): 39–67.\nImai, Kosuke, Luke Keele, Dustin Tingley, and Teppei Yamamoto. 2011. “Unpacking the Black Box of Causality: Learning about Causal Mechanisms from Experimental and Observational Studies.” American Political Science Review 105 (4): 765–789.\nBonus: Green, Donald P., Shang E. Ha, and John G. Bullock. 2010. “Enough Already about ‘Black Box’ Experiments: Studying Mediation Is More Difficult than Most Scholars Suppose.” Annals of the American Academy of Political and Social Science 628 (1): 200–208.\nAcharya, Avidit, Matthew Blackwell, and Maya Sen. 2016. “Explaining Causal Findings without Bias: Detecting and Assessing Direct Effects.” American Political Science Review 110 (3): 512–529.\nBlackwell, Matthew, Ruofan Ma, and Aleksei Opacic. 2024. “Assumption Smuggling in Intermediate Outcome Tests of Causal Mechanisms.” Working paper.\n\nApplications:\n\nRathbun, Brian C., Christopher Sebastian Parker, and Caleb Pomeroy. 2025. “Separate but Unequal: Ethnocentrism and Racialization Explain the ‘Democratic’ Peace in Public Opinion.” American Political Science Review 119 (2): 621–636.\nTomz, Michael, and Jessica L. P. Weeks. 2025. “Race, Democracy, and Public Support for War.” American Political Science Review: 1–18.\nHazlett, Chad. 2020. “Angry or Weary? How Violence Impacts Attitudes toward Peace among Darfurian Refugees.” Journal of Conflict Resolution 64 (5): 844–870."
-  },
-  {
-    "objectID": "schedule.html#week-14-shift-share-designs-and-experiments-with-interference",
-    "href": "schedule.html#week-14-shift-share-designs-and-experiments-with-interference",
-    "title": "Schedule",
-    "section": "Week 14: Shift-share designs and experiments with interference",
-    "text": "Week 14: Shift-share designs and experiments with interference\nMonday, April 27 & Wednesday, April 29\nTopics:\n\nIdentification with instruments that are inner products of unit-specific “shares” and independent global “shifts”\n“Share-exogeneity” and connections to differences-in-differences/“multiple instruments”\n“Shift-exogeneity” and connections to experiments with interference\n\nReadings:\n\nBorusyak, Kirill, Peter Hull, and Xavier Jaravel. 2025. “A Practical Guide to Shift-Share Instruments.” Journal of Economic Perspectives 39 (1): 181–204.\nBorusyak, Kirill, Peter Hull, and Xavier Jaravel. 2025. “Design-Based Identification with Formula Instruments: A Review.” Econometrics Journal 28 (1): 83–108.\nAronow, P. M., and Cyrus Samii. 2017. “Estimating Average Causal Effects under General Interference, with Application to a Social Network Experiment.” Annals of Applied Statistics 11 (4): 1912–1947.\n\nApplications:\n\nFouka, Vasiliki, and Marco Tabellini. 2022. “Changing In-Group Boundaries: The Effect of Immigration on Race Relations in the United States.” American Political Science Review 116 (3): 968–984.\nGulotty, Robert, and Anton Strezhnev. 2024. “The Political Benefits of the Monoculture: Estimating the Electoral Effect of the Market Facilitation Program.” Working paper."
-  },
-  {
-    "objectID": "lectures.html",
-    "href": "lectures.html",
-    "title": "Lectures",
-    "section": "",
-    "text": "Lecture slides are available as self-contained .html files made with RevealJS from a Quarto .qmd file. You can choose to print these to a PDF document by using the “PDF Export Mode” in the Tools menu accessed via the settings button in the lower left-hand side of the page. You are also welcome to directly download the .qmd file and supporting data/images/etc… from the Github repository. Slides are organized by week and combine Monday and Wednesday’s lectures.\n\n\n\nWeek 1 Github Repository\nWeek 1 .html slides\n\n\n\n\n\nWeek 2 Github Repository\nWeek 2 .html slides\n\n\n\n\n\nWeek 3 Github Repository\nWeek 3 .html slides\n\n\n\n\n\nWeek 4 Github Repository\nWeek 4 .html slides\n\n\n\n\n\nWeek 5 Github Repository\nWeek 5 .html slides\n\n\n\n\n\nWeek 6 Github Repository\nWeek 6 .html slides\n\n\n\n\n\nWeek 7 Github Repository\nWeek 7 .html slides\n\n\n\n\n\nWeek 8 Github Repository\nWeek 8 .html slides\n\n\n\n\n\nWeek 9 Github Repository\nWeek 9 .html slides\n\n\n\n\n\nWeek 10 Github Repository\nWeek 10 .html slides\n\n\n\n\n\nWeek 11 Github Repository\nWeek 11 .html slides\n\n\n\n\n\nWeek 12 Github Repository\nWeek 12 .html slides\n\n\n\n\n\nWeek 13 Github Repository\nWeek 13 .html slides\n\n\n\n\n\nWeek 14 Github Repository\nWeek 14 .html slides"
-  },
-  {
-    "objectID": "lectures.html#lecture-slides",
-    "href": "lectures.html#lecture-slides",
-    "title": "Lectures",
-    "section": "",
-    "text": "Lecture slides are available as self-contained .html files made with RevealJS from a Quarto .qmd file. You can choose to print these to a PDF document by using the “PDF Export Mode” in the Tools menu accessed via the settings button in the lower left-hand side of the page. You are also welcome to directly download the .qmd file and supporting data/images/etc… from the Github repository. Slides are organized by week and combine Monday and Wednesday’s lectures.\n\n\n\nWeek 1 Github Repository\nWeek 1 .html slides\n\n\n\n\n\nWeek 2 Github Repository\nWeek 2 .html slides\n\n\n\n\n\nWeek 3 Github Repository\nWeek 3 .html slides\n\n\n\n\n\nWeek 4 Github Repository\nWeek 4 .html slides\n\n\n\n\n\nWeek 5 Github Repository\nWeek 5 .html slides\n\n\n\n\n\nWeek 6 Github Repository\nWeek 6 .html slides\n\n\n\n\n\nWeek 7 Github Repository\nWeek 7 .html slides\n\n\n\n\n\nWeek 8 Github Repository\nWeek 8 .html slides\n\n\n\n\n\nWeek 9 Github Repository\nWeek 9 .html slides\n\n\n\n\n\nWeek 10 Github Repository\nWeek 10 .html slides\n\n\n\n\n\nWeek 11 Github Repository\nWeek 11 .html slides\n\n\n\n\n\nWeek 12 Github Repository\nWeek 12 .html slides\n\n\n\n\n\nWeek 13 Github Repository\nWeek 13 .html slides\n\n\n\n\n\nWeek 14 Github Repository\nWeek 14 .html slides"
-  },
-  {
-    "objectID": "assignments.html",
-    "href": "assignments.html",
-    "title": "Assignments",
-    "section": "",
-    "text": "Assignment\nAssigned\nDue\n\n\n\n\nProblem Set 1\nJan 21 (Week 1)\nFeb 4 (Week 3)\n\n\nProblem Set 2\nFeb 4 (Week 3)\nFeb 18 (Week 5)\n\n\nProblem Set 3\nFeb 18 (Week 5)\nMarch 4 (Week 7)\n\n\nMidterm Exam\nMarch 4 (Week 7)\nIn-Class\n\n\nProblem Set 4\nMarch 11 (Week 8)\nMarch 25 (Week 10)\n\n\nProblem Set 5\nApril 8 (Week 11)\nApril 22 (Week 13)\n\n\nFinal Exam\nMay 4 (Exam Week)\nLocation TBA"
-  },
-  {
-    "objectID": "assignments.html#schedule",
-    "href": "assignments.html#schedule",
-    "title": "Assignments",
-    "section": "",
-    "text": "Assignment\nAssigned\nDue\n\n\n\n\nProblem Set 1\nJan 21 (Week 1)\nFeb 4 (Week 3)\n\n\nProblem Set 2\nFeb 4 (Week 3)\nFeb 18 (Week 5)\n\n\nProblem Set 3\nFeb 18 (Week 5)\nMarch 4 (Week 7)\n\n\nMidterm Exam\nMarch 4 (Week 7)\nIn-Class\n\n\nProblem Set 4\nMarch 11 (Week 8)\nMarch 25 (Week 10)\n\n\nProblem Set 5\nApril 8 (Week 11)\nApril 22 (Week 13)\n\n\nFinal Exam\nMay 4 (Exam Week)\nLocation TBA"
-  },
-  {
-    "objectID": "assignments.html#problem-sets",
-    "href": "assignments.html#problem-sets",
-    "title": "Assignments",
-    "section": "Problem Sets",
-    "text": "Problem Sets\nProblem sets are distributed as .qmd files along with their rendered .html form. You should edit the provided .qmd file and render to .html when submitting the assignment. Additional files (e.g. datasets) are located in sub-folders. For convenience, all the combined files are also distributed as a .zip compressed archive.\n\nProblem Set 1\n\nGithub Repository\n.zip archive\n\n\n\nProblem Set 2\n\nGithub Repository\n.zip archive\n\n\n\nProblem Set 3\n\nGithub Repository\n.zip archive\n\n\n\nProblem Set 4\n\nGithub Repository\n.zip archive"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "PoliSci 813",
-    "section": "",
-    "text": "Causal Inference\nDesigning studies to uncover cause and effect from data\nPoliSci 813 • Spring 2026University of Wisconsin-Madison\n\n\n\n\n\n\n\n\nInstructor\n\n   Anton Strezhnev\n   North Hall 322D\n   strezhnev@wisc.edu\n\n\n\nTeaching Assistant\n\n   Junda Li\n   jli2458@wisc.edu\n\n\n\n\nCourse details\n\n   Mondays & Wednesdays\n   1/21/2026 - 5/4/2026\n   9:30am - 10:45am\n   North Hall 422\n\n\n\nContacting me\nE-mail is the best way to get in touch with me. My dedicated office hours are Tuesdays from 2pm-4pm if you want to meet in-person. I am also generally in my office on weekdays during normal hours and my door is open, so you are welcome to drop in. You can also feel free to e-mail me to confirm availability or to schedule a virtual meeting via Zoom."
-  },
-  {
-    "objectID": "resources.html",
-    "href": "resources.html",
-    "title": "Resources",
-    "section": "",
-    "text": "These textbooks provide a number of the readings that will be used through the course of the semester. Each is available either as a free online version or in digital form via UW-Madison library access.\n\nCunningham, Scott. Causal inference: The Mixtape. Yale University Press, 2021.\n\nFree online version\n\nHuntington-Klein, Nick. The Effect: An Introduction to Research Design and Causality. Chapman and Hall/CRC, 2021.\n\nFree online version\n\nHernán, Miguel A. and James M. Robins. Causal Inference: What If. Chapman & Hall/CRC. 2020.\n\nFree PDF available\n\nImbens, Guido W. and Donald B. Rubin. Causal Inference for Statistics, Social, and Biomedical Sciences. Cambridge University Press. 2015.\n\nUW-Madison Library Access\n\nMorgan, Stephen L., and Christopher Winship. Counterfactuals and Causal Inference. Cambridge University Press, 2015.\n\nUW-Madison Library Access\n\nWager, Stefan. Causal inference: A statistical learning approach.\n\nDraft PDF available here"
-  },
-  {
-    "objectID": "resources.html#textbooks",
-    "href": "resources.html#textbooks",
-    "title": "Resources",
-    "section": "",
-    "text": "These textbooks provide a number of the readings that will be used through the course of the semester. Each is available either as a free online version or in digital form via UW-Madison library access.\n\nCunningham, Scott. Causal inference: The Mixtape. Yale University Press, 2021.\n\nFree online version\n\nHuntington-Klein, Nick. The Effect: An Introduction to Research Design and Causality. Chapman and Hall/CRC, 2021.\n\nFree online version\n\nHernán, Miguel A. and James M. Robins. Causal Inference: What If. Chapman & Hall/CRC. 2020.\n\nFree PDF available\n\nImbens, Guido W. and Donald B. Rubin. Causal Inference for Statistics, Social, and Biomedical Sciences. Cambridge University Press. 2015.\n\nUW-Madison Library Access\n\nMorgan, Stephen L., and Christopher Winship. Counterfactuals and Causal Inference. Cambridge University Press, 2015.\n\nUW-Madison Library Access\n\nWager, Stefan. Causal inference: A statistical learning approach.\n\nDraft PDF available here"
-  },
-  {
-    "objectID": "resources.html#software",
-    "href": "resources.html#software",
-    "title": "Resources",
-    "section": "Software",
-    "text": "Software\n\nR and RStudio\nThis course uses R for all programming assignments. You are welcome to use the RStudio Interactive Development Environment (IDE) to write code and edit the assignment write-up. Due to the extensive integration of Quarto into Posit-developed IDEs, I encourage using either RStudio or the more recent Positron IDE.\n\nR: Download from https://www.r-project.org\nRStudio: Download from https://posit.co/download/rstudio-desktop/\nPositron: Download from https://positron.posit.co/\n\n\nRecommended Guides for R Programming\n\nR For Data Science Available at https://r4ds.hadley.nz/\nData Visualization: A Practical Introduction Available at https://socviz.co/\n\n\n\n\nQuarto and Markdown\nThe assignments are distributed as .qmd Quarto files. Quarto is the successor to R Markdown and lets you present your analysis, code, figures and written discussion all in a single document. It uses Markdown syntax for formatting text and supports embedded R code chunks that execute when you render the document. This lets you present your analysis, code, figures, and written discussion all in one place.\nTo complete assignments, you will edit the provided .qmd file, adding your code and written responses, then render it to an HTML file for submission. Both your .html output and .qmd file will be submitted via Gradescope\n\nQuarto: Download from https://quarto.org/docs/get-started/\nQuarto Guide: https://quarto.org/docs/guide/\nMarkdown Basics: https://quarto.org/docs/authoring/markdown-basics.html\nNote also the chapter on Quarto in R For Data Science"
-  },
-  {
-    "objectID": "resources.html#tutorials",
-    "href": "resources.html#tutorials",
-    "title": "Resources",
-    "section": "Tutorials",
-    "text": "Tutorials\nBelow are some additional tutorials to help supplement the main course material. They will generally focus on specific topics in statistical computing and things that we did not have time to cover as part of the main set of lectures.\n\nBasics of Monte Carlo simulations\nPower calculations"
-  },
-  {
-    "objectID": "slides/week1/week1_intro_and_review.html#welcome",
-    "href": "slides/week1/week1_intro_and_review.html#welcome",
-    "title": "Week 1: Review!",
-    "section": "Welcome!",
-    "text": "Welcome!\n\\[\n  \\require{cancel}\n\\]"
-  },
-  {
-    "objectID": "slides/week1/week1_intro_and_review.html#course-overview",
-    "href": "slides/week1/week1_intro_and_review.html#course-overview",
-    "title": "Week 1: Review!",
-    "section": "Course Overview",
-    "text": "Course Overview\n\nInstructor: Anton Strezhnev\nTA: Junda Li\nLogistics:\n\nLectures M/W - 9:30am - 10:45am\n5 Problem Sets (~ 2 weeks)\nIn-class midterm (March 4th)\nIn-class final (May 4th)\nMy office hours: Tuesdays 2pm-4pm (North Hall 322D)\nJunda’s office hours: Thursdays, 1:30pm-3:30pm, (North Hall 101/Grad Lounge)\nCourse Website: https://www.antonstrezhnev.com/ps813\nAnnouncements will be posted on Ed - please let me know if you do not have access."
-  },
-  {
-    "objectID": "slides/week1/week1_intro_and_review.html#course-objectives",
-    "href": "slides/week1/week1_intro_and_review.html#course-objectives",
-    "title": "Week 1: Review!",
-    "section": "Course Objectives",
-    "text": "Course Objectives\n\nWhat is this course about?\n\nDefining causal effects w/ a structured statistical framework (potential outcomes)\nOutlining assumptions necessary to identify causal effects from data\nEstimating and conducting inference on causal effects\n\nGoals for the course\n\nGive you the tools you need to develop your own causal research designs and comment on others’ designs.\nEquip you with an understanding of the fundamentals of causal inference to enable you to learn new methods.\nProfessionalization - how did causal inference emerge as a field and how do different disciplines approach the topic?"
-  },
-  {
-    "objectID": "slides/week1/week1_intro_and_review.html#course-workflow",
-    "href": "slides/week1/week1_intro_and_review.html#course-workflow",
-    "title": "Week 1: Review!",
-    "section": "Course workflow",
-    "text": "Course workflow\n\nLectures\n\nOne set of slides for each of the two lectures in each week\nYour primary point of instruction - goal is to synthesize the core material + give you the tools to learn more.\nI want lectures to be interactive - you should ask questions and interrupt!\nYou should do the readings prior to each week, but definitely be sure to do them before the Wednesday.\n\nReadings\n\nMix of textbooks and papers\nCombination of “theory” readings w/ selected applications to political science (and sociology/econ)\nOrganized on the syllabus by priority. Try to do all of them, but if you need to prioritize, start with the first ones on the list for the week.\nAll readings available digitally on the course website."
-  },
-  {
-    "objectID": "slides/week1/week1_intro_and_review.html#course-workflow-1",
-    "href": "slides/week1/week1_intro_and_review.html#course-workflow-1",
-    "title": "Week 1: Review!",
-    "section": "Course workflow",
-    "text": "Course workflow\n\nProblem sets (25% of your grade)\n\nMain day-to-day component of the class – meant to get you working with your colleagues and thinking hard about the material.\nCollaboration is strongly encouraged – you should ask and answer questions on our class Ed Discussion board\nSubmit on the Gradescope assignment platform\nGrading is on a plus/check/minus scale.\n\nConversion to grade point is somewhat holistic.\nMajority plusses is an A, Majority checks is an AB, Majority minus is a B\n\nSolutions will be posted after the due-date."
-  },
-  {
-    "objectID": "slides/week1/week1_intro_and_review.html#course-workflow-2",
-    "href": "slides/week1/week1_intro_and_review.html#course-workflow-2",
-    "title": "Week 1: Review!",
-    "section": "Course workflow",
-    "text": "Course workflow\n\nMidterm Exam (30% of your grade)\n\nThe midterm will be in-class on March 4th\n\nCovers all material up to that point (experiments + selection-on-observables)\nCombination of theoretical questions and code/results analysis.\n\n\nFinal Exam (35% of your grade)\n\nThe final exam will be in-person and written during the exam period (May 4th)\nA longer version of the midterm exam (to cover the 2 hour exam block).\n\nParticipation (10% of your grade)\n\nIt is important that you actively engage with lecture and with the teaching staff – ask and answer questions.\nDo the reading!\nParticipating on Ed counts towards this as well."
-  },
-  {
-    "objectID": "slides/week1/week1_intro_and_review.html#class-requirements",
-    "href": "slides/week1/week1_intro_and_review.html#class-requirements",
-    "title": "Week 1: Review!",
-    "section": "Class Requirements",
-    "text": "Class Requirements\n\nOverall: An interest in learning and willingness to ask questions.\nGenerally assume some background in probability theory and statistics (e.g. an intro course taught in most departments)\nMain concepts to be familiar with:\n\nproperties of random variables\nestimands and estimators\nbias, variance, consistency\ncentral limit theorem\nconfidence intervals; hypothesis testing"
-  },
-  {
-    "objectID": "slides/week1/week1_intro_and_review.html#a-brief-overview",
-    "href": "slides/week1/week1_intro_and_review.html#a-brief-overview",
-    "title": "Week 1: Review!",
-    "section": "A brief overview",
-    "text": "A brief overview\n\nWeek 1: Review of the properties of estimators\nWeek 2-4: Experiments\nWeek 5-7: Selection-on-observables\nWeek 8: Instrumental variables\nWeek 9-10: Differences-in-differences\nWeek 11: Panel data causal inference\nWeek 12: Regression discontinuity designs\nWeek 13: Causal mediation; sensitivity analysis\nWeek 14: Shift-share designs and experiments with interference"
-  },
-  {
-    "objectID": "slides/week1/week1_intro_and_review.html#review-estimators-and-their-properties",
-    "href": "slides/week1/week1_intro_and_review.html#review-estimators-and-their-properties",
-    "title": "Week 1: Review!",
-    "section": "Review: Estimators and their properties",
-    "text": "Review: Estimators and their properties"
-  },
-  {
-    "objectID": "slides/week1/week1_intro_and_review.html#estimation",
-    "href": "slides/week1/week1_intro_and_review.html#estimation",
-    "title": "Week 1: Review!",
-    "section": "Estimation",
-    "text": "Estimation\n\nOne critical use of statistical theory is understanding how to learn about things we don’t observe using things that we do observe. We call this estimation.\n\nWhat is the share of voters in Wisconsin who will turn out in the 2026 election?\nWhat is the share of voters who turn out among those assigned to receive a GOTV phone call?\n\nEstimand: The unobserved quantity that we want to learn about. Often denoted via a greek letter (e.g. \\(\\mu\\), \\(\\pi\\))\n\nOften a “population” characteristic that we want to learn about via a sample.\n\nBut in this class, you’ll learn another reason why we sometimes can’t observe a quantity of interest even in a sample!\n\nImportant to define your estimand well. (Lundberg, Johnson and Stewart, 2022)"
-  },
-  {
-    "objectID": "slides/week1/week1_intro_and_review.html#estimation-1",
-    "href": "slides/week1/week1_intro_and_review.html#estimation-1",
-    "title": "Week 1: Review!",
-    "section": "Estimation",
-    "text": "Estimation\n\nEstimator: The function of random variables that we will use to try to estimate the quantity of interest. Often denoted with a hat on the parameter of interest (e.g. \\(\\hat{\\mu}\\), \\(\\hat{\\pi}\\))\n\nWhy are the variables random?\n\nClassic inference: We have a random sample from the population - if we took another sample, we would obtain a different realization when applying our estimator to the new sample.\nDesign-based inference: We have a randomly assigned treatment - if we were to re-run the experiment, we would observe a different treatment/control difference b/c of different allocation of units.\n\n\nEstimate: A single realization of our estimator (e.g. 0.3, 9.535)\n\nWe often report both point estimates (“best guess”) and interval estimates (e.g. confidence intervals).\nCareful not to confuse properties of estimators with properties of the estimates themselves."
-  },
-  {
-    "objectID": "slides/week1/week1_intro_and_review.html#estimation-2",
-    "href": "slides/week1/week1_intro_and_review.html#estimation-2",
-    "title": "Week 1: Review!",
-    "section": "Estimation",
-    "text": "Estimation\n\n\n\nIllustrating Estimation"
-  },
-  {
-    "objectID": "slides/week1/week1_intro_and_review.html#estimation-3",
-    "href": "slides/week1/week1_intro_and_review.html#estimation-3",
-    "title": "Week 1: Review!",
-    "section": "Estimation",
-    "text": "Estimation\n\nThe classic estimation problem in statistics is to estimate some unknown population mean \\(\\mu\\) from an i.i.d. sample of \\(n\\) observations \\(Y_1, Y_2, \\dotsc, Y_n\\).\n\nWe assume that each \\(Y_i\\) is a draw from the target population with mean \\(\\mu\\) and population variance \\(\\sigma^2\\) (identically distributed) - therefore \\(E[Y_i] = \\mu\\) and \\(Var(Y_i) = \\sigma^2\\)\nWe’ll also assume that conditioning on \\(Y_i\\) tells us nothing about any other \\(Y_j\\)\n\\(Y_i \\perp \\!\\!\\! \\perp Y_j\\) (independently distributed) - this implies \\(Cov(Y_i, Y_j) = 0\\)\n\nOur estimand: \\(\\mu\\)\nOur estimator: The sample mean \\(\\hat{\\mu} = \\bar{Y} = \\frac{1}{n}\\sum_{i=1}^n Y_i\\)\nOur estimate: A particular realization of that estimator based on our observed sample (e.g. \\(0.4\\))\nNote that our estimator is a random variable – it’s a function of \\(Y_i\\)s which are random variables.\n\nTherefore it has an expectation \\(E[\\hat{\\mu}]\\)\nIt has a variance \\(Var(\\hat{\\mu})\\)\nIt has a distribution (which we may or may not know)."
-  },
-  {
-    "objectID": "slides/week1/week1_intro_and_review.html#estimation-4",
-    "href": "slides/week1/week1_intro_and_review.html#estimation-4",
-    "title": "Week 1: Review!",
-    "section": "Estimation",
-    "text": "Estimation\n\nHow do we know if we’ve picked a good estimator? Will it be close to the truth? Will it be systematically higher or lower than the target?\nWe want to derive some of its properties\n\nBias: \\(E[\\hat{\\mu}] - \\mu\\)\nVariance: \\(Var(\\hat{\\mu})\\)\nConsistency: Does \\(\\hat{\\mu}\\) converge in probability to \\(\\mu\\) as \\(n\\) goes to infinity?\nAsymptotic distribution: Is the sampling distribution of \\(\\hat{\\mu}\\) well approximated by a known distribution?"
-  },
-  {
-    "objectID": "slides/week1/week1_intro_and_review.html#estimation-5",
-    "href": "slides/week1/week1_intro_and_review.html#estimation-5",
-    "title": "Week 1: Review!",
-    "section": "Estimation",
-    "text": "Estimation\n\n\n\nProperties of Estimators"
-  },
-  {
-    "objectID": "slides/week1/week1_intro_and_review.html#unbiasedness",
-    "href": "slides/week1/week1_intro_and_review.html#unbiasedness",
-    "title": "Week 1: Review!",
-    "section": "Unbiasedness",
-    "text": "Unbiasedness\n\nIs the expectation of \\(\\hat{\\mu}\\) equal to \\(\\mu\\)?\nFirst we pull out the constant.\n\\[E[\\hat{\\mu}] = E\\left[\\frac{1}{n}\\sum_{i=1}^n Y_i\\right] = \\frac{1}{n}E\\left[\\sum_{i=1}^n Y_i\\right]\\]\nNext we use linearity of expectations\n\\[\\frac{1}{n}E\\left[\\sum_{i=1}^n Y_i\\right] = \\frac{1}{n}\\sum_{i=1}^n E\\left[Y_i\\right]\\]\nFinally, under our i.i.d. assumption\n\\[\\frac{1}{n}\\sum_{i=1}^n E\\left[Y_i\\right] = \\frac{1}{n}\\sum_{i=1}^n \\mu = \\frac{n \\mu}{n} = \\mu\\]\nTherefore, the bias, \\(\\text{Bias}(\\hat{\\mu}) = E[\\hat{\\mu}] - \\mu = 0\\)"
-  },
-  {
-    "objectID": "slides/week1/week1_intro_and_review.html#variance",
-    "href": "slides/week1/week1_intro_and_review.html#variance",
-    "title": "Week 1: Review!",
-    "section": "Variance",
-    "text": "Variance\n\nWhat is the variance of \\(\\hat{\\mu}\\)? Again, start by pulling out the constant.\n\\[Var(\\hat{\\mu}) = Var\\left[\\frac{1}{n}\\sum_{i=1}^n Y_i\\right] = \\frac{1}{n^2}Var\\left[\\sum_{i=1}^n Y_i\\right]\\]\nWe can further simplify by using our i.i.d. assumption. The variance of a sum of i.i.d. random variables is the sum of the variances.\n\\[\\frac{1}{n^2}Var\\left[\\sum_{i=1}^n Y_i\\right] = \\frac{1}{n^2}\\sum_{i=1}^n Var\\left[Y_i\\right]\\]\n“identically distributed”\n\\[\\frac{1}{n^2}\\sum_{i=1}^n Var\\left[Y_i\\right] = \\frac{1}{n^2}\\sum_{i=1}^n \\sigma^2 = \\frac{n\\sigma^2}{n^2} = \\frac{\\sigma^2}{n}\\]\nTherefore, the variance is \\(\\frac{\\sigma^2}{n}\\)"
-  },
-  {
-    "objectID": "slides/week1/week1_intro_and_review.html#asymptotic-properties",
-    "href": "slides/week1/week1_intro_and_review.html#asymptotic-properties",
-    "title": "Week 1: Review!",
-    "section": "Asymptotic properties",
-    "text": "Asymptotic properties\n\nAnother way of talking about properties of estimators is to consider how they behave as the sample size gets large.\n\nSometimes this is just easier than working with finite sample expectations.\nAdditionally, we might have a biased estimator. Does that bias “go away” in large samples?\n\nThis requires us to talk about sequences of estimators indexed (typically) by sample size.\n\nWe’ll typically denote this sequence with a subscript - for example, for the sample mean…\n\n\\[\\bar{Y}_n = \\{\\bar{Y}_1, \\bar{Y}_2, \\bar{Y}_3, \\dotsc\\}\\]\nCan we characterize the limit of this sequence of estimators?\n\nIt’s a random variable…so we need a slightly different language compared to deterministic series.\nBut a lot of intuitions from convergence of series carry over!"
-  },
-  {
-    "objectID": "slides/week1/week1_intro_and_review.html#convergence-in-probability",
-    "href": "slides/week1/week1_intro_and_review.html#convergence-in-probability",
-    "title": "Week 1: Review!",
-    "section": "Convergence in probability",
-    "text": "Convergence in probability\n\nFirst, we can talk about the convergence of a sequence to a single value\n\nThere are lots of different forms of convergence here, but the most common that we use is convergence in probability\nThis is the form of convergence in the “weak” law of large numbers\n\nConvergence in probability\n\nA sequence of random variables \\(\\hat{\\mu}_n\\) is said to converge in probability to some value \\(\\mu\\) if for every \\(\\epsilon &gt; 0\\),\n\\[\\Pr(|\\hat{\\mu}_n - \\mu| \\ge \\epsilon) \\to 0\\] as \\(n \\to \\infty\\).\n\nWe’ll denote this as \\(\\hat{\\mu_n} \\xrightarrow{p} \\mu\\). You’ll see other texts use the term “plim”\nAn estimator that converges in probability to the target estimand is called consistent."
-  },
-  {
-    "objectID": "slides/week1/week1_intro_and_review.html#properties-of-convergence-in-probability",
-    "href": "slides/week1/week1_intro_and_review.html#properties-of-convergence-in-probability",
-    "title": "Week 1: Review!",
-    "section": "Properties of convergence in probability",
-    "text": "Properties of convergence in probability\n\nConsider two sequences \\(X_n \\xrightarrow{p} x\\) and \\(Y_n \\xrightarrow{p} y\\) and continuous function \\(g()\\). By the continuous mapping theorem\n\n\n\\(X_n + Y_n \\xrightarrow{p} x + y\\)\n\\(X_nY_n \\xrightarrow{p} xy\\)\n\\(X_n/Y_n \\xrightarrow{p} x/y\\) if \\(y \\neq 0\\)\n\\(g(X_n) \\xrightarrow{p} g(x)\\)"
-  },
-  {
-    "objectID": "slides/week1/week1_intro_and_review.html#convergence-in-distribution",
-    "href": "slides/week1/week1_intro_and_review.html#convergence-in-distribution",
-    "title": "Week 1: Review!",
-    "section": "Convergence in distribution",
-    "text": "Convergence in distribution\n\nIn addition to asking whether the estimator will get closer to our target as \\(n\\) gets large, we also want to know whether its sampling distribution will be well approximated by a known distribution\n\nSpecifically, we care about whether it is approximately normally distributed\nThis lets us use our typical hypothesis tests and confidence intervals that rely on normal distribution critical values!\n\nConvergence in distribution\n\nA sequence of random variables \\(X_n\\) with CDF \\(F_n(x)\\) is said to converge in distribution to some random variable \\(X\\) with CDF \\(F(x)\\) if\n\\[\\lim_{n \\to \\infty} F_n(x) = F(x)\\]\n\nWe’ll typically denote this as as \\(X_n \\xrightarrow{d} X\\)."
-  },
-  {
-    "objectID": "slides/week1/week1_intro_and_review.html#properties-of-convergence-in-distribution",
-    "href": "slides/week1/week1_intro_and_review.html#properties-of-convergence-in-distribution",
-    "title": "Week 1: Review!",
-    "section": "Properties of convergence in distribution",
-    "text": "Properties of convergence in distribution\n\nIn addition to the continuous mapping theorem from before, it is also useful to know Slutsky’s theorem which involves one sequence converging in distribution and another converging in probability\nConsider two sequences \\(X_n \\xrightarrow{d} X\\) and \\(Y_n \\xrightarrow{p} y\\)\n\n\n\\(X_n + Y_n \\xrightarrow{d} X + y\\)\n\\(X_nY_n \\xrightarrow{d} Xy\\)\n\\(X_n/Y_n \\xrightarrow{d} X/y\\) if \\(y \\neq 0\\)"
-  },
-  {
-    "objectID": "slides/week1/week1_intro_and_review.html#the-central-limit-theorem",
-    "href": "slides/week1/week1_intro_and_review.html#the-central-limit-theorem",
-    "title": "Week 1: Review!",
-    "section": "The Central Limit Theorem",
-    "text": "The Central Limit Theorem\n\nThe most famous convergence in distribution result is the central limit theorem\n\nThe mean of \\(n\\) independent and identically distributed random variables converges in distribution to a normal distribution\nMany other central limit theorems under different assumptions on the random variables (e.g. “weak” dependence)\nShowing that an estimator is asymptotically normal often involves showing we can write it in a form that admits one of these CLTs\n\nBy the central limit theorem\n\\[\\sqrt{n}(\\hat{\\mu}_n - \\mu) \\xrightarrow{d} \\mathcal{N}(0, \\sigma^2)\\]\nAnd we’ll use this result to justify our asymptotic approximation of the sampling distribution of \\(\\hat{\\mu}_n\\)\n\\[\\hat{\\mu}_n \\overset{a}{\\sim} \\mathcal{N}\\bigg(\\mu, \\frac{\\sigma^2}{n}\\bigg)\\]"
-  },
-  {
-    "objectID": "slides/week1/week1_intro_and_review.html#big-o_p-and-little-o_p-notation",
-    "href": "slides/week1/week1_intro_and_review.html#big-o_p-and-little-o_p-notation",
-    "title": "Week 1: Review!",
-    "section": "Big-\\(O_p\\) and little-\\(o_p\\) notation",
-    "text": "Big-\\(O_p\\) and little-\\(o_p\\) notation\n\nSometimes we’ll want to use shorthand to characterize the asymptotic behavior of a given term\nLittle-\\(o_p\\) notation denotes convergence (in probability) to zero\n\n\\(Y_n = o_p(1)\\) means \\(\\Pr(|Y_n| \\ge \\epsilon) \\to 0\\) as \\(n \\to \\infty\\)\ne.g. for a consistent estimator, we can write \\(\\hat{\\mu}_n = \\mu + o_p(1)\\)\n\nBig-\\(O_p\\) notation denotes boundedness of a sequence as \\(n \\to \\infty\\)\n\n\\(Y_n = O_p(1)\\) means that \\(Pr(|Y_n| &gt; M) &lt; \\epsilon\\) for sufficiently large \\(n\\)"
-  },
-  {
-    "objectID": "slides/week1/week1_intro_and_review.html#big-o_p-and-little-o_p-notation-1",
-    "href": "slides/week1/week1_intro_and_review.html#big-o_p-and-little-o_p-notation-1",
-    "title": "Week 1: Review!",
-    "section": "Big-\\(O_p\\) and little-\\(o_p\\) notation",
-    "text": "Big-\\(O_p\\) and little-\\(o_p\\) notation\n\nThe rest of the orders are defined recursively\n\nSo \\(Y_n = O_p(a_n)\\) means that \\(\\frac{Y_n}{a_n} = O_p(1)\\)\n\nUseful properties\n\n\\(o_p(1) + o_p(1) = o_p(1)\\)\n\\(o_p(1) + O_p(1) = O_p(1)\\)\n\\(O_p(1)o_p(1) = o_p(1)\\)\nIf a sequence is \\(o_p(1)\\), it is \\(O_p(1)\\) but not vice-versa."
-  },
-  {
-    "objectID": "slides/week1/week1_intro_and_review.html#sqrtn-consistency",
-    "href": "slides/week1/week1_intro_and_review.html#sqrtn-consistency",
-    "title": "Week 1: Review!",
-    "section": "\\(\\sqrt{n}\\)-consistency",
-    "text": "\\(\\sqrt{n}\\)-consistency\n\nMost common place where you will see Big-\\(O_p\\) notation is in discussion of convergence rates of estimators\n\nNot just whether \\(\\hat{\\mu}\\) converges to \\(\\mu\\), but how quickly?\nThis matters for determining whether our approximation is going to be good quality in finite samples!\n\nAn estimator \\(\\hat{\\mu}_n\\) has a convergence rate \\(r_n \\to \\infty\\) if\n\\[r_n(\\hat{\\mu}_n - \\mu) = O_p(1)\\]\nThis implies that the estimation error \\(\\hat{\\mu}_n - \\mu\\) is \\(O_p(1/r_n)\\) or in other words bounded in probability by \\(1/r_n \\to 0\\)."
-  },
-  {
-    "objectID": "slides/week1/week1_intro_and_review.html#sqrtn-consistency-1",
-    "href": "slides/week1/week1_intro_and_review.html#sqrtn-consistency-1",
-    "title": "Week 1: Review!",
-    "section": "\\(\\sqrt{n}\\)-consistency",
-    "text": "\\(\\sqrt{n}\\)-consistency\n\nFrom the central limit theorem, the most common convergence rate that you’ll encounter is \\(\\sqrt{n}\\)\n\nSlower rates appear in nonparametrics and machine learning and create challenges for inference!\n\nSuppose the central limit theorem holds w.r.t. \\(\\hat{\\mu}_n\\) (e.g. it’s the sample mean).\n\\[\\sqrt{n}(\\hat{\\mu}_n - \\mu) \\sim \\mathcal{N}(0, \\sigma^2)\\]\nThe variance is finite, does not depend on \\(n\\), and the distribution is normal\n\nSo we can always find an \\(M\\) sufficiently large that the probability of observing \\(|\\hat{\\mu}_n - \\mu|\\) greater than that \\(M\\) is less than any arbitrary \\(\\epsilon &gt; 0\\).\n\nAnd therefore\n\\[\\sqrt{n}(\\hat{\\mu}_n - \\mu) = O_p(1)\\]"
-  },
-  {
-    "objectID": "slides/week1/week1_intro_and_review.html#next-week",
-    "href": "slides/week1/week1_intro_and_review.html#next-week",
-    "title": "Week 1: Review!",
-    "section": "Next week",
-    "text": "Next week\n\nPotential outcomes model\n\nDefining treatment effects as contrasts in counterfactuals\n\nCausal identification\n\nHow do we connect something we can observe (e.g. a difference-in-means) to something we can’t observe (an average treatment effect)?\nWe need to make assumptions!\nEvery identification assumption imposes some outside knowledge on the data-generating process.\n\nRandomized experiments\n\nRandomized experiments solve the identification problem (for the sample ATE)\nWhat can we get just with randomization of treatment?"
   },
   {
     "objectID": "slides/week2/week2_potential_outcomes_and_experiments.html#section",
