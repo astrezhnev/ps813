@@ -55,7 +55,7 @@ options(digits=3)
 - Differences-in-differences designs for dealing with unobserved confounding.
 - Identification under **Parallel trends**
 
-  $$E[Y_{it}(0) - Y_{it^{\prime}}(0) \mid D_i = 1] - E[Y_{it}(0) - Y_{it^{\prime}}(0) \mid D_i = 0]$$
+  $$\mathbb{E}[Y_{it}(0) - Y_{it^{\prime}}(0) \mid D_i = 1] - \mathbb{E}[Y_{it}(0) - Y_{it^{\prime}}(0) \mid D_i = 0]$$
   
 - Estimation via **first-differences** regression (Callaway and Sant'Anna, 2021)
   - Can adjust for **time-varying** and **time-invariant** threats to parallel trends.
@@ -95,7 +95,7 @@ options(digits=3)
   
 - **Strict exogeneity**
 
-  $$\{Y_{it}(0), Y_{it}(1) \} \perp\!\!\!\perp D_{i} | \mathbf{X}_{i}, \mathbf{U}_i$$
+  $$\{Y_{it}(0), Y_{it}(1) \} \perp\!\!\!\perp D_{i} \mid \mathbf{X}_{i}, \mathbf{U}_i$$
 
 :::
 
@@ -187,7 +187,7 @@ options(digits=3)
   - We assume that we can decompose the latent factor into two additive components: $U_{it} = \alpha_i + \delta_t$
 - This gives us the classic **two-way fixed effect** formulation:
 
-  $$Y_{it}(0) = \alpha_i + \delta_t + f(\mathbf{X_i}) + \varepsilon_{it}$$
+  $$Y_{it}(0) = \alpha_i + \delta_t + f(\mathbf{X}_i) + \varepsilon_{it}$$
 
 :::
 
@@ -299,7 +299,6 @@ options(digits=3)
 \draw[->, >=stealth, thick] (Yt1) to[bend right=15] (Dt);
 \draw[->, >=stealth, thick] (Dt1) to[bend left=15] (Yt);
 \draw[->, >=stealth, thick] (Dt1) -- (Xt);
-\draw[->, >=stealth, thick] (Xt1) to[bend right=15] (Dt);
 
 % Continuation arrows (parallel, each row to its own node)
 \draw[->, >=stealth, thick, dotted] (pastD) -- (Dt1);
@@ -324,11 +323,11 @@ options(digits=3)
   
 - For example, a one-lag linear model
 
-  $$Y_{it} = X_{it}^\prime\beta + \alpha Y_{it-1} + \tau_0 D_{it} + \tau_1 D_{it-1} + \epsilon_{it}$$
+  $$Y_{it} = X_{it}^\prime\beta + \alpha Y_{it-1} + \tau_0 D_{it} + \tau_1 D_{it-1} + \varepsilon_{it}$$
 
 - If we believe the parametric assumptions behind this model (e.g. constant effects), $\tau_0$ identifies the **average** contemporaneous effect of treatment at time $t$.
 - But does $\tau_1$ identify the effect **one period out**?
-  - No! We have **post-treatment** bias **(Glynn and Blackwell, 2018)**.
+  - No! We have **post-treatment** bias **(Blackwell and Glynn, 2018)**.
   - This is the **Table 2 fallacy** all over again.
 
 :::
@@ -386,7 +385,6 @@ options(digits=3)
 \draw[->, >=stealth, thick] (Yt1) to[bend right=15] (Dt);
 \draw[->, >=stealth, thick] (Dt1) to[bend left=15] (Yt);
 \draw[->, >=stealth, thick] (Dt1) -- (Xt);
-\draw[->, >=stealth, thick] (Xt1) to[bend right=15] (Dt);
 
 % Continuation arrows (parallel, each row to its own node)
 \draw[->, >=stealth, thick, dotted] (pastD) -- (Dt1);
@@ -418,13 +416,13 @@ options(digits=3)
 ::: {.incremental}
 
 - What happens if we control for the lagged dependent variable under strict exogeneity?
-  - We have a **reversion-to-the-mean** problem
 - What we **actually** want to do is adjust for the **expected** lagged outcome.
   - But the actual observed outcome contains **random error**
   - $Y_{it-1}$ can be high because of the **latent factor** or the **error**
-- This is another case of **endogenous selection bias** or **collider bias**
+- We are controlling for an **imperfect** proxy of the true confounder
+- This measurement error induces a bias due to **reversion to the mean**
   - If treated units tend to be higher in their outcomes than control (on average), then control units with similar **observed** outcomes are **outliers**
-  - We'd expect the subsequent outcome to be closer to the mean!
+  - We'd expect the subsequent outcome to be closer to the mean if there's independent noise at $t$ versus $t-1$
 
 :::
 
@@ -437,7 +435,7 @@ options(digits=3)
   - Time-invariant confounder: $\alpha_i \sim N(0, 1)$
   - Treatment correlated with confounder: $D_i \sim \text{Bernoulli}(\text{logit}^{-1}(\alpha_i))$
   - Outcome at $t{-}1$: $Y_{it-1} = \alpha_i + \varepsilon_{it-1}$, where $\varepsilon_{it-1} \sim N(0, \sigma_\varepsilon^2)$
-  - Outcome at $t$: $Y_{it} = \alpha_i + \beta D_i + \varepsilon_{it}$, where $\varepsilon_{it} \sim N(0, \sigma_\varepsilon^2)$
+  - Outcome at $t$: $Y_{it} = \alpha_i + \tau D_i + \varepsilon_{it}$, where $\varepsilon_{it} \sim N(0, \sigma_\varepsilon^2)$
 - **Parallel trends** holds by construction: $\alpha_i$ is time-invariant
 - Vary $\sigma_\varepsilon \in \{0.5, 1, 2, 4, 8\}$ to control how **noisy** the proxy $Y_{it-1}$ is for $\alpha_i$
 - Compare three estimators: simple difference-in-means post-treatment, DiD, and LDV
@@ -590,83 +588,6 @@ ggplot(sim_summary_rho, aes(x = factor(rho), y = mean_est,
                                 "LDV" = "dodgerblue",
                                 "DiD" = "indianred")) +
   theme_bw() + theme(legend.position = "bottom")
-```
-
-
-## Remember the DAG!
-
-```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-dpi: 300
-#| out-width: "80%"
-#| fig-format: "svg"
-#| fig-cap: "Adapted from Xu (2023) 'Causal Inference with Time-Series Cross-Sectional Data: A Reflection'"
-\usetikzlibrary{arrows}
-\begin{tikzpicture}[scale=2, every node/.style={font=\large}]
-
-% Unobserved row (top) -- like X but gray/dashed
-\node[gray] (Ut1) at (0.6, 2) {$U_{t-1}$};
-\node[gray] (Ut) at (2.6, 2) {$U_{t}$};
-
-% Treatment row
-\node (Dt1) at (0.6, 1.2) {$D_{t-1}$};
-\node (Dt) at (2.6, 1.2) {$D_{t}$};
-
-% Outcome row (offset right, more space from D row)
-\node (Yt1) at (1.3, 0.4) {$Y_{t-1}$};
-\node (Yt) at (3.3, 0.4) {$Y_{t}$};
-
-% Observed covariate row (bottom)
-\node (Xt1) at (0.6, -0.4) {$X_{t-1}$};
-\node (Xt) at (2.6, -0.4) {$X_{t}$};
-
-% Continuation nodes (each row gets its own, no Y continuation)
-\node (pastU) at (-0.6, 2) {\textellipsis};
-\node (pastD) at (-0.6, 1.2) {\textellipsis};
-\node (pastX) at (-0.6, -0.4) {\textellipsis};
-\node (futU) at (3.8, 2) {\textellipsis};
-\node (futD) at (3.8, 1.2) {\textellipsis};
-\node (futX) at (3.8, -0.4) {\textellipsis};
-
-% U -> D within period (gray dashed -- unobserved)
-\draw[->, >=stealth, thick, gray, dashed] (Ut1) -- (Dt1);
-\draw[->, >=stealth, thick, gray, dashed] (Ut) -- (Dt);
-
-% U -> Y within period (gray dashed, curved to avoid overlap)
-\draw[->, >=stealth, thick, gray, dashed] (Ut1) to[bend left=15] (Yt1);
-\draw[->, >=stealth, thick, gray, dashed] (Ut) to[bend left=15] (Yt);
-
-% U persistence across periods (gray dashed)
-\draw[->, >=stealth, thick, gray, dashed] (Ut1) -- (Ut);
-
-% X -> D within period
-\draw[->, >=stealth, thick] (Xt1) -- (Dt1);
-\draw[->, >=stealth, thick] (Xt) -- (Dt);
-
-% X -> Y within period
-\draw[->, >=stealth, thick] (Xt1) -- (Yt1);
-\draw[->, >=stealth, thick] (Xt) -- (Yt);
-
-% X persistence across periods
-\draw[->, >=stealth, thick] (Xt1) -- (Xt);
-
-% D -> Y within period (causal effect of interest)
-\draw[->, >=stealth, thick] (Dt1) -- (Yt1);
-\draw[->, >=stealth, thick] (Dt) -- (Yt);
-
-% D persistence across periods
-\draw[->, >=stealth, thick] (Dt1) -- (Dt);
-
-% Continuation arrows (parallel, each row to its own node)
-\draw[->, >=stealth, thick, dotted] (pastU) -- (Ut1);
-\draw[->, >=stealth, thick, dotted] (pastD) -- (Dt1);
-\draw[->, >=stealth, thick, dotted] (pastX) -- (Xt1);
-\draw[->, >=stealth, thick, dotted] (Ut) -- (futU);
-\draw[->, >=stealth, thick, dotted] (Dt) -- (futD);
-\draw[->, >=stealth, thick, dotted] (Xt) -- (futX);
-
-\end{tikzpicture}
 ```
 
 
