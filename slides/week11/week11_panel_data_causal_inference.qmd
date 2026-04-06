@@ -1,0 +1,1009 @@
+---
+title: "Week 11: Panel Data Causal Inference"
+subtitle: "PS 813 - Causal Inference"
+author:
+  - name: "Anton Strezhnev"
+    affiliation: "University of Wisconsin-Madison"
+    email: strezhnev@wisc.edu
+date: "March 23, 2026"
+date-format: "MMMM D, YYYY"
+editor:
+  render-on-save: true
+format:
+  revealjs:
+    theme: [default, custom.scss]
+    slide-number: true
+    overview: true
+    navigation-mode: vertical
+    progress: false
+    controls: true
+    link-external-newwindow: true
+    footer: "PS 813 - University of Wisconsin - Madison"
+    html-math-method:
+      method: mathjax
+      url: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+execute:
+  cache: true
+code:
+  execute:
+    - r
+    - python
+embed-resources: true
+
+---
+
+$$
+  \require{cancel}
+$$
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+library(tidyverse)
+library(haven)
+library(estimatr)
+library(panelView)
+library(fixest)
+options(digits=3)
+```
+
+## Last two weeks
+
+::: {.incremental}
+
+- Differences-in-differences designs for dealing with unobserved confounding.
+- Identification under **Parallel trends**
+
+  $$E[Y_{it}(0) - Y_{it^{\prime}}(0) \mid D_i = 1] - E[Y_{it}(0) - Y_{it^{\prime}}(0) \mid D_i = 0]$$
+  
+- Estimation via **first-differences** regression (Callaway and Sant'Anna, 2021)
+  - Can adjust for **time-varying** and **time-invariant** threats to parallel trends.
+- Pre-treatment **placebo test** diagnostics
+- Be careful with software defaults!
+
+:::
+
+## This week
+
+::: {.incremental}
+
+- In DiD, our identifying assumptions **rule out** outcome-treatment feedback
+  - Treatment is **exogenous** conditional on observed and unobserved (but structurally constrained) factors
+  - But past outcomes do not directly affect present treatment.
+- Not uncommon to have **dynamic** treatment settings where this assumption is violated.
+  - Doctors change treatment regimen in response to patient outcomes.
+  - Political campaigns adjust their strategy in response to observed poll numbers.
+  - Economic growth affects democratization (which affects economic growth)
+- In all of these settings, we have $Y_{t-1}$ affecting treatment $D_{t}$
+  - And typically also lagged **treatment** $D_{t-1}$ affecting current treatment $D_{t}$
+  
+:::
+
+## Review: DiD and Strict Exogeneity
+
+::: {.incremental}
+
+- For this section, we're going to work with binary treatment $D_{it}$ observed at each time period $t$
+  - For simplicity, we'll consider **two** time periods generically as $t$ and $t-1$
+  - Let $D_i = \{D_{i1}, D_{i2}, D_{i3}, \dotsc, D_{iT}\}$ denote the entire treatment **history** for a unit
+  
+- In DiD, our **parallel trends** assumption is a special case of a particular kind of exogeneity/ignorability assumption
+  - We assume that treatment history is **as-good-as-randomly** assigned given observed covariates **and** some latent factor
+  - Let $\mathbf{X}_i = \{X_{i1}, X_{i2}, X_{i3}, \dotsc, X_{iT}\}$ denote the unit's observed covariate history
+  - Let $\mathbf{U}_i = \{U_{i1}, U_{i2}, U_{i3}, \dotsc, U_{iT}\}$ denote the unit's latent factor history
+  
+- **Strict exogeneity**
+
+  $$\{Y_{it}(0), Y_{it}(1) \} \perp\!\!\!\perp D_{i} | \mathbf{X}_{i}, \mathbf{U}_i$$
+
+:::
+
+## Strict exogeneity
+
+```{tikz}
+#| echo: false
+#| fig-align: center
+#| fig-dpi: 300
+#| out-width: "80%"
+#| fig-format: "svg"
+#| fig-cap: "Adapted from Xu (2023) 'Causal Inference with Time-Series Cross-Sectional Data: A Reflection'"
+\usetikzlibrary{arrows}
+\begin{tikzpicture}[scale=2, every node/.style={font=\large}]
+
+% Unobserved row (top) -- like X but gray/dashed
+\node[gray] (Ut1) at (0.6, 2) {$U_{t-1}$};
+\node[gray] (Ut) at (2.6, 2) {$U_{t}$};
+
+% Treatment row
+\node (Dt1) at (0.6, 1.2) {$D_{t-1}$};
+\node (Dt) at (2.6, 1.2) {$D_{t}$};
+
+% Outcome row (offset right, more space from D row)
+\node (Yt1) at (1.3, 0.4) {$Y_{t-1}$};
+\node (Yt) at (3.3, 0.4) {$Y_{t}$};
+
+% Observed covariate row (bottom)
+\node (Xt1) at (0.6, -0.4) {$X_{t-1}$};
+\node (Xt) at (2.6, -0.4) {$X_{t}$};
+
+% Continuation nodes (each row gets its own, no Y continuation)
+\node (pastU) at (-0.6, 2) {\textellipsis};
+\node (pastD) at (-0.6, 1.2) {\textellipsis};
+\node (pastX) at (-0.6, -0.4) {\textellipsis};
+\node (futU) at (3.8, 2) {\textellipsis};
+\node (futD) at (3.8, 1.2) {\textellipsis};
+\node (futX) at (3.8, -0.4) {\textellipsis};
+
+% U -> D within period (gray dashed -- unobserved)
+\draw[->, >=stealth, thick, gray, dashed] (Ut1) -- (Dt1);
+\draw[->, >=stealth, thick, gray, dashed] (Ut) -- (Dt);
+
+% U -> Y within period (gray dashed, curved to avoid overlap)
+\draw[->, >=stealth, thick, gray, dashed] (Ut1) to[bend left=15] (Yt1);
+\draw[->, >=stealth, thick, gray, dashed] (Ut) to[bend left=15] (Yt);
+
+% U persistence across periods (gray dashed)
+\draw[->, >=stealth, thick, gray, dashed] (Ut1) -- (Ut);
+
+% X -> D within period
+\draw[->, >=stealth, thick] (Xt1) -- (Dt1);
+\draw[->, >=stealth, thick] (Xt) -- (Dt);
+
+% X -> Y within period
+\draw[->, >=stealth, thick] (Xt1) -- (Yt1);
+\draw[->, >=stealth, thick] (Xt) -- (Yt);
+
+% X persistence across periods
+\draw[->, >=stealth, thick] (Xt1) -- (Xt);
+
+% D -> Y within period (causal effect of interest)
+\draw[->, >=stealth, thick] (Dt1) -- (Yt1);
+\draw[->, >=stealth, thick] (Dt) -- (Yt);
+
+% D persistence across periods
+\draw[->, >=stealth, thick] (Dt1) -- (Dt);
+
+% Continuation arrows (parallel, each row to its own node)
+\draw[->, >=stealth, thick, dotted] (pastU) -- (Ut1);
+\draw[->, >=stealth, thick, dotted] (pastD) -- (Dt1);
+\draw[->, >=stealth, thick, dotted] (pastX) -- (Xt1);
+\draw[->, >=stealth, thick, dotted] (Ut) -- (futU);
+\draw[->, >=stealth, thick, dotted] (Dt) -- (futD);
+\draw[->, >=stealth, thick, dotted] (Xt) -- (futX);
+
+\end{tikzpicture}
+```
+
+
+## DiD and parallel trends
+
+::: {.incremental}
+
+- If we want to identify the effect of $D_{t}$ on $Y_{t}$ (the "instantaneous" effect), via a standard selection-on-observables design, we would need to adjust for both $X$ and $U$
+- But here, we've supposed that $U$ is **unobserved** - can't control for it directly.
+  - We need **more assumptions**!
+- DiD works by making an additional **functional form** assumption about the latent factor.
+  - We assume that we can decompose the latent factor into two additive components: $U_{it} = \alpha_i + \delta_t$
+- This gives us the classic **two-way fixed effect** formulation:
+
+  $$Y_{it}(0) = \alpha_i + \delta_t + f(\mathbf{X_i}) + \varepsilon_{it}$$
+
+:::
+
+## DiD and parallel trends
+
+::: {.incremental}
+
+- It's straightforward to see under this functional form assumption and the **strict exogeneity** assumption, we get **parallel trends**
+
+  $$\mathbb{E}[Y_{it}(0) - Y_{it-1}(0) \mid D_{it} = 0, \mathbf{X}] = \mathbb{E}[Y_{it}(0) - Y_{it-1}(0) \mid D_{it} = 1, \mathbf{X}] = \delta_{t} - \delta_{t-1}$$ 
+
+  
+- Under strict exogeneity $\text{Cov}(\varepsilon_{it}, D_{it}) = 0$
+
+:::
+
+## Sequential ignorability
+
+::: {.incremental}
+
+- But in many panel data settings, ruling out the arrow from $Y_{t-1}$ to $D_{t}$ is implausible!
+  - We'll need a **different** assumption
+- **Sequential ignorability** (Robins, 1986; Blackwell and Glynn, 2018)
+  - At each time period, treatment is as-if random conditional on observed covariate and outcome history
+
+    $$\{Y_{it}(1), Y_{it}(0)\} \perp\!\!\!\perp  D_{it} \mid X_{it}, Y_{it-1}, D_{it-1}$$
+  - We can relax this by conditioning on a **longer** history of outcomes, treatments and covariates.
+
+:::
+
+## Sequential ignorability
+
+```{tikz}
+#| echo: false
+#| fig-align: center
+#| fig-dpi: 300
+#| out-width: "80%"
+#| fig-format: "svg"
+#| fig-cap: "Adapted from Blackwell and Glynn (2018) 'How to Make Causal Inferences with Time-Series Cross-Sectional Data under Selection on Observables'"
+\usetikzlibrary{arrows}
+\begin{tikzpicture}[scale=2, every node/.style={font=\large}]
+
+% Treatment row
+\node (Dt1) at (0.6, 1.2) {$D_{t-1}$};
+\node (Dt) at (2.6, 1.2) {$D_{t}$};
+
+% Outcome row (offset right)
+\node (Yt1) at (1.3, 0.4) {$Y_{t-1}$};
+\node (Yt) at (3.3, 0.4) {$Y_{t}$};
+
+% Observed covariate row (bottom)
+\node (Xt1) at (0.6, -0.4) {$X_{t-1}$};
+\node (Xt) at (2.6, -0.4) {$X_{t}$};
+
+% Continuation nodes (all aligned vertically)
+\node (pastD) at (-0.9, 1.2) {\textellipsis};
+\node (pastY) at (-0.9, 0.4) {\textellipsis};
+\node (pastX) at (-0.9, -0.4) {\textellipsis};
+\node (futD) at (4.5, 1.2) {\textellipsis};
+\node (futY) at (4.5, 0.4) {\textellipsis};
+\node (futX) at (4.5, -0.4) {\textellipsis};
+
+% X -> D within period
+\draw[->, >=stealth, thick] (Xt1) -- (Dt1);
+\draw[->, >=stealth, thick] (Xt) -- (Dt);
+
+% X -> Y within period
+\draw[->, >=stealth, thick] (Xt1) -- (Yt1);
+\draw[->, >=stealth, thick] (Xt) -- (Yt);
+
+% D -> Y within period (causal effect of interest)
+\draw[->, >=stealth, thick] (Dt1) -- (Yt1);
+\draw[->, >=stealth, thick] (Dt) -- (Yt);
+
+% D persistence across periods
+\draw[->, >=stealth, thick] (Dt1) -- (Dt);
+
+% X persistence across periods
+\draw[->, >=stealth, thick] (Xt1) -- (Xt);
+
+% Cross-period feedback arrows (new relative to strict exogeneity)
+\draw[->, >=stealth, thick] (Yt1) -- (Yt);
+\draw[->, >=stealth, thick] (Yt1) to[bend right=15] (Dt);
+\draw[->, >=stealth, thick] (Dt1) to[bend left=15] (Yt);
+\draw[->, >=stealth, thick] (Dt1) -- (Xt);
+\draw[->, >=stealth, thick] (Xt1) to[bend right=15] (Dt);
+
+% Continuation arrows (parallel, each row to its own node)
+\draw[->, >=stealth, thick, dotted] (pastD) -- (Dt1);
+\draw[->, >=stealth, thick, dotted] (pastY) -- (Yt1);
+\draw[->, >=stealth, thick, dotted] (pastX) -- (Xt1);
+\draw[->, >=stealth, thick, dotted] (Dt) -- (futD);
+\draw[->, >=stealth, thick, dotted] (Yt) -- (futY);
+\draw[->, >=stealth, thick, dotted] (Xt) -- (futX);
+
+\end{tikzpicture}
+```
+
+## Causal estimands
+
+::: {.incremental}
+
+- We now have to consider potential outcomes in terms of the entire **treatment history** assigned up to time $t$
+
+  $$Y_{it}(d_1, d_2, \dotsc, d_t) = Y_{it}(d_{1:t})$$
+  
+- Partition this into the **contemporaneous** treatment $d_t$ and past values $d_1, d_2, \dotsc, d_{t-1}$
+
+  $$Y_{it}(d_{1:t}) = Y_{it}(d_{t}; d_{1:t-1})$$
+  
+- The **Contemporaneous Effect** of Treatment
+
+  $$Y_{it}(1; d_{1:t-1}) - Y_{it}(0; d_{1:t-1}) = Y_{it}(1) - Y_{it}(0)$$
+  
+- Later on when we talk about **mediation**, we'll introduce other kinds of estimands for **cumulative** effects over time.
+
+:::
+
+## Estimation of treatment effects
+
+::: {.incremental}
+
+- Under sequential ignorability, we can motivate estimation of the **contemporaneous** effect of treatment using an Autoregressive Distributed Lag (ADL) model framework.
+  - Adjust for some number of **lagged** outcomes (autoregressive)
+  - Adjust for some number of **lagged** treatments (distributed lag)
+  
+- For example, a one-lag linear model
+
+  $$Y_{it} = X_{it}^\prime\beta + \alpha Y_{it-1} + \tau_0 D_{it} + \tau_1 D_{it-1} + \epsilon_{it}$$
+
+- If we believe the parametric assumptions behind this model (e.g. constant effects), $\tau_0$ identifies the **average** contemporaneous effect of treatment at time $t$.
+- But does $\tau_1$ identify the effect **one period out**?
+  - No! We have **post-treatment** bias **(Glynn and Blackwell, 2018)**.
+  - This is the **Table 2 fallacy** all over again.
+
+:::
+
+## Sequential ignorability
+
+```{tikz}
+#| echo: false
+#| fig-align: center
+#| fig-dpi: 300
+#| out-width: "80%"
+#| fig-format: "svg"
+#| fig-cap: "Adapted from Blackwell and Glynn (2018) 'How to Make Causal Inferences with Time-Series Cross-Sectional Data under Selection on Observables'"
+\usetikzlibrary{arrows}
+\begin{tikzpicture}[scale=2, every node/.style={font=\large}]
+
+% Treatment row
+\node (Dt1) at (0.6, 1.2) {$D_{t-1}$};
+\node (Dt) at (2.6, 1.2) {$D_{t}$};
+
+% Outcome row (offset right)
+\node (Yt1) at (1.3, 0.4) {$Y_{t-1}$};
+\node (Yt) at (3.3, 0.4) {$Y_{t}$};
+
+% Observed covariate row (bottom)
+\node (Xt1) at (0.6, -0.4) {$X_{t-1}$};
+\node (Xt) at (2.6, -0.4) {$X_{t}$};
+
+% Continuation nodes (each row gets its own)
+\node (pastD) at (-0.6, 1.2) {\textellipsis};
+\node (pastX) at (-0.6, -0.4) {\textellipsis};
+\node (futD) at (3.8, 1.2) {\textellipsis};
+\node (futX) at (3.8, -0.4) {\textellipsis};
+
+% X -> D within period
+\draw[->, >=stealth, thick] (Xt1) -- (Dt1);
+\draw[->, >=stealth, thick] (Xt) -- (Dt);
+
+% X -> Y within period
+\draw[->, >=stealth, thick] (Xt1) -- (Yt1);
+\draw[->, >=stealth, thick] (Xt) -- (Yt);
+
+% D -> Y within period (causal effect of interest)
+\draw[->, >=stealth, thick] (Dt1) -- (Yt1);
+\draw[->, >=stealth, thick] (Dt) -- (Yt);
+
+% D persistence across periods
+\draw[->, >=stealth, thick] (Dt1) -- (Dt);
+
+% X persistence across periods
+\draw[->, >=stealth, thick] (Xt1) -- (Xt);
+
+% Cross-period feedback arrows (new relative to strict exogeneity)
+\draw[->, >=stealth, thick] (Yt1) -- (Yt);
+\draw[->, >=stealth, thick] (Yt1) to[bend right=15] (Dt);
+\draw[->, >=stealth, thick] (Dt1) to[bend left=15] (Yt);
+\draw[->, >=stealth, thick] (Dt1) -- (Xt);
+\draw[->, >=stealth, thick] (Xt1) to[bend right=15] (Dt);
+
+% Continuation arrows (parallel, each row to its own node)
+\draw[->, >=stealth, thick, dotted] (pastD) -- (Dt1);
+\draw[->, >=stealth, thick, dotted] (pastX) -- (Xt1);
+\draw[->, >=stealth, thick, dotted] (Dt) -- (futD);
+\draw[->, >=stealth, thick, dotted] (Xt) -- (futX);
+
+\end{tikzpicture}
+```
+
+## LDV vs. DiD
+
+::: {.incremental}
+
+- We'll talk about how to estimate these long-term and cumulative effects under **sequential ignorability** when we get to mediation in a few weeks.
+  - The relevant estimands and estimators come from this literature.
+  - Future treatment and covariates are **mediators** of past treatment!
+- But let's consider the **simple setting** with two time periods and two treatment groups
+  - Everyone is under **control** at time $t-1$, some units are treated at time $t$
+
+- **Two** possible ways to estimate the treatment effect.
+  1. **Difference-in-differences** - Regress $Y_{it} - Y_{it-1}$ on $D_{it}$
+  2. **Lagged-DV adjustment** - Regress $Y_{it}$ on $D_{it}$ and $Y_{it-1}$
+
+:::
+
+## Controlling for LDV under strict exogeneity
+
+::: {.incremental}
+
+- What happens if we control for the lagged dependent variable under strict exogeneity?
+  - We have a **reversion-to-the-mean** problem
+- What we **actually** want to do is adjust for the **expected** lagged outcome.
+  - But the actual observed outcome contains **random error**
+  - $Y_{it-1}$ can be high because of the **latent factor** or the **error**
+- This is another case of **endogenous selection bias** or **collider bias**
+  - If treated units tend to be higher in their outcomes than control (on average), then control units with similar **observed** outcomes are **outliers**
+  - We'd expect the subsequent outcome to be closer to the mean!
+
+:::
+
+## Simulation: Controlling for LDV
+
+::: {.incremental}
+
+- To see the bias from controlling for lagged $Y$, consider the following DGP:
+  - $N = 2000$ units, two periods ($t{-}1$ and $t$), true treatment effect $\tau = 0$
+  - Time-invariant confounder: $\alpha_i \sim N(0, 1)$
+  - Treatment correlated with confounder: $D_i \sim \text{Bernoulli}(\text{logit}^{-1}(\alpha_i))$
+  - Outcome at $t{-}1$: $Y_{it-1} = \alpha_i + \varepsilon_{it-1}$, where $\varepsilon_{it-1} \sim N(0, \sigma_\varepsilon^2)$
+  - Outcome at $t$: $Y_{it} = \alpha_i + \beta D_i + \varepsilon_{it}$, where $\varepsilon_{it} \sim N(0, \sigma_\varepsilon^2)$
+- **Parallel trends** holds by construction: $\alpha_i$ is time-invariant
+- Vary $\sigma_\varepsilon \in \{0.5, 1, 2, 4, 8\}$ to control how **noisy** the proxy $Y_{it-1}$ is for $\alpha_i$
+- Compare three estimators: simple difference-in-means post-treatment, DiD, and LDV
+
+:::
+
+## Simulation: LDV bias from measurement error
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+#| code-fold: true
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 5
+#| cache: true
+
+set.seed(53703)
+N <- 2000
+n_sims <- 500
+noise_levels <- c(0.5, 1, 2, 4, 8)
+
+sim_results <- map_dfr(noise_levels, function(sigma_e) {
+  map_dfr(1:n_sims, function(s) {
+    # Time-invariant confounder
+    alpha_i <- rnorm(N, 0, 1)
+    # Treatment correlated with confounder
+    D_i <- rbinom(N, 1, plogis(alpha_i))
+    # True treatment effect is ZERO
+    beta <- 0
+    # Pre and post outcomes: parallel trends holds
+    Y_pre <- alpha_i + rnorm(N, 0, sigma_e)
+    Y_post <- alpha_i + beta * D_i + rnorm(N, 0, sigma_e)
+
+    # Difference-in-means (biased by alpha_i)
+    dim_est <- coef(lm(Y_post ~ D_i))["D_i"]
+    # DiD (unbiased)
+    did_est <- coef(lm(I(Y_post - Y_pre) ~ D_i))["D_i"]
+    # LDV (biased -- errors in variables)
+    ldv_est <- coef(lm(Y_post ~ D_i + Y_pre))["D_i"]
+
+    tibble(sigma_e = sigma_e, sim = s,
+           `Diff-in-means` = dim_est, DiD = did_est, LDV = ldv_est)
+  })
+})
+
+sim_summary <- sim_results %>%
+  pivot_longer(cols = c(`Diff-in-means`, DiD, LDV),
+               names_to = "Estimator", values_to = "estimate") %>%
+  group_by(sigma_e, Estimator) %>%
+  summarize(mean_est = mean(estimate),
+            ci_low = quantile(estimate, 0.025),
+            ci_high = quantile(estimate, 0.975), .groups = "drop")
+
+sim_summary$Estimator <- factor(sim_summary$Estimator,
+                                levels = c("Diff-in-means", "LDV", "DiD"))
+
+ggplot(sim_summary, aes(x = factor(sigma_e), y = mean_est,
+                        color = Estimator, group = Estimator)) +
+  geom_point(size = 3, position = position_dodge(width = 0.4)) +
+  geom_errorbar(aes(ymin = ci_low, ymax = ci_high),
+                width = 0.3, position = position_dodge(width = 0.4)) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  labs(x = expression(paste("Noise in pre-treatment outcome (", sigma[epsilon], ")")),
+       y = "Estimate",
+       title = "LDV bias under the DiD model (true effect = 0)",
+       subtitle = "More noise in Y(pre) = worse proxy for confounder = more residual bias") +
+  scale_color_manual(values = c("Diff-in-means" = "gray60",
+                                "LDV" = "dodgerblue",
+                                "DiD" = "indianred")) +
+  theme_bw() + theme(legend.position = "bottom")
+```
+
+
+## Simulation: What if outcomes are autocorrelated?
+
+::: {.incremental}
+
+- In the previous simulation, $\varepsilon_{it-1}$ and $\varepsilon_{it}$ are **independent** — the only thing linking outcomes over time is $\alpha_i$
+- In practice, outcomes are often **autocorrelated**: a unit that is high at $t{-}1$ (beyond $\alpha_i$) tends to stay high at $t$
+- Modified DGP: let $\varepsilon_{it} = \rho \cdot \varepsilon_{it-1} + \nu_i$ where $\nu_i \sim N(0, \sigma_\varepsilon^2)$
+  - When $\rho > 0$, $Y_{it-1}$ is a **better proxy** for $Y_{it}$'s non-treatment component
+  - LDV should perform better because controlling for $Y_{it-1}$ captures more of the variation
+- We fix $\sigma_\varepsilon = 2$ and vary $\rho \in \{0, 0.25, 0.5, 0.75, 0.95\}$
+
+:::
+
+## Simulation: Autocorrelation reduces LDV bias
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+#| code-fold: true
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 5
+#| cache: true
+
+set.seed(53703)
+N <- 2000
+n_sims <- 500
+sigma_e <- 2
+rho_levels <- c(0, 0.25, 0.5, 0.75, 0.95)
+
+sim_results_rho <- map_dfr(rho_levels, function(rho) {
+  map_dfr(1:n_sims, function(s) {
+    alpha_i <- rnorm(N, 0, 1)
+    D_i <- rbinom(N, 1, plogis(alpha_i))
+    beta <- 0
+
+    eps_pre <- rnorm(N, 0, sigma_e)
+    eps_post <- rho * eps_pre + rnorm(N, 0, sigma_e)
+
+    Y_pre <- alpha_i + eps_pre
+    Y_post <- alpha_i + beta * D_i + eps_post
+
+    dim_est <- coef(lm(Y_post ~ D_i))["D_i"]
+    did_est <- coef(lm(I(Y_post - Y_pre) ~ D_i))["D_i"]
+    ldv_est <- coef(lm(Y_post ~ D_i + Y_pre))["D_i"]
+
+    tibble(rho = rho, sim = s,
+           `Diff-in-means` = dim_est, DiD = did_est, LDV = ldv_est)
+  })
+})
+
+sim_summary_rho <- sim_results_rho %>%
+  pivot_longer(cols = c(`Diff-in-means`, DiD, LDV),
+               names_to = "Estimator", values_to = "estimate") %>%
+  group_by(rho, Estimator) %>%
+  summarize(mean_est = mean(estimate),
+            ci_low = quantile(estimate, 0.025),
+            ci_high = quantile(estimate, 0.975), .groups = "drop")
+
+sim_summary_rho$Estimator <- factor(sim_summary_rho$Estimator,
+                                    levels = c("Diff-in-means", "LDV", "DiD"))
+
+ggplot(sim_summary_rho, aes(x = factor(rho), y = mean_est,
+                            color = Estimator, group = Estimator)) +
+  geom_point(size = 3, position = position_dodge(width = 0.4)) +
+  geom_errorbar(aes(ymin = ci_low, ymax = ci_high),
+                width = 0.3, position = position_dodge(width = 0.4)) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  labs(x = expression(paste("Autocorrelation (", rho, ")")),
+       y = "Estimate",
+       title = expression(paste("LDV bias with autocorrelated errors (", sigma[epsilon], " = 2, true effect = 0)")),
+       subtitle = "More autocorrelation = lagged Y is better proxy = less LDV bias") +
+  scale_color_manual(values = c("Diff-in-means" = "gray60",
+                                "LDV" = "dodgerblue",
+                                "DiD" = "indianred")) +
+  theme_bw() + theme(legend.position = "bottom")
+```
+
+
+## Remember the DAG!
+
+```{tikz}
+#| echo: false
+#| fig-align: center
+#| fig-dpi: 300
+#| out-width: "80%"
+#| fig-format: "svg"
+#| fig-cap: "Adapted from Xu (2023) 'Causal Inference with Time-Series Cross-Sectional Data: A Reflection'"
+\usetikzlibrary{arrows}
+\begin{tikzpicture}[scale=2, every node/.style={font=\large}]
+
+% Unobserved row (top) -- like X but gray/dashed
+\node[gray] (Ut1) at (0.6, 2) {$U_{t-1}$};
+\node[gray] (Ut) at (2.6, 2) {$U_{t}$};
+
+% Treatment row
+\node (Dt1) at (0.6, 1.2) {$D_{t-1}$};
+\node (Dt) at (2.6, 1.2) {$D_{t}$};
+
+% Outcome row (offset right, more space from D row)
+\node (Yt1) at (1.3, 0.4) {$Y_{t-1}$};
+\node (Yt) at (3.3, 0.4) {$Y_{t}$};
+
+% Observed covariate row (bottom)
+\node (Xt1) at (0.6, -0.4) {$X_{t-1}$};
+\node (Xt) at (2.6, -0.4) {$X_{t}$};
+
+% Continuation nodes (each row gets its own, no Y continuation)
+\node (pastU) at (-0.6, 2) {\textellipsis};
+\node (pastD) at (-0.6, 1.2) {\textellipsis};
+\node (pastX) at (-0.6, -0.4) {\textellipsis};
+\node (futU) at (3.8, 2) {\textellipsis};
+\node (futD) at (3.8, 1.2) {\textellipsis};
+\node (futX) at (3.8, -0.4) {\textellipsis};
+
+% U -> D within period (gray dashed -- unobserved)
+\draw[->, >=stealth, thick, gray, dashed] (Ut1) -- (Dt1);
+\draw[->, >=stealth, thick, gray, dashed] (Ut) -- (Dt);
+
+% U -> Y within period (gray dashed, curved to avoid overlap)
+\draw[->, >=stealth, thick, gray, dashed] (Ut1) to[bend left=15] (Yt1);
+\draw[->, >=stealth, thick, gray, dashed] (Ut) to[bend left=15] (Yt);
+
+% U persistence across periods (gray dashed)
+\draw[->, >=stealth, thick, gray, dashed] (Ut1) -- (Ut);
+
+% X -> D within period
+\draw[->, >=stealth, thick] (Xt1) -- (Dt1);
+\draw[->, >=stealth, thick] (Xt) -- (Dt);
+
+% X -> Y within period
+\draw[->, >=stealth, thick] (Xt1) -- (Yt1);
+\draw[->, >=stealth, thick] (Xt) -- (Yt);
+
+% X persistence across periods
+\draw[->, >=stealth, thick] (Xt1) -- (Xt);
+
+% D -> Y within period (causal effect of interest)
+\draw[->, >=stealth, thick] (Dt1) -- (Yt1);
+\draw[->, >=stealth, thick] (Dt) -- (Yt);
+
+% D persistence across periods
+\draw[->, >=stealth, thick] (Dt1) -- (Dt);
+
+% Continuation arrows (parallel, each row to its own node)
+\draw[->, >=stealth, thick, dotted] (pastU) -- (Ut1);
+\draw[->, >=stealth, thick, dotted] (pastD) -- (Dt1);
+\draw[->, >=stealth, thick, dotted] (pastX) -- (Xt1);
+\draw[->, >=stealth, thick, dotted] (Ut) -- (futU);
+\draw[->, >=stealth, thick, dotted] (Dt) -- (futD);
+\draw[->, >=stealth, thick, dotted] (Xt) -- (futX);
+
+\end{tikzpicture}
+```
+
+
+
+## Illustration: The Effects of the Shale Shock
+
+- Let's return to our example of the effect of the "shale shock" on coal county voting for the Republican party (Gazmararian, 2025).
+  - Last week we showed concerning evidence of a **parallel trends** violation - coal-heavy regions were already trending Republican prior to 2008.
+  - Extrapolating the trend (triple-differences in time) eliminates the observed effect.
+- What if, instead of DiD, we **controlled** for lagged Republican party vote share in 2004 and 2000.
+
+## Lagged DV approach: Setup
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+#| code-fold: true
+
+dff <- readRDS("assets/data/matched_df.rds")
+dff <- dff %>% filter(!is.na(oilgas_prop))
+
+# Create wide-format lagged outcomes
+lag_vars <- dff %>%
+  select(county_state, year, RepVotesMajorPercent) %>%
+  pivot_wider(names_from = year, values_from = RepVotesMajorPercent,
+              names_prefix = "Y_")
+
+dff <- dff %>% left_join(lag_vars, by = "county_state")
+```
+
+## Lagged DV: Estimates by year
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+#| code-fold: true
+#| fig-align: center
+#| fig-width: 8
+#| fig-height: 4.5
+
+# LDV regressions for each post-treatment year
+ldv_years <- c(2008, 2012, 2016, 2020)
+ldv_results <- map_dfr(ldv_years, function(yr) {
+  df_yr <- dff %>% filter(year == yr)
+  fit <- estimatr::lm_robust(
+    RepVotesMajorPercent ~ treat + Y_2004 + Y_2000 + oilgas_prop,
+    data = df_yr, clusters = county_state, se_type = "stata")
+  tidy_fit <- broom::tidy(fit) %>% filter(term == "treat")
+  tidy_fit$year <- yr
+  tidy_fit
+})
+
+ggplot(ldv_results, aes(x = year, y = estimate)) +
+  geom_point(size = 3) +
+  geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 0.5) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  geom_vline(xintercept = 2006, linetype = "dashed", color = "red") +
+  labs(x = "Year", y = "Estimate (pp)",
+       title = "LDV: Effect of coal county on Republican vote share",
+       subtitle = "Controlling for Y[2004], Y[2000], and oil/gas employment") +
+  scale_x_continuous(breaks = ldv_years) +
+  theme_bw()
+```
+
+
+## DiD: Estimates by year
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+#| code-fold: true
+#| fig-align: center
+#| fig-width: 8
+#| fig-height: 4.5
+
+# DiD regressions for each post-treatment year
+did_results <- map_dfr(ldv_years, function(yr) {
+  df_yr <- dff %>%
+    filter(year == yr) %>%
+    mutate(dY = RepVotesMajorPercent - Y_2004)
+  fit <- estimatr::lm_robust(
+    dY ~ treat + oilgas_prop,
+    data = df_yr, clusters = county_state, se_type = "stata")
+  tidy_fit <- broom::tidy(fit) %>% filter(term == "treat")
+  tidy_fit$year <- yr
+  tidy_fit
+})
+
+ggplot(did_results, aes(x = year, y = estimate)) +
+  geom_point(size = 3) +
+  geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 0.5) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  geom_vline(xintercept = 2006, linetype = "dashed", color = "red") +
+  labs(x = "Year", y = "Estimate (pp)",
+       title = "DiD: Effect of coal county on change in Republican vote share",
+       subtitle = "Outcome: Y[t] - Y[2004], controlling for oil/gas employment") +
+  scale_x_continuous(breaks = ldv_years) +
+  theme_bw()
+```
+
+## Comparing LDV and DiD
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 4.5
+
+combined <- bind_rows(
+  ldv_results %>% mutate(model = "LDV"),
+  did_results %>% mutate(model = "DiD")
+)
+
+ggplot(combined, aes(x = year, y = estimate, color = model, shape = model)) +
+  geom_point(size = 3, position = position_dodge(width = 0.8)) +
+  geom_errorbar(aes(ymin = conf.low, ymax = conf.high),
+                width = 0.5, position = position_dodge(width = 0.8)) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  geom_vline(xintercept = 2006, linetype = "dashed", color = "red") +
+  labs(x = "Year", y = "Estimate (pp)",
+       title = "Comparing LDV vs. DiD estimates",
+       color = "Model", shape = "Model") +
+  scale_x_continuous(breaks = ldv_years) +
+  scale_color_manual(values = c("LDV" = "dodgerblue", "DiD" = "indianred")) +
+  theme_bw() + theme(legend.position = "bottom")
+```
+
+
+## Placebo test: Pre-treatment hold-out
+
+::: {.incremental}
+
+- Let's construct a **placebo test** for the lagged DV approach.
+  - Because we have many pre-treatment periods, we can apply the LDV approach to **pre-treatment** outcomes
+- **Placebo 1**: Outcome year 2004, controlling for $Y_{2000}$ and $Y_{1996}$
+- **Placebo 2**: Outcome year 2000, controlling for $Y_{1996}$ and $Y_{1992}$
+- **Placebo 3**: Outcome year 1996, controlling for $Y_{1992}$ and $Y_{1988}$
+
+:::
+
+## Placebo: LDV estimates
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+#| code-fold: true
+#| fig-align: center
+#| fig-width: 8
+#| fig-height: 4.5
+
+# Placebo LDV regressions (2 lagged controls, matching main spec)
+placebo_ldv_results <- bind_rows(
+  # 2004 outcome, controlling for 2000, 1996
+  {
+    df_yr <- dff %>% filter(year == 2004)
+    fit <- estimatr::lm_robust(
+      RepVotesMajorPercent ~ treat + Y_2000 + Y_1996 + oilgas_prop,
+      data = df_yr, clusters = county_state, se_type = "stata")
+    broom::tidy(fit) %>% filter(term == "treat") %>% mutate(year = 2004)
+  },
+  # 2000 outcome, controlling for 1996, 1992
+  {
+    df_yr <- dff %>% filter(year == 2000)
+    fit <- estimatr::lm_robust(
+      RepVotesMajorPercent ~ treat + Y_1996 + Y_1992 + oilgas_prop,
+      data = df_yr, clusters = county_state, se_type = "stata")
+    broom::tidy(fit) %>% filter(term == "treat") %>% mutate(year = 2000)
+  },
+  # 1996 outcome, controlling for 1992, 1988
+  {
+    df_yr <- dff %>% filter(year == 1996)
+    fit <- estimatr::lm_robust(
+      RepVotesMajorPercent ~ treat + Y_1992 + Y_1988 + oilgas_prop,
+      data = df_yr, clusters = county_state, se_type = "stata")
+    broom::tidy(fit) %>% filter(term == "treat") %>% mutate(year = 1996)
+  }
+)
+
+ggplot(placebo_ldv_results, aes(x = year, y = estimate)) +
+  geom_point(size = 3) +
+  geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 0.5) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  labs(x = "Year", y = "Estimate (pp)",
+       title = "Placebo test: LDV estimates in pre-treatment periods",
+       subtitle = "Each placebo controls for two prior election outcomes + oil/gas share") +
+  scale_x_continuous(breaks = c(1996, 2000, 2004)) +
+  theme_bw()
+```
+
+## Bracketing: Angrist and Pischke (2009)
+
+::: {.incremental}
+
+- **Angrist and Pischke (2009, Ch. 5.4)** show that LDV and DiD estimates **bracket** the true causal effect if **one** of the two identifying assumptions holds.
+  - Focus on the simple linear model case - **Ding and Li (2019)** extend to the non-parametric setting.
+
+- Two-period DiD. All units under control at time $0$
+  - Assume $\tau > 0$ (positive effect)
+  
+- For exposition, assume time-effects are already removed via differencing and no covariates.
+
+:::
+
+## Bracketing: Case 1 -- DiD is correct, LDV is misspecified
+
+::: {.incremental}
+
+- Suppose the **FE model** is the truth:
+
+  $$Y_{it} = \alpha_i + \tau D_{it} + \varepsilon_{it}$$
+
+  where $\varepsilon_{it}$ is serially uncorrelated and independent of $\alpha_i$ and $D_{it}$. Since $D_{it-1} = 0$: $Y_{it-1} = \alpha_i + \varepsilon_{it-1}$
+
+- You mistakenly estimate the **LDV regression** (controlling for $Y_{it-1}$ instead of $\alpha_i$):
+
+  $$Y_{it} = a + b \cdot Y_{it-1} + \tau^{\text{LDV}} D_{it} + u_{it}$$
+
+:::
+
+## Bracketing: Case 1 -- FWL decomposition
+
+::: {.incremental}
+
+- By FWL, the LDV estimand is $\hat{\tau}^{\text{LDV}} \xrightarrow{p} \frac{\text{Cov}(Y_{it}, \tilde{D}_{it})}{\text{Var}(\tilde{D}_{it})}$
+  - $\tilde{D}_{it} = D_{it} - \hat{\gamma} Y_{it-1}$ is the residual from the auxiliary regression of $D_{it}$ on $Y_{it-1}$
+
+- To evaluate this, substitute $\alpha_i = Y_{it-1} - \varepsilon_{it-1}$ into the true model:
+
+  $$Y_{it} = \alpha_i + \tau D_{it} + \varepsilon_{it} = (Y_{it-1} - \varepsilon_{it-1}) + \tau D_{it} + \varepsilon_{it}$$
+
+  $$\Rightarrow Y_{it} = Y_{it-1} + \tau D_{it} + (\varepsilon_{it} - \varepsilon_{it-1})$$
+
+:::
+
+## Bracketing: Case 1 -- Deriving the bias
+
+::: {.incremental}
+
+- Substitute in and use properties of covariances
+
+  $$\frac{\text{Cov}(Y_{it}, \tilde{D}_{it})}{\text{Var}(\tilde{D}_{it})} = \frac{\text{Cov}(Y_{it-1} + \tau D_{it} + \varepsilon_{it} - \varepsilon_{it-1},\; \tilde{D}_{it})}{\text{Var}(\tilde{D}_{it})}$$
+  
+- $\text{Cov}(Y_{it-1}, \tilde{D}_{it}) = 0$ by construction (FWL residualizes out $Y_{it-1}$)
+- $\text{Cov}(D_{it}, \tilde{D}_{it}) = \text{Var}(\tilde{D}_{it})$ 
+- $\text{Cov}(\varepsilon_{it}, \tilde{D}_{it}) = 0$ since $\varepsilon_{it} \perp\!\!\!\perp (D_{it}, Y_{it-1})$
+- But $\text{Cov}(\varepsilon_{it-1}, \tilde{D}_{it}) = \text{Cov}(\varepsilon_{it-1}, D_{it}) - \hat{\gamma}\text{Cov}(\varepsilon_{it-1}, Y_{it-1})$
+  - And since $Y_{it-1} = \alpha_i + \varepsilon_{it-1}$...
+  - $\text{Cov}(\varepsilon_{it-1}, \tilde{D}_{it})  = -\hat{\gamma}\sigma^2_{\varepsilon}$
+
+- So: $\hat{\tau}^{\text{LDV}} \xrightarrow{p} \tau + \frac{\hat{\gamma} \sigma^2_\varepsilon}{\text{Var}(\tilde{D}_{it})}$, with bias having the **same sign** as $\hat{\gamma}$ (the sign of selection)
+
+:::
+
+## Bracketing: Case 1 -- Why is LDV biased?
+
+::: {.incremental}
+
+- $Y_{it-1} = \alpha_i + \varepsilon_{it-1}$ is a **noisy proxy** for the confounder $\alpha_i$
+  - Controlling for a noisy proxy does not fully remove confounding
+- With **positive selection** (high outcome $\leadsto$ more likely to be treated) ($\hat{\gamma} > 0$)
+  - LDV **overestimates** $\tau$ 
+- With **negative selection** ($\hat{\gamma} < 0$)
+  - LDV **underestimates** $\tau$
+
+:::
+
+## Bracketing: Case 2 -- LDV is correct, DiD is misspecified
+
+::: {.incremental}
+
+- Now suppose the **LDV model** is the truth:
+
+  $$Y_{it} = \alpha + \theta Y_{it-1} + \tau D_{it} + \varepsilon_{it}$$
+
+- Where $\varepsilon_{it}$ is serially uncorrelated, $0 < \theta < 1$ (stationary)
+
+- You mistakenly estimate the **first-differenced regression** (no control for $Y_{it-1}$):
+
+  $$\Delta Y_{it} = a + \tau^{\text{DiD}} D_{it} + u_{it}$$
+
+  where $\Delta Y_{it} = Y_{it} - Y_{it-1}$ and $D_{it-1} = 0$ for everyone
+
+:::
+
+## Bracketing: Case 2 -- FWL decomposition
+
+::: {.incremental}
+
+- The DiD estimand is $\hat{\tau}^{\text{DiD}} \xrightarrow{p} \frac{\text{Cov}(\Delta Y_{it}, D_{it})}{\text{Var}(D_{it})}$
+
+- Subtract $Y_{it-1}$ from both sides of the true model:
+
+  $$Y_{it} - Y_{it-1} = \alpha + (\theta - 1)Y_{it-1} + \tau D_{it} + \varepsilon_{it}$$
+
+- So $\Delta Y_{it} = \alpha + (\theta - 1)Y_{it-1} + \tau D_{it} + \varepsilon_{it}$. Substituting:
+
+  $$\frac{\text{Cov}(\Delta Y_{it}, D_{it})}{\text{Var}(D_{it})} = \frac{\text{Cov}(\alpha + (\theta - 1)Y_{it-1} + \tau D_{it} + \varepsilon_{it}, D_{it})}{\text{Var}(D_{it})} $$
+
+  $$\frac{\text{Cov}(\Delta Y_{it}, D_{it})}{\text{Var}(D_{it})} = \tau + (\theta - 1)\frac{\text{Cov}(Y_{it-1}, D_{it})}{\text{Var}(D_{it})} + \frac{\text{Cov}(\varepsilon_{it}, D_{it})}{\text{Var}(D_{it})}$$
+
+- $\text{Cov}(\varepsilon_{it}, D_{it}) = 0$ by assumption (LDV model has no unobserved confounding)
+
+:::
+
+## Bracketing: Case 2 -- Deriving the bias
+
+::: {.incremental}
+
+- Therefore:
+
+  $$\hat{\tau}^{\text{DiD}} \xrightarrow{p} \tau + (\theta - 1)\frac{\text{Cov}(Y_{it-1}, D_{it})}{\text{Var}(D_{it})}$$
+
+- The bias is $(\theta - 1)\frac{\text{Cov}(Y_{it-1}, D_{it})}{\text{Var}(D_{it})}$
+- The bias has the **opposite sign** from the selection:
+  - With positive selection ($\text{Cov}(Y_{it-1}, D_{it}) > 0$) and $\theta < 1$: bias is **negative** → DiD underestimates
+  - With negative selection: bias is **positive** → DiD overestimates
+
+- Under this model, **LDV is unbiased**: it correctly controls for $Y_{it-1}$
+
+:::
+
+## Bracketing
+
+::: {.incremental}
+
+- Combining both cases with **positive selection** ($\text{Cov}(\alpha_i, D_i) > 0$):
+  - If strict exogeneity is correct: LDV overestimates, DiD is exact
+  - If sequential ignorability is correct: DiD underestimates, LDV is exact
+
+- The true effect is **bracketed** between the two estimates if **one** of these two assumptions is true.
+
+- This is a useful result, but important to be aware of its limitations
+  - It guarantees nothing if **neither assumption** is true!
+  
+- In many cases, we're skeptical of **parallel trends** but we don't think **sequential ignorability** is right either
+  - Rather, we think the unobserved latent factor structure might be more complicated than $U_{it} = \alpha_i + \delta_t$
+  - What do we do then?
+  
+:::
+
+
+

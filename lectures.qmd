@@ -58,8 +58,8 @@ Lecture slides are available as self-contained `.html` files made with RevealJS 
 
 ### Week 11: Panel Data Causal Inference
 
-- Week 11 Github Repository
-- Week 11 `.html` slides
+- [Week 11 Github Repository](https://github.com/astrezhnev/ps813/tree/main/slides/week11/)
+- [Week 11 `.html` slides](https://www.antonstrezhnev.com/ps813/slides/week11/week11_panel_data_causal_inference.html)
 
 ### Week 12: Regression Discontinuity Designs
 
