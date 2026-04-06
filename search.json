@@ -1558,21 +1558,21 @@
     "href": "slides/week11/week11_panel_data_causal_inference.html#sequential-ignorability",
     "title": "Week 11: Panel Data Causal Inference",
     "section": "Sequential ignorability",
-    "text": "Sequential ignorability\n\nBut in many panel data settings, ruling out the arrow from \\(Y_{t-1}\\) to \\(D_{t}\\) is implausible!\n\nWe’ll need a different assumption\n\nSequential ignorability (Robins, 1986; Blackwell and Glynn, 2018)\n\nAt each time period, treatment is as-if random conditional on observed covariate and outcome history\n\\[\\{Y_{it}(1), Y_{it}(0)\\} \\perp\\!\\!\\!\\perp  D_{it} \\mid X_{it}, Y_{it-1}, D_{it-1}\\]\nWe can relax this by conditioning on a longer history of outcomes, treatments and covariates."
+    "text": "Sequential ignorability\n\nBut in many panel data settings, ruling out the arrow from \\(Y_{t-1}\\) to \\(D_{t}\\) is implausible!\n\nWe’ll need to make a different assumption\nBefore that though, we need to define the potential outcomes in a new way!\n\nWe now have to consider potential outcomes in terms of the entire treatment history assigned up to time \\(t\\)\n\\[Y_{it}(d_1, d_2, \\dotsc, d_t) = Y_{it}(d_{1:t})\\]\nWe can partition this joint potential outcome into the contemporaneous treatment \\(d_t\\) and past values \\(d_1, d_2, \\dotsc, d_{t-1}\\)\n\\[Y_{it}(d_{1:t}) = Y_{it}(d_{t}; d_{1:t-1})\\]\nWe’ll define the Contemporaneous Effect of treatment at time \\(t\\) as:\n\\[Y_{it}(1; d_{1:t-1}) - Y_{it}(0; d_{1:t-1}) = Y_{it}(1) - Y_{it}(0)\\]\nLater on when we talk about mediation, we’ll introduce other kinds of estimands for cumulative effects over time."
   },
   {
     "objectID": "slides/week11/week11_panel_data_causal_inference.html#sequential-ignorability-1",
     "href": "slides/week11/week11_panel_data_causal_inference.html#sequential-ignorability-1",
     "title": "Week 11: Panel Data Causal Inference",
     "section": "Sequential ignorability",
-    "text": "Sequential ignorability\n\nAdapted from Blackwell and Glynn (2018) ‘How to Make Causal Inferences with Time-Series Cross-Sectional Data under Selection on Observables’"
+    "text": "Sequential ignorability\n\nIdentification of causal effects under outcome-treatment feedback can be done under a sequential ignorability assumption (Robins, 1986; Blackwell and Glynn, 2018).\nAt each time period, treatment is as-if random conditional on observed covariate and outcome history\n\\[\\{Y_{it}(1), Y_{it}(0)\\} \\perp\\!\\!\\!\\perp  D_{it} \\mid X_{it}, Y_{it-1}, D_{it-1}\\]\nWe can relax this by conditioning on a longer history of outcomes, treatments and covariates.\nHere we’re focusing on the version of sequential ignorability needed for the contemporaneous treatment effect, but can make it more general\n\\[\\{Y_{is}(d_{1:s}) : s = t, \\dotsc, T\\} \\perp\\!\\!\\!\\perp  D_{it} \\mid X_{it}, Y_{it-1}, D_{it-1}\\]\nWe’ll cover this more when we talk about mediation"
   },
   {
-    "objectID": "slides/week11/week11_panel_data_causal_inference.html#causal-estimands",
-    "href": "slides/week11/week11_panel_data_causal_inference.html#causal-estimands",
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#sequential-ignorability-2",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#sequential-ignorability-2",
     "title": "Week 11: Panel Data Causal Inference",
-    "section": "Causal estimands",
-    "text": "Causal estimands\n\nWe now have to consider potential outcomes in terms of the entire treatment history assigned up to time \\(t\\)\n\\[Y_{it}(d_1, d_2, \\dotsc, d_t) = Y_{it}(d_{1:t})\\]\nPartition this into the contemporaneous treatment \\(d_t\\) and past values \\(d_1, d_2, \\dotsc, d_{t-1}\\)\n\\[Y_{it}(d_{1:t}) = Y_{it}(d_{t}; d_{1:t-1})\\]\nThe Contemporaneous Effect of Treatment\n\\[Y_{it}(1; d_{1:t-1}) - Y_{it}(0; d_{1:t-1}) = Y_{it}(1) - Y_{it}(0)\\]\nLater on when we talk about mediation, we’ll introduce other kinds of estimands for cumulative effects over time."
+    "section": "Sequential ignorability",
+    "text": "Sequential ignorability\n\nAdapted from Blackwell and Glynn (2018) ‘How to Make Causal Inferences with Time-Series Cross-Sectional Data under Selection on Observables’"
   },
   {
     "objectID": "slides/week11/week11_panel_data_causal_inference.html#estimation-of-treatment-effects",
@@ -1582,8 +1582,8 @@
     "text": "Estimation of treatment effects\n\nUnder sequential ignorability, we can motivate estimation of the contemporaneous effect of treatment using an Autoregressive Distributed Lag (ADL) model framework.\n\nAdjust for some number of lagged outcomes (autoregressive)\nAdjust for some number of lagged treatments (distributed lag)\n\nFor example, a one-lag linear model\n\\[Y_{it} = X_{it}^\\prime\\beta + \\alpha Y_{it-1} + \\tau_0 D_{it} + \\tau_1 D_{it-1} + \\epsilon_{it}\\]\nIf we believe the parametric assumptions behind this model (e.g. constant effects), \\(\\tau_0\\) identifies the average contemporaneous effect of treatment at time \\(t\\).\nBut does \\(\\tau_1\\) identify the effect one period out?\n\nNo! We have post-treatment bias (Glynn and Blackwell, 2018).\nThis is the Table 2 fallacy all over again."
   },
   {
-    "objectID": "slides/week11/week11_panel_data_causal_inference.html#sequential-ignorability-2",
-    "href": "slides/week11/week11_panel_data_causal_inference.html#sequential-ignorability-2",
+    "objectID": "slides/week11/week11_panel_data_causal_inference.html#sequential-ignorability-3",
+    "href": "slides/week11/week11_panel_data_causal_inference.html#sequential-ignorability-3",
     "title": "Week 11: Panel Data Causal Inference",
     "section": "Sequential ignorability",
     "text": "Sequential ignorability\n\nAdapted from Blackwell and Glynn (2018) ‘How to Make Causal Inferences with Time-Series Cross-Sectional Data under Selection on Observables’"
