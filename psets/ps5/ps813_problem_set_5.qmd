@@ -1,0 +1,74 @@
+---
+title: 'PS 813: Problem Set 5'
+author: "YOUR NAME"
+date: "April 8, 2026"
+output:
+  html_document:
+    df_print: paged
+code:
+  execute: 
+    - r
+    - python
+embed-resources: true
+---
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+# Useful packages
+library(estimatr)
+library(tidyverse)
+library(haven)
+```
+
+
+> Please upload your solutions as a .html file saved as "Yourlastname_Yourfirstinitial_pset5.html"). In addition, an electronic copy of your .qmd file (saved as "Yourlastname_Yourfirstinitial_pset5.qmd") must be submitted to the course website at the same time. We should be able to run your code without error messages. In order to receive credit, homework submissions must be substantially started and all work must be shown.
+
+# Problem 1
+
+In "The Long-Term Impact of Mobilization and Repression on Political Trust" (2021), Desposato et. al. examine the impact of exposure to the 1989 student protest movement in China on present day trust in government. The paper uses a survey of Beijing residents who would have been enrolled in college around the time of the protests. The researchers compare the present day attitudes of those who began college in 1985-1988 and would have had direct personal exposure to the movement to those who enrolled in college in the fall of 1989 and would not have been exposed due to the post-Tiananmen crackdown.
+
+To address the possibility of cohort-specific differences, the researchers use a fuzzy regression discontinuity design to estimate the effect of exposure vs. non-exposure by leveraging the fact that enrollment decisions are partly driven by a cut-off date. Students born after September 1, 1970 would be on track to enroll in the fall of 1989 (or later) and miss exposure to the protest movement while those born just before would have enrolled in the fall of 1988 (or earlier) and have been exposed to the movement. However, exposure in this case is **fuzzy** as not all students who would be eligible to enroll based on the birthday cut-off would have enrolled as expected (some students may start early, some may delay, etc...).
+
+The paper claims that individuals who attended college during the protest movement exhibit less trust in the central government. 
+
+The original source for this data is
+
+> Desposato, Scott W., Gang Wang, and Jason Y. Wu. "The long-term impact of mobilization and repression on political trust." *Comparative Political Studies* 54.14 (2021): 2447-2474.
+
+The code below will read in the dataset in as `problem1`. Please note that you will have to drop any observations with missing data in the relevant variables.
+
+```{r}
+load("data/DWW_CPS.RData")
+problem1 <- data
+```
+
+
+The relevant variables are:
+
+- `X_c`: The centered difference between respondent's birthday and the enrollment cut-off of *September 1, 1970* (in years, continuous). Values greater than zero denote birthdays above the cut-off. Values below zero denote birthdays below the cut-off.
+- `T`: Exposure to the 1989 student protest movement.
+- `TrustCent`: Trust in the Central Government (0-10 index) High values denote greater trust
+- `TrustProv`: Trust in the Provincial Government (0-10 index) High values denote greater trust
+- `TrustLocal`: Trust in the Local Government (0-10 index) High values denote greater trust
+
+## Part A
+
+Estimate the "intent-to-treat" effect of being born just before vs. just after the September 1, 1970 birthday cut-off on trust in the central government using a local linear regression with a uniform kernel. Use a bandwidth of $h=2$ to the left and right of the cut-point. Provide a 95% confidence interval and discuss your results. Compare your regression discontinuity estimates to the simple difference in average central government trust between respondents exposed to the protest movement and respondents who were not exposed to the protest movement.
+
+## Part B
+
+Estimate the first stage effect of being born just before vs. just after the September 1, 1970 birthday cut-off on exposure to the 1989 protest movement using a local linear regression with a uniform kernel. Use a bandwidth of $h=2$ to the left and right of the cut-point. Provide a 95% confidence interval and discuss your results. Is the birthday cut-off a strong instrument for exposure to the protest movement?
+
+## Part C
+
+Now use a bandwidth of $h=4$. Provide a 95% confidence interval and compare your results to Part B. 
+
+## Part D
+
+Make two binned scatterplots to visualize the first stage and overlay the regression estimates - one for your results from Part B and one for your results from Part C. Compare the two plots and discuss which of the two regressions provides a better estimate of the CEF and why. 
+
+Do you think this fuzzy RD is a valid design for identifying the impact of exposure to the 1989 student protest movement on present-day attitudes?
+
+## Part E
+
+Assess whether there is bunching near the discontinuity. Use any appropriate analytical technique or techniques and interpret your results. Is there evidence to suggest that the density of the running variable in this dataset is discontinuous at the cut-off?

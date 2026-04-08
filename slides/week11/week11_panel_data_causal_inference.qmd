@@ -934,5 +934,669 @@ ggplot(placebo_ldv_results, aes(x = year, y = estimate)) +
   
 :::
 
+## Synthetic Controls {.smaller}
+
+## The Synthetic Control Method
+
+::: {.incremental}
+
+- **Comparative case studies** in the social sciences try to assess the impact of some event by comparing the case of interest to some unaffected units
+  - We ideally want to pick units that are **similar** enough that they share the same **latent characteristics** shaping the evolution of the outcome.
+- The **Synthetic Control Method** (SCM) builds on this intuition (Abadie and Gardeazabal, 2003; Abadie, Diamond, and Hainmueller, 2010).
+  - What if instead of using a single comparison, we use a **weighted average** of those units.
+  - Find weights on the control units that reproduce the pre-treatment outcome trajectory of the treated unit
+  - Compare the **observed** outcome trajectory to the **synthetic control** average.
+- Justified under **two** different outcome models
+  - Under **sequential ignorability**, we get an unbiased estimator (because past outcomes are direct confounders)
+  - Under a **latent factor model**, the bias goes away as the **number of time periods** gets large.
+
+:::
+
+## SCM: Setup and Notation
+
+::: {.incremental}
+
+- Observe outcomes $Y_{it}$ for units $i = 1, \dotsc, J+1$ over periods $t = 1, \dotsc, T$
+  - Let $T_0$ denote the number of **pre-treatment** periods, $T_1$ the number of **post-treatment**
+  - Unit $i = 1$ is the treated unit, exposed to treatment starting at $T_0 + 1$
+  - Units $i = 2, \dotsc, J+1$ are **donor** units (never treated)
+
+- We want to estimate:
+
+  $$\tau_{1t} = Y_{1t}(1) - Y_{1t}(0) \quad \text{for } t > T_0$$
+
+- We define a set of **weights** on the donor units $\mathbf{W} = (w_2, \dotsc, w_{J+1})$ with $w_j \geq 0$ and $\sum_j w_j = 1$
+- Estimate the effect by comparing the **observed** outcome to the **imputed counterfactual**
+
+  $$\hat{\tau_{1t}} = Y_{1t} - \sum_{j=2}^{J+1} w_j Y_{jt}$$
+
+:::
+
+## SCM: The data-generating process
+
+::: {.incremental}
+
+- The SCM is typically motivated by an underlying **latent factor model** for the outcome
+
+  $$Y_{it}(0) = \delta_t + \mathbf{\theta}_t \mathbf{Z}_i + \boldsymbol{\lambda}_t' \boldsymbol{\mu}_i + \varepsilon_{it}$$
+  
+- $\mathbf{Z}_i$ are the **observed covariates** (with time-varying coefficients $\mathbf{\theta}_t$).
+- $\boldsymbol{\lambda}_t$ are $F$-dimensional time-varying factors and $\boldsymbol{\mu}_i$ are unit-specific loadings
+- This is a more **general** model of latent unobserved confounding than DiD
+  - In DiD, there is a **single** common time trend across all factors $\boldsymbol{\lambda}_t = \lambda$
+  - The latent factor model allows for some number of **varying** time-trends across units (elements of $\boldsymbol{\lambda}_t$) that apply to different units (weights dictated by $\boldsymbol{\mu}_i$).
+
+:::
+
+## SCM: Choosing the weights
+
+::: {.incremental}
+
+- The goal of the synthetic control method is to find weights such that the weighted average of **donor** units reproduces the covariates and the pre-treatment trajectory of the treated unit 
+
+  $$\sum_{j=2}^{J+1} w^*_j Y_{jt} = Y_{1t} \quad \text{for } t \in \{1, 2, \dotsc, T_0\}$$
+  
+   $$\sum_{j=2}^{J+1} w^*_j \mathbf{Z}_j = \mathbf{Z}_{1}$$
+  
+- For notational simplicity, we'll denote the $K \times J+1$ matrix of combined covariates and pre-treatment outcomes as $\mathbf{X}$
+  - $\mathbf{X}_1$ is the $K x 1$ vector for the treated unit
+  - $\mathbf{X}_0$ is the $K x J$ matrix for the control units.
+  
+- The **ideal** synthetic control has weights weights $\mathbf{W}^*$ such that $\mathbf{X}_1 = \mathbf{X}_0 \mathbf{W}^*$
+
+:::
+
+## SCM: Bias
+
+::: {.incremental}
+
+- Supposing that we find $\mathbf{W}^*$, what is the **error** in our imputed counterfactual?
+
+  $$Y_{1t}(0) - \sum_{j=2}^{J+1} w^*_j Y_{jt}$$
+
+- **Abadie, Diamond and Hainmueller (2010)** show that under the latent factor model, the expected error **goes to zero**...
+  - ...when the number of pre-treatment periods is **large**...
+  - ...relative to the size of the pre-treatment shocks!
+  
+- **Intuition**: Remember our earlier errors-in-variables example when we **controlled** for a lagged dependent variable!
+  - The lagged outcomes are **proxies** for the latent factor - the less **noisy** the proxy, the better it reproduces the true unobserved latent factor.
+
+- Under an **autoregressive** outcome model, the bias is zero!
+  - "Sequential ignorability" - past $Y$ directly affects future $Y$.
+
+:::
+
+## SCM: Estimating the weights
+
+::: {.incremental}
+
+- In practice, we can only get $\mathbf{X}_1 \approx \mathbf{X}_0 \mathbf{W}^*$
+  - How do we find $\mathbf{W}^*$?
+
+- We solve a **constrained** minimization problem that minimizes a **distance** metric
+- For example, the euclidean norm:
+
+  $$||\mathbf{X}_1 - \mathbf{X}_0 \mathbf{W}^*|| = \sqrt{\sum_{h=1}^K v_h(X_{h1} - w_2 X_{h2} - w_3 X_{h3} - \dotsc - w_{J+1}X_{hJ+1})^2}$$
+  
+- We impose constraints:
+  - $\sum_{j=2}^{J+1} w_j = 1$ **Weights sum to 1**
+  - $w_j \ge 0 \quad \forall j \in \{2, 3, \dotsc, J+1\}$ **Weights are non-negative**
+  
+- Note that we also get to choose how much importance to put on each dimension (covariate) $\mathbf{V} = \{v_1, v_2, \dotsc, v_K\}$ 
+  - **Abadie, Diamond and Hainmueller (2010)** use an out-of-sample validation approach against the pre-treatment outcomes
+  - Not really necessary if you're **already** balancing on **every** pre-treatment outcome.
+
+:::
+
+## SCM: Notes on the weights
+
+::: {.incremental}
+
+- The **non-negativity** and **sum to 1** have some useful properties:
+  - **Sparse** - most weights are 0
+  - **Interpretable** - we can characterize the precise contributions of each element of the donor pool to the synthetic control
+  - Avoid **extrapolation**
+  
+- But there are problems!
+  - If the treated unit is outside the **convex hull** of the controls, it's **impossible** to reproduce the pre-treatment trajectory!
+
+- In general, the bias $\to 0$ results are derived under **perfect fit** - if the synthetic control is a **poor match**, bias can be huge!
+
+- Possible solutions
+  - Add an **intercept** (Doudchenko and Imbens, 2017; Ferman and Pinto, 2021)
+  - Allow for **negative weights** (Doudchenko and Imbens, 2017)
+  - Add an **outcome model** to correct for imperfect fit (Ben-Michael, Feller and Rothstein, 2021)
+
+:::
+
+## Application: Basque Country Terrorism
+
+::: {.incremental}
+
+- **Abadie and Gardeazabal (2003)**: Effect of ETA terrorism on the Basque Country's GDP per capita
+  - Treatment: onset of political terrorism in the late 1960s (they use ~1970 as treatment)
+  - Donor pool: 16 other Spanish regions
+  - Outcome: real GDP per capita (thousands of 1986 USD)
+  - Time: 1955-1997
+- Replication example in the `Synth` package
+
+:::
+
+## Basque Country: Data Preparation
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+#| code-fold: true
+#| cache: true
+
+library(Synth)
+data(basque)
+
+# Prepare data for Synth
+dataprep.out <- dataprep(
+  foo = basque,
+  predictors = c("school.illit", "school.prim", "school.med",
+                 "school.high", "school.post.high", "invest"),
+  predictors.op = "mean",
+  time.predictors.prior = 1964:1969,
+  special.predictors = list(
+    list("gdpcap", 1960:1969, "mean"),
+    list("sec.agriculture", seq(1961, 1969, 2), "mean"),
+    list("sec.energy", seq(1961, 1969, 2), "mean"),
+    list("sec.industry", seq(1961, 1969, 2), "mean"),
+    list("sec.construction", seq(1961, 1969, 2), "mean"),
+    list("sec.services.venta", seq(1961, 1969, 2), "mean"),
+    list("sec.services.nonventa", seq(1961, 1969, 2), "mean"),
+    list("popdens", 1969, "mean")
+  ),
+  dependent = "gdpcap",
+  unit.variable = "regionno",
+  unit.names.variable = "regionname",
+  time.variable = "year",
+  treatment.identifier = 17,  # Basque Country
+  controls.identifier = c(2:16, 18),  # All other regions (excluding Spain aggregate = 1)
+  time.optimize.ssr = 1960:1969,
+  time.plot = 1955:1997
+)
+```
+
+## Basque Country: Fitting the Synthetic Control
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+#| cache: true
+#| output: false
+
+# Run the synth optimization
+synth.out <- synth(data.prep.obj = dataprep.out, method = "BFGS")
+```
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+
+# Display the weights
+synth.tables <- synth.tab(dataprep.res = dataprep.out, synth.res = synth.out)
+cat("Donor weights (non-zero):\n")
+w <- synth.tables$tab.w
+print(w[w$w.weights > 0.01, ])
+```
+
+## Basque Country: Synthetic vs. Actual
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+#| code-fold: true
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 5.5
+#| cache: true
+
+# Extract path data
+years <- dataprep.out$tag$time.plot
+Y_treat <- dataprep.out$Y1plot
+Y_synth <- dataprep.out$Y0plot %*% synth.out$solution.w
+
+plot_df <- data.frame(
+  year = years,
+  Treated = as.numeric(Y_treat),
+  Synthetic = as.numeric(Y_synth)
+) %>%
+  pivot_longer(cols = c(Treated, Synthetic), names_to = "Unit", values_to = "gdpcap")
+
+ggplot(plot_df, aes(x = year, y = gdpcap, color = Unit, linetype = Unit)) +
+  geom_line(linewidth = 1.2) +
+  geom_vline(xintercept = 1970, linetype = "dashed", color = "gray40") +
+  annotate("text", x = 1971, y = 3, label = "Terrorism\nonset", hjust = 0, size = 3.5) +
+  labs(x = "Year", y = "Real per capita GDP\n(1986 USD, thousands)",
+       title = "Basque Country vs. Synthetic Basque Country",
+       subtitle = "Abadie & Gardeazabal (2003) — Effect of ETA terrorism on GDP") +
+  scale_color_manual(values = c("Treated" = "black", "Synthetic" = "firebrick")) +
+  scale_linetype_manual(values = c("Treated" = "solid", "Synthetic" = "dashed")) +
+  theme_bw() + theme(legend.position = "bottom")
+```
+
+## Basque Country: Treatment Effect (Gap Plot)
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+#| code-fold: true
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 5
+#| cache: true
+
+gap <- as.numeric(Y_treat) - as.numeric(Y_synth)
+gap_df <- data.frame(year = years, gap = gap)
+
+ggplot(gap_df, aes(x = year, y = gap)) +
+  geom_line(linewidth = 1.2) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  geom_vline(xintercept = 1970, linetype = "dashed", color = "gray40") +
+  annotate("text", x = 1971, y = 0.4, label = "Terrorism onset", hjust = 0, size = 3.5) +
+  labs(x = "Year", y = "Gap in real per capita GDP\n(Treated − Synthetic)",
+       title = "Estimated effect of terrorism on Basque Country GDP",
+       subtitle = "Negative gap = terrorism reduced GDP relative to synthetic control") +
+  theme_bw()
+```
+
+## SCM: Inference
+
+::: {.incremental}
+
+- With a single treated unit, standard inference is not straightforward. **Abadie et al. (2010)** propose a **permutation testing** approach:
+  - Apply SCM to **each donor unit** as if it were treated
+  - If the treated unit's gap is unusually large relative to these "placebo" gaps, the effect is unlikely due to chance
+  - **Test statistic**: post/pre RMSPE ratio
+  - Common practice to drop controls with egregiously worse pre-treatment fit compared to treated unit.
+
+- Recent work in statistics moves beyond this:
+  - "Conformal inference" approach in **Chernozhukov, Wüthrich, and Zhu (2019)**
+
+:::
+
+## Basque Country: Permutation tests
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+#| code-fold: true
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 5.5
+#| cache: true
+
+# Run placebo tests for each control region
+control_ids <- c(2:16, 18)
+placebo_gaps <- list()
+
+for (ctrl_id in control_ids) {
+  donor_ids <- setdiff(c(2:16, 18), ctrl_id)
+
+  tryCatch({
+    dp <- dataprep(
+      foo = basque,
+      predictors = c("school.illit", "school.prim", "school.med",
+                     "school.high", "school.post.high", "invest"),
+      predictors.op = "mean",
+      time.predictors.prior = 1964:1969,
+      special.predictors = list(
+        list("gdpcap", 1960:1969, "mean"),
+        list("sec.agriculture", seq(1961, 1969, 2), "mean"),
+        list("sec.energy", seq(1961, 1969, 2), "mean"),
+        list("sec.industry", seq(1961, 1969, 2), "mean"),
+        list("sec.construction", seq(1961, 1969, 2), "mean"),
+        list("sec.services.venta", seq(1961, 1969, 2), "mean"),
+        list("sec.services.nonventa", seq(1961, 1969, 2), "mean"),
+        list("popdens", 1969, "mean")
+      ),
+      dependent = "gdpcap",
+      unit.variable = "regionno",
+      unit.names.variable = "regionname",
+      time.variable = "year",
+      treatment.identifier = ctrl_id,
+      controls.identifier = donor_ids,
+      time.optimize.ssr = 1960:1969,
+      time.plot = 1955:1997
+    )
+
+    so <- synth(data.prep.obj = dp, method = "BFGS")
+
+    y1 <- as.numeric(dp$Y1plot)
+    y0 <- as.numeric(dp$Y0plot %*% so$solution.w)
+    placebo_gaps[[as.character(ctrl_id)]] <- data.frame(
+      year = 1955:1997, gap = y1 - y0, unit = ctrl_id
+    )
+  }, error = function(e) {
+    # Skip units where optimization fails
+  })
+}
+
+placebo_df <- do.call(rbind, placebo_gaps)
+
+# Add treated unit
+treated_gap_df <- data.frame(year = years, gap = gap, unit = 17)
+
+```
+
+## Basque Country: Permutation tests
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+#| code-fold: true
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 5.5
+#| cache: true
+
+ggplot() +
+  geom_line(data = placebo_df, aes(x = year, y = gap, group = unit),
+            color = "gray70", alpha = 0.6) +
+  geom_line(data = treated_gap_df, aes(x = year, y = gap),
+            color = "black", linewidth = 1.2) +
+  geom_vline(xintercept = 1970, linetype = "dashed", color = "gray40") +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  labs(x = "Year", y = "Gap in real per capita GDP",
+       title = "Placebo tests: Basque Country (black) vs. donor regions (gray)",
+       subtitle = "Each gray line = SCM applied to a donor region as if it were treated") +
+  theme_bw()
+```
 
 
+## Permutation Tests: Dropping Poor Fits
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+#| code-fold: true
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 5.5
+#| cache: true
+
+# Compute pre-treatment RMSPE for each unit
+treated_pre_rmspe <- sqrt(mean((treated_gap_df %>% filter(year < 1970))$gap^2))
+
+placebo_pre_rmspe <- placebo_df %>%
+  filter(year < 1970) %>%
+  group_by(unit) %>%
+  summarize(pre_rmspe = sqrt(mean(gap^2))) %>%
+  ungroup()
+
+# Keep only units with pre-RMSPE <= 5x the treated unit
+keep_units <- placebo_pre_rmspe %>%
+  filter(pre_rmspe <= 5 * treated_pre_rmspe) %>%
+  pull(unit)
+
+placebo_df_trimmed <- placebo_df %>% filter(unit %in% keep_units)
+
+n_dropped <- n_distinct(placebo_df$unit) - length(keep_units)
+
+ggplot() +
+  geom_line(data = placebo_df_trimmed, aes(x = year, y = gap, group = unit),
+            color = "gray70", alpha = 0.6) +
+  geom_line(data = treated_gap_df, aes(x = year, y = gap),
+            color = "black", linewidth = 1.2) +
+  geom_vline(xintercept = 1970, linetype = "dashed", color = "gray40") +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  labs(x = "Year", y = "Gap in real per capita GDP",
+       title = paste0("Placebo tests: Dropping donors with pre-RMSPE > 5x treated (",
+                      n_dropped, " dropped)"),
+       subtitle = "Basque Country (black) vs. donor regions with adequate pre-treatment fit (gray)") +
+  theme_bw()
+```
+
+## Permutation Tests: RMSPE Ratios
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+#| code-fold: true
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 5
+#| cache: true
+
+# Compute post/pre RMSPE ratios
+compute_rmspe_ratio <- function(gap_df, treatment_year = 1970) {
+  pre <- gap_df %>% filter(year < treatment_year)
+  post <- gap_df %>% filter(year >= treatment_year)
+  rmspe_pre <- sqrt(mean(pre$gap^2))
+  rmspe_post <- sqrt(mean(post$gap^2))
+  rmspe_post / rmspe_pre
+}
+
+# Treated unit ratio
+treated_ratio <- compute_rmspe_ratio(treated_gap_df)
+
+# Placebo ratios
+placebo_ratios <- placebo_df %>%
+  group_by(unit) %>%
+  group_modify(~ tibble(ratio = compute_rmspe_ratio(.x))) %>%
+  ungroup()
+
+all_ratios <- bind_rows(
+  placebo_ratios,
+  tibble(unit = 17, ratio = treated_ratio)
+) %>%
+  mutate(is_treated = unit == 17)
+
+# Compute p-value
+pval <- mean(all_ratios$ratio >= treated_ratio)
+
+ggplot(all_ratios, aes(x = ratio, fill = is_treated)) +
+  geom_histogram(bins = 15, color = "white", alpha = 0.8) +
+  geom_vline(xintercept = treated_ratio, linetype = "dashed", color = "red", linewidth = 1) +
+  scale_fill_manual(values = c("FALSE" = "gray70", "TRUE" = "black"),
+                    labels = c("Donor regions", "Basque Country"),
+                    name = "") +
+  labs(x = "Post/Pre RMSPE Ratio",
+       y = "Count",
+       title = "Distribution of RMSPE ratios: Permutation inference",
+       subtitle = paste0("Basque Country ratio = ", round(treated_ratio, 2),
+                         " | p-value = ", round(pval, 3))) +
+  theme_bw() + theme(legend.position = "bottom")
+```
+
+## Staggered Adoption SCM
+
+::: {.incremental}
+
+- Conventional SCM is designed for **one** treated unit — what if multiple units are treated?
+  - What should we weight our control pool to - each unit **separately** or the **average** of the units?
+  
+- We might get perfect balance for the **average** of the units but terrible fit for individual treated units!
+  
+- **Ben-Michael, Feller and Rothstein (2022)** show that the bias is a **combination** of these two imbalances.
+  - Propose a **partial pooling** approach that minimizes a combination of the two.
+  
+- Implemented in the `augsynth` R package (along with their outcome-augmented synthetic control)
+
+:::
+
+## Application: Shale Shock and Republican Voting
+
+::: {.incremental}
+
+- Let's apply the augmented/multi-unit synthetic control to the **Gazmararian (2025)** shale shock data
+  - Earlier, we saw that DiD and LDV gave **different** estimates, and placebo tests raised concerns
+  - Is SCM the solution?
+
+- Review of the setup:
+  - 116 treated coal counties, 97 control counties
+  - Treatment onset: 2008 (shale gas boom undermines coal industry)
+  - Outcome: Republican vote share
+  - Pre-treatment periods: 1972--2004 (8 election cycles)
+  - Post-treatment periods: 2008--2020 (4 election cycles)
+
+:::
+
+## multisynth: Average Effect Across Treated Units
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+#| code-fold: true
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 5
+#| cache: true
+
+# Use multisynth for the multi-unit case
+# multisynth infers treatment timing from the binary indicator
+msyn <- multisynth(
+  RepVotesMajorPercent ~ treated,
+  unit = county_state, time = year,
+  data = dff
+)
+
+msyn_summ <- summary(msyn)
+
+# Extract average ATT for plotting
+avg_att <- msyn_summ$att %>%
+  filter(Level == "Average")
+
+ggplot(avg_att, aes(x = Time, y = Estimate)) +
+  geom_point(size = 3) +
+  geom_errorbar(aes(ymin = lower_bound, ymax = upper_bound), width = 0.3) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  geom_vline(xintercept = -0.5, linetype = "dashed", color = "red") +
+  labs(x = "Time relative to treatment (election cycles)",
+       y = "Estimated ATT (pp)",
+       title = "Multisynth: Effect of shale shock on Republican vote share",
+       subtitle = "Average across treated coal counties (partially pooled SCM)") +
+  theme_bw()
+```
+
+## Placebo testing
+
+::: {.incremental}
+
+- We've **fit** the synthetic control model to minimize pre-treatment outcome discrepancies.
+  - A perfect synthetic control will reproduce the trajectory **exactly**
+  - But this doesn't mean that our estimator is unbiased - especially if we have a short panel.
+  - How do we assess whether the bias is small? 
+    - **Perfect pre-treatment fit** is no longer a valid **placebo test**!
+
+- We can use a **placebo test** approach where we **backdate** the treatment to an earlier period and check whether the synthetic control produces spurious "effects" in held-out pre-treatment periods
+  - Same intuition as our discussion last week - we want our placebo tests to involve **held-out** comparisons.
+  
+:::
+
+## Backdating falsification tests
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+#| code-fold: true
+#| fig-align: center
+#| fig-width: 10
+#| fig-height: 5.5
+#| cache: true
+
+# In-time falsification: backdate treatment to 2000 and 1996
+# Fit SCM using only pre-placebo data, check for "effects" in held-out periods
+
+placebo_years <- c(1996, 2000, 2004)
+
+falsification_results <- list()
+
+for (placebo_yr in placebo_years) {
+  # Create dataset: only pre-2008 data, with treatment backdated
+  falsification_df <- dff %>%
+    filter(year < 2008) %>%
+    mutate(placebo_treat = as.integer(treat == 1 & year >= placebo_yr))
+
+  tryCatch({
+    plac_fit <- multisynth(
+      RepVotesMajorPercent ~ placebo_treat,
+      unit = county_state, time = year,
+      data = falsification_df,
+    )
+
+    plac_summ <- summary(plac_fit)
+    plac_att <- plac_summ$att %>%
+      filter(Level == "Average") %>%
+      mutate(placebo_year = placebo_yr)
+
+    falsification_results[[as.character(placebo_yr)]] <- plac_att
+  }, error = function(e) {
+    cat("Error for placebo year", placebo_yr, ":", conditionMessage(e), "\n")
+  })
+}
+
+all_results <- bind_rows(
+  do.call(rbind, falsification_results)
+) %>%
+  mutate(placebo_label = paste0("Placebo treatment = ", placebo_year))
+
+ggplot(all_results, aes(x = Time, y = Estimate,
+                         color = factor(placebo_year))) +
+  geom_point(size = 2.5) +
+  geom_errorbar(aes(ymin = lower_bound, ymax = upper_bound), width = 0.3) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  geom_vline(xintercept = -0.5, linetype = "dotted") +
+  facet_wrap(~ placebo_label, scales = "free_x") +
+  labs(x = "Time relative to (placebo) treatment",
+       y = "Estimated ATT (pp)",
+       title = "Placebo tests: backdated treatment vs. actual",
+       subtitle = "Placebo treatments should show no effect in held-out pre-2008 periods") +
+  scale_color_manual(values = c("1996" = "steelblue", "2000" = "darkorange",
+                                 "2004" = "black")) +
+  theme_bw() + theme(legend.position = "none")
+```
+
+
+## Conclusion
+
+::: {.incremental}
+
+- Causal inference in time-series data is **hard**!
+  - Even the estimands can get tricky - we'll come back to this again when we talk about **mediation** 
+  
+- The core problem centers around how we deal with **unobserved confounding** and the role that **past outcomes** play in identification/estimation
+
+- Three scenarios:
+  - Unobserved confounding but simple functional form (DiD)
+    - Adjust via **differencing** - works in short panels
+  - Observed confounding driven by past $Y$
+    - Adjust by **controlling** for past $Y$ - also fine in short panels
+  - Unobserved confounding more complex than DiD
+    - Adjust for past $Y$ to indirectly control for the latent factor - need **many** pre-treatment periods!
+
+:::
+
+## Next week
+
+::: {.incremental}
+
+- The last of the "holy trinity" - **regression discontinuity designs**
+- What happens when we have arbitrary unobserved confounding...
+  - ...but treatment is assigned via a **threshold**
+  
+- In this case, even if treatment-outcome are confounded, that confounding might be **negligible** in the window around the threshold!
+
+- Two ways to think about this
+  - "As-if-random" assignment at the cut-off
+  - Continuity in potential outcomes at the cut-off
+  
+- Estimation by **extrapolation** to the threshold.
+  - Works best when we have **lots of units** near the cut-off.
+
+:::
