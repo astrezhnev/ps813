@@ -1789,7 +1789,7 @@
     "href": "slides/week11/week11_panel_data_causal_inference.html#scm-estimating-the-weights",
     "title": "Week 11: Panel Data Causal Inference",
     "section": "SCM: Estimating the weights",
-    "text": "SCM: Estimating the weights\n\nIn practice, we can only get \\(\\mathbf{X}_1 \\approx \\mathbf{X}_0 \\mathbf{W}^*\\)\n\nHow do we find \\(\\mathbf{W}^*\\)?\n\nWe solve a constrained minimization problem that minimizes a distance metric\nFor example, the euclidean norm:\n\\[||\\mathbf{X}_1 - \\mathbf{X}_0 \\mathbf{W}^*|| = \\sqrt{\\sum_{h=1}^K v_h(X_{h1} - w_2 X_{h2} - w_3 X_{h3} - \\dotsc - w_{J+1}X_{hJ+1})^2}\\]\nWe impose constraints:\n\n\\(\\sum_{j=2}^{J+1} w_j = 1\\) Weights sum to 1\n\\(w_j \\ge 0 \\quad \\forall j \\in \\{2, 3, \\dotsc, J+1\\}\\) Weights are non-negative\n\nNote that we also get to choose how much importance to put on each dimension (covariate) \\(\\mathbf{V} = \\{v_1, v_2, \\dotsc, v_K\\}\\)\n\nAbadie, Diamond and Hainmueller (2010) use an out-of-sample validation approach against the pre-treatment outcomes\nNot really necessary if you’re already balancing on every pre-treatment outcome."
+    "text": "SCM: Estimating the weights\n\nIn practice, we can only get \\(\\mathbf{X}_1 \\approx \\mathbf{X}_0 \\mathbf{W}^*\\)\n\nHow do we find \\(\\mathbf{W}^*\\)?\n\nWe solve a constrained minimization problem that minimizes a distance metric\nFor example, the euclidean norm:\n\\[||\\mathbf{X}_1 - \\mathbf{X}_0 \\mathbf{W}^*|| = \\sqrt{\\sum_{h=1}^K v_h(X_{h1} - w_2 X_{h2} - w_3 X_{h3} - \\dotsc - w_{J+1}X_{hJ+1})^2}\\]\nWe impose constraints:\n\n\\(\\sum_{j=2}^{J+1} w_j = 1\\) Weights sum to 1\n\\(w_j \\ge 0 \\quad \\forall j \\in \\{2, 3, \\dotsc, J+1\\}\\) Weights are non-negative\n\nNote that we also get to choose how much importance to put on each dimension (covariate) \\(\\mathbf{V} = \\{v_1, v_2, \\dotsc, v_K\\}\\)\n\nAbadie, Diamond and Hainmueller (2010) use an out-of-sample validation approach against the pre-treatment outcomes to choose an optimal \\(\\mathbf{V}\\)"
   },
   {
     "objectID": "slides/week11/week11_panel_data_causal_inference.html#scm-notes-on-the-weights",
@@ -2167,7 +2167,7 @@
     "href": "assignments.html#problem-sets",
     "title": "Assignments",
     "section": "Problem Sets",
-    "text": "Problem Sets\nProblem sets are distributed as .qmd files along with their rendered .html form. You should edit the provided .qmd file and render to .html when submitting the assignment. Additional files (e.g. datasets) are located in sub-folders. For convenience, all the combined files are also distributed as a .zip compressed archive.\n\nProblem Set 1\n\nGithub Repository\n.zip archive\n\n\n\nProblem Set 2\n\nGithub Repository\n.zip archive\n\n\n\nProblem Set 3\n\nGithub Repository\n.zip archive\n\n\n\nProblem Set 4\n\nGithub Repository\n.zip archive"
+    "text": "Problem Sets\nProblem sets are distributed as .qmd files along with their rendered .html form. You should edit the provided .qmd file and render to .html when submitting the assignment. Additional files (e.g. datasets) are located in sub-folders. For convenience, all the combined files are also distributed as a .zip compressed archive.\n\nProblem Set 1\n\nGithub Repository\n.zip archive\n\n\n\nProblem Set 2\n\nGithub Repository\n.zip archive\n\n\n\nProblem Set 3\n\nGithub Repository\n.zip archive\n\n\n\nProblem Set 4\n\nGithub Repository\n.zip archive\n\n\n\nProblem Set 5\n\nGithub Repository\n.zip archive"
   },
   {
     "objectID": "lectures.html",
