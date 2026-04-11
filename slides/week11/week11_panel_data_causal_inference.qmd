@@ -1043,8 +1043,7 @@ ggplot(placebo_ldv_results, aes(x = year, y = estimate)) +
   - $w_j \ge 0 \quad \forall j \in \{2, 3, \dotsc, J+1\}$ **Weights are non-negative**
   
 - Note that we also get to choose how much importance to put on each dimension (covariate) $\mathbf{V} = \{v_1, v_2, \dotsc, v_K\}$ 
-  - **Abadie, Diamond and Hainmueller (2010)** use an out-of-sample validation approach against the pre-treatment outcomes
-  - Not really necessary if you're **already** balancing on **every** pre-treatment outcome.
+  - **Abadie, Diamond and Hainmueller (2010)** use an out-of-sample validation approach against the pre-treatment outcomes to choose an optimal $\mathbf{V}$
 
 :::
 

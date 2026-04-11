@@ -40,6 +40,7 @@ The code below will read in the dataset in as `problem1`. Please note that you w
 ```{r}
 load("data/DWW_CPS.RData")
 problem1 <- data
+rm(data)
 ```
 
 
@@ -72,3 +73,48 @@ Do you think this fuzzy RD is a valid design for identifying the impact of expos
 ## Part E
 
 Assess whether there is bunching near the discontinuity. Use any appropriate analytical technique or techniques and interpret your results. Is there evidence to suggest that the density of the running variable in this dataset is discontinuous at the cut-off?
+
+# Problem 2
+
+In "Rock the registration: Same day registration increases turnout of young voters" Grumbach and Hill (2022) study the effect of same day registration (SDR) laws on voter turnout, arguing that these laws primarily benefit younger voters as these voters are more likely to experience events requiring voter registration changes (e.g. change of address) and interact less often with government agencies that register voters. Their design is a staggered-adoption difference-in-differences using the roll out of SDR policies across U.S. states
+
+The original source for the data is below:
+
+> Grumbach, Jacob M., and Charlotte Hill. "Rock the registration: Same day registration increases turnout of young voters." The Journal of Politics 84, no. 1 (2022): 405-417.
+
+The code below will load in the dataset as `problem2`. Note that while the original study ran the regression on the **individual level** turnout data, the included data is **aggregated** at the level of the state-age-group-year level.
+
+```{r}
+load("data/GH2022_aggregated.RData")
+problem2 <- gh2022_agg
+rm(gh2022_agg)
+```
+
+The relevant variables are 
+
+- `state` - U.S. state
+- `year` - Year of the election (2-year increments)
+- `age_group` - Age bracket of voters
+- `voted` - Turnout rate among the given age group in that state and year 
+- `n_obs` - The number of observations from the CPS dataset in that particular cell
+- `sdr` - Whether a state has a "same day registration" law in place in a given year
+
+## Part A
+
+Generate a plot of the distribution of treatment across state and over time using the `panelView` R package. Comment on the distribution. Which units should be omitted from any difference-in-difference analysis? For which relative treatment times are we likely to have too few observations for reliable standard error estimation?
+
+## Part B
+
+Drop units for which we cannot estimate an ATT using differences-in-differences. Additionally, drop Ohio from 2014 onward as it elminated same day registration after having briefly implemented it.
+
+Using a conventional dynamic two-way fixed effects estimator, estimate the average treatment effect of same day registration on 18-24 year old turnout 0, 1, 2 and 3 elections after implementation. Include the placebo estimates for the three elections prior to treatment. Use the election just prior to treatment as the "baseline" time period. Cluster your standard errors appropriately (at the level of the state). I would recommend using `fixest` to implement this.
+
+Make an event study plot to present you results and interpret your findings. 
+
+## Part C
+
+Construct a test for whether the turnout effects you estimated in Part B vary between the 18-24 year old voters and all of the other age brackets in the sample. Do you conclude that there is a statistically distinguishable difference in the treatment effect of SDR between "young" voters and older voters?
+
+## Part D
+
+Estimate the same relative treatment time effects from Part B using instead the **Callaway/Sant'anna** first-differences estimator (implemented in `did`). Compare the two sets of estimates (both the relative treatment time effects and the placebo estimates) and discuss any differences you observe. Explain why the two sets of estimates might differ, or if they don't, what you might then conclude about the treatment effects. 

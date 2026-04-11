@@ -40,3 +40,8 @@ Problem sets are distributed as `.qmd` files along with their rendered `.html` f
 - [Github Repository](https://github.com/astrezhnev/ps813/tree/main/psets/ps4)
 - [`.zip` archive](https://www.antonstrezhnev.com/ps813/psets/ps4.zip)
 
+### Problem Set 5
+
+- [Github Repository](https://github.com/astrezhnev/ps813/tree/main/psets/ps5)
+- [`.zip` archive](https://www.antonstrezhnev.com/ps813/psets/ps5.zip)
+
