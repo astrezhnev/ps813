@@ -322,21 +322,28 @@ house %>% filter(abs(x) < .2) %>% ggplot(aes(x=x, y=y, colour=as.factor(d))) +
 
 ::: {.incremental}
 
-1. Choose a polynomial order $p$ and a kernel function $K(\cdot)$
+- Choose a polynomial order $p$ and a kernel function $K(\cdot)$
     - Kernel captures how we should weight observations near the discontinuity vs. far
     - Lots of options: "triangular" is common (diminishing weight further from the discontinuity) but we'll just use a uniform kernel for this example.
-2. Choose a bandwidth $h$
+- Choose a bandwidth $h$
     - Observations outside of the bandwidth receive a weight of $0$. Observations inside the bandwidth get weight $K\left(\frac{X_i - c}{h}\right)$
     - With a uniform kernel, all observations get the same weight if they're inside the bandwidth
-3. Fit a regression among observations $X_i \ge c$ of $Y_i$ on the polynomial of $(X_i - c), (X_i - c)^2, \dotsc, (X_i - c)^p$, weighting each observation by its kernel weight.
+    
+:::
+
+## Local polynomial regression
+
+::: {.incremental}
+
+- Fit a regression among observations $X_i \ge c$ of $Y_i$ on the polynomial of $(X_i - c), (X_i - c)^2, \dotsc, (X_i - c)^p$, weighting each observation by its kernel weight.
 
   $$\widehat{\mathbb{E}}[Y_i | X_i \ge x] = \hat{\mu}_{+} + \hat{\mu}_{+,1}(X_i - c) + \dotsc + \hat{\mu}_{+,p}(X_i - c)^p$$
     
-4. Fit a regression among observations $X_i < c$ of $Y_i$ on the polynomial of $(X_i - c), (X_i - c)^2, \dotsc, (X_i - c)^p$,  weighting each observation by its kernel weight.
+- Fit a regression among observations $X_i < c$ of $Y_i$ on the polynomial of $(X_i - c), (X_i - c)^2, \dotsc, (X_i - c)^p$,  weighting each observation by its kernel weight.
 
   $$\widehat{\mathbb{E}}[Y_i | X_i < x] = \hat{\mu}_{-} + \hat{\mu}_{-,1}(X_i - c) + \dotsc + \hat{\mu}_{-,p}(X_i - c)^p$$
     
-5. Our RD estimate is the difference in intercepts from this regression: $\hat{\tau}_{\text{SRD}} = \hat{\mu}_+ - \hat{\mu}_-$
+- Our RD estimate is the difference in intercepts from this regression: $\hat{\tau}_{\text{SRD}} = \hat{\mu}_+ - \hat{\mu}_-$
 
 :::
 
@@ -721,5 +728,25 @@ rdplot <- rddensity::rdplotdensity(density_test, house$x)
   - Beware cubic polynomials and above! Poor boundary properties.
   - Typically assess sensitivity across lots of different bandwidth choices
 - Always plot your RDs!
+
+:::
+
+## Next Two Weeks
+
+::: {.incremental}
+
+- Four separate topics related to causal inference that we need to cover.
+- **Mediation analysis**
+  - How can we decompose treatment effects into "direct" and "indirect" components?
+  - What assumptions do we need to identify **mediation** pathways?
+- **Sensitivity analysis** for selection-on-observables
+  - How bad does the confounding have to be to break our result?
+  - How can we use this to defend the **robustness** of our design?
+- **Inference** with dependent treatment assignment
+  - When should you use **clustered** standard errors?
+  - When to use
+- Causal inference with **interference**
+  - What happens when we don't have SUTVA?
+  - **shift-share** designs with a particular interference structure
 
 :::
