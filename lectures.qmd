@@ -66,7 +66,7 @@ Lecture slides are available as self-contained `.html` files made with RevealJS 
 - [Week 12 Github Repository](https://github.com/astrezhnev/ps813/tree/main/slides/week12/)
 - [Week 12 `.html` slides](https://www.antonstrezhnev.com/ps813/slides/week12/week12_regression_discontinuity.html)
 
-### Week 13: Mediation and Sensitivity Analysis
+### Week 13 Part 1: Mediation
 
 - [Week 13 Part 1 Github Repository](https://github.com/astrezhnev/ps813/tree/main/slides/week13/part1/)
 - [Week 13 Part 1 `.html` slides](https://www.antonstrezhnev.com/ps813/slides/week13/part1/week13_mediation.html)
