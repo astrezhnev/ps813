@@ -572,7 +572,7 @@ house %>% filter(abs(x) < 1) %>% ggplot(aes(x=x, y=y, colour=as.factor(d))) +
   - $D_i(0)$: The treatment taken by unit $i$ when $X_i < c$
 - Under our original continuity assumption, applying the Sharp RD estimator to a Fuzzy RD setting recovers the **intent to treat effect**
 
-$$\lim_{x \to c^{+}} \mathbb{E}[Y_i | X_i = x] - \lim_{x \to c^{-}} \mathbb{E}[Y_i | X_i = x]  = \mathbb{E}[(D_i(1) - D_i(0))(Y_i(1) - Y_i(0)) | X_i = c] = \tau_{\text{ITT}}$$
+  $$\lim_{x \to c^{+}} \mathbb{E}[Y_i | X_i = x] - \lim_{x \to c^{-}} \mathbb{E}[Y_i | X_i = x]  = \mathbb{E}[(D_i(1) - D_i(0))(Y_i(1) - Y_i(0)) | X_i = c] = \tau_{\text{ITT}}$$
 
 - ITT is driven by two elements
   - $Y_i(1) - Y_i(0)$: The actual treatment effect
@@ -604,18 +604,16 @@ $$\lim_{x \to c^{+}} \mathbb{E}[Y_i | X_i = x] - \lim_{x \to c^{-}} \mathbb{E}[Y
 ::: {.incremental}
 
 - We can just take the ratio of the two regression coefficients from the reduced form and the first stage RDs
-- Or we can do this with a 2SLS approach - for a (local) linear model.
-- First stage
+- Or we can do this with a 2SLS approach. For a (local) linear model:
+  - "First stage"
 
-  $$D_i = \delta_0 + \rho \mathbb{1}(X_i \ge c) + \delta_1(X_i - c) + \delta_2(X_i - c)\mathbb{1}(X_i \ge c)$$
+    $$D_i = \delta_0 + \rho \mathbb{1}(X_i \ge c) + \delta_1(X_i - c) + \delta_2(X_i - c)\mathbb{1}(X_i \ge c)$$
 
-- Second stage
+  - Second stage
+  
+    $$Y_i = \beta_0 + \tau \hat{D_i} + \beta_1(X_i - c) + \beta_2(X_i - c)\mathbb{1}(X_i \ge c)$$
 
-  $$Y_i = \beta_0 + \tau \tilde{D_i} + \beta_1(X_i - c) + \beta_2(X_i - c)\mathbb{1}(X_i \ge c)$$
-
-where $\tilde{D_i}$ is the instrumented-for treatment variable (fitted values from the first stage)
-
-- Note that the cutpoint indicator still appears in the second-stage to allow for the more flexible linear model above and below the cutpoint.
+- Note that interactions with the cutpoint indicator still appear in the second-stage to allow for the model above and below the cutpoint to vary in coefficients.
 - All weak instrument problems still apply here! Need a strong first stage to do reliable inference.
 
 :::
@@ -744,7 +742,7 @@ rdplot <- rddensity::rdplotdensity(density_test, house$x)
   - How can we use this to defend the **robustness** of our design?
 - **Inference** with dependent treatment assignment
   - When should you use **clustered** standard errors?
-  - When to use
+  - When to use adjustments for **spatial** autocorrelation?
 - Causal inference with **interference**
   - What happens when we don't have SUTVA?
   - **shift-share** designs with a particular interference structure

@@ -68,8 +68,13 @@ Lecture slides are available as self-contained `.html` files made with RevealJS 
 
 ### Week 13: Mediation and Sensitivity Analysis
 
-- Week 13 Github Repository
-- Week 13 `.html` slides
+- [Week 13 Part 1 Github Repository](https://github.com/astrezhnev/ps813/tree/main/slides/week13/part1/)
+- [Week 13 Part 1 `.html` slides](https://www.antonstrezhnev.com/ps813/slides/week13/part1/week13_mediation.html)
+
+### Week 13 Part 2: Sensitivity Analysis
+
+- Week 13 Part 2 Github Repository
+- Week 13 Part 2 `.html` slides
 
 ### Week 14: Shift-share Designs and Experiments with Interference
 
