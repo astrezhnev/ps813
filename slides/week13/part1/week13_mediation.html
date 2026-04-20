@@ -1204,7 +1204,7 @@ Anton Strezhnev
 <h2>Effect Decomposition</h2>
 <ul>
 <li class="fragment"><p>Writing the <span class="math inline">\(NDE_i(0)\)</span> in terms of the controlled direct effect fixing <span class="math inline">\(M_i = 0\)</span> leads to Vanderweele (2014)’s 4-way decomposition</p>
-<p>#<span class="math inline">\(\begin{align*} Y_i(1) - Y_i(0) &amp;= \text{CDE}_i(0) + \underbrace{(Y_i(1,1) - Y_i(0,1) - Y_i(1,0) + Y_i(0,0)) (M_i(0))}_{\text{reference interaction}} + \\ &amp; \underbrace{(Y_i(1,1) - Y_i(0,1) - Y_i(1,0) + Y_i(0,0))(M_i(1) - M_i(0))}_{\text{mediated interaction}} + \text{NIE}_i(0)\end{align*}\)</span>$</p></li>
+<p><span class="math display">\[\begin{align*} Y_i(1) - Y_i(0) &amp;= \text{CDE}_i(0) + \underbrace{(Y_i(1,1) - Y_i(0,1) - Y_i(1,0) + Y_i(0,0)) (M_i(0))}_{\text{reference interaction}} + \\ &amp; \underbrace{(Y_i(1,1) - Y_i(0,1) - Y_i(1,0) + Y_i(0,0))(M_i(1) - M_i(0))}_{\text{mediated interaction}} + \text{NIE}_i(0)\end{align*}\]</span></p></li>
 </ul>
 </section>
 <section id="identification" class="slide level2 title-slide center">
@@ -1257,14 +1257,21 @@ Y_i(d, m) &amp;{\perp \! \! \! \perp} M_i | D_i = d, X_i = x, L_i = l
 <li class="fragment"><p>First, define a “marginal structural model” for the mean potential outcomes under a particular treatment “history”</p>
 <p><span class="math display">\[E[Y_i(d,m)] = \alpha_0 + \alpha_1 d + \alpha_2 m + \alpha_3 dm\]</span></p></li>
 <li class="fragment"><p>With long treatment histories need to make some assumptions (e.g. a blip + cumulative effect), but here straightforward to use a fully-saturated MSM.</p></li>
-<li class="fragment"><p>Estimation by IPTW.</p>
+</ul>
+</section>
+<section id="marginal-structural-models-1" class="slide level2">
+<h2>Marginal Structural Models</h2>
+<ul>
+<li class="fragment">Next, we estimate via <strong>inverse-propensity of treatment weighting</strong>:
 <ul>
 <li class="fragment"><p>Under sequential ignorability, we can get consistent estimates of the parameters via a regression with inverse-propensity of treatment weights.</p></li>
 <li class="fragment"><p>For a unit with treatment <span class="math inline">\(D_i = d\)</span> and mediator <span class="math inline">\(M_i = m\)</span>, we construct the IP weight:</p>
 <p><span class="math display">\[\text{SW}_i = \frac{Pr(D_i = d)}{Pr(D_i = d|X_i = x)} \times \frac{Pr(M_i = m | D_i = d)}{Pr(M_i = m | D_i = d, X_i = x, L_i = l)}\]</span></p></li>
 </ul></li>
-<li class="fragment"><p>Now we just need two models - one for the treatment given <span class="math inline">\(X_i\)</span> and another for the mediator given treatment, <span class="math inline">\(X_i\)</span> and <span class="math inline">\(L_i\)</span>.</p></li>
-<li class="fragment"><p>IPTW avoids the post-treatment bias problem of directly conditioning on <span class="math inline">\(L_i\)</span></p></li>
+<li class="fragment">Now we just need two models - one for the treatment given <span class="math inline">\(X_i\)</span> and another for the mediator given treatment, <span class="math inline">\(X_i\)</span> and <span class="math inline">\(L_i\)</span>.
+<ul>
+<li class="fragment">IPTW avoids the post-treatment bias problem of directly conditioning on <span class="math inline">\(L_i\)</span></li>
+</ul></li>
 </ul>
 </section>
 <section id="identification-of-the-ande" class="slide level2">

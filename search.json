@@ -1579,7 +1579,7 @@
     "href": "slides/week13/part1/week13_mediation.html#effect-decomposition-1",
     "title": "Week 13, Part 1: Mediation",
     "section": "Effect Decomposition",
-    "text": "Effect Decomposition\n\nWriting the \\(NDE_i(0)\\) in terms of the controlled direct effect fixing \\(M_i = 0\\) leads to Vanderweele (2014)’s 4-way decomposition\n#\\(\\begin{align*} Y_i(1) - Y_i(0) &= \\text{CDE}_i(0) + \\underbrace{(Y_i(1,1) - Y_i(0,1) - Y_i(1,0) + Y_i(0,0)) (M_i(0))}_{\\text{reference interaction}} + \\\\ & \\underbrace{(Y_i(1,1) - Y_i(0,1) - Y_i(1,0) + Y_i(0,0))(M_i(1) - M_i(0))}_{\\text{mediated interaction}} + \\text{NIE}_i(0)\\end{align*}\\)$"
+    "text": "Effect Decomposition\n\nWriting the \\(NDE_i(0)\\) in terms of the controlled direct effect fixing \\(M_i = 0\\) leads to Vanderweele (2014)’s 4-way decomposition\n\\[\\begin{align*} Y_i(1) - Y_i(0) &= \\text{CDE}_i(0) + \\underbrace{(Y_i(1,1) - Y_i(0,1) - Y_i(1,0) + Y_i(0,0)) (M_i(0))}_{\\text{reference interaction}} + \\\\ & \\underbrace{(Y_i(1,1) - Y_i(0,1) - Y_i(1,0) + Y_i(0,0))(M_i(1) - M_i(0))}_{\\text{mediated interaction}} + \\text{NIE}_i(0)\\end{align*}\\]"
   },
   {
     "objectID": "slides/week13/part1/week13_mediation.html#identification",
@@ -1614,7 +1614,14 @@
     "href": "slides/week13/part1/week13_mediation.html#marginal-structural-models",
     "title": "Week 13, Part 1: Mediation",
     "section": "Marginal Structural Models",
-    "text": "Marginal Structural Models\n\nRobins (1999) developed a technique to estimate the average treatment effect of any joint intervention on multiple variables\n\nApplication to treatment history effects, etc…\nEqually applicable here (since the CDE is just the effect of two non-randomized “treatments”)\n\nFirst, define a “marginal structural model” for the mean potential outcomes under a particular treatment “history”\n\\[E[Y_i(d,m)] = \\alpha_0 + \\alpha_1 d + \\alpha_2 m + \\alpha_3 dm\\]\nWith long treatment histories need to make some assumptions (e.g. a blip + cumulative effect), but here straightforward to use a fully-saturated MSM.\nEstimation by IPTW.\n\nUnder sequential ignorability, we can get consistent estimates of the parameters via a regression with inverse-propensity of treatment weights.\nFor a unit with treatment \\(D_i = d\\) and mediator \\(M_i = m\\), we construct the IP weight:\n\\[\\text{SW}_i = \\frac{Pr(D_i = d)}{Pr(D_i = d|X_i = x)} \\times \\frac{Pr(M_i = m | D_i = d)}{Pr(M_i = m | D_i = d, X_i = x, L_i = l)}\\]\n\nNow we just need two models - one for the treatment given \\(X_i\\) and another for the mediator given treatment, \\(X_i\\) and \\(L_i\\).\nIPTW avoids the post-treatment bias problem of directly conditioning on \\(L_i\\)"
+    "text": "Marginal Structural Models\n\nRobins (1999) developed a technique to estimate the average treatment effect of any joint intervention on multiple variables\n\nApplication to treatment history effects, etc…\nEqually applicable here (since the CDE is just the effect of two non-randomized “treatments”)\n\nFirst, define a “marginal structural model” for the mean potential outcomes under a particular treatment “history”\n\\[E[Y_i(d,m)] = \\alpha_0 + \\alpha_1 d + \\alpha_2 m + \\alpha_3 dm\\]\nWith long treatment histories need to make some assumptions (e.g. a blip + cumulative effect), but here straightforward to use a fully-saturated MSM."
+  },
+  {
+    "objectID": "slides/week13/part1/week13_mediation.html#marginal-structural-models-1",
+    "href": "slides/week13/part1/week13_mediation.html#marginal-structural-models-1",
+    "title": "Week 13, Part 1: Mediation",
+    "section": "Marginal Structural Models",
+    "text": "Marginal Structural Models\n\nNext, we estimate via inverse-propensity of treatment weighting:\n\nUnder sequential ignorability, we can get consistent estimates of the parameters via a regression with inverse-propensity of treatment weights.\nFor a unit with treatment \\(D_i = d\\) and mediator \\(M_i = m\\), we construct the IP weight:\n\\[\\text{SW}_i = \\frac{Pr(D_i = d)}{Pr(D_i = d|X_i = x)} \\times \\frac{Pr(M_i = m | D_i = d)}{Pr(M_i = m | D_i = d, X_i = x, L_i = l)}\\]\n\nNow we just need two models - one for the treatment given \\(X_i\\) and another for the mediator given treatment, \\(X_i\\) and \\(L_i\\).\n\nIPTW avoids the post-treatment bias problem of directly conditioning on \\(L_i\\)"
   },
   {
     "objectID": "slides/week13/part1/week13_mediation.html#identification-of-the-ande",
