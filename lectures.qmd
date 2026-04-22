@@ -73,8 +73,8 @@ Lecture slides are available as self-contained `.html` files made with RevealJS 
 
 ### Week 13 Part 2: Sensitivity Analysis
 
-- Week 13 Part 2 Github Repository
-- Week 13 Part 2 `.html` slides
+- [Week 13 Part 2 Github Repository](https://github.com/astrezhnev/ps813/tree/main/slides/week13/part2/)
+- [Week 13 Part 2 `.html` slides](https://www.antonstrezhnev.com/ps813/slides/week13/part2/week13_sensitivity_analyses.html)
 
 ### Week 14: Shift-share Designs and Experiments with Interference
 
