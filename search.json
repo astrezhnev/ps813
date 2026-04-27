@@ -1565,7 +1565,7 @@
     "href": "slides/week14/part1/week14_regression_and_dependence.html#classical-standard-errors",
     "title": "Week 14, Part 1: Regression, Dependence and Standard Errors",
     "section": "Classical Standard Errors",
-    "text": "Classical Standard Errors\n\nThe classical OLS variance estimator imposes an assumption of spherical errors\n\\[\\text{Var}(\\epsilon_i \\mid \\mathbf{X}) = \\sigma^2\\]\nTwo underlying assumptions:\n\nHomoskedasticity: \\(\\text{Var}(\\epsilon_i \\mid X_i)  = \\sigma^2\\) for all \\(i\\)\nNo autocorrelation: \\(\\text{Cov}(\\epsilon_i, \\epsilon_j \\mid \\mathbf{X}) = 0\\) for \\(i \\neq j\\)\n\nUnder spherical errors, the sandwich form simplifies as \\(\\mathbf{\\Sigma} = \\sigma^2\\mathbf{I}\\):\n\\[\\text{Var}(\\hat{\\beta} \\mid \\mathbf{X}) = (\\mathbf{X}^\\prime\\mathbf{X})^{-1} (\\mathbf{X}^\\prime \\sigma^2 \\mathbf{I} \\mathbf{X}) (\\mathbf{X}^\\prime\\mathbf{X})^{-1} = \\sigma^2 (\\mathbf{X}^\\prime\\mathbf{X})^{-1}\\]"
+    "text": "Classical Standard Errors\n\nThe classical OLS variance estimator imposes an assumption of spherical errors\n\\[\\text{Var}(\\epsilon \\mid \\mathbf{X}) = \\sigma^2\\mathbf{I}\\]\nTwo underlying assumptions:\n\nHomoskedasticity: \\(\\text{Var}(\\epsilon_i \\mid X_i)  = \\sigma^2\\) for all \\(i\\)\nZero error covariance: \\(\\text{Cov}(\\epsilon_i, \\epsilon_j \\mid \\mathbf{X}) = 0\\) for \\(i \\neq j\\)\n\nUnder spherical errors, the sandwich form simplifies as \\(\\mathbf{\\Sigma} = \\sigma^2\\mathbf{I}\\):\n\\[\\text{Var}(\\hat{\\beta} \\mid \\mathbf{X}) = (\\mathbf{X}^\\prime\\mathbf{X})^{-1} (\\mathbf{X}^\\prime \\sigma^2 \\mathbf{I} \\mathbf{X}) (\\mathbf{X}^\\prime\\mathbf{X})^{-1} = \\sigma^2 (\\mathbf{X}^\\prime\\mathbf{X})^{-1}\\]"
   },
   {
     "objectID": "slides/week14/part1/week14_regression_and_dependence.html#classical-standard-errors-1",
@@ -1586,7 +1586,7 @@
     "href": "slides/week14/part1/week14_regression_and_dependence.html#heteroskedasticity-robust-ses-1",
     "title": "Week 14, Part 1: Regression, Dependence and Standard Errors",
     "section": "Heteroskedasticity-robust SEs",
-    "text": "Heteroskedasticity-robust SEs\n\nHC-robust SEs are biased in finite samples.\n\nA number of corrections have been proposed which change how the \\(\\sigma_i^2\\) are imputed\nThese estimators tend to perform better in smaller samples\n\nHC0: \\(\\hat{e}_i^2\\) - the original estimator\nHC1: \\(\\frac{N}{N - K}\\hat{e}_i^2\\) - a constant re-scaling by the degrees of freedom\nHC2: \\(\\frac{\\hat{e}_i^2}{1 - h_{ii}}\\) - scale the residuals by the leverage\nHC3: \\(\\frac{\\hat{e}_i^2}{(1 - h_{ii})^2}\\)"
+    "text": "Heteroskedasticity-robust SEs\n\nHC-robust SEs are biased in finite samples.\n\nA number of corrections have been proposed which change how the \\(\\sigma_i^2\\) are imputed\nThese estimators tend to perform better in smaller samples\n\nHC0: \\(\\hat{e}_i^2\\) - the original estimator\nHC1: \\(\\frac{N}{N - K}\\hat{e}_i^2\\) - a constant re-scaling by the degrees of freedom\nHC2: \\(\\frac{\\hat{e}_i^2}{1 - h_{ii}}\\) - scale the residuals by the leverage\nHC3: \\(\\frac{\\hat{e}_i^2}{(1 - h_{ii})^2}\\) - use the ``jacknife” residual"
   },
   {
     "objectID": "slides/week14/part1/week14_regression_and_dependence.html#cluster-robust-ses",

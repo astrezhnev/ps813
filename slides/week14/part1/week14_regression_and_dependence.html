@@ -1113,11 +1113,11 @@ Anton Strezhnev
 <h2>Classical Standard Errors</h2>
 <ul>
 <li class="fragment"><p>The <strong>classical</strong> OLS variance estimator imposes an assumption of <strong>spherical errors</strong></p>
-<p><span class="math display">\[\text{Var}(\epsilon_i \mid \mathbf{X}) = \sigma^2\]</span></p></li>
+<p><span class="math display">\[\text{Var}(\epsilon \mid \mathbf{X}) = \sigma^2\mathbf{I}\]</span></p></li>
 <li class="fragment"><p>Two underlying assumptions:</p>
 <ul>
 <li class="fragment"><strong>Homoskedasticity</strong>: <span class="math inline">\(\text{Var}(\epsilon_i \mid X_i)  = \sigma^2\)</span> for all <span class="math inline">\(i\)</span></li>
-<li class="fragment"><strong>No autocorrelation</strong>: <span class="math inline">\(\text{Cov}(\epsilon_i, \epsilon_j \mid \mathbf{X}) = 0\)</span> for <span class="math inline">\(i \neq j\)</span></li>
+<li class="fragment"><strong>Zero error covariance</strong>: <span class="math inline">\(\text{Cov}(\epsilon_i, \epsilon_j \mid \mathbf{X}) = 0\)</span> for <span class="math inline">\(i \neq j\)</span></li>
 </ul></li>
 <li class="fragment"><p>Under spherical errors, the sandwich form simplifies as <span class="math inline">\(\mathbf{\Sigma} = \sigma^2\mathbf{I}\)</span>:</p>
 <p><span class="math display">\[\text{Var}(\hat{\beta} \mid \mathbf{X}) = (\mathbf{X}^\prime\mathbf{X})^{-1} (\mathbf{X}^\prime \sigma^2 \mathbf{I} \mathbf{X}) (\mathbf{X}^\prime\mathbf{X})^{-1} = \sigma^2 (\mathbf{X}^\prime\mathbf{X})^{-1}\]</span></p></li>
@@ -1156,7 +1156,7 @@ Anton Strezhnev
 <li class="fragment"><strong>HC0</strong>: <span class="math inline">\(\hat{e}_i^2\)</span> - the original estimator</li>
 <li class="fragment"><strong>HC1</strong>: <span class="math inline">\(\frac{N}{N - K}\hat{e}_i^2\)</span> - a constant re-scaling by the degrees of freedom</li>
 <li class="fragment"><strong>HC2</strong>: <span class="math inline">\(\frac{\hat{e}_i^2}{1 - h_{ii}}\)</span> - scale the residuals by the leverage</li>
-<li class="fragment"><strong>HC3</strong>: <span class="math inline">\(\frac{\hat{e}_i^2}{(1 - h_{ii})^2}\)</span></li>
+<li class="fragment"><strong>HC3</strong>: <span class="math inline">\(\frac{\hat{e}_i^2}{(1 - h_{ii})^2}\)</span> - use the ``jacknife” residual</li>
 </ul>
 </section>
 <section id="cluster-robust-ses" class="slide level2">
