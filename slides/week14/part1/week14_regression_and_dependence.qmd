@@ -111,11 +111,14 @@ options(digits=3)
 - One way to think about the values of $\mathbf{H}$ is they define the **weights** that generate $\hat{Y}$ from $Y$
 
   $$\hat{Y}_i = \sum_{j=1}^N h_{ij} Y_j$$
+  
 - Note that these weights are **not convex**!
 - The **diagonal** elements $h_{ii}$ of the matrix are referred to as the **leverage** of each observation
   - Captures how much the prediction for unit $i$ will change in response to a change in the **observation** for $i$
   
 - "High leverage" observations are those that are **extreme** in the covariate space.
+
+
 
 :::
 
@@ -161,11 +164,11 @@ options(digits=3)
 
 - The **classical** OLS variance estimator imposes an assumption of **spherical errors**
 
-  $$\text{Var}(\epsilon_i \mid \mathbf{X}) = \sigma^2$$
+  $$\text{Var}(\epsilon \mid \mathbf{X}) = \sigma^2\mathbf{I}$$
 
 - Two underlying assumptions:
   - **Homoskedasticity**: $\text{Var}(\epsilon_i \mid X_i)  = \sigma^2$ for all $i$
-  - **No autocorrelation**: $\text{Cov}(\epsilon_i, \epsilon_j \mid \mathbf{X}) = 0$ for $i \neq j$
+  - **Zero error covariance**: $\text{Cov}(\epsilon_i, \epsilon_j \mid \mathbf{X}) = 0$ for $i \neq j$
 
 - Under spherical errors, the sandwich form simplifies as $\mathbf{\Sigma} = \sigma^2\mathbf{I}$:
 
@@ -214,7 +217,7 @@ options(digits=3)
 - **HC0**: $\hat{e}_i^2$ - the original estimator
 - **HC1**: $\frac{N}{N - K}\hat{e}_i^2$ - a constant re-scaling by the degrees of freedom 
 - **HC2**: $\frac{\hat{e}_i^2}{1 - h_{ii}}$ - scale the residuals by the leverage
-- **HC3**: $\frac{\hat{e}_i^2}{(1 - h_{ii})^2}$ 
+- **HC3**: $\frac{\hat{e}_i^2}{(1 - h_{ii})^2}$ - use the ``jacknife" residual
 
 :::
 
