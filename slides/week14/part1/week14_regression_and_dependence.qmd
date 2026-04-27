@@ -1,0 +1,574 @@
+---
+title: "Week 14, Part 1: Regression, Dependence and Standard Errors"
+subtitle: "PS 813 - Causal Inference"
+author:
+  - name: "Anton Strezhnev"
+    affiliation: "University of Wisconsin-Madison"
+    email: strezhnev@wisc.edu
+date: "April 27, 2026"
+date-format: "MMMM D, YYYY"
+editor:
+  render-on-save: true
+format:
+  revealjs:
+    theme: [default, custom.scss]
+    slide-number: true
+    overview: true
+    navigation-mode: vertical
+    progress: false
+    controls: true
+    link-external-newwindow: true
+    footer: "PS 813 - University of Wisconsin - Madison"
+    html-math-method:
+      method: mathjax
+      url: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+execute:
+  cache: true
+code:
+  execute:
+    - r
+    - python
+embed-resources: true
+
+---
+
+$$
+  \require{cancel}
+$$
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+library(tidyverse)
+library(haven)
+library(estimatr)
+options(digits=3)
+```
+
+## Today
+
+::: {.incremental}
+
+- Going back to **estimation** with **ordinary least squares** regression.
+  - Estimand: $\mathbb{E}[Y|X]$
+- What happens when we have **dependence** across units
+  - Dependence due to cluster-based **sampling** from a target population
+  - Dependence due to cluster-based **assignment** of treatment
+- Various forms of "robust" standard errors
+  - Conventional "heteroskedasticity" robust SEs
+  - Cluster-robust standard errors
+  - Spatial HAC
+- When do these work? What sample sizes do I need for valid inference? How do I implement a bootstrap?
+
+:::
+
+## Regression Review
+
+::: {.incremental}
+
+- We observe an outcome $Y_i$ and a $K \times 1$ vector of predictors $X_i$ for each of $N$ units (one of which is a constant -- the "intercept")
+  - We'll stack these into the $N \times 1$ outcome vector $Y$ and the $N \times K$ design matrix $\mathbf{X}$
+- Consider the **ordinary least squares** estimator 
+
+  $$\hat{\beta} = \bigg(\frac{1}{N}\sum_{i=1}^N X_iX_i^\prime\bigg)^{-1}\bigg(\frac{1}{N}\sum_{i=1}^N X_iY_i\bigg) = (\mathbf{X}^\prime\mathbf{X})^{-1}\mathbf{X}^\prime Y$$
+
+:::
+
+## Regression Review
+
+- When is OLS consistent for the true conditional expectation function $\mathbb{E}[Y_i | X_i]$?
+
+  1. **Linear** CEF
+  
+  $$Y_i = X_i^\prime \beta + \epsilon_i = \beta_1 X_{i1} + \beta_2 X_{i2} + \dotsc + \beta_K X_{iK} + \epsilon_i$$
+    
+  2. Zero Conditional Mean Error
+  
+  $$\mathbb{E}[\epsilon \mid \mathbf{X}] = 0$$
+    
+  3. No perfect collinearity
+ 
+
+## Aside: Leverage/Hat values
+
+::: {.incremental}
+
+- The **fitted values** from OLS can be written as a linear projection of $Y$ onto the column space of $\mathbf{X}$
+
+  $$\hat{Y} = \mathbf{X}\hat{\beta} = \mathbf{X}(\mathbf{X}^\prime\mathbf{X})^{-1}\mathbf{X}^\prime Y = \mathbf{H}Y$$
+
+- $\mathbf{H} = \mathbf{X}(\mathbf{X}^\prime\mathbf{X})^{-1}\mathbf{X}^\prime$ is the **projection matrix** or **hat matrix** ("hat" because it puts the hat on $Y$).
+- $\mathbf{H}$ is symmetric
+- $\mathbf{H}$ is idempotent ($\mathbf{H}\mathbf{H} = \mathbf{H}$).
+
+:::
+
+## Aside: Leverage/Hat values
+
+::: {.incremental}
+
+- One way to think about the values of $\mathbf{H}$ is they define the **weights** that generate $\hat{Y}$ from $Y$
+
+  $$\hat{Y}_i = \sum_{j=1}^N h_{ij} Y_j$$
+- Note that these weights are **not convex**!
+- The **diagonal** elements $h_{ii}$ of the matrix are referred to as the **leverage** of each observation
+  - Captures how much the prediction for unit $i$ will change in response to a change in the **observation** for $i$
+  
+- "High leverage" observations are those that are **extreme** in the covariate space.
+
+:::
+
+## Regression Standard Errors
+
+::: {.incremental}
+
+- We have an estimator, $\hat{\beta}$. We want to estimate its **variance**. Two questions:
+  - What is the **actual** variance? $Var(\hat{\beta})$
+  - Can we come up with a good estimator of it? $\widehat{Var}(\hat{\beta})$
+  
+- Let's first derive the variance. Plugging $Y = \mathbf{X}\beta + \epsilon$ into the OLS formula:
+
+  $$\hat{\beta} - \beta = (\mathbf{X}^\prime\mathbf{X})^{-1}\mathbf{X}^\prime\epsilon$$
+
+- Taking the conditional variance:
+
+  $$\text{Var}(\hat{\beta} \mid \mathbf{X}) = (\mathbf{X}^\prime\mathbf{X})^{-1}\mathbf{X}^\prime \, \mathbb{E}[\epsilon\epsilon^\prime \mid \mathbf{X}] \, \mathbf{X}(\mathbf{X}^\prime\mathbf{X})^{-1}$$
+
+- Define $\mathbf{\Sigma} \equiv \mathbb{E}[\epsilon\epsilon^\prime \mid \mathbf{X}]$ - the $N \times N$ variance-covariance matrix of the errors:
+
+  $$\text{Var}(\hat{\beta} \mid \mathbf{X}) = (\mathbf{X}^\prime\mathbf{X})^{-1} \, \mathbf{X}^\prime \mathbf{\Sigma} \mathbf{X} \, (\mathbf{X}^\prime\mathbf{X})^{-1}$$
+
+:::
+
+## Regression Standard Errors
+
+::: {.incremental}
+
+- Equivalently:
+
+  $$\text{Var}(\hat{\beta} \mid \mathbf{X}) = \frac{1}{N}\bigg(\frac{1}{N}\sum_{i=1}^N X_iX_i^\prime\bigg)^{-1}\bigg(\frac{1}{N}\sum_{i=1}^N \sum_{j=1}^N \sigma_{ij} X_iX_j^\prime\bigg)\bigg(\frac{1}{N}\sum_{i=1}^N X_iX_i^\prime\bigg)^{-1}$$
+
+  where $\sigma_{ij} = \text{Cov}(\epsilon_i, \epsilon_j \mid \mathbf{X})$ is the $(i, j)$ entry of $\mathbf{\Sigma}$.
+
+- Our various approaches to estimation will make different assumptions on $\mathbf{\Sigma}$ to facilitate estimation.
+
+:::
+
+## Classical Standard Errors
+
+::: {.incremental}
+
+- The **classical** OLS variance estimator imposes an assumption of **spherical errors**
+
+  $$\text{Var}(\epsilon_i \mid \mathbf{X}) = \sigma^2$$
+
+- Two underlying assumptions:
+  - **Homoskedasticity**: $\text{Var}(\epsilon_i \mid X_i)  = \sigma^2$ for all $i$
+  - **No autocorrelation**: $\text{Cov}(\epsilon_i, \epsilon_j \mid \mathbf{X}) = 0$ for $i \neq j$
+
+- Under spherical errors, the sandwich form simplifies as $\mathbf{\Sigma} = \sigma^2\mathbf{I}$:
+
+  $$\text{Var}(\hat{\beta} \mid \mathbf{X}) = (\mathbf{X}^\prime\mathbf{X})^{-1} (\mathbf{X}^\prime \sigma^2 \mathbf{I} \mathbf{X}) (\mathbf{X}^\prime\mathbf{X})^{-1} = \sigma^2 (\mathbf{X}^\prime\mathbf{X})^{-1}$$
+
+:::
+
+## Classical Standard Errors
+
+::: {.incremental}
+
+- An unbiased estimator for $\sigma^2$ uses the residuals with a degrees-of-freedom correction
+
+  $$\hat{\sigma}^2 = \frac{1}{N - K} \sum_{i=1}^N \hat{e}_i^2$$
+
+- Yielding the classical variance estimator
+
+  $$\widehat{\text{Var}(\hat{\beta})} = \hat{\sigma}^2 (\mathbf{X}^\prime\mathbf{X})^{-1}$$
+
+
+:::
+
+## Heteroskedasticity-robust SEs
+
+::: {.incremental}
+
+- Our first relaxation is to allow $\text{Var}(\epsilon_i \mid X_i) = \sigma_i^2$ to vary across $i$
+  - Still assume zero covariance **across** observations.
+  - The variance-covariance matrix of the errors is a diagonal matrix $\mathbf{\Sigma} = \text{diag}(\sigma_1^2, \dotsc, \sigma_N^2)$.
+- A consistent estimator of $Var(\hat{\beta})$ replaces $\sigma_i^2$ with the squared OLS residual $\hat{e}_i^2$
+
+  $$\widehat{\text{Var}(\hat{\beta})} = (\mathbf{X}^\prime\mathbf{X})^{-1} \bigg(\sum_{i=1}^N \hat{e}_i^2 X_i X_i^\prime\bigg) (\mathbf{X}^\prime\mathbf{X})^{-1}$$
+
+- This is the **Eicker-Huber-White** **heteroskedasticity-consistent** variance estimator
+
+:::
+
+## Heteroskedasticity-robust SEs
+
+::: {.incremental}
+
+- HC-robust SEs are **biased** in finite samples.
+  - A number of corrections have been proposed which change how the $\sigma_i^2$ are imputed
+  - These estimators tend to perform better in smaller samples
+
+- **HC0**: $\hat{e}_i^2$ - the original estimator
+- **HC1**: $\frac{N}{N - K}\hat{e}_i^2$ - a constant re-scaling by the degrees of freedom 
+- **HC2**: $\frac{\hat{e}_i^2}{1 - h_{ii}}$ - scale the residuals by the leverage
+- **HC3**: $\frac{\hat{e}_i^2}{(1 - h_{ii})^2}$ 
+
+:::
+
+## Cluster-robust SEs
+
+::: {.incremental}
+
+- Now let's relax the assumption that $Cov(\epsilon_i, \epsilon_j | \mathbf{X}) = 0$ for $i \neq j$
+  - A common structure of dependence is that errors are correlated **within groups** but independent **across groups**
+
+- Index observations by cluster $g = 1, \dotsc, G$ and order the observations by cluster.
+  - Let $X_g$ be the $N_g \times K$ design matrix and $\hat{e}_g$ the residual vector for cluster $g$.
+  
+- We assume $Cov(\epsilon_i, \epsilon_j | \mathbf{X}) = 0$ if $i$ and $j$ **do not** share a cluster.
+
+- This makes $\mathbf{\Sigma}$ **block-diagonal** - $\sigma_{ij} = 0$ for $i, j$ in different clusters.
+  - The "meat" of the sandwich becomes a sum over clusters:
+
+  $$\text{Var}(\hat{\beta} \mid \mathbf{X}) = (\mathbf{X}^\prime\mathbf{X})^{-1} \bigg(\sum_{g=1}^G X_g^\prime \mathbf{\Sigma}_g X_g\bigg)(\mathbf{X}^\prime\mathbf{X})^{-1}$$
+
+  where $\mathbf{\Sigma}_g = \mathbb{E}[\epsilon_g \epsilon_g^\prime \mid \mathbf{X}]$ is the $N_g \times N_g$ within-cluster block of $\mathbf{\Sigma}$.
+
+:::
+
+## Cluster-robust SEs
+
+::: {.incremental}
+
+- The **Liang-Zeger (1986)** cluster-robust estimator plugs in residuals at the cluster level
+
+  $$\widehat{\text{Var}(\hat{\beta})} = (\mathbf{X}^\prime\mathbf{X})^{-1} \bigg(\sum_{g=1}^G X_g^\prime \hat{e}_g \hat{e}_g^\prime X_g\bigg) (\mathbf{X}^\prime\mathbf{X})^{-1}$$
+
+- Arbitrary correlation structure **within** each cluster is allowed, but we restrict correlation **across** cluster
+  - e.g. in many DiD/TWFE regression settings, we assume independence **across** unit but allow for arbitrary correlation over time.
+
+:::
+
+## Cluster-robust SEs
+
+::: {.incremental}
+
+- Crucially, now the consistency results for cluster-robust standard errors depend on $G$ going to infinity, not $N$
+  - With a few clusters (less than $30$-ish), the conventional Liang-Zeger estimator will tend to **under-cover**
+  
+- Small sample corrections (cluster-level analogues of HC1/HC2):
+  - **CR1** - multiply CR0 by $\frac{G}{G-1} \cdot \frac{N-1}{N-K}$ - a degrees-of-freedom rescaling at the cluster level
+  - **CR2** (Bell-McCaffrey 2002): replace $\hat{e}_g \hat{e}_g^\prime$ with $\mathbf{A}_g \hat{e}_g \hat{e}_g^\prime \mathbf{A}_g^\prime$, where $\mathbf{A}_g = (\mathbf{I}_{N_g} - \mathbf{H}_{gg})^{-1/2}$ uses the within-cluster block $\mathbf{H}_{gg}$ of the hat matrix
+
+:::
+
+## Simulation evidence: Setup
+
+::: {.incremental}
+
+- $G$ clusters with $n_g = 10$ units each. Treatment $X_g$ assigned at the **cluster level** (half of clusters treated).
+- Errors decompose into a cluster shock and an idiosyncratic shock
+
+  $$\epsilon_{ig} = \alpha_g + u_{ig}, \quad \alpha_g \sim \mathcal{N}(0, \sigma_\alpha^2), \quad u_{ig} \sim \mathcal{N}(0, \sigma_u^2)$$
+
+  with $\sigma_\alpha^2 + \sigma_u^2 = 1$, so the **intra-class correlation** is $\rho = \sigma_\alpha^2$.
+  
+- Outcome model with **no treatment effect**:
+
+  $$Y_{ig} = \beta_0 + \epsilon_{ig}$$
+  
+:::
+
+```{r sim-run, echo=F, cache=T, message=F, warning=F}
+sim_data <- function(G, n_per, ICC) {
+  cluster_id <- rep(1:G, each = n_per)
+  treat_clusters <- c(rep(0, floor(G/2)), rep(1, G - floor(G/2)))
+  X <- treat_clusters[cluster_id]
+  sig_alpha <- sqrt(ICC)
+  sig_u <- sqrt(1 - ICC)
+  alpha_g <- rnorm(G, 0, sig_alpha)
+  u_ig <- rnorm(G * n_per, 0, sig_u)
+  Y <- alpha_g[cluster_id] + u_ig
+  data.frame(Y = Y, X = X, cluster_id = cluster_id)
+}
+
+run_one <- function(G, n_per, ICC) {
+  d <- sim_data(G, n_per, ICC)
+  hc1 <- suppressWarnings(lm_robust(Y ~ X, data = d, se_type = "HC1"))
+  cr1 <- suppressWarnings(lm_robust(Y ~ X, data = d, clusters = cluster_id, se_type = "stata"))
+  cr2 <- suppressWarnings(lm_robust(Y ~ X, data = d, clusters = cluster_id, se_type = "CR2"))
+  c(HC1 = unname(hc1$p.value["X"]),
+    CR1 = unname(cr1$p.value["X"]),
+    CR2 = unname(cr2$p.value["X"]))
+}
+
+B <- 1000
+n_per <- 10
+
+# Vary ICC, fix G = 50
+set.seed(20260427)
+ICC_grid <- c(0, 0.05, 0.1, 0.2, 0.3, 0.5)
+results_ICC <- map_dfr(ICC_grid, function(rho) {
+  res <- replicate(B, run_one(50, n_per, rho))
+  tibble(ICC = rho, HC1 = res["HC1", ], CR1 = res["CR1", ], CR2 = res["CR2", ])
+})
+
+# Vary G, fix ICC = 0.2
+set.seed(20260428)
+G_grid <- c(5, 10, 20, 30, 50, 100, 200)
+results_G <- map_dfr(G_grid, function(G) {
+  res <- replicate(B, run_one(G, n_per, 0.2))
+  tibble(G = G, HC1 = res["HC1", ], CR1 = res["CR1", ], CR2 = res["CR2", ])
+})
+
+reject_ICC <- results_ICC %>%
+  group_by(ICC) %>%
+  summarise(across(c(HC1, CR1, CR2), ~ mean(.x < 0.05))) %>%
+  pivot_longer(c(HC1, CR1, CR2), names_to = "estimator", values_to = "rate") %>%
+  mutate(estimator = factor(estimator, levels = c("HC1", "CR1", "CR2")))
+
+reject_G <- results_G %>%
+  group_by(G) %>%
+  summarise(across(c(HC1, CR1, CR2), ~ mean(.x < 0.05))) %>%
+  pivot_longer(c(HC1, CR1, CR2), names_to = "estimator", values_to = "rate") %>%
+  mutate(estimator = factor(estimator, levels = c("HC1", "CR1", "CR2")))
+
+se_colors <- c("HC1" = "indianred", "CR1" = "darkorange2", "CR2" = "dodgerblue")
+```
+
+## Simulation: Varying ICC
+
+```{r, echo=F, fig.align="center", fig.height=5, fig.width=9}
+ggplot(reject_ICC, aes(x = ICC, y = rate, color = estimator, shape = estimator)) +
+  geom_hline(yintercept = 0.05, linetype = "dashed", color = "grey40") +
+  geom_line(linewidth = 1) +
+  geom_point(size = 3) +
+  scale_color_manual(values = se_colors) +
+  scale_y_continuous(limits = c(0, NA), labels = scales::percent_format(accuracy = 1)) +
+  scale_x_continuous(breaks = ICC_grid) +
+  labs(x = expression("Intra-class correlation " * rho),
+       y = "Rejection rate of true null",
+       color = "SE estimator", shape = "SE estimator",
+       caption = "G = 50 clusters, 10 units each. 1,000 replications. Dashed line: nominal 5%.") +
+  theme_minimal(base_size = 14) +
+  theme(legend.position = "right")
+```
+
+- HC1 **over-rejects severely** as soon as $\rho > 0$. CR1 and CR2 hold size at $G = 50$ across all ICC levels.
+
+## Simulation: Varying number of clusters
+
+```{r, echo=F, fig.align="center", fig.height=5, fig.width=9}
+ggplot(reject_G, aes(x = G, y = rate, color = estimator, shape = estimator)) +
+  geom_hline(yintercept = 0.05, linetype = "dashed", color = "grey40") +
+  geom_line(linewidth = 1) +
+  geom_point(size = 3) +
+  scale_color_manual(values = se_colors) +
+  scale_x_log10(breaks = G_grid) +
+  scale_y_continuous(limits = c(0, NA), labels = scales::percent_format(accuracy = 1)) +
+  labs(x = "Number of clusters (G), log scale",
+       y = "Rejection rate of true null",
+       color = "SE estimator", shape = "SE estimator",
+       caption = expression("ICC " * rho * " = 0.2; 10 units per cluster. 1,000 replications. Dashed line: nominal 5%.")) +
+  theme_minimal(base_size = 14) +
+  theme(legend.position = "right")
+```
+
+- HC1 over-rejects everywhere. CR1 over-rejects badly with few clusters; CR2 is much better-behaved but still imperfect at $G = 5$.
+
+
+## Bootstrap methods
+
+::: {.incremental}
+
+- We can extend the bootstrap beyond the conventional "pairs" bootstrap to deal with clustered covariance structure
+  - **Block/cluster bootstrap**: resample **whole clusters** with replacement, keeping all units within a sampled cluster.
+
+- We can also implement bootstrap procedures that don't rely on **resampling** units entirely
+  - **Fractional weighted** bootstrap: Randomly assign each unit a **weight** drawn from a uniform Dirichlet distribution multiplied by $n$ - run the weighted regression.
+  - **Wild bootstrap** (Wu 1986; Mammen 1993): hold $X_i$ fixed, perturb the residuals by random sign-flips
+  
+    $$Y_i^{(b)} = X_i^\prime\hat{\beta} + \omega_i^{(b)} \hat{e}_i, \quad \omega_i^{(b)} \in \{-1, +1\}$$
+    
+  - **Wild cluster bootstrap** (Cameron, Gelbach, Miller 2008): same idea, but flip the sign of the entire cluster's residuals together. Works well in small $G$ cases.
+
+:::
+
+## Spatial autocorrelation
+
+::: {.incremental}
+
+- Errors can also be correlated in **space**: observations on neighboring regions are exposed to common shocks.
+- Cluster-robust SEs require a **partition** of the units but spatial dependence often does not have clear boundaries
+- **Conley (1999) "spatial HAC"** 
+  - For estimating the "meat", use the **cross-product** of the residuals weighted by the distance between the two observations.
+
+    $$\widehat{\mathbf{X}^\prime \mathbf{\Sigma} \mathbf{X}} = \sum_{i=1}^N \sum_{j=1}^N w(d_{ij}, d^*) \hat{e}_i \hat{e}_j X_i X_j^\prime$$
+
+  where $d_{ij}$ is the distance between $i$ and $j$ and $w(\cdot)$ is a kernel that goes to zero past cutoff distance $d^*$.
+- The bandwidth $d^*$ is a researcher choice.
+
+:::
+
+## Spatial simulation: Setup
+
+::: {.incremental}
+
+- $25 \times 25$ regular grid of points indexed by location ($N = 625$). $d_{ij}$ = Euclidean distance between locations $i$ and $j$.
+- Draw treatment from a **gaussian random field** $x = (x_1, \dotsc, x_N)^\prime$ 
+
+  $$x \sim \mathcal{N}(0, \, \mathbf{\Sigma}_\rho), \qquad [\mathbf{\Sigma}_\rho]_{ij} = \exp(-d_{ij} / \rho)$$
+
+- Draw errors independently from the same field (spatially correlated)
+  - Both $X$ and $\epsilon$ inherit the same spatial structure
+- Outcome: $Y_i = \beta_0 + \beta_1 X_i + \epsilon_i$ with $\beta_1 = 0$.
+
+:::
+
+```{r spatial-setup, echo=F, cache=T, message=F, warning=F}
+# Visualization grid (larger for prettier picture)
+viz_size <- 25
+viz_grid <- expand.grid(x = 1:viz_size, y = 1:viz_size)
+D_viz <- as.matrix(dist(viz_grid))
+
+set.seed(20260427)
+viz_data <- map_dfr(c(0.5, 2, 5), function(r) {
+  Sigma <- exp(-D_viz / r) + 1e-8 * diag(nrow(viz_grid))
+  L <- t(chol(Sigma))
+  z <- as.vector(L %*% rnorm(nrow(viz_grid)))
+  cbind(viz_grid, value = z, range = r)
+}) %>% mutate(panel = factor(paste0("rho == ", range), levels = c("rho == 0.5", "rho == 2", "rho == 5")))
+
+# Simulation grid (same dimensions as visualization grid)
+sim_size <- 25
+sim_grid <- expand.grid(x = 1:sim_size, y = 1:sim_size)
+N_sim <- nrow(sim_grid)
+D_sim <- as.matrix(dist(sim_grid))
+
+run_one_spatial <- function(L, cutoff) {
+  X <- as.vector(L %*% rnorm(N_sim))   # continuous spatial treatment
+  Y <- as.vector(L %*% rnorm(N_sim))   # spatial errors (beta_1 = 0)
+  Xmat <- cbind(1, X); K <- 2
+  bread <- solve(crossprod(Xmat))
+  bhat <- bread %*% crossprod(Xmat, Y)
+  resid <- drop(Y - Xmat %*% bhat)
+  # HC1
+  meat_hc <- crossprod(Xmat, resid^2 * Xmat)
+  V_hc <- bread %*% meat_hc %*% bread * N_sim/(N_sim - K)
+  hc_se <- sqrt(V_hc[2, 2])
+  # Conley with Bartlett kernel
+  W <- pmax(0, 1 - D_sim / cutoff)
+  meat_c <- t(Xmat) %*% (W * tcrossprod(resid)) %*% Xmat
+  V_c <- bread %*% meat_c %*% bread * N_sim/(N_sim - K)
+  c_se <- sqrt(V_c[2, 2])
+  c(HC1 = 2 * pnorm(-abs(bhat[2] / hc_se)),
+    Conley = 2 * pnorm(-abs(bhat[2] / c_se)))
+}
+
+set.seed(20260428)
+range_grid <- c(0.1, 0.5, 1, 2, 3, 5)
+B_spatial <- 500
+results_spatial <- map_dfr(range_grid, function(r) {
+  Sigma <- exp(-D_sim / r) + 1e-8 * diag(N_sim)
+  L <- t(chol(Sigma))
+  res <- replicate(B_spatial, run_one_spatial(L, cutoff = 5))
+  tibble(range = r, HC1 = res["HC1", ], Conley = res["Conley", ])
+})
+
+reject_spatial <- results_spatial %>%
+  group_by(range) %>%
+  summarise(across(c(HC1, Conley), ~ mean(.x < 0.05))) %>%
+  pivot_longer(c(HC1, Conley), names_to = "estimator", values_to = "rate") %>%
+  mutate(estimator = factor(estimator, levels = c("HC1", "Conley")))
+```
+
+## Visualizing spatial dependence
+
+```{r, echo=F, fig.align="center", fig.height=4.5, fig.width=11}
+ggplot(viz_data, aes(x = x, y = y, fill = value)) +
+  geom_tile() +
+  facet_wrap(~ panel, labeller = label_parsed) +
+  scale_fill_viridis_c() +
+  coord_equal() +
+  theme_minimal(base_size = 13) +
+  labs(x = NULL, y = NULL, fill = "Field value",
+       caption = "One realization of the Gaussian random field at three values of the range parameter.") +
+  theme(panel.grid = element_blank(),
+        axis.text = element_blank(),
+        axis.ticks = element_blank())
+```
+
+- Small $\rho$ looks like noise; large $\rho$ produces large coherent "patches". Both $X_i$ and $\epsilon_i$ are independent realizations of this latent field at the same $\rho$.
+
+## Spatial simulation: HC1 vs Conley
+
+```{r, echo=F, fig.align="center", fig.height=5, fig.width=9}
+spatial_colors <- c("HC1" = "indianred", "Conley" = "dodgerblue")
+ggplot(reject_spatial, aes(x = range, y = rate, color = estimator, shape = estimator)) +
+  geom_hline(yintercept = 0.05, linetype = "dashed", color = "grey40") +
+  geom_line(linewidth = 1) +
+  geom_point(size = 3) +
+  scale_color_manual(values = spatial_colors) +
+  scale_y_continuous(limits = c(0, NA), labels = scales::percent_format(accuracy = 1)) +
+  scale_x_continuous(breaks = range_grid) +
+  labs(x = expression("Range parameter " * rho * "  (larger = stronger spatial correlation)"),
+       y = "Rejection rate of true null",
+       color = "SE estimator", shape = "SE estimator",
+       caption = expression("25x25 grid (N=625). Conley cutoff " * d^"*" * " = 5. 500 replications. Dashed line: nominal 5%.")) +
+  theme_minimal(base_size = 14) +
+  theme(legend.position = "right")
+```
+
+- HC1 over-rejects as $\rho$ grows. Conley does better but as the "range" of dependence gets large $\rho$, we also overreject!
+
+## Design-based approaches
+
+:::{.incremental}
+
+- We've focused on thinking about dependence from the standpoint of **model-based** inference
+  - Clustered SEs are valid under **unobserved** cluster-level shocks **uncorrelated** with the regressors.
+- But when are these estimators justified under **design-based** grounds?
+- **Descriptive inference**
+  - Clustering reflects the structure of **sampling** (e.g. sampling **villages** then **individuals**)
+- **Causal inference** - Abadie, Athey, Imbens, Wooldridge (2020; 2023)
+  - Can avoid clustering if treatment assignment is independent (e.g. complete randomization) **and** we're targeting the SATE.
+  - If there is clustering in either the treatment or the sampling scheme, then ignoring clustering will tend to under-cover.
+- Xu and Wooldridge (2022) extend the design-based approach to spatial SEs 
+
+:::
+
+## Conclusion
+
+:::{.incremental}
+
+- What standard errors should you use when you fit a linear regression?
+- **Classical SEs** - Basically never
+- **Heteroskedasticity-robust SEs** - Genuine i.i.d. sampling/treatment assignment
+- **Cluster-robust SEs** - i.i.d. sampling/treatment assignment **by cluster**
+  - Can just do the analysis at the **cluster level** as an alternative.
+- **Dyadic/Multi-way SEs** (Aronow, Samii, and Assenova 2015; Cameron, Gelbach and Miller (2011))
+  - Dependence between units that **share** a member (e.g. dyads)
+- **Spatial SEs** - Dependence is **smooth** in some underlying space.
+  - Need pretty **rapid** decay otherwise you're functionally in an $N=1$ setting!
+- Be **wary** of finite sample problems!
+  - **Angrist and Pischke (2009)**: Rule of 42
+
+:::
+
+## Next Lecture
+
+
+:::{.incremental}
+
+- Come with questions!
+  - We have lots of time for review!
+  
+- Concluding topic - **interference** in treatment assignment
+  - How does the estimand change when there is arbitrary (unknown) interference?
+  - Are there designs that facilitate estimation under known interference?
+  - A common design with **interference**: the "shift-share" design.
+
+:::

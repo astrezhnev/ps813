@@ -76,7 +76,12 @@ Lecture slides are available as self-contained `.html` files made with RevealJS 
 - [Week 13 Part 2 Github Repository](https://github.com/astrezhnev/ps813/tree/main/slides/week13/part2/)
 - [Week 13 Part 2 `.html` slides](https://www.antonstrezhnev.com/ps813/slides/week13/part2/week13_sensitivity_analyses.html)
 
-### Week 14: Shift-share Designs and Experiments with Interference
+### Week 14 Part 1: Regression Standard Errors and Dependence
 
-- Week 14 Github Repository
-- Week 14 `.html` slides
+- [Week 14 Part 1 Github Repository](https://github.com/astrezhnev/ps813/tree/main/slides/week14/part1/)
+- [Week 14 Part 1 `.html` slides](https://www.antonstrezhnev.com/ps813/slides/week14/part1/week14_regression_and_dependence.html)
+
+### Week 14 Part 2: Shift-share Designs and Experiments with Interference
+
+- Week 14 Part 2 Github Repository
+- Week 14 Part 2 `.html` slides
