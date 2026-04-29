@@ -83,5 +83,5 @@ Lecture slides are available as self-contained `.html` files made with RevealJS 
 
 ### Week 14 Part 2: Shift-share Designs and Experiments with Interference
 
-- Week 14 Part 2 Github Repository
-- Week 14 Part 2 `.html` slides
+- [Week 14 Part 2 Github Repository](https://github.com/astrezhnev/ps813/tree/main/slides/week14/part2/)
+- [Week 14 Part 2 `.html` slides](https://www.antonstrezhnev.com/ps813/slides/week14/part2/week14_interference_and_shift_share.html)
