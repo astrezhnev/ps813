@@ -4,6 +4,10 @@ project:
   render:
       - "*.qmd" 
       - "!psets/"
+  # Problem sets are not rendered by the site (the .qmd files are student
+  # templates); they are copied over as-is so the posted .html/.zip resolve.
+  resources:
+      - "psets/**"
 
 website:
   title: "PoliSci 813"
