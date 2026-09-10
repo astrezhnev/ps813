@@ -1,0 +1,171 @@
+---
+title: 'PS 813: Problem Set 4'
+author: "YOUR NAME"
+date: "March 11, 2026"
+output:
+  html_document:
+    df_print: paged
+code:
+  execute: 
+    - r
+    - python
+embed-resources: true
+---
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+# Useful packages
+library(estimatr)
+library(tidyverse)
+library(haven)
+```
+
+
+> Please upload your solutions as a .html file saved as "Yourlastname_Yourfirstinitial_pset4.html"). In addition, an electronic copy of your .qmd file (saved as "Yourlastname_Yourfirstinitial_pset4.qmd") must be submitted to the course website at the same time. We should be able to run your code without error messages. In order to receive credit, homework submissions must be substantially started and all work must be shown.
+
+# Problem 1
+
+This problem will have you replicate and analyze the results from Moser and Voena's 2012 AER paper on the impact of the World War I "Trading with the Enemy Act" on U.S. domestic invention. The full citation is below
+
+> Moser, P., & Voena, A. (2012). Compulsory licensing: Evidence from the trading with the enemy act. American Economic Review, 102(1), 396-427.
+
+The premise of the study is to evaluate the effect that "compulsory licensing" policy -- that is, policies that permit domestic firms to violate foreign patents and produce foreign inventions without needing to obtain a license from the owner of the foreign patent -- have on domestic invention. Does access to foreign inventions make domestic firms more innovative? The authors leverage an exogenous event in U.S. licensing policy that arose from World War I -- the 1917 "Trading with the Enemy Act" (TWEA) which permitted U.S. firms to violate patents owned by enemy-country firms. This had the consequence of effectively licensing all patents from German-owned firms to U.S. firms after 1918 (that is, from 1919 onward), allowing them to produce these inventions without paying for a license from the German-owned company.
+
+The authors look specifically at domestic innovation and patent activity in the organic chemicals sector. They note that only some of the sub-classes of organic chemicals (as defined by the US Patent Office) received any compulsory licenses under the Trading with the Enemy Act while others did not. They leverage this variation in exposure to the ``treatment" of compulsory licensing to implement a differences-in-differences design looking at domestic firm patent activity in each of these sub-classes (comparing sub-classes that were exposed to compulsory licensing to those that were unexposed).
+
+The dataset is `chem_patents_maindataset.dta` -- the code below will load it.
+
+```{r}
+library(tidyverse)
+# Read in the Moser and Voena (2012) dataset
+chem <- haven::read_dta("data/chem_patents_maindataset.dta")
+```
+
+The unit of the dataset is the sub-class/year (471,120 observations) of 7248 US Patent and Trademark Office (USPTO) patent sub-classes over 65 years.
+
+The relevant variables are
+
+- `uspto_class` - USPTO Patent Sub-Class (unit)
+- `grntyr` - Year of observation (year)
+- `count_usa` - Count of patents granted to US-owned firms in the year
+- `count_france` - Count of patents granted to French-owned firms in the year
+- `count_for` - Count of patents granted to foreign-owned (non-US) firms in the year
+- `treat` - Treatment indicator -- Whether the patent sub-class received any German patents under TWEA (after 1918 when the policy went into effect) (Note that this is not an indicator for the overall treatment *group* (whether the unit *ever* received treatment) -- it is only 1 after 1918 for units that receive treatment but is still 0 for those "treated" units prior to the initiation of treatment)
+
+## Part A 
+
+If you try to use a two-way fixed effects estimator on the dataset as it is, it will likely freeze up your computer as this is a *very large* dataset. We'll instead first aggregate the data in a way that will let you use a simple first-differences estimator to estimate the treatment effect.
+
+Generate a point estimate for the average treatment effect of receiving treatment on the average annual count of US patents using a first-differences estimator with the pre-treatment "period" averaging over the years 1875-1918 and the post-treatment "period" averaging over 1919-1939. You should aggregate your data such that the outcome is the post-/pre- difference in the outcome (preferably using `tidyverse` functions like `group_by` and `summarize` or even `pivot_wider`) and each row is a USPTO patent sub-class (rather than a sub-class/year observation) and use a difference-in-means estimator with the differenced outcome.
+
+Provide a 95% confidence interval and interpret your point estimate. Do we reject the null of no treatment effect at the $\alpha = .05$ level?
+
+## Part B
+
+A colleague suggests that you should instead just compare the average differences in the count of US patents in the post-1918 period between exposed and unexposed sub-classes to estimate the treatment effect. Based on what we observe in the pre-1919 period, is ignorability of the treatment likely to hold under this strategy? Discuss why or why not.
+
+## Part C
+
+The authors implement a test of their differences-in-differences identification assumptions by also estimating the effect the Trading with the Enemy Act on patents granted by French firms, which the authors note "could not license enemy patents under the TWEA." Describe what sort of a diagnostic strategy this is. What do the authors expect to find if their parallel trends assumption holds?
+
+Estimate the effect of TWEA exposure on the count of French firm patents using a first-differences estimator and provide a a 95%  confidence interval. Are the results consistent with what the authors expect if their design assumptions hold?
+
+## Part D
+
+We might be concerned that there are differential trends in pre-treatment patenting between those sub-classes exposed to the treatment and those exposed to control. Estimate the difference in the trend in US patents between exposed and unexposed sub-classes from 1918 to 1917, 1916, 1915, and 1914 (four estimates in total: 1918-1917, 1918-1916, 1918-1915, 1918-1914). Provide a 95% robust confidence interval for each of these estimates and interpret your results. Do we reject the null that any of these differ from $0$ (at $\alpha = .05$)? If the outcome trends were evolving in parallel between the treated and control groups, what would we expect these estimates to be? What do your results suggest for the validity of the parallel trends assumption?
+
+# Problem 2
+
+Consider the standard instrumental variables set-up in the treatment non-compliance setting, $Z_i$ denotes the assignment to treatment, $D_i$ is the actual treatment that is taken and $Y_i$ is the outcome of interest. Assume that all of the instrumental variables assumptions hold (treatment is ignorable, exclusion restriction, non-zero first stage, monotonicity/no-defiers). 
+
+The specific example you'll examine in this problem is the JOBS II randomized trial which evaluated the effect of a job training program on reducing depression among those who recently experienced job loss (among other health outcomes). This specific dataset on 502 "high-risk" individuals from this experiment comes from:
+
+> Little, Roderick J., and Linda HY Yau. "Statistical techniques for analyzing data from prevention trials: Treatment of no-shows using Rubin's causal model." Psychological Methods 3.2 (1998): 147.
+
+The code below will load the data into R
+
+```{r, message=F, warning=F}
+## Load the JOBS II dataset
+jobs2 <- read_table2("data/wjobs.tab", na= ".")
+## Make the treatment and instrument variable
+jobs2$Z <- jobs2$Tx
+jobs2$D <- as.integer(jobs2$Tx == 1 & jobs2$c1 == 1)
+```
+
+The relevant columns are
+
+- `Z` - Assignment to the job training program
+- `D` - Actual participation in job training
+- `depress` - Change in depression from baseline (higher values = more depression)
+- `risk` - Pre-treatment mental health risk score
+- `educ` - Number of years of education completed
+- `age` - Age
+- `single` - Marital status: single
+
+## Part A
+
+Examine the data and explain why monotonicity **is guaranteed** to hold for this particular design.
+
+## Part B
+
+Using the Wald estimator, estimate the local average treatment effect of participation in the job training program among the compliers. Assuming asymptotic normality, provide a 95\% confidence interval and conduct a hypothesis test for the null of no LATE at $\alpha = .05$.
+
+## Part C
+
+Estimate the first stage effect of assignment to training on participation in the program. Would you consider assignment to the job program to be a strong instrument for participation?
+
+## Part D
+
+Which subset of your sample consists exclusively of never-takers (think in terms of combinations of values of $Z_i$ and $D_i$)? Suppose you were to take the mean of one of your covariates among this group -- explain why this would identify the mean of the covariate among the never-takers.
+
+## Part E
+
+Using the group you identified in D, examine the pre-treatment covariate averages among the never-treated respondents. Compare these to the overall means in the sample. Discuss whether there are any notable differences and what this would imply for the representativeness of the LATE from Part B.
+
+# Problem 3
+
+Do recentralization efforts affect the provision of public services. Malesky, Nguyen and Tran (2014) study the effect of a policy in Vietnam that eliminated elected people's councils in a number of districts across the country. Notably, the government deliberately designed a "pilot" version of the policy so that its impact could be studied by researchers. In 2009, the government selected 10 provinces that would be "treated" -- their elected people's councils would be abolished. The remainder would be under control and retain their elected people's councils. This reform was then implemented in 2009 in the treated provinces by not holding elections for the people's councils whose terms ended in April of 2009.
+
+The full citation for the paper is:
+
+> Malesky, Edmund J., Cuong Viet Nguyen, and Anh Tran. "The impact of recentralization on public services: A difference-in-differences analysis of the abolition of elected councils in Vietnam." American Political Science Review 108, no. 1 (2014): 144-168.
+
+A PDF of the text is also included with the exam archive.
+
+Malesky et. al. (2014) use data from three waves of the Vietnam Household Living Standard Survey (VHLSS) of randomly selected rural communes across Vietnam. These surveys are designed to measure household welfare as well as observations of the levels of public service provision (e.g. whether the commune has a post office). The surveys cover two periods that were prior to the implementation of the recentralization reform: 2006 and 2008 as well as one year post-recentralization reform: 2010. Each observation is a rural commune, observations are nested within districts, provinces and regions.
+
+The code below will read in the data 
+
+```{r, echo=F, warning=F, message=F}
+vietnam <- read_csv("data/malesky_2014.csv")
+```
+
+The key variables are:
+
+- `tinh_id` - Province identifier 
+- `Region` - Region of the country
+- `year` - Year of the survey
+- `treatment` - Is the commune subject to the recentralization reform (1 if treated, 0 if control).
+- `agrext` - Whether the commune has an agricultural extension center
+- `city` - Whether the province is a national-level city
+
+## Part A
+
+The treatment was assigned at the level of the **province**. We want to analyze the data at the level of the region. We also want to convert the data into a "wide" format.
+
+Create a new data frame that contains one row for each province. It should contain the region in which the province is located and an indicator for whether that province was selected to be treated. You should consider a province treated if any of its component communes are coded as "treated" (in the original dataset, some districts even in treated provinces ended up not implementing the reform, but we will ignore this for this problem).
+
+Your dataset should also include the averages of the outcome variable (`agrext`) for each year in the survey. It should also include an indicator for whether the province is a national level city (use the 2010 value). Use this dataset for the remainder of the problem.
+
+## Part B
+
+Was treatment assigned at random? Use evidence from the paper and/or any additional information you find in the data to make your argument.
+
+## Part C
+
+Using a differences-in-differences estimator and using 2008 as your baseline period, estimate the ATT of the reform on the share of communes that have an agricultural extension center. Provide a 90% confidence interval and interpret your results. Do we conclude that the reform increased the share of communes that have an agricultural extension center ($\alpha = .1$).
+
+## Part D
+
+Construct an appropriate pre-trends test using the pre-treatment outcome data and assess whether there is evidence against the parallel trends assumption with respect to the `agrext` outcome. Do you find evidence that suggests parallel trends does not hold? Explain your reasoning.
+
