@@ -717,10 +717,10 @@ static_plot <- function(frame,  alpha = .05, split = NULL, vis_alpha = .2){
 
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-ext: svg
-#| fig-cap: "DiD with 2 periods, 2 groups"
+%| echo: false
+%| fig-align: center
+%| fig-ext: svg
+%| fig-cap: "DiD with 2 periods, 2 groups"
 \usetikzlibrary{shapes}
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows}
@@ -788,10 +788,10 @@ static_plot <- function(frame,  alpha = .05, split = NULL, vis_alpha = .2){
 
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-ext: svg
-#| fig-cap: "DiD with 4 periods, 2 groups"
+%| echo: false
+%| fig-align: center
+%| fig-ext: svg
+%| fig-cap: "DiD with 4 periods, 2 groups"
 \usetikzlibrary{shapes}
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows}
@@ -834,10 +834,10 @@ static_plot <- function(frame,  alpha = .05, split = NULL, vis_alpha = .2){
 
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-ext: svg
-#| fig-cap: "DiD with 4 periods, 2 groups - relative treatment time"
+%| echo: false
+%| fig-align: center
+%| fig-ext: svg
+%| fig-cap: "DiD with 4 periods, 2 groups - relative treatment time"
 \usetikzlibrary{shapes}
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows}
@@ -951,10 +951,10 @@ static_plot <- function(frame,  alpha = .05, split = NULL, vis_alpha = .2){
 
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-ext: svg
-#| fig-cap: "Static TWFE 2x2s"
+%| echo: false
+%| fig-align: center
+%| fig-ext: svg
+%| fig-cap: "Static TWFE 2x2s"
 \usetikzlibrary{shapes}
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows}
@@ -1004,10 +1004,10 @@ static_plot <- function(frame,  alpha = .05, split = NULL, vis_alpha = .2){
 
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-ext: svg
-#| fig-cap: "Dynamic TWFE - relative time 1"
+%| echo: false
+%| fig-align: center
+%| fig-ext: svg
+%| fig-cap: "Dynamic TWFE - relative time 1"
 \usetikzlibrary{shapes}
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows}

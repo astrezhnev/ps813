@@ -102,12 +102,12 @@ options(digits=3)
 ## Strict exogeneity
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-dpi: 300
-#| out-width: "80%"
-#| fig-format: "svg"
-#| fig-cap: "Adapted from Xu (2023) 'Causal Inference with Time-Series Cross-Sectional Data: A Reflection'"
+%| echo: false
+%| fig-align: center
+%| fig-dpi: 300
+%| out-width: "80%"
+%| fig-format: "svg"
+%| fig-cap: "Adapted from Xu (2023) 'Causal Inference with Time-Series Cross-Sectional Data: A Reflection'"
 \usetikzlibrary{arrows}
 \begin{tikzpicture}[scale=2, every node/.style={font=\large}]
 
@@ -247,12 +247,12 @@ options(digits=3)
 ## Sequential ignorability
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-dpi: 300
-#| out-width: "80%"
-#| fig-format: "svg"
-#| fig-cap: "Adapted from Blackwell and Glynn (2018) 'How to Make Causal Inferences with Time-Series Cross-Sectional Data under Selection on Observables'"
+%| echo: false
+%| fig-align: center
+%| fig-dpi: 300
+%| out-width: "80%"
+%| fig-format: "svg"
+%| fig-cap: "Adapted from Blackwell and Glynn (2018) 'How to Make Causal Inferences with Time-Series Cross-Sectional Data under Selection on Observables'"
 \usetikzlibrary{arrows}
 \begin{tikzpicture}[scale=2, every node/.style={font=\large}]
 
@@ -335,12 +335,12 @@ options(digits=3)
 ## Sequential ignorability
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-dpi: 300
-#| out-width: "80%"
-#| fig-format: "svg"
-#| fig-cap: "Adapted from Blackwell and Glynn (2018) 'How to Make Causal Inferences with Time-Series Cross-Sectional Data under Selection on Observables'"
+%| echo: false
+%| fig-align: center
+%| fig-dpi: 300
+%| out-width: "80%"
+%| fig-format: "svg"
+%| fig-cap: "Adapted from Blackwell and Glynn (2018) 'How to Make Causal Inferences with Time-Series Cross-Sectional Data under Selection on Observables'"
 \usetikzlibrary{arrows}
 \begin{tikzpicture}[scale=2, every node/.style={font=\large}]
 
@@ -1455,6 +1455,8 @@ ggplot(all_ratios, aes(x = ratio, fill = is_treated)) +
 #| fig-width: 10
 #| fig-height: 5
 #| cache: true
+
+library(augsynth)
 
 # Use multisynth for the multi-unit case
 # multisynth infers treatment timing from the binary indicator

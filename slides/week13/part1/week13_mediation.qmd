@@ -82,11 +82,11 @@ options(digits=3)
 ## Mediation Effects
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-dpi: 300
-#| out-width: "60%"
-#| fig-format: "svg"
+%| echo: false
+%| fig-align: center
+%| fig-dpi: 300
+%| out-width: "60%"
+%| fig-format: "svg"
 \usetikzlibrary{arrows}
 \begin{tikzpicture}[scale=2, every node/.style={font=\large}]
 \node (d) at (0,1) {$D$};
@@ -202,11 +202,11 @@ options(digits=3)
 ## Identification of the ACDE
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-dpi: 300
-#| out-width: "60%"
-#| fig-format: "svg"
+%| echo: false
+%| fig-align: center
+%| fig-dpi: 300
+%| out-width: "60%"
+%| fig-format: "svg"
 \usetikzlibrary{arrows}
 \begin{tikzpicture}[scale=2, every node/.style={font=\large}]
 \node (x) at (0,4) {$X$};
@@ -341,11 +341,11 @@ Y_i &= \alpha_3 + \tau_3 D_i + \gamma M_i + X_i^{\prime}\beta_3 + \epsilon_{i3}\
 ## Sequential g-Estimation
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-dpi: 300
-#| out-width: "60%"
-#| fig-format: "svg"
+%| echo: false
+%| fig-align: center
+%| fig-dpi: 300
+%| out-width: "60%"
+%| fig-format: "svg"
 \usetikzlibrary{arrows}
 \begin{tikzpicture}[scale=2, every node/.style={font=\large}]
 \node (x) at (0,4) {$X$};

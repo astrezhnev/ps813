@@ -120,11 +120,11 @@ options(digits=3)
 ## Instrumental variables
 
 ```{tikz}
-#| label: iv-dag-1
-#| echo: false
-#| fig-align: center
-#| fig-ext: svg
-#| out-width: 50%
+%| label: iv-dag-1
+%| echo: false
+%| fig-align: center
+%| fig-ext: svg
+%| out-width: 50%
 \usetikzlibrary{shapes}
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows}
@@ -189,11 +189,11 @@ options(digits=3)
 ## Assumption 1: Randomization
 
 ```{tikz}
-#| label: iv-dag-2
-#| echo: false
-#| fig-align: center
-#| fig-ext: svg
-#| out-width: 50%
+%| label: iv-dag-2
+%| echo: false
+%| fig-align: center
+%| fig-ext: svg
+%| out-width: 50%
 \usetikzlibrary{shapes}
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows}
@@ -237,11 +237,11 @@ options(digits=3)
 ## Assumption 2: Exclusion restriction
 
 ```{tikz}
-#| label: iv-dag-3
-#| echo: false
-#| fig-align: center
-#| fig-ext: svg
-#| out-width: 50%
+%| label: iv-dag-3
+%| echo: false
+%| fig-align: center
+%| fig-ext: svg
+%| out-width: 50%
 \usetikzlibrary{shapes}
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows}
@@ -282,11 +282,11 @@ options(digits=3)
 ## Assumption 3: Non-zero first stage
 
 ```{tikz}
-#| label: iv-dag-4
-#| echo: false
-#| fig-align: center
-#| fig-ext: svg
-#| out-width: 50%
+%| label: iv-dag-4
+%| echo: false
+%| fig-align: center
+%| fig-ext: svg
+%| out-width: 50%
 \usetikzlibrary{shapes}
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows}
@@ -340,11 +340,11 @@ Stratum              | $D_i(1)$          |  $D_i(0)$ |
 ## Assumption 4: Monotonicity
 
 ```{tikz}
-#| label: iv-dag-5
-#| echo: false
-#| fig-align: center
-#| fig-ext: svg
-#| out-width: 50%
+%| label: iv-dag-5
+%| echo: false
+%| fig-align: center
+%| fig-ext: svg
+%| out-width: 50%
 \usetikzlibrary{shapes}
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows}

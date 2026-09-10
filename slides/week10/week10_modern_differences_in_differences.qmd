@@ -149,10 +149,10 @@ panelview(data=union, D="CBrequired_SY", index=c("State", "year"), axis.adjust=T
 ## DiD with staggered adoption
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-cap: "DiD with 4 periods, 3 timing groups"
-#| fig-ext: svg
+%| echo: false
+%| fig-align: center
+%| fig-cap: "DiD with 4 periods, 3 timing groups"
+%| fig-ext: svg
 \usetikzlibrary{shapes}
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows}
@@ -249,10 +249,10 @@ panelview(data=union, D="CBrequired_SY", index=c("State", "year"), axis.adjust=T
 ## Visualizing group effects
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-cap: "DiD for group 3, time 3"
-#| fig-ext: svg
+%| echo: false
+%| fig-align: center
+%| fig-cap: "DiD for group 3, time 3"
+%| fig-ext: svg
 \usetikzlibrary{shapes}
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows}
@@ -306,10 +306,10 @@ panelview(data=union, D="CBrequired_SY", index=c("State", "year"), axis.adjust=T
 ## Visualizing group effects
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-cap: "DiD for group 3, time 4"
-#| fig-ext: svg
+%| echo: false
+%| fig-align: center
+%| fig-cap: "DiD for group 3, time 4"
+%| fig-ext: svg
 \usetikzlibrary{shapes}
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows}
@@ -363,10 +363,10 @@ panelview(data=union, D="CBrequired_SY", index=c("State", "year"), axis.adjust=T
 ## Visualizing group effects
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-cap: "DiD for group 4, time 4"
-#| fig-ext: svg
+%| echo: false
+%| fig-align: center
+%| fig-cap: "DiD for group 4, time 4"
+%| fig-ext: svg
 \usetikzlibrary{shapes}
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows}
@@ -485,10 +485,10 @@ panelview(data=union, D="CBrequired_SY", index=c("State", "year"), axis.adjust=T
 ## Two-way FE w/ staggered adoption
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-cap: "Good 2x2"
-#| fig-ext: svg
+%| echo: false
+%| fig-align: center
+%| fig-cap: "Good 2x2"
+%| fig-ext: svg
 \usetikzlibrary{shapes}
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows}
@@ -542,10 +542,10 @@ panelview(data=union, D="CBrequired_SY", index=c("State", "year"), axis.adjust=T
 ## Two-way FE w/ staggered adoption
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-cap: "Bad 2x2"
-#| fig-ext: svg
+%| echo: false
+%| fig-align: center
+%| fig-cap: "Bad 2x2"
+%| fig-ext: svg
 \usetikzlibrary{shapes}
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows}
@@ -653,10 +653,10 @@ panelview(data=union, D="CBrequired_SY", index=c("State", "year"), axis.adjust=T
 ## Dynamic TWFE
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-cap: "Dynamic specification - good 2x2s"
-#| fig-ext: svg
+%| echo: false
+%| fig-align: center
+%| fig-cap: "Dynamic specification - good 2x2s"
+%| fig-ext: svg
 \usetikzlibrary{shapes}
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows}
@@ -711,10 +711,10 @@ panelview(data=union, D="CBrequired_SY", index=c("State", "year"), axis.adjust=T
 ## Dynamic TWFE
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-cap: "Dynamic specification - contaminated 2x2s"
-#| fig-ext: svg
+%| echo: false
+%| fig-align: center
+%| fig-cap: "Dynamic specification - contaminated 2x2s"
+%| fig-ext: svg
 \usetikzlibrary{shapes}
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows}
@@ -768,10 +768,10 @@ panelview(data=union, D="CBrequired_SY", index=c("State", "year"), axis.adjust=T
 ## Dynamic TWFE
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-cap: "Dynamic specification - (some) de-contamination"
-#| fig-ext: svg
+%| echo: false
+%| fig-align: center
+%| fig-cap: "Dynamic specification - (some) de-contamination"
+%| fig-ext: svg
 \usetikzlibrary{shapes}
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows}
@@ -1079,10 +1079,10 @@ cs_1
 ## Regression Imputation Estimator
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-cap: "Regression Imputation Group 3, Time 3"
-#| fig-ext: svg
+%| echo: false
+%| fig-align: center
+%| fig-cap: "Regression Imputation Group 3, Time 3"
+%| fig-ext: svg
 \usetikzlibrary{shapes}
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows}
@@ -1136,10 +1136,10 @@ cs_1
 
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-cap: "Regression Imputation Group 4, Time 4"
-#| fig-ext: svg
+%| echo: false
+%| fig-align: center
+%| fig-cap: "Regression Imputation Group 4, Time 4"
+%| fig-ext: svg
 \usetikzlibrary{shapes}
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows}
@@ -1192,10 +1192,10 @@ cs_1
 ## Regression Imputation Estimator
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-cap: "Regression Imputation Group 3, Time 4"
-#| fig-ext: svg
+%| echo: false
+%| fig-align: center
+%| fig-cap: "Regression Imputation Group 3, Time 4"
+%| fig-ext: svg
 \usetikzlibrary{shapes}
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows}
@@ -1436,10 +1436,10 @@ where $N^{(t)} = \sum_{g^\prime = t + 1}^G N_{g^\prime}$
 ## In-sample imputation bias
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-cap: "2x2 comparisons in in-sample TWFE imputation of placebo for group 3, time 1"
-#| fig-ext: svg
+%| echo: false
+%| fig-align: center
+%| fig-cap: "2x2 comparisons in in-sample TWFE imputation of placebo for group 3, time 1"
+%| fig-ext: svg
 \usetikzlibrary{shapes}
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows}

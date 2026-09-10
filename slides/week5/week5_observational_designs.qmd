@@ -423,11 +423,11 @@ $$\underbrace{\mathbb{E}[Y_i | D_i = 1] - \mathbb{E}[Y_i | D_i = 0]}_{\text{Diff
 ## Directed Acyclic Graphs
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-dpi: 300
-#| out-width: "32%"
-#| fig-format: "svg"
+%| echo: false
+%| fig-align: center
+%| fig-dpi: 300
+%| out-width: "32%"
+%| fig-format: "svg"
 \usetikzlibrary{arrows}
 \begin{tikzpicture}[scale=2, every node/.style={font=\large}]
 \node (d) at (0,0) {$D$};
@@ -456,11 +456,11 @@ $$\underbrace{\mathbb{E}[Y_i | D_i = 1] - \mathbb{E}[Y_i | D_i = 0]}_{\text{Diff
 
 ::: {.column width="50%"}
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-dpi: 300
-#| out-width: "50%"
-#| fig-format: "svg"
+%| echo: false
+%| fig-align: center
+%| fig-dpi: 300
+%| out-width: "50%"
+%| fig-format: "svg"
 \usetikzlibrary{arrows}
 \begin{tikzpicture}[scale=2, every node/.style={font=\large}]
 \node (d) at (0,0) {$D$};
@@ -494,11 +494,11 @@ $$\underbrace{\mathbb{E}[Y_i | D_i = 1] - \mathbb{E}[Y_i | D_i = 0]}_{\text{Diff
 
 ::: {.column width="50%"}
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-dpi: 300
-#| out-width: "50%"
-#| fig-format: "svg"
+%| echo: false
+%| fig-align: center
+%| fig-dpi: 300
+%| out-width: "50%"
+%| fig-format: "svg"
 \usetikzlibrary{arrows}
 \begin{tikzpicture}[scale=2, every node/.style={font=\large}]
 \node (d) at (0,0) {$D$};
@@ -550,11 +550,11 @@ $$P(X_1, X_2, \dotsc, X_K) = \prod_{k=1}^K P(X_K | \text{parents}(X_K))$$
 ## D-separation
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-dpi: 300
-#| out-width: "28%"
-#| fig-format: "svg"
+%| echo: false
+%| fig-align: center
+%| fig-dpi: 300
+%| out-width: "28%"
+%| fig-format: "svg"
 \usetikzlibrary{arrows}
 \begin{tikzpicture}[scale=2, every node/.style={font=\large}]
 \node (x1) at (0,0) {$X_1$};
@@ -584,11 +584,11 @@ $$P(X_1, X_2, \dotsc, X_K) = \prod_{k=1}^K P(X_K | \text{parents}(X_K))$$
 ## D-separation
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-dpi: 300
-#| out-width: "28%"
-#| fig-format: "svg"
+%| echo: false
+%| fig-align: center
+%| fig-dpi: 300
+%| out-width: "28%"
+%| fig-format: "svg"
 \usetikzlibrary{arrows}
 \begin{tikzpicture}[scale=2, every node/.style={font=\large}]
 \node[circle, draw] (x1) at (0,0) {$X_1$};
@@ -618,11 +618,11 @@ $$P(X_1, X_2, \dotsc, X_K) = \prod_{k=1}^K P(X_K | \text{parents}(X_K))$$
 ## D-separation
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-dpi: 300
-#| out-width: "28%"
-#| fig-format: "svg"
+%| echo: false
+%| fig-align: center
+%| fig-dpi: 300
+%| out-width: "28%"
+%| fig-format: "svg"
 \usetikzlibrary{arrows}
 \begin{tikzpicture}[scale=2, every node/.style={font=\large}]
 \node[circle, draw]  (x1) at (0,0) {$X_1$};
@@ -694,11 +694,11 @@ $$P(X_1, X_2, \dotsc, X_K) = \prod_{k=1}^K P(X_K | \text{parents}(X_K))$$
 ## Good controls
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-dpi: 300
-#| out-width: "24%"
-#| fig-format: "svg"
+%| echo: false
+%| fig-align: center
+%| fig-dpi: 300
+%| out-width: "24%"
+%| fig-format: "svg"
 \usetikzlibrary{arrows}
 \begin{tikzpicture}[scale=2, every node/.style={font=\large}]
 \node (d) at (0,0) {$D$};
@@ -716,11 +716,11 @@ $$P(X_1, X_2, \dotsc, X_K) = \prod_{k=1}^K P(X_K | \text{parents}(X_K))$$
 ## Bad controls
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-dpi: 300
-#| out-width: "24%"
-#| fig-format: "svg"
+%| echo: false
+%| fig-align: center
+%| fig-dpi: 300
+%| out-width: "24%"
+%| fig-format: "svg"
 \usetikzlibrary{arrows}
 \begin{tikzpicture}[scale=2, every node/.style={font=\large}]
 \node (d) at (0,0) {$D$};
@@ -741,11 +741,11 @@ $$P(X_1, X_2, \dotsc, X_K) = \prod_{k=1}^K P(X_K | \text{parents}(X_K))$$
 ## Bad controls
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-dpi: 300
-#| out-width: "32%"
-#| fig-format: "svg"
+%| echo: false
+%| fig-align: center
+%| fig-dpi: 300
+%| out-width: "32%"
+%| fig-format: "svg"
 \usetikzlibrary{arrows}
 \begin{tikzpicture}[scale=2, every node/.style={font=\large}]
 \node (d) at (0,0) {$D$};
@@ -767,11 +767,11 @@ $$P(X_1, X_2, \dotsc, X_K) = \prod_{k=1}^K P(X_K | \text{parents}(X_K))$$
 ## Neutral Controls
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-dpi: 300
-#| out-width: "24%"
-#| fig-format: "svg"
+%| echo: false
+%| fig-align: center
+%| fig-dpi: 300
+%| out-width: "24%"
+%| fig-format: "svg"
 \usetikzlibrary{arrows}
 \begin{tikzpicture}[scale=2, every node/.style={font=\large}]
 \node (d) at (0,0) {$D$};
@@ -800,11 +800,11 @@ $$P(X_1, X_2, \dotsc, X_K) = \prod_{k=1}^K P(X_K | \text{parents}(X_K))$$
 ## DAG Practice
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-dpi: 300
-#| out-width: "32%"
-#| fig-format: "svg"
+%| echo: false
+%| fig-align: center
+%| fig-dpi: 300
+%| out-width: "32%"
+%| fig-format: "svg"
 \usetikzlibrary{arrows}
 \begin{tikzpicture}[scale=2, every node/.style={font=\large}]
 \node (D) at (0,0) {$D$};
@@ -827,11 +827,11 @@ $$P(X_1, X_2, \dotsc, X_K) = \prod_{k=1}^K P(X_K | \text{parents}(X_K))$$
 ## DAG Practice
 
 ```{tikz}
-#| echo: false
-#| fig-align: center
-#| fig-dpi: 300
-#| out-width: "36%"
-#| fig-format: "svg"
+%| echo: false
+%| fig-align: center
+%| fig-dpi: 300
+%| out-width: "36%"
+%| fig-format: "svg"
 \usetikzlibrary{arrows}
 \begin{tikzpicture}[scale=2, every node/.style={font=\large}]
 \node (U) at (0,2) {$U$};
