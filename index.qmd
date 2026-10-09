@@ -12,7 +12,7 @@ page-layout: full
 
 [Designing studies to uncover cause and effect from data]{style="font-size: 2em;"}
 
-[PoliSci 813 • Spring 2026<br>University of Wisconsin-Madison]{style="color: grey;"}
+[PoliSci 813 • Spring 2027<br>University of Wisconsin-Madison]{style="color: grey;"}
 
 :::
 
@@ -36,8 +36,7 @@ page-layout: full
 
 ### Teaching Assistant
 
-- {{< fa user >}} &nbsp; [Junda Li](https://jundali.org)
-- {{< fa envelope >}} &nbsp; [jli2458@wisc.edu](mailto:jli2458@wisc.edu)
+- {{< fa user >}} &nbsp; TBA
 
 :::
 
@@ -46,7 +45,7 @@ page-layout: full
 ### Course details
 
 - {{< fa calendar >}} &nbsp; Mondays & Wednesdays
-- {{< fa calendar-alt >}} &nbsp; 1/21/2026 - 5/4/2026
+- {{< fa calendar-alt >}} &nbsp; 1/20/2027 - TBA
 - {{< fa clock >}} &nbsp; 9:30am - 10:45am
 - {{< fa location-dot >}} &nbsp; North Hall 422
 

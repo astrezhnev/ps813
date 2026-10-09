@@ -5,7 +5,7 @@ author:
   - name: "Anton Strezhnev"
     affiliation: "University of Wisconsin-Madison"
     email: strezhnev@wisc.edu
-date: "February 23, 2026"
+date: "February 22, 2027"
 date-format: "MMMM D, YYYY"
 editor:
   render-on-save: true

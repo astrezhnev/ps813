@@ -6,13 +6,13 @@ title: "Assignments"
 
 | Assignment        | Assigned           | Due                  |
 |-------------------|--------------------|----------------------|
-| Problem Set 1     | Jan 21 (Week 1)    | Feb 4 (Week 3)       |
-| Problem Set 2     | Feb 4 (Week 3)     | Feb 18 (Week 5)      |
-| Problem Set 3     | Feb 18 (Week 5)    | March 4 (Week 7)     |
-| **Midterm Exam**  | March 4 (Week 7)   | **In-Class**         |
-| Problem Set 4     | March 11 (Week 8)  | March 25 (Week 10)   |
-| Problem Set 5     | April 8 (Week 11)  | April 22 (Week 13)   |
-| **Final Exam**    | May 4 (Exam Week)  | **Location TBA**     |
+| Problem Set 1     | Jan 20 (Week 1)    | Feb 3 (Week 3)       |
+| Problem Set 2     | Feb 3 (Week 3)     | Feb 17 (Week 5)      |
+| Problem Set 3     | Feb 17 (Week 5)    | March 3 (Week 7)     |
+| **Midterm Exam**  | March 3 (Week 7)   | **In-Class**         |
+| Problem Set 4     | March 10 (Week 8)  | March 31 (Week 10)   |
+| Problem Set 5     | April 7 (Week 11)  | April 21 (Week 13)   |
+| **Final Exam**    | TBA (Exam Week)    | **Location TBA**     |
 
 ---
 

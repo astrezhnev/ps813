@@ -25,21 +25,7 @@ title: "Staff"
 
 ## Teaching Assistant
 
-### Junda Li
-
-::: {.course-details}
-
-- **PhD Candidate**
-- Department of Political Science
-- University of Wisconsin-Madison
-
-:::
-
-|                  |                                                              |
-|------------------|--------------------------------------------------------------|
-| **Email**        | [jli2458@wisc.edu](mailto:jli2458@wisc.edu)                  |
-| **Website**      | [jundali.org](https://www.jundali.org/)                      |
-| **Office Hours** | Thursdays, 1:30pm-3:30pm, North Hall 101 (Grad Lounge)       |
+### TBA
 
 ---
 

@@ -10,7 +10,7 @@ All hyperlinks to papers are either to the published version of the paper (if pu
 
 ## Week 1: Statistical Review 
 
-*Wednesday, January 21*
+*Wednesday, January 20*
 
 **Topics:**
 
@@ -29,7 +29,7 @@ All hyperlinks to papers are either to the published version of the paper (if pu
 
 ## Week 2: Potential Outcomes + Randomized Experiments
 
-*Monday, January 26 & Wednesday, January 28*
+*Monday, January 25 & Wednesday, January 27*
 
 **Topics:**
 
@@ -54,7 +54,7 @@ All hyperlinks to papers are either to the published version of the paper (if pu
 
 ## Week 3: Experiments: Attrition and Generalizability
 
-*Monday, February 2 & Wednesday, February 4*
+*Monday, February 1 & Wednesday, February 3*
 
 **Topics:**
 
@@ -76,7 +76,7 @@ All hyperlinks to papers are either to the published version of the paper (if pu
 
 ## Week 4: Experiments: Incorporating Covariates
 
-*Monday, February 9 & Wednesday, February 11*
+*Monday, February 8 & Wednesday, February 10*
 
 **Topics:**
 
@@ -101,7 +101,7 @@ All hyperlinks to papers are either to the published version of the paper (if pu
 
 ## Week 5: Selection-on-Observables
 
-*Monday, February 16 & Wednesday, February 18*
+*Monday, February 15 & Wednesday, February 17*
 
 **Topics:**
 
@@ -129,7 +129,7 @@ All hyperlinks to papers are either to the published version of the paper (if pu
 
 ## Week 6: Selection-on-Observables - Regression and Weighting
 
-*Monday, February 23 & Wednesday, February 25*
+*Monday, February 22 & Wednesday, February 24*
 
 **Topics:**
 
@@ -154,12 +154,12 @@ All hyperlinks to papers are either to the published version of the paper (if pu
 
 ## Week 7: Selection-on-Observables - Matching
 
-*Monday, March 2 & Wednesday, March 4*
+*Monday, March 1 & Wednesday, March 3*
 
 **Topics:**
 
 - Covariate adjustment using matching estimators
-- **Midterm exam** on Wednesday **March 4th**
+- **Midterm exam** on Wednesday **March 3rd**
 
 **Readings:**
 
@@ -176,7 +176,7 @@ All hyperlinks to papers are either to the published version of the paper (if pu
 
 ## Week 8: Instrumental Variables
 
-*Monday, March 9 & Wednesday, March 11*
+*Monday, March 8 & Wednesday, March 10*
 
 **Topics:**
 
@@ -201,7 +201,7 @@ All hyperlinks to papers are either to the published version of the paper (if pu
 
 ## Week 9: Differences-in-Differences
 
-*Monday, March 16 & Wednesday, March 18*
+*Monday, March 15 & Wednesday, March 17*
 
 **Topics:**
 
@@ -224,9 +224,15 @@ All hyperlinks to papers are either to the published version of the paper (if pu
 
 ---
 
+## Spring Break
+
+*No Class: Monday, March 22 & Wednesday, March 24*
+
+---
+
 ## Week 10: Modern Differences-in-Differences
 
-*Monday, March 23 & Wednesday, March 25*
+*Monday, March 29 & Wednesday, March 31*
 
 **Topics:**
 
@@ -249,15 +255,9 @@ All hyperlinks to papers are either to the published version of the paper (if pu
 
 ---
 
-## Spring Break
-
-*No Class: Monday, March 23 & Wednesday, March 25*
-
----
-
 ## Week 11: Panel Data Causal Inference
 
-*Monday, April 6 & Wednesday, April 8*
+*Monday, April 5 & Wednesday, April 7*
 
 **Topics:**
 
@@ -281,7 +281,7 @@ All hyperlinks to papers are either to the published version of the paper (if pu
 
 ## Week 12: Regression Discontinuity Designs
 
-*Monday, April 13 & Wednesday, April 15*
+*Monday, April 12 & Wednesday, April 14*
 
 **Topics:**
 
@@ -307,7 +307,7 @@ All hyperlinks to papers are either to the published version of the paper (if pu
 
 ## Week 13: Mediation and Sensitivity Analysis
 
-*Monday, April 20 & Wednesday, April 22*
+*Monday, April 19 & Wednesday, April 21*
 
 **Topics:**
 
@@ -336,7 +336,7 @@ All hyperlinks to papers are either to the published version of the paper (if pu
 
 ## Week 14: Shift-share designs and experiments with interference
 
-*Monday, April 27 & Wednesday, April 29*
+*Monday, April 26 & Wednesday, April 28*
 
 **Topics:**
 

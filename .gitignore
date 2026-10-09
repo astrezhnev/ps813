@@ -34,3 +34,9 @@ Thumbs.db
 *.bcf
 
 **/*.quarto_ipynb
+
+# LibreOffice lock files
+.~lock.*#
+
+# Printable syllabus (built locally by build_syllabus_pdf.py, not posted)
+ps813-syllabus.pdf
